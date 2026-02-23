@@ -224,7 +224,7 @@ Transform:
   m_GameObject: {fileID: 319614656}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.76, y: 0.884, z: 2.7}
+  m_LocalPosition: {x: 47.05, y: 0.884, z: 0.11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -343,12 +343,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2534013, y: 0.000000032174476, z: -0.000000008428139, w: 0.9673613}
-  m_LocalPosition: {x: 43.76, y: 3.134, z: -1.3}
+  m_LocalRotation: {x: 0.2454424, y: 0.000000038206508, z: -0.000000009673395, w: 0.9694112}
+  m_LocalPosition: {x: 55.35652, y: 40.362953, z: 7.576544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 724608534}
   m_LocalEulerAnglesHint: {x: 21.7, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
@@ -556,6 +556,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 724608534}
+  - component: {fileID: 724608535}
   m_Layer: 0
   m_Name: GamesCamera
   m_TagString: Untagged
@@ -577,8 +578,25 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 863517471}
+  - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &724608535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724608533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bab135341c03949a1c61a6bddceb5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cinemachineBrain: {fileID: 330585548}
+  _inputAxisController: {fileID: 863517472}
+  _orbitalFollow: {fileID: 863517475}
+  <CameraCinemachine>k__BackingField: {fileID: 863517476}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -657,8 +675,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863517470}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2534013, y: 0.000000027090428, z: 0.000000010980264, w: 0.9673613}
-  m_LocalPosition: {x: 52.06652, y: 39.232006, z: 13.417006}
+  m_LocalRotation: {x: 0.24544239, y: 0.000000038279186, z: -0.000000009960449, w: 0.96941125}
+  m_LocalPosition: {x: 55.35652, y: 40.362953, z: 7.576544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -746,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Composition:
-    ScreenPosition: {x: 0, y: 0}
+    ScreenPosition: {x: 0, y: -0.0516935}
     DeadZone:
       Enabled: 0
       Size: {x: 0.2, y: 0.2}
@@ -776,13 +794,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
-    BindingMode: 4
-    PositionDamping: {x: 1, y: 1, z: 1}
+    BindingMode: 1
+    PositionDamping: {x: 1, y: 1, z: 0}
     AngularDampingMode: 0
-    RotationDamping: {x: 1, y: 1, z: 1}
+    RotationDamping: {x: 1, y: 1, z: 0}
     QuaternionDamping: 1
-  OrbitStyle: 1
-  Radius: 5
+  OrbitStyle: 0
+  Radius: 8
   Orbits:
     Top:
       Radius: 2
@@ -794,10 +812,10 @@ MonoBehaviour:
       Radius: 2.5
       Height: 0.1
     SplineCurvature: 0.5
-  RecenteringTarget: 2
+  RecenteringTarget: 0
   HorizontalAxis:
     Value: 0
-    Center: 0
+    Center: -180
     Range: {x: -180, y: 180}
     Wrap: 1
     Recentering:
@@ -806,9 +824,9 @@ MonoBehaviour:
       Time: 2
     Restrictions: 0
   VerticalAxis:
-    Value: 17.5
-    Center: 17.5
-    Range: {x: -10, y: 45}
+    Value: 25
+    Center: 25
+    Range: {x: 10, y: 45}
     Wrap: 0
     Recentering:
       Enabled: 0
@@ -1011,7 +1029,9 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 1550271542}
+  - {fileID: 724608533}
   _characterController: {fileID: 319614662}
+  _cameraController: {fileID: 724608535}
 --- !u!4 &1512463414
 Transform:
   m_ObjectHideFlags: 0
@@ -1183,7 +1203,6 @@ MeshFilter:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 330585546}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 912202401}

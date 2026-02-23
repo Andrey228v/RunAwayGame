@@ -2,15 +2,14 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
 namespace Assets.Input
 {
     public class InputReader : IDisposable
     {
         public Action OnLeftButtonClick;
         public event Action<Vector2> OnDirectionMoveChandged;
-        public event Action OnMoved;
-        public event Action OnStoped;
+        public event Action<bool> OnMoved;
+        //public event Action OnStoped;
 
         private InputSystem_Actions _inputSystem;
         private InputAction _leftButtonMoveAction;
@@ -21,12 +20,16 @@ namespace Assets.Input
         {
             _inputSystem = new InputSystem_Actions();
             _inputSystem.Player.Enable();
+            _inputSystem.Player.Move.started += OnMove;
             _inputSystem.Player.Move.performed += OnMove;
+            _inputSystem.Player.Move.canceled += OnMove;
         }
 
         public void Dispose()
         {
+            _inputSystem.Player.Move.started -= OnMove;
             _inputSystem.Player.Move.performed -= OnMove;
+            _inputSystem.Player.Move.canceled -= OnMove;
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -35,18 +38,20 @@ namespace Assets.Input
 
             if (context.started == true)
             {
-                OnDirectionMoveChandged?.Invoke(context.ReadValue<Vector2>());
-                OnMoved?.Invoke();
+                //OnDirectionMoveChandged?.Invoke(context.ReadValue<Vector2>());
+                //OnMoved?.Invoke(true);
             }
             else if (context.performed == true)
             {
                 OnDirectionMoveChandged?.Invoke(context.ReadValue<Vector2>());
+                OnMoved?.Invoke(true);
+                Debug.Log(context.ReadValue<Vector2>());
             }
             else if (context.canceled == true)
             {
                 OnDirectionMoveChandged?.Invoke(context.ReadValue<Vector2>());
-                OnStoped?.Invoke();
+                OnMoved?.Invoke(false);
             }
-        }
+        } 
     }
 }

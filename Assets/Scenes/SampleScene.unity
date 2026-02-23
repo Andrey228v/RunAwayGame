@@ -343,7 +343,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2454424, y: 0.000000038206508, z: -0.000000009673395, w: 0.9694112}
+  m_LocalRotation: {x: 0.24544246, y: 0.0000000053214877, z: -0.0000000013473322, w: 0.9694112}
   m_LocalPosition: {x: 55.35652, y: 40.362953, z: 7.576544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -593,10 +593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59bab135341c03949a1c61a6bddceb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cinemachineBrain: {fileID: 330585548}
-  _inputAxisController: {fileID: 863517472}
-  _orbitalFollow: {fileID: 863517475}
-  <CameraCinemachine>k__BackingField: {fileID: 863517476}
+  _cameraCinemachine: {fileID: 863517476}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +672,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 863517470}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24544239, y: 0.000000038279186, z: -0.000000009960449, w: 0.96941125}
+  m_LocalRotation: {x: 0.24544242, y: 0.00000000581195, z: -0.000000003284489, w: 0.9694112}
   m_LocalPosition: {x: 55.35652, y: 40.362953, z: 7.576544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -794,7 +791,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetOffset: {x: 0, y: 0, z: 0}
   TrackerSettings:
-    BindingMode: 1
+    BindingMode: 0
     PositionDamping: {x: 1, y: 1, z: 0}
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 0}

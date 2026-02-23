@@ -5,7 +5,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMovement : ITickable, IDisposable
+    public class PlayerMovement : IDisposable
     {
         private CharacterController _characterController;
         private readonly InputReader _inputReader;
@@ -15,7 +15,6 @@ namespace Assets.Scripts.Player
         private Vector3 _direction;
         private float _speed = 5f;
         
-
         public PlayerMovement(CharacterController characterController, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
             _inputReader = inputReader;
@@ -31,12 +30,12 @@ namespace Assets.Scripts.Player
             _inputReader.OnMoved -= SetIsMove;
         }
 
-        public void Tick()
-        {
-            Move();
-        }
+        //public void Tick()
+        //{
+        //    Move();
+        //}
 
-        private void Move()
+        public void Move()
         {
             if (_isMove)
             {

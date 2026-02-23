@@ -3,7 +3,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerRotator : ITickable
+    public class PlayerRotator
     {
         private float _rotateSpeed = 200f;
         private CharacterController _characterController;
@@ -15,15 +15,20 @@ namespace Assets.Scripts.Player
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
         }
 
-        public void Tick()
+        //public void Tick()
+        //{
+        //    Rotate();
+        //}
+
+        public void Rotate()
         {
             if (_playerMoveDirectionCalculator.GetMoveDirection().magnitude > 0)
             {
-                Rotate(_playerMoveDirectionCalculator.GetMoveDirection(), _rotateSpeed);
+                RotateDir(_playerMoveDirectionCalculator.GetMoveDirection(), _rotateSpeed);
             }
         }
 
-        private void Rotate(Vector3 direction, float rotateSpeed)
+        private void RotateDir(Vector3 direction, float rotateSpeed)
         {
             Debug.DrawRay(_characterController.transform.position, direction * 3f, Color.white, 1f);
             Quaternion targetRotation = Quaternion.LookRotation(direction);

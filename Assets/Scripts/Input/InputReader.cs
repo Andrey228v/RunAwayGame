@@ -9,12 +9,7 @@ namespace Assets.Input
         public Action OnLeftButtonClick;
         public event Action<Vector2> OnDirectionMoveChandged;
         public event Action<bool> OnMoved;
-        //public event Action OnStoped;
-
         private InputSystem_Actions _inputSystem;
-        private InputAction _leftButtonMoveAction;
-        private InputAction _rightButtonMoveAction;
-        private PlayerInput _playerInput;
 
         public InputReader()
         {

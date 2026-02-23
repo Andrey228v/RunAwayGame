@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Camera;
+﻿using Assets.Input;
+using Assets.Scripts.Camera;
 using Assets.Scripts.Player;
 using UnityEngine;
 using VContainer;
@@ -16,7 +17,10 @@ namespace Assets.Scripts.Installers
             builder.RegisterInstance(_characterController);
             builder.RegisterInstance(_cameraController);
             builder.Register<PlayerMovement>(Lifetime.Singleton).As<ITickable>().AsSelf();
+            builder.Register<PlayerRotator>(Lifetime.Singleton).As<ITickable>().AsSelf();
             builder.Register<Test>(Lifetime.Singleton);
+            builder.Register<InputReader>(Lifetime.Singleton); // ????
+            builder.Register<PlayerMoveDirectionCalculator>(Lifetime.Singleton);
         }
     }
 }

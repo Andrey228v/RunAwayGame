@@ -12,6 +12,8 @@ namespace Assets.Scripts.Player
         private Vector3 _inputDirection;
         private Quaternion _cameraAngleRotation;
         private Vector3 _direction;
+        private Vector3 _jumpForce = Vector3.zero;
+        private Vector3 _gravity = Vector3.zero;
 
         public PlayerMoveDirectionCalculator(CameraController cameraController, InputReader inputReader)
         {
@@ -30,8 +32,19 @@ namespace Assets.Scripts.Player
 
         public Vector3 GetMoveDirection()
         {
-            _direction = _cameraAngleRotation * _inputDirection;
+            _direction = _cameraAngleRotation * (_inputDirection + _jumpForce + _gravity);
+            _jumpForce = Vector3.zero;
             return _direction;
+        }
+
+        public void SetJumpForce(Vector3 force)
+        {
+            _jumpForce = force;
+        }
+
+        public void SetGravity(Vector3 force)
+        {
+            _gravity = force;
         }
 
         private void SetInputDirection(Vector2 direction)

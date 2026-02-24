@@ -15,17 +15,25 @@ namespace Assets.Scripts.StateMachines.Player
         private PlayerMovement _playerMovement;
         private PlayerRotator _playerRotator;
         private InputReader _inputReader;
+        private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
+        private PlayerGroundChecker _playerGroundChecker;
+        private PlayerGravityController _playerGravityController;
 
-        public PlayerStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, InputReader inputReader)
+        public PlayerStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, 
+            InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator,
+            PlayerGroundChecker playerGroundChecker, PlayerGravityController playerGravityController)
         {
             _playerMovement = playerMovement;
             _playerRotator = playerRotator;
             _inputReader = inputReader;
+            _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
+            _playerGroundChecker = playerGroundChecker;
+            _playerGravityController = playerGravityController;
 
             _states = new List<IState>()
             {
                 new MoveState(this, _playerMovement, _playerRotator, _inputReader),
-                new JumpState()
+                new JumpState(this, _inputReader, _playerMoveDirectionCalculator, _playerMovement, _playerRotator, _playerGroundChecker, _playerGravityController)
             };
             
             _currentState = _states[0];

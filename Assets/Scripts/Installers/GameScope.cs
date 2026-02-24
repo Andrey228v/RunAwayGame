@@ -25,6 +25,9 @@ namespace Assets.Scripts.Installers
             builder.Register<InputReader>(Lifetime.Singleton); // ????
             builder.Register<PlayerMoveDirectionCalculator>(Lifetime.Singleton);
             builder.Register<PlayerStateMachine>(Lifetime.Singleton).As<ITickable>().AsSelf();
+            builder.Register<PlayerJumper>(Lifetime.Singleton);
+            builder.Register<PlayerGroundChecker>(Lifetime.Singleton);
+            builder.Register<PlayerGravityController>(Lifetime.Singleton);
         }
     }
 }

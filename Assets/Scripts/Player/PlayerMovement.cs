@@ -1,7 +1,6 @@
 ﻿using Assets.Input;
 using System;
 using UnityEngine;
-using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
@@ -29,11 +28,6 @@ namespace Assets.Scripts.Player
         {
             _inputReader.OnMoved -= SetIsMove;
         }
-
-        //public void Tick()
-        //{
-        //    Move();
-        //}
 
         public void Move()
         {

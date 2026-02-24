@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerRotator
     {
-        private float _rotateSpeed = 200f;
+        private float _rotateSpeed = 300f;
         private CharacterController _characterController;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
@@ -14,11 +13,6 @@ namespace Assets.Scripts.Player
             _characterController = characterController;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
         }
-
-        //public void Tick()
-        //{
-        //    Rotate();
-        //}
 
         public void Rotate()
         {

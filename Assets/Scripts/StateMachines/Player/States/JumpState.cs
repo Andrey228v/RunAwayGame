@@ -40,17 +40,20 @@ namespace Assets.Scripts.StateMachines.Player.States
         public void Enter()
         {
             _playerMoveDirectionCalculator.SetJumpForce(new Vector3(_forceX, _forceY, 0f));
+
+            ChangeStateMove();
         }
         public void Update()
         {
-            _playerMovement.Move();
-            _playerRotator.Rotate();
-            _isGround = _playerGroundChecker.GetIsGrounded();
+            //_playerMovement.Move();
+            //_playerRotator.Rotate();
 
-            if (_isGround) 
-            {
-                ChangeStateMove();
-            }
+            //_isGround = _playerGroundChecker.GetIsGrounded();
+
+            //if (_isGround) 
+            //{
+            //    ChangeStateMove();
+            //}
         }
 
         public void Exit()

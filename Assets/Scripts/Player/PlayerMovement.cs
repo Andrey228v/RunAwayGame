@@ -33,7 +33,7 @@ namespace Assets.Scripts.Player
         {
             if (_isMove)
             {
-                _direction = _playerMoveDirectionCalculator.GetMoveDirection();
+                _direction = _playerMoveDirectionCalculator.GetSumForce();
                 _characterController.Move(_direction * _speed * Time.deltaTime);
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Assets.Input;
+using ECM2;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
@@ -7,18 +8,18 @@ namespace Assets.Scripts.Player
     {
         private Vector3 _gravity = new Vector3(0, -10f, 0);
 
-        private CharacterController _characterController;
+        private Character _character;
         private readonly InputReader _inputReader;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
-        public PlayerGravityController(CharacterController characterController, InputReader inputReader, 
+        public PlayerGravityController(Character character, InputReader inputReader, 
             PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
-            _characterController = characterController;
+            _character = character;
             _inputReader = inputReader;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
 
-            _playerMoveDirectionCalculator.SetGravity(_gravity);
+            //_playerMoveDirectionCalculator.SetGravity(_gravity);
         }
 
 

@@ -1,4 +1,5 @@
 ﻿using Assets.Input;
+using ECM2;
 using System;
 using UnityEngine;
 
@@ -9,13 +10,13 @@ namespace Assets.Scripts.Player
         private int _forceX = 5;
         private int _forceY = 10;
 
-        private CharacterController _characterController;
+        private Character _character;
         private readonly InputReader _inputReader;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
-        public PlayerJumper(CharacterController characterController, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
+        public PlayerJumper(Character character, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
-            _characterController = characterController;
+            _character = character;
             _inputReader = inputReader;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
 

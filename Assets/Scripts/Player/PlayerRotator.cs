@@ -1,16 +1,17 @@
-﻿using UnityEngine;
+﻿using ECM2;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerRotator
     {
         private float _rotateSpeed = 300f;
-        private CharacterController _characterController;
+        private Character _character;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
-        public PlayerRotator(CharacterController characterController, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
+        public PlayerRotator(Character character, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
-            _characterController = characterController;
+            _character = character;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
         }
 
@@ -24,10 +25,7 @@ namespace Assets.Scripts.Player
 
         private void RotateDir(Vector3 direction, float rotateSpeed)
         {
-            Debug.DrawRay(_characterController.transform.position, direction * 3f, Color.white, 1f);
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            Quaternion q = new Quaternion(0f, targetRotation.y, 0f, targetRotation.w);
-            _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, q, rotateSpeed * Time.deltaTime);
+            _character.RotateTowards(direction, rotateSpeed);
         }
     }
 }

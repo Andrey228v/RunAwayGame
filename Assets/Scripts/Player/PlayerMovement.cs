@@ -1,4 +1,5 @@
 ﻿using Assets.Input;
+using ECM2;
 using System;
 using UnityEngine;
 
@@ -6,7 +7,7 @@ namespace Assets.Scripts.Player
 {
     public class PlayerMovement : IDisposable
     {
-        private CharacterController _characterController;
+        private Character _character;
         private readonly InputReader _inputReader;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
@@ -14,10 +15,10 @@ namespace Assets.Scripts.Player
         private Vector3 _direction;
         private float _speed = 5f;
         
-        public PlayerMovement(CharacterController characterController, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
+        public PlayerMovement(Character character, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
             _inputReader = inputReader;
-            _characterController = characterController;
+            _character = character;
             _isMove = false;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
 
@@ -33,8 +34,8 @@ namespace Assets.Scripts.Player
         {
             if (_isMove)
             {
-                _direction = _playerMoveDirectionCalculator.GetSumForce();
-                _characterController.Move(_direction * _speed * Time.deltaTime);
+                _direction = _playerMoveDirectionCalculator.GetMoveDirection();
+                _character.SetMovementDirection(_direction);
             }
         }
 

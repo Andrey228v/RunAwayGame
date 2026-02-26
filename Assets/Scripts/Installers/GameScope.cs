@@ -4,6 +4,7 @@ using Assets.Scripts.Player;
 using Assets.Scripts.StateMachines;
 using Assets.Scripts.StateMachines.Player;
 using Assets.Scripts.StateMachines.Player.States;
+using ECM2;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -12,12 +13,12 @@ namespace Assets.Scripts.Installers
 {
     public class GameScope : LifetimeScope
     {
-        [SerializeField] private CharacterController _characterController;
+        [SerializeField] private Character _character;
         [SerializeField] private CameraController _cameraController;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInstance(_characterController);
+            builder.RegisterInstance(_character);
             builder.RegisterInstance(_cameraController);
             builder.Register<PlayerMovement>(Lifetime.Singleton);
             builder.Register<PlayerRotator>(Lifetime.Singleton);

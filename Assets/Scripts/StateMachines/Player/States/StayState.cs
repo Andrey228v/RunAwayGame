@@ -1,13 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Scripts.StateMachines.Player.States
+﻿namespace Assets.Scripts.StateMachines.Player.States
 {
-    public class StayState
+    public class StayState : IState
     {
+        public void CheckChangeState()
+        {
+            
+        }
 
+        public void Enter()
+        {
+            
+        }
+
+        public void Exit()
+        {
+            
+        }
+
+        public void FixedUpdate()
+        {
+            
+        }
+
+        public void Update()
+        {
+            
+        }
     }
 }

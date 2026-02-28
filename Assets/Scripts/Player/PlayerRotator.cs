@@ -1,28 +1,31 @@
-﻿using Assets.Scripts.Camera;
+﻿using ECM2;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerRotator : ITickable
+    public class PlayerRotator
     {
-        private float _rotateSpeed = 100f;
-        private CharacterController _characterController;
-        private CameraController _cameraController;
+        private float _rotateSpeed = 300f;
+        private Character _character;
+        private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
-        public PlayerRotator(CharacterController characterController, CameraController cameraController)
+        public PlayerRotator(Character character, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
-            _characterController = characterController;
-            _cameraController = cameraController;
+            _character = character;
+            _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
         }
 
-        public void Tick()
+        public void Rotate()
         {
-            //if (_moveDirection.magnitude > 0)
-            //{
-            //    CharacterView.RotateTowards(_moveDirection, _rotateSpeed);
-            //}
+            if (_playerMoveDirectionCalculator.GetMoveDirection().magnitude > 0)
+            {
+                RotateDir(_playerMoveDirectionCalculator.GetMoveDirection(), _rotateSpeed);
+            }
+        }
+
+        private void RotateDir(Vector3 direction, float rotateSpeed)
+        {
+            _character.RotateTowards(direction, rotateSpeed);
         }
     }
 }

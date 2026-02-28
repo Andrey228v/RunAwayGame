@@ -6,52 +6,50 @@ namespace Assets.Input
 {
     public class InputReader : IDisposable
     {
-        public Action OnLeftButtonClick;
+        private InputSystem_Actions _inputSystem;
+
         public event Action<Vector2> OnDirectionMoveChandged;
         public event Action<bool> OnMoved;
-        //public event Action OnStoped;
-
-        private InputSystem_Actions _inputSystem;
-        private InputAction _leftButtonMoveAction;
-        private InputAction _rightButtonMoveAction;
-        private PlayerInput _playerInput;
+        public event Action OnJumped;
 
         public InputReader()
         {
             _inputSystem = new InputSystem_Actions();
             _inputSystem.Player.Enable();
-            _inputSystem.Player.Move.started += OnMove;
+            //_inputSystem.Player.Move.started += OnMove;
             _inputSystem.Player.Move.performed += OnMove;
             _inputSystem.Player.Move.canceled += OnMove;
+            _inputSystem.Player.Jump.started += OnJump;
         }
 
         public void Dispose()
         {
-            _inputSystem.Player.Move.started -= OnMove;
+            //_inputSystem.Player.Move.started -= OnMove;
             _inputSystem.Player.Move.performed -= OnMove;
             _inputSystem.Player.Move.canceled -= OnMove;
+            _inputSystem.Player.Jump.started -= OnJump;
         }
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            Debug.Log("EVENT TEST");
-
-            if (context.started == true)
-            {
-                //OnDirectionMoveChandged?.Invoke(context.ReadValue<Vector2>());
-                //OnMoved?.Invoke(true);
-            }
-            else if (context.performed == true)
+            if (context.performed == true)
             {
                 OnDirectionMoveChandged?.Invoke(context.ReadValue<Vector2>());
                 OnMoved?.Invoke(true);
-                Debug.Log(context.ReadValue<Vector2>());
             }
             else if (context.canceled == true)
             {
                 OnDirectionMoveChandged?.Invoke(context.ReadValue<Vector2>());
                 OnMoved?.Invoke(false);
             }
-        } 
+        }
+
+        public void OnJump(InputAction.CallbackContext context) 
+        {
+            if(context.started == true)
+            {
+                OnJumped?.Invoke();
+            }
+        }
     }
 }

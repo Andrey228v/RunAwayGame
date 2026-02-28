@@ -29,10 +29,15 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void Enter()
         {
-            
+
         }
 
         public void Update()
+        {
+            
+        }
+
+        public void FixedUpdate()
         {
             _playerMovement.Move();
             _playerRotator.Rotate();
@@ -40,14 +45,17 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void Exit()
         {
-            
+
+        }
+
+        public void CheckChangeState()
+        {
+
         }
 
         private void ChangeStateJump()
         {
             _stateSwitcher.ChangeState<JumpState>();
         }
-
-
     }
 }

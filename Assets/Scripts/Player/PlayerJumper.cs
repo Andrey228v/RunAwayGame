@@ -1,7 +1,6 @@
 ﻿using Assets.Input;
 using ECM2;
 using System;
-using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
@@ -20,17 +19,22 @@ namespace Assets.Scripts.Player
             _inputReader = inputReader;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
 
-            _inputReader.OnJumped += Jump;
+            //_inputReader.OnJumped += Jump;
         }
 
         public void Dispose()
         {
-            _inputReader.OnJumped -= Jump;
+            //_inputReader.OnJumped -= Jump;
         }
 
         public void Jump()
         {
-            //_playerMoveDirectionCalculator.SetJumpForce(new Vector3(_forceX, _forceY, 0f));
+            _character.Jump();
+        }
+
+        public void StopJump()
+        {
+            _character.StopJumping();
         }
     }
 }

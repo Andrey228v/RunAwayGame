@@ -13,7 +13,6 @@ namespace Assets.Scripts.Player
 
         private bool _isMove;
         private Vector3 _direction;
-        private float _speed = 5f;
         
         public PlayerMovement(Character character, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
@@ -32,11 +31,8 @@ namespace Assets.Scripts.Player
 
         public void Move()
         {
-            if (_isMove)
-            {
-                _direction = _playerMoveDirectionCalculator.GetMoveDirection();
-                _character.SetMovementDirection(_direction);
-            }
+            _direction = _playerMoveDirectionCalculator.GetMoveDirection();
+            _character.SetMovementDirection(_direction);
         }
 
         private void SetIsMove(bool isMove) 

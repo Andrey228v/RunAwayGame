@@ -6,6 +6,10 @@
 
         public void Update();
 
+        public void FixedUpdate();
+
+        public void CheckChangeState();
+
         public void Exit();
     }
 }

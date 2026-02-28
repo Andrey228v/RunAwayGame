@@ -1,15 +1,10 @@
-﻿
-using ECM2;
-using UnityEngine;
+﻿using ECM2;
 
 namespace Assets.Scripts.Player
 {
     public class PlayerGroundChecker
     {
         private Character _character;
-
-
-        private bool _isGround;
 
         public PlayerGroundChecker(Character character)
         {
@@ -18,10 +13,7 @@ namespace Assets.Scripts.Player
 
         public bool GetIsGrounded()
         {
-            _isGround = _character.IsGrounded();
-            return _isGround;
+            return _character.IsGrounded();
         }
-
-
     }
 }

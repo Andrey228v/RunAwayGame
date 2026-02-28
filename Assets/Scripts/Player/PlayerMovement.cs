@@ -10,6 +10,7 @@ namespace Assets.Scripts.Player
         private Character _character;
         private readonly InputReader _inputReader;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
+        
 
         private bool _isMove;
         private Vector3 _direction;

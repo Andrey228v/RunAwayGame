@@ -1,6 +1,7 @@
 ﻿using Assets.Input;
 using Assets.Scripts.Player;
 using Cysharp.Threading.Tasks;
+using ECM2;
 using System;
 using UnityEngine;
 
@@ -19,13 +20,14 @@ namespace Assets.Scripts.StateMachines.Player.States
         private PlayerRotator _playerRotator;
         private PlayerGroundChecker _playerGroundChecker;
         private PlayerGravityController _playerGravityController;
+        private Character _character;
 
         private bool _isGround = false;
 
         public JumpState(IStateSwitcher stateSwitcher, InputReader inputReader, 
             PlayerMoveDirectionCalculator playerMoveDirectionCalculator, PlayerMovement playerMovement, 
             PlayerRotator playerRotator, PlayerGroundChecker playerGroundChecker, PlayerGravityController playerGravityController,
-            PlayerJumper playerJumper)
+            PlayerJumper playerJumper, Character character, AnimatorController animatorController)
         {
             _stateSwitcher = stateSwitcher;
             _inputReader = inputReader;
@@ -34,6 +36,7 @@ namespace Assets.Scripts.StateMachines.Player.States
             _playerRotator = playerRotator;
             _playerGroundChecker = playerGroundChecker;
             _playerJumper = playerJumper;
+            _character = character;
         }
 
         public void Dispose()

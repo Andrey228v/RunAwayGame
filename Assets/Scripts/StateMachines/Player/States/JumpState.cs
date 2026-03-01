@@ -9,34 +9,25 @@ namespace Assets.Scripts.StateMachines.Player.States
 {
     public class JumpState : IState, IDisposable
     {
-        private int _forceX = 5;
-        private int _forceY = 10;
-
         private IStateSwitcher _stateSwitcher;
         private PlayerJumper _playerJumper;
-        private readonly InputReader _inputReader;
-        private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
         private PlayerMovement _playerMovement;
         private PlayerRotator _playerRotator;
         private PlayerGroundChecker _playerGroundChecker;
-        private PlayerGravityController _playerGravityController;
-        private Character _character;
+        private AnimatorController _animatorController;
 
         private bool _isGround = false;
 
-        public JumpState(IStateSwitcher stateSwitcher, InputReader inputReader, 
-            PlayerMoveDirectionCalculator playerMoveDirectionCalculator, PlayerMovement playerMovement, 
-            PlayerRotator playerRotator, PlayerGroundChecker playerGroundChecker, PlayerGravityController playerGravityController,
-            PlayerJumper playerJumper, Character character, AnimatorController animatorController)
+        public JumpState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement, 
+            PlayerRotator playerRotator, PlayerGroundChecker playerGroundChecker,
+            PlayerJumper playerJumper, AnimatorController animatorController)
         {
             _stateSwitcher = stateSwitcher;
-            _inputReader = inputReader;
-            _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
             _playerMovement = playerMovement;
             _playerRotator = playerRotator;
             _playerGroundChecker = playerGroundChecker;
             _playerJumper = playerJumper;
-            _character = character;
+            _animatorController = animatorController;
         }
 
         public void Dispose()
@@ -47,6 +38,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         public void Enter()
         {
             _playerJumper.Jump();
+            _animatorController.SetJump(true);
         }
         public void Update()
         {
@@ -62,6 +54,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         public void Exit()
         {
             _playerJumper.StopJump();
+            _animatorController.SetJump(false);
         }
 
         public async void CheckChangeState()
@@ -78,7 +71,6 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         private void ChangeStateMove()
         {
-            
             _stateSwitcher.ChangeState<MoveState>();
         }
     }

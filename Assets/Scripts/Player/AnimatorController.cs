@@ -4,7 +4,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class AnimatorController : IInitializable
+    public class AnimatorController
     {
         private Animator _animator;
         private Character _character;
@@ -14,15 +14,10 @@ namespace Assets.Scripts.Player
         private const string IsJumping = "IsJumping_b";
         private const string IsFalling_b = "IsFalling_b";
 
-        public AnimatorController(Character character)
+        public AnimatorController(Character character, Animator animator)
         {
             _character = character;
-        }
-
-        public void Initialize()
-        {
-            _animator = _character.animator;
-            Animator a1 = _character.GetComponent<Animator>();
+            _animator = animator;
         }
 
         public void SetStatic(bool isStatic)

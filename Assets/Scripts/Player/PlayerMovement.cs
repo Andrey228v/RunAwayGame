@@ -10,11 +10,12 @@ namespace Assets.Scripts.Player
         private Character _character;
         private readonly InputReader _inputReader;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
-        
-
+       
         private bool _isMove;
         private Vector3 _direction;
         
+        public bool IsMove => _isMove;
+
         public PlayerMovement(Character character, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
             _inputReader = inputReader;
@@ -34,6 +35,11 @@ namespace Assets.Scripts.Player
         {
             _direction = _playerMoveDirectionCalculator.GetMoveDirection();
             _character.SetMovementDirection(_direction);
+        }
+
+        public void Stop()
+        {
+            _character.SetMovementDirection(Vector3.zero);
         }
 
         private void SetIsMove(bool isMove) 

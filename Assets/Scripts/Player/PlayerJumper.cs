@@ -6,9 +6,6 @@ namespace Assets.Scripts.Player
 {
     public class PlayerJumper : IDisposable
     {
-        private int _forceX = 5;
-        private int _forceY = 10;
-
         private Character _character;
         private readonly InputReader _inputReader;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
@@ -19,17 +16,28 @@ namespace Assets.Scripts.Player
             _inputReader = inputReader;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
 
-            //_inputReader.OnJumped += Jump;
+            _inputReader.OnJumped += Jump;
+            _inputReader.OnJumpButtonUp += StopJump;
         }
 
         public void Dispose()
         {
-            //_inputReader.OnJumped -= Jump;
+            _inputReader.OnJumped -= Jump;
+            _inputReader.OnJumpButtonUp -= StopJump;
         }
 
         public void Jump()
         {
+            //_character.GetCharacterMovement().SetMovementMode(MovementMode.Flying);
+
+            //Вопрос правильно ли это - хрен знает....
+            // 1. Снимаем привязку к земле!
+            //_character.GetCharacterMovement().PauseGroundConstraint();
+            
             _character.Jump();
+            //_character.LaunchCharacter();
+            // 2. Возвращаем.
+            //_character.EnableGroundConstraint(true);
         }
 
         public void StopJump()

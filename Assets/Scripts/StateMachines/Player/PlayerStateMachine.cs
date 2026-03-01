@@ -9,7 +9,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.StateMachines.Player
 {
-    public class PlayerStateMachine : IStateSwitcher, ITickable, IFixedTickable, IStartable
+    public class PlayerStateMachine : IStateSwitcher, ITickable, IFixedTickable, IStartable, ILateTickable
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;
@@ -22,8 +22,7 @@ namespace Assets.Scripts.StateMachines.Player
         private Character _character;
         private AnimatorController _animatorController;
 
-        public PlayerStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, 
-            InputReader inputReader,
+        public PlayerStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, InputReader inputReader,
             PlayerGroundChecker playerGroundChecker,
             PlayerJumper playerJumper, Character character, AnimatorController animatorController)
         {
@@ -39,12 +38,13 @@ namespace Assets.Scripts.StateMachines.Player
 
         public void Start()
         {
-            Debug.Log(_character);
+            //Debug.Log(_character);
 
             _states = new List<IState>()
             {
+                new StayState(this, _inputReader, _animatorController),
                 new MoveState(this, _playerMovement, _playerRotator, _inputReader, _animatorController),
-                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _playerJumper, _animatorController)
+                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _playerJumper, _animatorController, _inputReader)
             };
 
             _currentState = _states[0];
@@ -54,13 +54,20 @@ namespace Assets.Scripts.StateMachines.Player
 
         public void Tick()
         {
-
+            Debug.Log(_currentState.ToString());
+            _currentState.CheckChangeState();
         }
 
         public void FixedTick()
         {
             _currentState.FixedUpdate();
-            _currentState.CheckChangeState();
+            //_currentState.CheckChangeState();
+            
+        }
+
+        public void LateTick()
+        {
+            _currentState.LateUpdate();
         }
 
         public void ChangeState<T>() where T : IState
@@ -71,5 +78,7 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState = state;
             _currentState?.Enter();
         }
+
+
     }
 }

@@ -1223,6 +1223,7 @@ MonoBehaviour:
   - {fileID: 1550271542}
   - {fileID: 724608533}
   _character: {fileID: 1663398682}
+  _animator: {fileID: 1791582797}
   _cameraController: {fileID: 724608535}
 --- !u!4 &1512463414
 Transform:
@@ -1297,6 +1298,11 @@ MonoBehaviour:
 --- !u!4 &1663398687 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3658827350356666609, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
+  m_PrefabInstance: {fileID: 1472666606}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1791582797 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1650584684667895938, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
   m_PrefabInstance: {fileID: 1472666606}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

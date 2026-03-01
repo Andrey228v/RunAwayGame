@@ -10,7 +10,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         private PlayerMovement _playerMovement;
         private PlayerRotator _playerRotator;
         private InputReader _inputReader;
-        AnimatorController _animatorController;
+        private AnimatorController _animatorController;
 
         public MoveState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement,
             PlayerRotator playerRotator, InputReader inputReader, AnimatorController animatorController)
@@ -21,16 +21,20 @@ namespace Assets.Scripts.StateMachines.Player.States
             _inputReader = inputReader;
             _animatorController = animatorController;
 
-            _inputReader.OnJumped += ChangeStateJump;
+            //_inputReader.OnStoped += ChangeStayState;
+            //_inputReader.OnJumped += ChangeJumpState;
         }
 
         public void Dispose()
         {
-            _inputReader.OnJumped -= ChangeStateJump;
+            _inputReader.OnStoped -= ChangeStayState;
+            _inputReader.OnJumped -= ChangeJumpState;
         }
 
         public void Enter()
         {
+            _inputReader.OnStoped += ChangeStayState;
+            _inputReader.OnJumped += ChangeJumpState;
             _animatorController.SetMove(true);
         }
 
@@ -45,9 +49,15 @@ namespace Assets.Scripts.StateMachines.Player.States
             _playerRotator.Rotate();
         }
 
+        public void LateUpdate()
+        {
+
+        }
+
         public void Exit()
         {
-            _animatorController.SetMove(false);
+            _inputReader.OnStoped -= ChangeStayState;
+            _inputReader.OnJumped -= ChangeJumpState;
         }
 
         public void CheckChangeState()
@@ -55,7 +65,14 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         }
 
-        private void ChangeStateJump()
+        private void ChangeStayState()
+        {
+            _animatorController.SetMove(false);
+            _playerMovement.Stop();
+            _stateSwitcher.ChangeState<StayState>();
+        }
+
+        private void ChangeJumpState()
         {
             _stateSwitcher.ChangeState<JumpState>();
         }

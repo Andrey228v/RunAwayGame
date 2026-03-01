@@ -2674,6 +2674,7 @@ namespace ECM2
             // Ensure that the Character state is valid
 
             bool isJumpAllowed = IsJumpAllowed();
+
             if (isJumpAllowed)
             {
                 // Ensure jumpCurrentCount and jumpInputHoldTime are valid
@@ -2759,6 +2760,9 @@ namespace ECM2
                 jumpCurrentCount++;
 
             bool didJump = CanJump() && DoJump();
+
+            //Debug.Log($"didJump: {didJump}, CanJump(): {CanJump()}, DoJump(): {DoJump()}");
+
             if (didJump)
             {
                 // Transition from not (actively) jumping to jumping

@@ -1,4 +1,5 @@
 ﻿using ECM2;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
@@ -13,7 +14,22 @@ namespace Assets.Scripts.Player
 
         public bool GetIsGrounded()
         {
-            return _character.IsGrounded();
+            //IsGrounded = isOnWalkableGround && isConstrainedToGround;
+            //IsOnGround = _currentGround.hitGround;
+            //_character.GetCharacterMovement().PauseGroundConstraint();
+            Debug.Log($"IsGrounded:{_character.IsGrounded()}, IsOnGround: {_character.IsOnGround()}, isOnGround: {_character.GetCharacterMovement().isOnGround}");
+
+            return _character.IsGrounded(); 
+        }
+
+        public void PauseGroundChecking() 
+        {
+            _character.GetCharacterMovement().PauseGroundConstraint();
+        }
+
+        public void ReturnGroundChecking()
+        {
+            _character.EnableGroundConstraint(true);
         }
     }
 }

@@ -11,18 +11,18 @@ namespace Assets.Scripts.StateMachines.Player.States
         private PlayerRotator _playerRotator;
         private InputReader _inputReader;
         private AnimatorController _animatorController;
+        private FallController _fallController;
+        private bool _isFall = false;
 
         public MoveState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement,
-            PlayerRotator playerRotator, InputReader inputReader, AnimatorController animatorController)
+            PlayerRotator playerRotator, InputReader inputReader, AnimatorController animatorController, FallController fallController)
         {
             _stateSwitcher = stateSwitcher;
             _playerMovement = playerMovement;
             _playerRotator = playerRotator;
             _inputReader = inputReader;
             _animatorController = animatorController;
-
-            //_inputReader.OnStoped += ChangeStayState;
-            //_inputReader.OnJumped += ChangeJumpState;
+            _fallController = fallController;
         }
 
         public void Dispose()
@@ -47,6 +47,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         {
             _playerMovement.Move();
             _playerRotator.Rotate();
+            _isFall = _fallController.GetIsFall();
         }
 
         public void LateUpdate()
@@ -62,7 +63,10 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void CheckChangeState()
         {
-
+            if (_isFall)
+            {
+                _stateSwitcher.ChangeState<FallState>();
+            }
         }
 
         private void ChangeStayState()

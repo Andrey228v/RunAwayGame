@@ -28,16 +28,12 @@ namespace Assets.Scripts.Player
 
         public void Jump()
         {
-            //_character.GetCharacterMovement().SetMovementMode(MovementMode.Flying);
-
             //Вопрос правильно ли это - хрен знает....
             // 1. Снимаем привязку к земле!
-            //_character.GetCharacterMovement().PauseGroundConstraint();
-            
+            _character.GetCharacterMovement().PauseGroundConstraint();
             _character.Jump();
-            //_character.LaunchCharacter();
             // 2. Возвращаем.
-            //_character.EnableGroundConstraint(true);
+            _character.EnableGroundConstraint(true);
         }
 
         public void StopJump()

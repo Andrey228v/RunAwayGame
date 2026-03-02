@@ -16,13 +16,14 @@ namespace Assets.Scripts.EnteryPoints
         private PlayerJumper _playerJumper;
         private Character _character;
         private AnimatorController _animatorController;
+        private FallController _fallController;
 
         [Inject]
         public void Constructor(PlayerMovement playerMovement, 
             PlayerRotator playerRotator, InputReader inputReader,
             PlayerGroundChecker playerGroundChecker,
             PlayerJumper playerJumper, Character character, 
-            AnimatorController animatorController)
+            AnimatorController animatorController, FallController fallController)
         {
             _playerMovement = playerMovement;
             _playerRotator = playerRotator;
@@ -31,11 +32,12 @@ namespace Assets.Scripts.EnteryPoints
             _playerJumper = playerJumper;
             _character = character;
             _animatorController = animatorController;
+            _fallController = fallController;
         }
 
         private void Start()
         {
-            new PlayerStateMachine(_playerMovement, _playerRotator, _inputReader, _playerGroundChecker, _playerJumper, _character, _animatorController);
+            new PlayerStateMachine(_playerMovement, _playerRotator, _inputReader, _playerGroundChecker, _playerJumper, _character, _animatorController, _fallController);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Assets.Scripts.Installers
             builder.Register<PlayerGroundChecker>(Lifetime.Singleton);
             builder.Register<PlayerGravityController>(Lifetime.Singleton);
             builder.Register<AnimatorController>(Lifetime.Singleton);
+            builder.Register<FallController>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<PlayerStateMachine>();
         }

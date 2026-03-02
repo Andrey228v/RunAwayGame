@@ -21,10 +21,11 @@ namespace Assets.Scripts.StateMachines.Player
         private PlayerJumper _playerJumper;
         private Character _character;
         private AnimatorController _animatorController;
+        private FallController _fallController;
 
         public PlayerStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, InputReader inputReader,
             PlayerGroundChecker playerGroundChecker,
-            PlayerJumper playerJumper, Character character, AnimatorController animatorController)
+            PlayerJumper playerJumper, Character character, AnimatorController animatorController, FallController fallController)
         {
             _playerMovement = playerMovement;
             _playerRotator = playerRotator;
@@ -33,7 +34,7 @@ namespace Assets.Scripts.StateMachines.Player
             _playerJumper = playerJumper;
             _character = character;
             _animatorController = animatorController;
-
+            _fallController = fallController;
         }
 
         public void Start()
@@ -42,9 +43,10 @@ namespace Assets.Scripts.StateMachines.Player
 
             _states = new List<IState>()
             {
-                new StayState(this, _inputReader, _animatorController),
-                new MoveState(this, _playerMovement, _playerRotator, _inputReader, _animatorController),
-                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _playerJumper, _animatorController, _inputReader)
+                new StayState(this, _inputReader, _animatorController, _fallController),
+                new MoveState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _fallController),
+                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _playerJumper, _animatorController, _inputReader, _fallController),
+                new FallState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _playerGroundChecker, _fallController),
             };
 
             _currentState = _states[0];
@@ -55,13 +57,13 @@ namespace Assets.Scripts.StateMachines.Player
         public void Tick()
         {
             Debug.Log(_currentState.ToString());
-            _currentState.CheckChangeState();
+            //_currentState.CheckChangeState();
         }
 
         public void FixedTick()
         {
             _currentState.FixedUpdate();
-            //_currentState.CheckChangeState();
+            _currentState.CheckChangeState();
             
         }
 

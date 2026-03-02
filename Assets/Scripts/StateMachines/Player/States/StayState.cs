@@ -11,23 +11,22 @@ namespace Assets.Scripts.StateMachines.Player.States
         private InputReader _inputReader;
         private AnimatorController _animatorController;
         private bool _isMove  = false;
+        private FallController _fallController;
+        private bool _isFall = false;
 
-        public StayState(IStateSwitcher stateSwitcher, InputReader inputReader, AnimatorController animatorController) 
+        public StayState(IStateSwitcher stateSwitcher, InputReader inputReader, 
+            AnimatorController animatorController, FallController fallController) 
         {
             _stateSwitcher = stateSwitcher;
             _inputReader = inputReader;
             _animatorController = animatorController;
-
-            //_inputReader.OnStartMove += ChangeMoveState;
-            //_inputReader.OnJumped += ChangeJumpState;
-            //_inputReader.OnMoved += (bool value) => { _isMove = value; };
+            _fallController = fallController;
         }
 
         public void Dispose()
         {
             _inputReader.OnStartMove -= ChangeMoveState;
             _inputReader.OnJumped -= ChangeJumpState;
-            //_inputReader.OnMoved -= (bool value) => { _isMove = value; };
         }
 
 
@@ -45,7 +44,7 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void FixedUpdate()
         {
-            
+            _isFall = _fallController.GetIsFall();
         }
 
         public void LateUpdate()
@@ -57,13 +56,14 @@ namespace Assets.Scripts.StateMachines.Player.States
         {
             _inputReader.OnStartMove -= ChangeMoveState;
             _inputReader.OnJumped -= ChangeJumpState;
-            //_animatorController.SetStatic(false);
         }
 
         public void CheckChangeState()
         {
-            //if (_isMove)
-            //    _stateSwitcher.ChangeState<MoveState>();
+            if (_isFall)
+            {
+                _stateSwitcher.ChangeState<FallState>();
+            }
         }
 
         public void ChangeMoveState()

@@ -16,13 +16,15 @@ namespace Assets.Scripts.StateMachines.Player.States
         private PlayerGroundChecker _playerGroundChecker;
         private AnimatorController _animatorController;
         private InputReader _inputReader;
+        private FallController _fallController;
 
         private bool _isGround = false;
+        private bool _isFall = false;
 
         public JumpState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement, 
             PlayerRotator playerRotator, PlayerGroundChecker playerGroundChecker,
             PlayerJumper playerJumper, AnimatorController animatorController,
-            InputReader inputReader)
+            InputReader inputReader, FallController fallController)
         {
             _stateSwitcher = stateSwitcher;
             _playerMovement = playerMovement;
@@ -31,6 +33,7 @@ namespace Assets.Scripts.StateMachines.Player.States
             _playerJumper = playerJumper;
             _animatorController = animatorController;
             _inputReader = inputReader;
+            _fallController = fallController;
         }
 
         public void Dispose()
@@ -40,10 +43,6 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void Enter()
         {
-            //_playerJumper.Jump();
-            //Jump();
-            //_inputReader.OnJumped += Jump;
-            //_playerGroundChecker.PauseGroundChecking();
             _isGround = false;
             _animatorController.SetJump(true);
         }
@@ -56,24 +55,22 @@ namespace Assets.Scripts.StateMachines.Player.States
         {
             _playerMovement.Move();
             _playerRotator.Rotate();
-            //_isGround = _playerGroundChecker.GetIsGrounded();
+            _isFall = _fallController.GetIsFall();
+            _isGround = _playerGroundChecker.GetIsGrounded();
         }
 
         public void LateUpdate()
         {
-            _isGround = _playerGroundChecker.GetIsGrounded();
+            
         }
 
         public void Exit()
         {
-            //_playerJumper.StopJump();
             _animatorController.SetJump(false);
-            //_inputReader.OnJumped -= Jump;
         }
 
         public void CheckChangeState()
         {
-            //await UniTask.NextFrame();
             _isGround = _playerGroundChecker.GetIsGrounded();
 
             if (_isGround && _playerMovement.IsMove)
@@ -84,11 +81,10 @@ namespace Assets.Scripts.StateMachines.Player.States
             {
                 _stateSwitcher.ChangeState<StayState>();
             }
+            else if (_isGround == false && _isFall)
+            {
+                _stateSwitcher.ChangeState<FallState>();
+            }
         }
-
-        //private void Jump()
-        //{
-        //    _playerJumper.Jump(); Debug.Log("TEST JUMP");
-        //}
     }
 }

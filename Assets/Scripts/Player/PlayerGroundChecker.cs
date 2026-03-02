@@ -17,7 +17,7 @@ namespace Assets.Scripts.Player
             //IsGrounded = isOnWalkableGround && isConstrainedToGround;
             //IsOnGround = _currentGround.hitGround;
             //_character.GetCharacterMovement().PauseGroundConstraint();
-            Debug.Log($"IsGrounded:{_character.IsGrounded()}, IsOnGround: {_character.IsOnGround()}, isOnGround: {_character.GetCharacterMovement().isOnGround}");
+            //Debug.Log($"IsGrounded:{_character.IsGrounded()}, IsOnGround: {_character.IsOnGround()}, isOnGround: {_character.GetCharacterMovement().isOnGround}");
 
             return _character.IsGrounded(); 
         }

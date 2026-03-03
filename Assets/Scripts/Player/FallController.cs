@@ -13,7 +13,7 @@ namespace Assets.Scripts.Player
 
         public bool GetIsFall()
         {
-            return _character.IsFalling();
+            return _character.IsFalling() && _character.velocity.y < 0;
         }
 
     }

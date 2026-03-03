@@ -1,7 +1,6 @@
 ﻿using Assets.Input;
 using Assets.Scripts.Player;
 using System;
-using UnityEngine;
 
 namespace Assets.Scripts.StateMachines.Player.States
 {
@@ -10,7 +9,6 @@ namespace Assets.Scripts.StateMachines.Player.States
         private readonly IStateSwitcher _stateSwitcher;
         private InputReader _inputReader;
         private AnimatorController _animatorController;
-        private bool _isMove  = false;
         private FallController _fallController;
         private bool _isFall = false;
 
@@ -35,21 +33,12 @@ namespace Assets.Scripts.StateMachines.Player.States
             _inputReader.OnStartMove += ChangeMoveState;
             _inputReader.OnJumped += ChangeJumpState;
             _animatorController.SetStatic(true);
-        }
-
-        public void Update()
-        {
-
+            _animatorController.SetGround(true);
         }
 
         public void FixedUpdate()
         {
             _isFall = _fallController.GetIsFall();
-        }
-
-        public void LateUpdate()
-        {
-
         }
 
         public void Exit()

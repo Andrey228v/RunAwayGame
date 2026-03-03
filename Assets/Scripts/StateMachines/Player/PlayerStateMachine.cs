@@ -1,15 +1,13 @@
 ﻿using Assets.Input;
 using Assets.Scripts.Player;
 using Assets.Scripts.StateMachines.Player.States;
-using ECM2;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets.Scripts.StateMachines.Player
 {
-    public class PlayerStateMachine : IStateSwitcher, ITickable, IFixedTickable, IStartable, ILateTickable
+    public class PlayerStateMachine : IStateSwitcher, IFixedTickable, IStartable
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;
@@ -19,33 +17,29 @@ namespace Assets.Scripts.StateMachines.Player
         private InputReader _inputReader;
         private PlayerGroundChecker _playerGroundChecker;
         private PlayerJumper _playerJumper;
-        private Character _character;
         private AnimatorController _animatorController;
         private FallController _fallController;
 
         public PlayerStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, InputReader inputReader,
             PlayerGroundChecker playerGroundChecker,
-            PlayerJumper playerJumper, Character character, AnimatorController animatorController, FallController fallController)
+            PlayerJumper playerJumper, AnimatorController animatorController, FallController fallController)
         {
             _playerMovement = playerMovement;
             _playerRotator = playerRotator;
             _inputReader = inputReader;
             _playerGroundChecker = playerGroundChecker;
             _playerJumper = playerJumper;
-            _character = character;
             _animatorController = animatorController;
             _fallController = fallController;
         }
 
         public void Start()
         {
-            //Debug.Log(_character);
-
             _states = new List<IState>()
             {
                 new StayState(this, _inputReader, _animatorController, _fallController),
                 new MoveState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _fallController),
-                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _playerJumper, _animatorController, _inputReader, _fallController),
+                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _animatorController, _fallController),
                 new FallState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _playerGroundChecker, _fallController),
             };
 
@@ -54,22 +48,11 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState.Enter();
         }
 
-        public void Tick()
-        {
-            Debug.Log(_currentState.ToString());
-            //_currentState.CheckChangeState();
-        }
-
         public void FixedTick()
         {
             _currentState.FixedUpdate();
             _currentState.CheckChangeState();
             
-        }
-
-        public void LateTick()
-        {
-            _currentState.LateUpdate();
         }
 
         public void ChangeState<T>() where T : IState
@@ -80,7 +63,5 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState = state;
             _currentState?.Enter();
         }
-
-
     }
 }

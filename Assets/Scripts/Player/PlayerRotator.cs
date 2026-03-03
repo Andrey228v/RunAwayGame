@@ -5,7 +5,6 @@ namespace Assets.Scripts.Player
 {
     public class PlayerRotator
     {
-        private float _rotateSpeed = 300f;
         private Character _character;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
@@ -19,7 +18,7 @@ namespace Assets.Scripts.Player
         {
             if (_playerMoveDirectionCalculator.GetMoveDirection().magnitude > 0)
             {
-                RotateDir(_playerMoveDirectionCalculator.GetMoveDirection(), _rotateSpeed);
+                RotateDir(_playerMoveDirectionCalculator.GetMoveDirection(), Time.deltaTime);
             }
         }
 

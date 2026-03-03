@@ -7,16 +7,15 @@ namespace Assets.Scripts.Player
     public class AnimatorController
     {
         private Animator _animator;
-        private Character _character;
 
         private const string StaticIdle = "Static_b";
         private const string Speed = "Speed_f";
         private const string IsJumping = "IsJumping_b";
         private const string IsFalling_b = "IsFalling_b";
+        private const string IsGround_b = "IsGround_b";
 
-        public AnimatorController(Character character, Animator animator)
+        public AnimatorController(Animator animator)
         {
-            _character = character;
             _animator = animator;
         }
 
@@ -51,6 +50,9 @@ namespace Assets.Scripts.Player
             _animator.SetBool(IsFalling_b, isFall);
         }
 
-
+        public void SetGround(bool isGround) 
+        {
+            _animator.SetBool(IsGround_b, isGround);
+        }
     }
 }

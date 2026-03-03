@@ -36,11 +36,7 @@ namespace Assets.Scripts.StateMachines.Player.States
             _inputReader.OnStoped += ChangeStayState;
             _inputReader.OnJumped += ChangeJumpState;
             _animatorController.SetMove(true);
-        }
-
-        public void Update()
-        {
-            
+            _animatorController.SetGround(true);
         }
 
         public void FixedUpdate()
@@ -48,11 +44,6 @@ namespace Assets.Scripts.StateMachines.Player.States
             _playerMovement.Move();
             _playerRotator.Rotate();
             _isFall = _fallController.GetIsFall();
-        }
-
-        public void LateUpdate()
-        {
-
         }
 
         public void Exit()

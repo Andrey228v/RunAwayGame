@@ -1,5 +1,4 @@
 ﻿using ECM2;
-using UnityEngine;
 
 namespace Assets.Scripts.Player
 {

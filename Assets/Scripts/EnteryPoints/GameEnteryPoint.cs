@@ -37,7 +37,7 @@ namespace Assets.Scripts.EnteryPoints
 
         private void Start()
         {
-            new PlayerStateMachine(_playerMovement, _playerRotator, _inputReader, _playerGroundChecker, _playerJumper, _character, _animatorController, _fallController);
+            new PlayerStateMachine(_playerMovement, _playerRotator, _inputReader, _playerGroundChecker, _playerJumper, _animatorController, _fallController);
         }
     }
 }

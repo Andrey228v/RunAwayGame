@@ -37,11 +37,6 @@ namespace Assets.Scripts.StateMachines.Player.States
             _animatorController.SetFall(true);
         }
 
-        public void Update()
-        {
-
-        }
-
         public void FixedUpdate()
         {
             _playerMovement.Move();
@@ -50,14 +45,10 @@ namespace Assets.Scripts.StateMachines.Player.States
             _isFall = _fallController.GetIsFall();
         }
 
-        public void LateUpdate()
-        {
-
-        }
-
         public void Exit()
         {
             _animatorController.SetFall(false);
+            _animatorController.SetGround(false);
         }
 
         public void CheckChangeState()

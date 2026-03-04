@@ -1,5 +1,6 @@
 ﻿using Assets.Input;
 using Assets.Scripts.Player;
+using Assets.Scripts.SaveLoad;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
 using UnityEngine;
@@ -7,7 +8,7 @@ using VContainer;
 
 namespace Assets.Scripts.EnteryPoints
 {
-    public class GameEnteryPoint : MonoBehaviour
+    public class GameEnteryPoint : MonoBehaviour // Вместо MonoBehaviour протестировать IStartable....
     {
         private PlayerMovement _playerMovement;
         private PlayerRotator _playerRotator;
@@ -17,6 +18,8 @@ namespace Assets.Scripts.EnteryPoints
         private Character _character;
         private AnimatorController _animatorController;
         private FallController _fallController;
+
+        private readonly ISaveSystem _saveSystem;
 
         [Inject]
         public void Constructor(PlayerMovement playerMovement, 

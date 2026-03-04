@@ -1,7 +1,9 @@
 ﻿using Assets.Input;
 using Assets.Scripts.Camera;
 using Assets.Scripts.Player;
+using Assets.Scripts.SaveLoad;
 using Assets.Scripts.StateMachines.Player;
+using Assets.Scripts.UI;
 using ECM2;
 using UnityEngine;
 using VContainer;
@@ -14,6 +16,10 @@ namespace Assets.Scripts.Installers
         [SerializeField] private Character _character;
         [SerializeField] private Animator _animator;
         [SerializeField] private CameraController _cameraController;
+
+        [SerializeField] private GamePanelController _gamePanelController;
+        [SerializeField] private Transform _spawnPoint;
+
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -32,6 +38,13 @@ namespace Assets.Scripts.Installers
             builder.Register<FallController>(Lifetime.Singleton);
 
             builder.RegisterEntryPoint<PlayerStateMachine>();
+
+            //Под вопросом...
+            builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
+            builder.Register<PlayerData>(Lifetime.Singleton);
+            builder.RegisterInstance(_gamePanelController);
+
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.SaveLoad;
 using UnityEngine;
+using VContainer;
 
 namespace Assets.Scripts.UI
 {
@@ -8,14 +9,13 @@ namespace Assets.Scripts.UI
         [SerializeField] private GameInterfacePanel _gameInterfacePanel;
         [SerializeField] private GameMenuPanel _gameMenuPanel;
 
-        private ISaveSystem _saveSystem;
+        private SaveLoadService _saveLoadService;
 
-        public GamePanelController(GameInterfacePanel gameInterfacePanel, GameMenuPanel gameMenuPanel,
-            ISaveSystem saveSystem) 
+        [Inject]
+        public void Constructor( SaveLoadService saveLoadService) 
         {
-            _gameInterfacePanel = gameInterfacePanel;
-            _gameMenuPanel = gameMenuPanel;
-            _saveSystem = saveSystem;
+
+            _saveLoadService = saveLoadService;
         }
 
         private void OnEnable()
@@ -56,12 +56,12 @@ namespace Assets.Scripts.UI
 
         private void LoadGame()
         {
-            //_saveSystem.Load();
+            _saveLoadService.Load();
         }
 
         private void SaveGame()
         {
-
+            _saveLoadService.Save();
         }
 
         //?????

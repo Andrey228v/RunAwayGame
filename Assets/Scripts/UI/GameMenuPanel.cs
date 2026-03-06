@@ -15,7 +15,7 @@ namespace Assets.Scripts.UI
 
         public bool IsVisible { get; private set; }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         public void OnValidate()
         {
             if (_backToGameButton == null)

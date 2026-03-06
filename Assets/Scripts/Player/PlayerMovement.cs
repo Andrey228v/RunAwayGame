@@ -1,4 +1,5 @@
 ﻿using Assets.Input;
+using Assets.Scripts.SaveLoad;
 using ECM2;
 using System;
 using UnityEngine;
@@ -13,15 +14,20 @@ namespace Assets.Scripts.Player
        
         private bool _isMove;
         private Vector3 _direction;
+        private ISaveSystem _saveSystem;
+        private PlayerData _playerData;
         
         public bool IsMove => _isMove;
 
-        public PlayerMovement(Character character, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
+        public PlayerMovement(Character character, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator,
+            ISaveSystem saveSystem, PlayerData playerData)
         {
             _inputReader = inputReader;
             _character = character;
             _isMove = false;
             _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
+            _saveSystem = saveSystem;
+            _playerData = playerData;
 
             _inputReader.OnMoved += SetIsMove;
         }

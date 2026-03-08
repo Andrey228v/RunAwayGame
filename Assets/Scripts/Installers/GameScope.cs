@@ -20,6 +20,8 @@ namespace Assets.Scripts.Installers
         [SerializeField] private StartPoint _startPoint;
         [SerializeField] private FinishPoint _finishPoint;
 
+        [SerializeField] private Transform _checkPoints;
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -42,15 +44,23 @@ namespace Assets.Scripts.Installers
             {
                 Debug.LogError($"{_startPoint.name}: _spawnPoint is not set!", this);
             }
+
+            if (_checkPoints == null)
+            {
+                Debug.LogError($"{_checkPoints.name}: _checkPointers is not set!", this);
+            }
         }
 #endif
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInstance(_startPoint);
-            builder.RegisterInstance(_finishPoint);
+            //builder.RegisterInstance(_startPoint);
+            //builder.RegisterInstance(_finishPoint);
             builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(_gamePanelController);
+            //builder.RegisterInstance(_checkPoints).WithParameter("key", "CheckPoints");
+            builder.RegisterInstance(new GamePoints(_startPoint, _finishPoint, _checkPoints));
+
             builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
             builder.Register<PlayerData>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);

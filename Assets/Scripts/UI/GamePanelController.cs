@@ -9,35 +9,35 @@ namespace Assets.Scripts.UI
         [SerializeField] private GameInterfacePanel _gameInterfacePanel;
         [SerializeField] private GameMenuPanel _gameMenuPanel;
 
-        private SaveLoadService _saveLoadService;
+        //private SaveLoadService _saveLoadService;
 
-        [Inject]
-        public void Constructor( SaveLoadService saveLoadService) 
-        {
+        //[Inject]
+        //public void Constructor( SaveLoadService saveLoadService) 
+        //{
 
-            _saveLoadService = saveLoadService;
-        }
+        //    _saveLoadService = saveLoadService;
+        //}
 
         private void OnEnable()
         {
-            _gameInterfacePanel.OnMenuButtonClick += ShowMenu;
-            _gameMenuPanel.OnBackButtonClick += HideMenu;
+            //_gameInterfacePanel.OnMenuButtonClick += ShowMenu;
+            //_gameMenuPanel.OnBackButtonClick += HideMenu;
 
-            _gameInterfacePanel.OnLoadButtonClick += LoadGame;
-            _gameInterfacePanel.OnSaveButtonClick += SaveGame;
-            _gameInterfacePanel.OnSoundButtonClick += SoundChangeState;
-            _gameMenuPanel.OnBackButtonClick += BackToMenu;
+            //_gameInterfacePanel.OnLoadButtonClick += LoadGame;
+            //_gameInterfacePanel.OnSaveButtonClick += SaveGame;
+            //_gameInterfacePanel.OnSoundButtonClick += SoundChangeState;
+            //_gameMenuPanel.OnBackButtonClick += BackToMenu;
         }
 
         private void OnDisable()
         {
-            _gameInterfacePanel.OnMenuButtonClick -= ShowMenu;
-            _gameMenuPanel.OnBackButtonClick -= HideMenu;
+            //_gameInterfacePanel.OnMenuButtonClick -= ShowMenu;
+            //_gameMenuPanel.OnBackButtonClick -= HideMenu;
 
-            _gameInterfacePanel.OnLoadButtonClick -= LoadGame;
-            _gameInterfacePanel.OnSaveButtonClick -= SaveGame;
-            _gameInterfacePanel.OnSoundButtonClick -= SoundChangeState;
-            _gameMenuPanel.OnBackButtonClick -= BackToMenu;
+            //_gameInterfacePanel.OnLoadButtonClick -= LoadGame;
+            //_gameInterfacePanel.OnSaveButtonClick -= SaveGame;
+            //_gameInterfacePanel.OnSoundButtonClick -= SoundChangeState;
+            //_gameMenuPanel.OnBackButtonClick -= BackToMenu;
         }
 
         private void ShowMenu()
@@ -56,12 +56,12 @@ namespace Assets.Scripts.UI
 
         private void LoadGame()
         {
-            _saveLoadService.Load();
+            //_saveLoadService.Load();
         }
 
         private void SaveGame()
         {
-            _saveLoadService.Save();
+            //_saveLoadService.Save();
         }
 
         //?????

@@ -1,68 +1,60 @@
-﻿using Assets.Input;
+﻿using Assets.Scripts.Camera;
 using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
+using System;
 using UnityEngine;
-using VContainer;
+using VContainer.Unity;
 
 namespace Assets.Scripts.EnteryPoints
 {
-    public class GameEnteryPoint : MonoBehaviour // Вместо MonoBehaviour протестировать IStartable....
+    public class GameEnteryPoint : IStartable //MonoBehaviour // Вместо MonoBehaviour протестировать IStartable....
     {
-        private PlayerMovement _playerMovement;
-        private PlayerRotator _playerRotator;
-        private InputReader _inputReader;
-        private PlayerGroundChecker _playerGroundChecker;
-        private PlayerJumper _playerJumper;
-        private Character _character;
-        private AnimatorController _animatorController;
-        private FallController _fallController;
+        private PlayerController _playerController;
+        private PlayerStateMachineFactory _playerStateMachineFactory;
+        private CameraController _cameraController;
+        private Func<Character> _characterFactory;
+        private ISaveSystem _saveSystem;
         private PlayerData _playerData;
         private StartPoint _startPoint;
 
-        private ISaveSystem _saveSystem;
-
-        [Inject]
-        public void Constructor(PlayerMovement playerMovement, 
-            PlayerRotator playerRotator, InputReader inputReader,
-            PlayerGroundChecker playerGroundChecker,
-            PlayerJumper playerJumper, Character character, 
-            AnimatorController animatorController, FallController fallController,
-            PlayerData playerData, ISaveSystem saveSystem, StartPoint startPoint)
+        public GameEnteryPoint(PlayerController playerController, 
+            PlayerStateMachineFactory playerStateMachineFactory, CameraController cameraController,
+            Func<Character> characterFactory, PlayerData playerData,
+            StartPoint startPoint, ISaveSystem saveSystem)
         {
-            _playerMovement = playerMovement;
-            _playerRotator = playerRotator;
-            _inputReader = inputReader;
-            _playerGroundChecker = playerGroundChecker;
-            _playerJumper = playerJumper;
-            _character = character;
-            _animatorController = animatorController;
-            _fallController = fallController;
+            _playerController = playerController;
+            _playerStateMachineFactory = playerStateMachineFactory;
+            _cameraController = cameraController;
+            _characterFactory = characterFactory;
             _saveSystem = saveSystem;
             _playerData = playerData;
             _startPoint = startPoint;
         }
 
-        private void Start()
+        public void Start()
         {
+            Character character = _characterFactory();
+
             if (_saveSystem.HasKey("PlayerData"))
             {
                 var loadedData = _saveSystem.Load<PlayerData>("PlayerData");
                 _playerData.PlayerPosition = loadedData.PlayerPosition;
                 _playerData.PlayerRotation = loadedData.PlayerRotation;
 
-                _character.transform.SetLocalPositionAndRotation(_playerData.PlayerPosition, _playerData.PlayerRotation);
+                character.transform.SetLocalPositionAndRotation(_playerData.PlayerPosition, _playerData.PlayerRotation);
             }
             else
             {
-                _character.transform.SetLocalPositionAndRotation(_startPoint.transform.position, new Quaternion(0, 0, 0, 0));
+                character.transform.SetLocalPositionAndRotation(_startPoint.transform.position, new Quaternion(0, 0, 0, 0));
             }
 
-                
+            _cameraController.SetTarget(character.transform);
+            PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
 
-            new PlayerStateMachine(_playerMovement, _playerRotator, _inputReader, _playerGroundChecker, _playerJumper, _animatorController, _fallController);
+            _playerController.SetPlayerStateMachine(playerStateMachine);
         }
     }
 }

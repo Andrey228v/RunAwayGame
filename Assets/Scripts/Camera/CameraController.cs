@@ -24,5 +24,10 @@ namespace Assets.Scripts.Camera
             _targetRotation = Quaternion.AngleAxis(_cameraTransform.eulerAngles.y, Vector3.up);
             OnCameraAngleChanged?.Invoke(_targetRotation);
         }
+
+        public void SetTarget(Transform target)
+        {
+            _cameraCinemachine.Follow = target;
+        }
     }
 }

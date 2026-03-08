@@ -8,13 +8,11 @@ namespace Assets.Scripts.Player
     {
         private Character _character;
         private readonly InputReader _inputReader;
-        private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
 
-        public PlayerJumper(Character character, InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
+        public PlayerJumper(Character character, InputReader inputReader)
         {
             _character = character;
             _inputReader = inputReader;
-            _playerMoveDirectionCalculator = playerMoveDirectionCalculator;
 
             _inputReader.OnJumped += Jump;
             _inputReader.OnJumpButtonUp += StopJump;

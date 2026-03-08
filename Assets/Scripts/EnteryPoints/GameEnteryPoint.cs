@@ -10,7 +10,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.EnteryPoints
 {
-    public class GameEnteryPoint : IStartable //MonoBehaviour // Вместо MonoBehaviour протестировать IStartable....
+    public class GameEnteryPoint : IStartable
     {
         private PlayerController _playerController;
         private PlayerStateMachineFactory _playerStateMachineFactory;
@@ -19,8 +19,9 @@ namespace Assets.Scripts.EnteryPoints
         private ISaveSystem _saveSystem;
         private PlayerData _playerData;
         private StartPoint _startPoint;
+        
 
-        public GameEnteryPoint(PlayerController playerController, 
+        public GameEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory, CameraController cameraController,
             Func<Character> characterFactory, PlayerData playerData,
             StartPoint startPoint, ISaveSystem saveSystem)
@@ -53,7 +54,6 @@ namespace Assets.Scripts.EnteryPoints
 
             _cameraController.SetTarget(character.transform);
             PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
-
             _playerController.SetPlayerStateMachine(playerStateMachine);
         }
     }

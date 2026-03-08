@@ -485,7 +485,7 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 2
+  UpdateMethod: 0
   BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
@@ -1393,8 +1393,6 @@ MonoBehaviour:
   - {fileID: 519036324}
   _characterPrefab: {fileID: 1688571644223161820, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
   _cameraController: {fileID: 724608535}
-  _gameEnteryPoint: {fileID: 1550271545}
-  _playerController: {fileID: 1550271546}
   _gamePanelController: {fileID: 1301896430}
   _startPoint: {fileID: 1290018570}
   _finishPoint: {fileID: 1067475116}
@@ -1422,8 +1420,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1550271544}
-  - component: {fileID: 1550271545}
-  - component: {fileID: 1550271546}
   m_Layer: 0
   m_Name: ScriptsMB
   m_TagString: Untagged
@@ -1446,30 +1442,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1550271545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1550271542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0efab0c5a10ab264facc6288b8fd6f50, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1550271546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1550271542}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f72864e971fb7a54687d6ad797bc189e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1590651032 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6622878955296884563, guid: 951feb579e3b39140b4fe8b330bf1c32, type: 3}

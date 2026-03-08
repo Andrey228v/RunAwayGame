@@ -3,11 +3,12 @@ using Assets.Scripts.Player;
 using Assets.Scripts.StateMachines.Player.States;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets.Scripts.StateMachines.Player
 {
-    public class PlayerStateMachine : IStateSwitcher, IFixedTickable, IStartable
+    public class PlayerStateMachine : IStateSwitcher
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;
@@ -31,6 +32,8 @@ namespace Assets.Scripts.StateMachines.Player
             _playerJumper = playerJumper;
             _animatorController = animatorController;
             _fallController = fallController;
+
+            Start();
         }
 
         public void Start()
@@ -50,9 +53,10 @@ namespace Assets.Scripts.StateMachines.Player
 
         public void FixedTick()
         {
+            Debug.Log("TICK");
             _currentState.FixedUpdate();
             _currentState.CheckChangeState();
-            
+
         }
 
         public void ChangeState<T>() where T : IState

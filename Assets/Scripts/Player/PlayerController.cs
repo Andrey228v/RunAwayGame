@@ -1,36 +1,37 @@
-﻿using Assets.Scripts.SaveLoad;
-using ECM2;
+﻿using Assets.Scripts.StateMachines.Player;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerController : ISaveLoad
+    //ISaveLoad, IFixedTickable
+    public class PlayerController : MonoBehaviour
     {
-        private Character _character;
-        private PlayerData _playerData;
-        private ISaveSystem _saveSystem;
+        private PlayerStateMachine _playerStateMachine;
 
-        public PlayerController(Character character, PlayerData playerData, ISaveSystem saveSystem) 
+        private void FixedUpdate()
         {
-            _character = character;
-            _playerData = playerData;
-            _saveSystem = saveSystem;
+            _playerStateMachine.FixedTick();
         }
 
+        public void SetPlayerStateMachine(PlayerStateMachine playerStateMachine)
+        {
+            _playerStateMachine = playerStateMachine;
+        }
 
         public void Load()
         {
-            if (_saveSystem.HasKey("PlayerData"))
-            {
-                var load = _saveSystem.Load<PlayerData>("PlayerData");
-                _character.transform.SetPositionAndRotation(load.PlayerPosition, load.PlayerRotation);
-            }
+            //if (_saveSystem.HasKey("PlayerData"))
+            //{
+            //    var load = _saveSystem.Load<PlayerData>("PlayerData");
+            //    _character.transform.SetPositionAndRotation(load.PlayerPosition, load.PlayerRotation);
+            //}
         }
 
         public void Save()
         {
-            _playerData.PlayerPosition = _character.position;
-            _playerData.PlayerRotation = _character.rotation;
-            _saveSystem.Save("PlayerData", _playerData);
+            //_playerData.PlayerPosition = _character.position;
+            //_playerData.PlayerRotation = _character.rotation;
+            //_saveSystem.Save("PlayerData", _playerData);
         }
     }
 }

@@ -4,7 +4,6 @@ using Assets.Scripts.StateMachines.Player.States;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using VContainer.Unity;
 
 namespace Assets.Scripts.StateMachines.Player
 {
@@ -51,16 +50,12 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState.Enter();
         }
 
-        public void Update()
-        {
-            
-        }
-
 
         public void FixedTick()
         {
             _currentState.CheckChangeState();
             _currentState.FixedUpdate();
+            Debug.Log(_currentState);
         }
 
         public void ChangeState<T>() where T : IState

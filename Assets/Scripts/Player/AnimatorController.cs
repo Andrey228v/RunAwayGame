@@ -1,6 +1,4 @@
-﻿using ECM2;
-using UnityEngine;
-using VContainer.Unity;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.Player
 {

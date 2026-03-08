@@ -51,29 +51,17 @@ namespace Assets.Scripts.Installers
             builder.RegisterInstance(_finishPoint);
             builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(_gamePanelController);
-
-            //builder.Register<PlayerController>(Lifetime.Singleton).As<IFixedTickable>();
-
-            builder.RegisterEntryPoint<PlayerController>().AsSelf();
-
-            //builder.Register<IFixedTickable, PlayerController>(Lifetime.Singleton);
-            //builder.RegisterEntryPoint<PlayerController>();
-            //builder.RegisterEntryPoint<GameEnteryPoint>().WithParameter("container", this.Container);
-
-
-            //Под вопросом...
             builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
             builder.Register<PlayerData>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
-
             builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
-            //builder.Register<IStartable, GameEnteryPoint>(Lifetime.Singleton);
 
             builder.RegisterFactory<Character>(container => () =>
             {
                 return container.Instantiate(_characterPrefab);
             }, Lifetime.Transient);
 
+            builder.RegisterEntryPoint<PlayerController>().AsSelf();
             builder.RegisterEntryPoint<GameEnteryPoint>();
         }
     }

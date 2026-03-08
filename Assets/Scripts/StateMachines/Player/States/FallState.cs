@@ -1,6 +1,4 @@
-﻿
-
-using Assets.Input;
+﻿using Assets.Input;
 using Assets.Scripts.Player;
 
 namespace Assets.Scripts.StateMachines.Player.States
@@ -17,6 +15,7 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         private bool _isGround;
         private bool _isFall;
+        private bool _isMove;
 
         public FallState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement,
             PlayerRotator playerRotator, InputReader inputReader, AnimatorController animatorController,
@@ -35,6 +34,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         public void Enter()
         {
             _animatorController.SetFall(true);
+            _animatorController.SetGround(false);
         }
 
         public void FixedUpdate()
@@ -43,19 +43,23 @@ namespace Assets.Scripts.StateMachines.Player.States
             _playerRotator.Rotate();
             _isGround = _playerGroundChecker.GetIsGrounded();
             _isFall = _fallController.GetIsFall();
+            _isMove = _playerMovement.IsMove;
+
         }
 
         public void Exit()
         {
-            _animatorController.SetFall(false);
-            _animatorController.SetGround(false);
+            _animatorController.SetFall(_isFall);
+            _animatorController.SetGround(_isGround);
+            _animatorController.SetMove(_isMove);
+            _animatorController.SetStatic(!_isMove);
         }
 
         public void CheckChangeState()
         {
-            if(_isGround && _playerMovement.IsMove == false)
+            if(_isGround && _isMove == false)
                 _stateSwitcher.ChangeState<StayState>();
-            else if(_isGround && _playerMovement.IsMove)
+            else if(_isGround && _isMove)
                 _stateSwitcher.ChangeState<MoveState>();
             else if (_isFall == false && _isGround == false)
                 _stateSwitcher.ChangeState<JumpState>();

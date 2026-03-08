@@ -20,7 +20,6 @@ namespace Assets.Scripts.EnteryPoints
         private PlayerData _playerData;
         private StartPoint _startPoint;
         
-
         public GameEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory, CameraController cameraController,
             Func<Character> characterFactory, PlayerData playerData,
@@ -54,6 +53,7 @@ namespace Assets.Scripts.EnteryPoints
 
             _cameraController.SetTarget(character.transform);
             PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
+            _playerController.SetCharacter(character);
             _playerController.SetPlayerStateMachine(playerStateMachine);
         }
     }

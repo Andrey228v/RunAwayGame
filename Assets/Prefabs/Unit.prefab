@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationMode: 1
-  _rotationRate: 100
+  _rotationRate: 300
   _startingMovementMode: 1
   _maxWalkSpeed: 15
   _minAnalogWalkSpeed: 0

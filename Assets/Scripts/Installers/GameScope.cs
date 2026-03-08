@@ -1,5 +1,4 @@
-﻿using Assets.Input;
-using Assets.Scripts.Camera;
+﻿using Assets.Scripts.Camera;
 using Assets.Scripts.EnteryPoints;
 using Assets.Scripts.Player;
 using Assets.Scripts.Points;
@@ -16,7 +15,6 @@ namespace Assets.Scripts.Installers
     {
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private CameraController _cameraController;
-        [SerializeField] private PlayerController _playerController;
 
         [SerializeField] private GamePanelController _gamePanelController;
         [SerializeField] private StartPoint _startPoint;
@@ -33,11 +31,6 @@ namespace Assets.Scripts.Installers
             if (_cameraController == null)
             {
                 Debug.LogError($"{_cameraController.name}: _cameraController is not set!", this);
-            }
-
-            if (_playerController == null)
-            {
-                Debug.LogError($"{_playerController.name}: _playerController is not set!", this);
             }
 
             if (_gamePanelController == null)
@@ -58,7 +51,15 @@ namespace Assets.Scripts.Installers
             builder.RegisterInstance(_finishPoint);
             builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(_gamePanelController);
-            builder.RegisterInstance(_playerController);
+
+            //builder.Register<PlayerController>(Lifetime.Singleton).As<IFixedTickable>();
+
+            builder.RegisterEntryPoint<PlayerController>().AsSelf();
+
+            //builder.Register<IFixedTickable, PlayerController>(Lifetime.Singleton);
+            //builder.RegisterEntryPoint<PlayerController>();
+            //builder.RegisterEntryPoint<GameEnteryPoint>().WithParameter("container", this.Container);
+
 
             //Под вопросом...
             builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
@@ -66,12 +67,14 @@ namespace Assets.Scripts.Installers
             builder.Register<SaveLoadService>(Lifetime.Singleton);
 
             builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
-            builder.Register<IStartable, GameEnteryPoint>(Lifetime.Singleton);
+            //builder.Register<IStartable, GameEnteryPoint>(Lifetime.Singleton);
 
             builder.RegisterFactory<Character>(container => () =>
             {
                 return container.Instantiate(_characterPrefab);
             }, Lifetime.Transient);
+
+            builder.RegisterEntryPoint<GameEnteryPoint>();
         }
     }
 }

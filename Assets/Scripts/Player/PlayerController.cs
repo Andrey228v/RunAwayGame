@@ -1,15 +1,23 @@
 ﻿using Assets.Scripts.StateMachines.Player;
 using UnityEngine;
+using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
     //ISaveLoad, IFixedTickable
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : ITickable, IFixedTickable
     {
         private PlayerStateMachine _playerStateMachine;
 
-        private void FixedUpdate()
+
+        public void Tick()
         {
+            _playerStateMachine.Update();
+        }
+
+        public void FixedTick()
+        {
+            Debug.Log("TICK");
             _playerStateMachine.FixedTick();
         }
 

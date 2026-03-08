@@ -51,12 +51,16 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState.Enter();
         }
 
+        public void Update()
+        {
+            
+        }
+
+
         public void FixedTick()
         {
-            Debug.Log("TICK");
-            _currentState.FixedUpdate();
             _currentState.CheckChangeState();
-
+            _currentState.FixedUpdate();
         }
 
         public void ChangeState<T>() where T : IState

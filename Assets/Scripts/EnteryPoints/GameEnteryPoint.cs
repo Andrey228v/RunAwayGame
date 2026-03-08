@@ -5,7 +5,9 @@ using Assets.Scripts.SaveLoad;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 using VContainer.Unity;
 
 namespace Assets.Scripts.EnteryPoints
@@ -18,12 +20,16 @@ namespace Assets.Scripts.EnteryPoints
         private Func<Character> _characterFactory;
         private ISaveSystem _saveSystem;
         private PlayerData _playerData;
-        private StartPoint _startPoint;
-        
+        //private StartPoint _startPoint;
+        private IObjectResolver _container;
+        private List<CheckPoint> _checkPoints;
+        private int _checkpointsCount;
+        private GamePoints _gamePoints;
+
         public GameEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory, CameraController cameraController,
-            Func<Character> characterFactory, PlayerData playerData,
-            StartPoint startPoint, ISaveSystem saveSystem)
+            Func<Character> characterFactory, PlayerData playerData, ISaveSystem saveSystem,
+            IObjectResolver container, GamePoints gamePoints)
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -31,10 +37,38 @@ namespace Assets.Scripts.EnteryPoints
             _characterFactory = characterFactory;
             _saveSystem = saveSystem;
             _playerData = playerData;
-            _startPoint = startPoint;
+            //_startPoint = startPoint;
+            _container = container;
+            _gamePoints = gamePoints;
         }
 
         public void Start()
+        {
+            InitPlayer();
+            InitCheckPoints();
+
+        }
+
+        private void InitCheckPoints()
+        {
+            Transform checkPointsParent = _gamePoints.CheckPoints;
+
+            _checkPoints = new List<CheckPoint>();
+
+            for (int i = 0; i < checkPointsParent.childCount; i++)
+            {
+                CheckPoint checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPoint>();
+                _checkPoints.Add(checkpoint);
+            }
+
+            _checkpointsCount = _checkPoints.Count;
+
+            Debug.Log(_checkpointsCount);
+
+
+        }
+
+        private void InitPlayer()
         {
             Character character = _characterFactory();
 
@@ -48,7 +82,7 @@ namespace Assets.Scripts.EnteryPoints
             }
             else
             {
-                character.transform.SetLocalPositionAndRotation(_startPoint.transform.position, new Quaternion(0, 0, 0, 0));
+                character.transform.SetLocalPositionAndRotation(_gamePoints.StartPoint.transform.position, new Quaternion(0, 0, 0, 0));
             }
 
             _cameraController.SetTarget(character.transform);
@@ -56,5 +90,6 @@ namespace Assets.Scripts.EnteryPoints
             _playerController.SetCharacter(character);
             _playerController.SetPlayerStateMachine(playerStateMachine);
         }
+
     }
 }

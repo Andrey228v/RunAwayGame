@@ -3,6 +3,7 @@ using Assets.Scripts.EnteryPoints;
 using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
+using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
 using ECM2;
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace Assets.Scripts.Installers
         [SerializeField] private FinishPoint _finishPoint;
 
         [SerializeField] private Transform _checkPoints;
+
+        [SerializeField] private LevelData _levelData;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -54,12 +57,10 @@ namespace Assets.Scripts.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
-            //builder.RegisterInstance(_startPoint);
-            //builder.RegisterInstance(_finishPoint);
             builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(_gamePanelController);
-            //builder.RegisterInstance(_checkPoints).WithParameter("key", "CheckPoints");
             builder.RegisterInstance(new GamePoints(_startPoint, _finishPoint, _checkPoints));
+            builder.RegisterInstance(_levelData);
 
             builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
             builder.Register<PlayerData>(Lifetime.Singleton);

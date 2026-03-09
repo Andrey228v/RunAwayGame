@@ -712,6 +712,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChPoint (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5468852110550784280, guid: d992ac580bb110e4fb6e836a532b4424, type: 3}
+      propertyPath: _id
+      value: c54dbe42-287d-451e-9edd-fa4a2758b9de
+      objectReference: {fileID: 0}
     - target: {fileID: 8141826889084327267, guid: d992ac580bb110e4fb6e836a532b4424, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.73
@@ -1371,6 +1375,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChPoint (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5468852110550784280, guid: d992ac580bb110e4fb6e836a532b4424, type: 3}
+      propertyPath: _id
+      value: 49d28f92-3348-4cae-b48f-8b59e43feba2
+      objectReference: {fileID: 0}
     - target: {fileID: 8141826889084327267, guid: d992ac580bb110e4fb6e836a532b4424, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.73
@@ -1653,6 +1661,15 @@ MonoBehaviour:
   _startPoint: {fileID: 1290018570}
   _finishPoint: {fileID: 1067475116}
   _checkPoints: {fileID: 1058712722}
+  _levelData:
+    LevelID: 
+    IsLevelWasStarted: 0
+    LastCheckpointPosition: {fileID: 0}
+    PlayerData:
+      PlayerPosition: {x: 0, y: 0, z: 0}
+      PlayerRotation: {x: 0, y: 0, z: 0, w: 1}
+    CheckPoints: []
+    IsLevelCompleted: 0
 --- !u!4 &1512463414
 Transform:
   m_ObjectHideFlags: 0

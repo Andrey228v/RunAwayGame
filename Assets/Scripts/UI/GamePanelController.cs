@@ -56,12 +56,12 @@ namespace Assets.Scripts.UI
 
         private void LoadGame()
         {
-            _saveLoadService.Load();
+            _saveLoadService.LoadAllLevel();
         }
 
         private void SaveGame()
         {
-            _saveLoadService.Save();
+            _saveLoadService.SaveAllLevel();
         }
 
         //?????

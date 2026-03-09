@@ -22,7 +22,6 @@ namespace Assets.Scripts.Player
 
         public void FixedTick()
         {
-            Debug.Log("TICK");
             _playerStateMachine.FixedTick();
         }
 
@@ -49,7 +48,8 @@ namespace Assets.Scripts.Player
         {
             _playerData.PlayerPosition = _character.position;
             _playerData.PlayerRotation = _character.rotation;
-            _saveSystem.Save("PlayerData", _playerData);
+
+            //_saveSystem.Save("PlayerData", _playerData); // Надо поменять ???
         }
     }
 }

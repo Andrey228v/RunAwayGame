@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.SaveLoad;
+using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets.Scripts.Player
@@ -10,14 +10,12 @@ namespace Assets.Scripts.Player
     public class PlayerController : IFixedTickable, ISaveLoad
     {
         private PlayerStateMachine _playerStateMachine;
-        private ISaveSystem _saveSystem;
         private Character _character;
-        private PlayerData _playerData;
 
-        public PlayerController(ISaveSystem saveSystem, PlayerData playerData)
+
+        public PlayerController()
         {
-            _saveSystem = saveSystem;
-            _playerData = playerData;
+           
         }
 
         public void FixedTick()
@@ -35,19 +33,17 @@ namespace Assets.Scripts.Player
             _character = character;
         }
 
-        public void Load()
+        public void Load(LevelData data)
         {
-            //if (_saveSystem.HasKey("PlayerData"))
-            //{
-            //    var load = _saveSystem.Load<PlayerData>("PlayerData");
-            //    _character.transform.SetPositionAndRotation(load.PlayerPosition, load.PlayerRotation);
-            //}
+            _character.transform.SetLocalPositionAndRotation(data.PlayerData.PlayerPosition, data.PlayerData.PlayerRotation);
         }
 
-        public void Save()
+        public void Save(LevelData data)
         {
-            _playerData.PlayerPosition = _character.position;
-            _playerData.PlayerRotation = _character.rotation;
+            //_playerData.PlayerPosition = _character.position;
+            //_playerData.PlayerRotation = _character.rotation;
+
+            
 
             //_saveSystem.Save("PlayerData", _playerData); // Надо поменять ???
         }

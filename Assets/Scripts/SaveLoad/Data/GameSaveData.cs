@@ -7,7 +7,7 @@ namespace Assets.Scripts.SaveLoad.Data
     public class GameSaveData
     {
         public Dictionary<string, LevelData> LevelsData = new Dictionary<string, LevelData>();
-        public int CurrentLevel;
+        public string CurrentLevelId;
         public DateTime LastSaveTime;
     }
 }

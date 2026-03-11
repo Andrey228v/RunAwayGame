@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Player;
+using System;
 using UnityEngine;
 
 
@@ -11,6 +12,8 @@ namespace Assets.Scripts.Points
         public string Id => _id;
 
         public bool IsActivated { get; private set; }
+
+        public event Action OnActivated;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -47,6 +50,7 @@ namespace Assets.Scripts.Points
         {
             IsActivated = true;
             gameObject.SetActive(false);
+            OnActivated?.Invoke();
         }
 
         public void Deactivate()

@@ -23,19 +23,23 @@ namespace Assets.Scripts.EnteryPoints
         //private ISaveSystem _saveSystem;
         private PlayerData _playerData;
         private IObjectResolver _container;
-        private List<CheckPoint> _checkPoints;
+        //private List<CheckPoint> _checkPoints;
         private int _checkpointsCount;
         private GamePoints _gamePoints;
-        private LevelData _levelData;
-        private string _levelId;
+        //private string _levelId;
         private ISaveService _saveService;
+        //private string _levelID;
+        private LevelData _startData;
+        private LevelData _loadData;
+        private CheckPointsController _checkPointsController;
 
         public GameEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory, 
             CameraController cameraController,
             Func<Character> characterFactory, PlayerData playerData,
             IObjectResolver container, GamePoints gamePoints,
-            ISaveService saveService)
+            ISaveService saveService, LevelData startData,
+            CheckPointsController checkPointsController)
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -45,40 +49,19 @@ namespace Assets.Scripts.EnteryPoints
             _playerData = playerData;
             _container = container;
             _gamePoints = gamePoints;
-            //_levelData = levelData; // ситуативно пока оставить, потом придмать что-то потому что загрузка будет из общего словаря...
+            _startData = startData; // ситуативно пока оставить, потом придмать что-то потому что загрузка будет из общего словаря...
             _saveService = saveService;
+            //_levelID = levelID; // под вопросом
+            _checkPointsController = checkPointsController;
         }
 
         public void Start()
         {
-            _levelId = _levelData.LevelID;
-            _levelData = _saveService.GetLevelData(_levelId);
-
+            
+            _loadData = _saveService.GetLevelData(_startData.LevelID);
 
             InitPlayer();
             InitCheckPoints();
-
-        }
-
-        private void InitCheckPoints()
-        {
-            Transform checkPointsParent = _gamePoints.CheckPoints;
-
-            _checkPoints = new List<CheckPoint>();
-
-            for (int i = 0; i < checkPointsParent.childCount; i++)
-            {
-                CheckPoint checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPoint>();
-                _checkPoints.Add(checkpoint);
-            }
-
-            _checkpointsCount = _checkPoints.Count;
-
-            Debug.Log(_checkpointsCount);
-
-
-
-
 
         }
 
@@ -86,18 +69,25 @@ namespace Assets.Scripts.EnteryPoints
         {
             Character character = _characterFactory();
 
-            //if (_saveSystem.HasKey(SaveUtilites.PLAYER_DATA))
-            //{
-            //    var loadedData = _saveSystem.Load<PlayerData>(SaveUtilites.PLAYER_DATA);
-            //    _playerData.PlayerPosition = loadedData.PlayerPosition;
-            //    _playerData.PlayerRotation = loadedData.PlayerRotation;
+            if (_loadData.PlayerData == null)
+            {
+                var playerData = new PlayerData
+                {
+                    PlayerPosition = _gamePoints.StartPoint.transform.position,
+                    PlayerRotation = new Quaternion(0, 0, 0, 0)
+                };
 
-            //    character.transform.SetLocalPositionAndRotation(_playerData.PlayerPosition, _playerData.PlayerRotation);
-            //}
-            //else
-            //{
-            //    character.transform.SetLocalPositionAndRotation(_gamePoints.StartPoint.transform.position, new Quaternion(0, 0, 0, 0));
-            //}
+                character.transform.SetLocalPositionAndRotation(playerData.PlayerPosition, playerData.PlayerRotation);
+                _loadData.PlayerData = playerData;
+            }
+            else
+            {
+                var playerData = _loadData.PlayerData;
+                _playerData.PlayerPosition = playerData.PlayerPosition;
+                _playerData.PlayerRotation = playerData.PlayerRotation;
+
+                character.transform.SetLocalPositionAndRotation(_playerData.PlayerPosition, _playerData.PlayerRotation);
+            }
 
             _cameraController.SetTarget(character.transform);
             PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
@@ -105,5 +95,34 @@ namespace Assets.Scripts.EnteryPoints
             _playerController.SetPlayerStateMachine(playerStateMachine);
         }
 
+        private void InitCheckPoints() // ПОД ВОПРОСОМ....
+        {
+            List<CheckPoint> loadCheckPointsData = _loadData.CheckPoints;
+            List<CheckPoint> gameCheckPointList = _checkPointsController.TransformToList(_gamePoints.CheckPoints);
+
+            if (loadCheckPointsData == null)
+            {
+                _checkpointsCount = gameCheckPointList.Count;
+                _loadData.CheckPoints = gameCheckPointList;
+                
+                Debug.Log(_checkpointsCount);
+            }
+            else
+            {
+                for(int i = 0; i < gameCheckPointList.Count; i++)
+                {
+                    CheckPoint checkPoint = gameCheckPointList[i];
+
+                    if(loadCheckPointsData[i].IsActivated == true)
+                    {
+                        checkPoint.Activate();
+                    }
+                    else
+                    {
+                        checkPoint.Deactivate();
+                    }
+                }
+            }
+        }
     }
 }

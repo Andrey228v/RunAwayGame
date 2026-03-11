@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.SaveLoad.Service;
 using System.Collections.Generic;
+using UnityEditor.Overlays;
 using UnityEngine;
 
 namespace Assets.Scripts.SaveLoad
@@ -43,10 +44,14 @@ namespace Assets.Scripts.SaveLoad
 
         public void SaveAllLevel()
         {
+            //_saveData = new GameSaveData(); // Вопрос так ли делать....
+
             foreach (ISaveLoad load in _saveLoads)
             {
                 //load.Save();
             }
+
+            
         }
 
 
@@ -74,7 +79,9 @@ namespace Assets.Scripts.SaveLoad
 
         public void SaveLevelData(string levelID, LevelData data)
         {
-            
+            SaveAllLevel(); // ТАК ЛИ  ????
+
+            _saveData.LevelsData[levelID] = data;
         }
     }
 }

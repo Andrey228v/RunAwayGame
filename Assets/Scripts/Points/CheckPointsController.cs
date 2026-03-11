@@ -1,17 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
     public class CheckPointsController
     {
-        public CheckPointsController(Transform checkPoints) 
-        {
+        public List<CheckPoint> CheckPoints { get; private set; }
 
+        public List<CheckPoint> TransformToList(Transform checkPoints) 
+        {
+            Transform checkPointsParent = checkPoints;
+            CheckPoints = new List<CheckPoint>();
+
+            for (int i = 0; i < checkPointsParent.childCount; i++)
+            {
+                CheckPoint checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPoint>();
+                CheckPoints.Add(checkpoint);
+            }
+
+            return CheckPoints;
         }
+
+
     }
 }

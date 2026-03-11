@@ -57,12 +57,16 @@ namespace Assets.Scripts.EnteryPoints
 
         public void Start()
         {
-            
-            _loadData = _saveService.GetLevelData(_startData.LevelID);
+            _checkPointsController.OnSave += _saveService.LoadLevel;
+
+
+            _saveService.SetLevelId(_startData.LevelID);
+            _loadData = _saveService.GetLevelData();
 
             InitPlayer();
             InitCheckPoints();
 
+            _saveService.LoadLevel();
         }
 
         private void InitPlayer()
@@ -77,7 +81,7 @@ namespace Assets.Scripts.EnteryPoints
                     PlayerRotation = new Quaternion(0, 0, 0, 0)
                 };
 
-                character.transform.SetLocalPositionAndRotation(playerData.PlayerPosition, playerData.PlayerRotation);
+                //character.transform.SetLocalPositionAndRotation(playerData.PlayerPosition, playerData.PlayerRotation);
                 _loadData.PlayerData = playerData;
             }
             else
@@ -86,7 +90,7 @@ namespace Assets.Scripts.EnteryPoints
                 _playerData.PlayerPosition = playerData.PlayerPosition;
                 _playerData.PlayerRotation = playerData.PlayerRotation;
 
-                character.transform.SetLocalPositionAndRotation(_playerData.PlayerPosition, _playerData.PlayerRotation);
+                //character.transform.SetLocalPositionAndRotation(_playerData.PlayerPosition, _playerData.PlayerRotation);
             }
 
             _cameraController.SetTarget(character.transform);
@@ -109,19 +113,21 @@ namespace Assets.Scripts.EnteryPoints
             }
             else
             {
-                for(int i = 0; i < gameCheckPointList.Count; i++)
-                {
-                    CheckPoint checkPoint = gameCheckPointList[i];
+                //_checkPointsController.Load(_loadData); // ПОД ВОПРОСОМ...
 
-                    if(loadCheckPointsData[i].IsActivated == true)
-                    {
-                        checkPoint.Activate();
-                    }
-                    else
-                    {
-                        checkPoint.Deactivate();
-                    }
-                }
+                //for(int i = 0; i < gameCheckPointList.Count; i++)
+                //{
+                //    CheckPoint checkPoint = gameCheckPointList[i];
+
+                //    if(loadCheckPointsData[i].IsActivated == true)
+                //    {
+                //        checkPoint.Activate();
+                //    }
+                //    else
+                //    {
+                //        checkPoint.Deactivate();
+                //    }
+                //}
             }
         }
     }

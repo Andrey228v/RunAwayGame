@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.SaveLoad.Service;
+using System;
 using System.Collections.Generic;
 using UnityEditor.Overlays;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Assets.Scripts.SaveLoad
         private IEnumerable<ISaveLoad> _saveLoads;
         private ISaveSystem _saveSystem;
         private GameSaveData _saveData;
+        private string _levelId;
 
         public SaveLoadService(IEnumerable<ISaveLoad> saveLoads, ISaveSystem saveSystem) 
         {
@@ -18,6 +20,11 @@ namespace Assets.Scripts.SaveLoad
             _saveSystem = saveSystem;
 
             LoadOrCreateSave();
+        }
+
+        public void SetLevelId(string levelId)
+        {
+            _levelId = levelId;
         }
 
         private void LoadOrCreateSave()
@@ -34,54 +41,53 @@ namespace Assets.Scripts.SaveLoad
             }
         }
 
-        public void LoadAllLevel()
+        public void LoadLevel()
         {
-            foreach (ISaveLoad load in _saveLoads)
+            LevelData levelData = new LevelData();
+
+            foreach (ISaveLoad obj in _saveLoads)
             {
-                //load.Load();
+                obj.Load(levelData);
             }
         }
-
-        public void SaveAllLevel()
-        {
-            //_saveData = new GameSaveData(); // Вопрос так ли делать....
-
-            foreach (ISaveLoad load in _saveLoads)
-            {
-                //load.Save();
-            }
-
-            
-        }
-
 
         public void DeleteSave()
         {
             
         }
 
-        public LevelData GetLevelData(string levelID)
+        public LevelData GetLevelData()
         {
-            if (_saveData.LevelsData.TryGetValue(levelID, out LevelData data))
+            if (_saveData.LevelsData.TryGetValue(_levelId, out LevelData data))
             {
                 return data;
             }
 
             // Возвращаем новые данные, если для уровня нет сохранения
-            return new LevelData { LevelID = levelID };
+            return new LevelData { LevelID = _levelId };
         }
 
-        public bool HasSaveData()
+        public void SaveLevelData()
         {
-            return false;
-        }
+            LevelData data = GetLevelData();
 
+            foreach (ISaveLoad obj in _saveLoads)
+            {
+                obj.Save(data);
+            }
 
-        public void SaveLevelData(string levelID, LevelData data)
-        {
-            SaveAllLevel(); // ТАК ЛИ  ????
+            if (_saveData.LevelsData.ContainsKey(_levelId))
+            {
+                _saveData.LevelsData[_levelId] = data;
+            }
+            else
+            {
+                _saveData.LevelsData.Add(_levelId, data);
+            }
 
-            _saveData.LevelsData[levelID] = data;
+            _saveData.CurrentLevelId = _levelId;
+            _saveData.LastSaveTime = DateTime.Now;
+            _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
         }
     }
 }

@@ -37,11 +37,11 @@ namespace Assets.Scripts.Player
 
         public void Load()
         {
-            if (_saveSystem.HasKey("PlayerData"))
-            {
-                var load = _saveSystem.Load<PlayerData>("PlayerData");
-                _character.transform.SetPositionAndRotation(load.PlayerPosition, load.PlayerRotation);
-            }
+            //if (_saveSystem.HasKey("PlayerData"))
+            //{
+            //    var load = _saveSystem.Load<PlayerData>("PlayerData");
+            //    _character.transform.SetPositionAndRotation(load.PlayerPosition, load.PlayerRotation);
+            //}
         }
 
         public void Save()

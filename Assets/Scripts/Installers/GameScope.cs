@@ -4,6 +4,7 @@ using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
+using Assets.Scripts.SaveLoad.Service;
 using Assets.Scripts.UI;
 using ECM2;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace Assets.Scripts.Installers
 
         [SerializeField] private Transform _checkPoints;
 
-        [SerializeField] private LevelData _levelData;
+        [SerializeField] private LevelData _startData;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -52,6 +53,11 @@ namespace Assets.Scripts.Installers
             {
                 Debug.LogError($"{_checkPoints.name}: _checkPointers is not set!", this);
             }
+
+            if (_startData == null)
+            {
+                Debug.LogError($"_startData is not set!", this);
+            }
         }
 #endif
 
@@ -60,12 +66,14 @@ namespace Assets.Scripts.Installers
             builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(_gamePanelController);
             builder.RegisterInstance(new GamePoints(_startPoint, _finishPoint, _checkPoints));
-            builder.RegisterInstance(_levelData);
+            builder.RegisterInstance(_startData);
 
             builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
             builder.Register<PlayerData>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
             builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
+            builder.Register<ISaveService, SaveLoadService>(Lifetime.Singleton);
+            builder.Register<CheckPointsController>(Lifetime.Singleton);
 
             builder.RegisterFactory<Character>(container => () =>
             {

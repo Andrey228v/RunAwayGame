@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Player;
+using UnityEngine;
+
 
 namespace Assets.Scripts.Points
 {
@@ -10,7 +12,6 @@ namespace Assets.Scripts.Points
 
         public bool IsActivated { get; private set; }
 
-
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -21,6 +22,43 @@ namespace Assets.Scripts.Points
             }
         }
 #endif
+
+        private void Awake()
+        {
+            IsActivated = false;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (IsActivated)
+            {
+                return;
+            }
+
+            if (other.GetComponent<PlayerMB>() == false)
+            {
+                return;
+            }
+
+            Activate();
+        }
+
+        public void Activate()
+        {
+            IsActivated = true;
+            gameObject.SetActive(false);
+        }
+
+        public void Deactivate()
+        {
+            IsActivated = false;
+            gameObject.SetActive(true);
+        }
+
+
+
+
+
 
         private void GenerateGUID()
         {

@@ -115,35 +115,24 @@ namespace Assets.Scripts.EnteryPoints
 
         private LevelData InitCheckPoints(LevelData levelData) // ПОД ВОПРОСОМ....
         {
-            List<CheckPoint> loadCheckPointsData = levelData.CheckPoints;
+            List<CheckPointData> loadCheckPointsData = levelData.CheckPoints;
             List<CheckPoint> gameCheckPointList = _checkPointsController.TransformToList(_gamePoints.CheckPoints);
 
             if (loadCheckPointsData == null)
             {
                 _checkpointsCount = gameCheckPointList.Count;
-                levelData.CheckPoints = gameCheckPointList;
                 
+                for(int i = 0; i < loadCheckPointsData.Count; i++)
+                {
+                    loadCheckPointsData[i] = new CheckPointData { Id = gameCheckPointList[i].Id, IsActivated = gameCheckPointList[i].IsActivated };
+                    _loadData.CheckPoints = loadCheckPointsData;
+                }
+
                 Debug.Log(_checkpointsCount);
             }
             else
             {
-                //levelData.CheckPoints = gameCheckPointList;
 
-                //_checkPointsController.Load(_loadData); // ПОД ВОПРОСОМ...
-
-                //for(int i = 0; i < gameCheckPointList.Count; i++)
-                //{
-                //    CheckPoint checkPoint = gameCheckPointList[i];
-
-                //    if(loadCheckPointsData[i].IsActivated == true)
-                //    {
-                //        checkPoint.Activate();
-                //    }
-                //    else
-                //    {
-                //        checkPoint.Deactivate();
-                //    }
-                //}
             }
 
             return levelData;

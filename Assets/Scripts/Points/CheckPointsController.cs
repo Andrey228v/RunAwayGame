@@ -14,9 +14,9 @@ namespace Assets.Scripts.Points
 
         public void Dispose()
         {
-            for (int i = 0; i < CheckPoints.Count; i++)
+            foreach (CheckPoint checkPoint in CheckPoints)
             {
-                OnSave -= CheckPointActivated;
+                checkPoint.OnActivated -= CheckPointActivated;
             }
         }
 
@@ -29,41 +29,34 @@ namespace Assets.Scripts.Points
             {
                 CheckPoint checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPoint>();
                 CheckPoints.Add(checkpoint);
-                OnSave += CheckPointActivated;
+                checkpoint.OnActivated += CheckPointActivated;
             }
 
             return CheckPoints;
         }
 
-        public void CheckPointActivated()
+        public void CheckPointActivated(CheckPoint checkPoint) // Вопрос надо ли передавать checkPoint
         {
             OnSave?.Invoke();
         }
 
         public void Load(LevelData data)
         {
-            List<CheckPoint> loadCheckPointsData  = data.CheckPoints;
-
             for (int i = 0; i < CheckPoints.Count; i++)
             {
                 CheckPoint checkPoint = CheckPoints[i];
-
-                if (loadCheckPointsData[i].IsActivated == true)
-                {
-                    checkPoint.Activate();
-                }
-                else
-                {
-                    checkPoint.Deactivate();
-                }
+                CheckPointData checkPointData = data.CheckPoints[i];
+                checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
+                checkPoint.SetState(checkPointData.IsActivated);
             }
         }
 
         public void Save(LevelData data)
         {
-            data.CheckPoints = CheckPoints;
+            for (int i = 0; i < CheckPoints.Count; i++)
+            {
+                data.CheckPoints[i] = new CheckPointData { Id = CheckPoints[i].Id, IsActivated = CheckPoints[i].IsActivated };
+            }
         }
-
-
     }
 }

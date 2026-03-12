@@ -6,17 +6,10 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    //ISaveLoad, IFixedTickable
     public class PlayerController : IFixedTickable, ISaveLoad
     {
         private PlayerStateMachine _playerStateMachine;
         private Character _character;
-
-
-        public PlayerController()
-        {
-           
-        }
 
         public void FixedTick()
         {
@@ -40,12 +33,8 @@ namespace Assets.Scripts.Player
 
         public void Save(LevelData data)
         {
-            //_playerData.PlayerPosition = _character.position;
-            //_playerData.PlayerRotation = _character.rotation;
-
-            
-
-            //_saveSystem.Save("PlayerData", _playerData); // Надо поменять ???
+            data.PlayerData.PlayerPosition = _character.transform.position;
+            data.PlayerData.PlayerRotation = _character.transform.rotation;
         }
     }
 }

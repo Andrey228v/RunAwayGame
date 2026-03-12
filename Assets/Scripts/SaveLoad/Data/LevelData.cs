@@ -11,7 +11,7 @@ namespace Assets.Scripts.SaveLoad.Data
         public bool IsLevelWasStarted; // Был ли уровень запущен до этого запуска ??
         public CheckPoint LastCheckpointPosition;
         public PlayerData PlayerData;
-        public List<CheckPoint> CheckPoints;
+        public List<CheckPointData> CheckPoints;
         public bool IsLevelCompleted;
     }
 }

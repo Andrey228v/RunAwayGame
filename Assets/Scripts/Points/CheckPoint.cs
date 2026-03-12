@@ -8,68 +8,92 @@ namespace Assets.Scripts.Points
     public class CheckPoint : MonoBehaviour
     {
         [SerializeField] private string _id;
+        [SerializeField] private bool _isActivated;
+
+        private bool _isInitialized;
 
         public string Id => _id;
+        public bool IsActivated => _isActivated;
 
-        public bool IsActivated { get; private set; }
-
-        public event Action OnActivated;
-
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            // Автоматически генерируем GUID в редакторе
-            if (string.IsNullOrEmpty(_id))
-            {
-                GenerateGUID();
-            }
-        }
-#endif
+        public event Action<CheckPoint> OnActivated;
 
         private void Awake()
         {
-            IsActivated = false;
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            if (_isInitialized) return;
+
+            _isActivated = false;
+            _isInitialized = true;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (IsActivated)
-            {
-                return;
-            }
+            if (IsActivated) return;
 
-            if (other.GetComponent<PlayerMB>() == false)
-            {
-                return;
-            }
+            if (!other.TryGetComponent<PlayerMB>(out _)) return;
 
             Activate();
         }
 
         public void Activate()
         {
-            IsActivated = true;
-            gameObject.SetActive(false);
-            OnActivated?.Invoke();
+            if (_isActivated) return;
+
+            SetState(true);
+            OnActivated?.Invoke(this);
         }
 
         public void Deactivate()
         {
-            IsActivated = false;
-            gameObject.SetActive(true);
+            if (!_isActivated) return;
+
+            SetState(false);
         }
 
-
-
-
-
-
-        private void GenerateGUID()
+        public void SetState(bool activated)
         {
-            _id = $"CP_{System.Guid.NewGuid().ToString().Substring(0, 8)}";
-            Debug.Log($"Generated new GUID for checkpoint: {_id}");
+            _isActivated = activated;
+            gameObject.SetActive(!activated);
         }
 
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (string.IsNullOrEmpty(_id))
+            {
+                GenerateId();
+            }
+        }
+#endif
 
+        private void GenerateId()
+        {
+            _id = $"CP_{Guid.NewGuid():N}"[..12]; // Первые 12 символов
+            Debug.Log($"[CheckPoint] Generated ID: {_id}", this);
+        }
+
+        // Публичные методы для управления (опционально)
+        public void SetId(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                Debug.LogError("[CheckPoint] Cannot set empty ID!", this);
+                return;
+            }
+
+            _id = id;
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(this);
+#endif
+        }
+
+        public void ResetState()
+        {
+            SetState(false);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.SaveLoad;
+using System;
 using UnityEngine;
 using VContainer;
 
@@ -9,14 +10,16 @@ namespace Assets.Scripts.UI
         [SerializeField] private GameInterfacePanel _gameInterfacePanel;
         [SerializeField] private GameMenuPanel _gameMenuPanel;
 
-        private SaveLoadService _saveLoadService;
+        public event Action OnButtonLoadClick;
+        public event Action OnButtonSaveClick;
+        //private SaveLoadService _saveLoadService;
 
-        [Inject]
-        public void Constructor(SaveLoadService saveLoadService)
-        {
+        //[Inject]
+        //public void Constructor(SaveLoadService saveLoadService)
+        //{
 
-            _saveLoadService = saveLoadService;
-        }
+        //    _saveLoadService = saveLoadService;
+        //}
 
         private void OnEnable()
         {
@@ -56,12 +59,14 @@ namespace Assets.Scripts.UI
 
         private void LoadGame()
         {
-            _saveLoadService.LoadLevel();
+            //_saveLoadService.LoadLevel();
+            OnButtonLoadClick?.Invoke();
         }
 
         private void SaveGame()
         {
-            _saveLoadService.SaveLevelData();
+            //_saveLoadService.SaveLevelData();
+            OnButtonSaveClick?.Invoke();
         }
 
         //?????

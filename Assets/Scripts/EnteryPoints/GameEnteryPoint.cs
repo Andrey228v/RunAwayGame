@@ -5,6 +5,7 @@ using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.SaveLoad.Service;
 using Assets.Scripts.StateMachines.Player;
+using Assets.Scripts.UI;
 using ECM2;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.EnteryPoints
 {
-    public class GameEnteryPoint : IStartable
+    public class GameEnteryPoint : IStartable, IDisposable
     {
         private PlayerController _playerController;
         private PlayerStateMachineFactory _playerStateMachineFactory;
@@ -32,6 +33,7 @@ namespace Assets.Scripts.EnteryPoints
         private LevelData _startData;
         private LevelData _loadData;
         private CheckPointsController _checkPointsController;
+        private GamePanelController _gamePanelController;
 
         public GameEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory, 
@@ -39,7 +41,8 @@ namespace Assets.Scripts.EnteryPoints
             Func<Character> characterFactory, PlayerData playerData,
             IObjectResolver container, GamePoints gamePoints,
             ISaveService saveService, LevelData startData,
-            CheckPointsController checkPointsController)
+            CheckPointsController checkPointsController,
+            GamePanelController gamePanelController)
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -53,27 +56,36 @@ namespace Assets.Scripts.EnteryPoints
             _saveService = saveService;
             //_levelID = levelID; // под вопросом
             _checkPointsController = checkPointsController;
+            _gamePanelController = gamePanelController;
         }
 
         public void Start()
         {
-            _checkPointsController.OnSave += _saveService.LoadLevel;
+            _checkPointsController.OnSave += _saveService.SaveLevelData;
+            _gamePanelController.OnButtonLoadClick += _saveService.LoadLevel;
+            _gamePanelController.OnButtonSaveClick += _saveService.SaveLevelData;
 
 
             _saveService.SetLevelId(_startData.LevelID);
             _loadData = _saveService.GetLevelData();
 
-            InitPlayer();
-            InitCheckPoints();
+            _loadData = InitPlayer(_loadData);
+            _loadData = InitCheckPoints(_loadData);
 
+            _saveService.SaveLevelIntoGame(_loadData);
             _saveService.LoadLevel();
         }
 
-        private void InitPlayer()
+        public void Dispose()
+        {
+            _checkPointsController.OnSave -= _saveService.SaveLevelData;
+        }
+
+        private LevelData InitPlayer(LevelData levelData)
         {
             Character character = _characterFactory();
 
-            if (_loadData.PlayerData == null)
+            if (levelData.PlayerData == null)
             {
                 var playerData = new PlayerData
                 {
@@ -82,13 +94,13 @@ namespace Assets.Scripts.EnteryPoints
                 };
 
                 //character.transform.SetLocalPositionAndRotation(playerData.PlayerPosition, playerData.PlayerRotation);
-                _loadData.PlayerData = playerData;
+                levelData.PlayerData = playerData;
             }
             else
             {
-                var playerData = _loadData.PlayerData;
-                _playerData.PlayerPosition = playerData.PlayerPosition;
-                _playerData.PlayerRotation = playerData.PlayerRotation;
+                //var playerData = _loadData.PlayerData;
+                //_playerData.PlayerPosition = playerData.PlayerPosition;
+                //_playerData.PlayerRotation = playerData.PlayerRotation;
 
                 //character.transform.SetLocalPositionAndRotation(_playerData.PlayerPosition, _playerData.PlayerRotation);
             }
@@ -97,22 +109,26 @@ namespace Assets.Scripts.EnteryPoints
             PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
             _playerController.SetCharacter(character);
             _playerController.SetPlayerStateMachine(playerStateMachine);
+
+            return levelData;
         }
 
-        private void InitCheckPoints() // ПОД ВОПРОСОМ....
+        private LevelData InitCheckPoints(LevelData levelData) // ПОД ВОПРОСОМ....
         {
-            List<CheckPoint> loadCheckPointsData = _loadData.CheckPoints;
+            List<CheckPoint> loadCheckPointsData = levelData.CheckPoints;
             List<CheckPoint> gameCheckPointList = _checkPointsController.TransformToList(_gamePoints.CheckPoints);
 
             if (loadCheckPointsData == null)
             {
                 _checkpointsCount = gameCheckPointList.Count;
-                _loadData.CheckPoints = gameCheckPointList;
+                levelData.CheckPoints = gameCheckPointList;
                 
                 Debug.Log(_checkpointsCount);
             }
             else
             {
+                //levelData.CheckPoints = gameCheckPointList;
+
                 //_checkPointsController.Load(_loadData); // ПОД ВОПРОСОМ...
 
                 //for(int i = 0; i < gameCheckPointList.Count; i++)
@@ -129,6 +145,10 @@ namespace Assets.Scripts.EnteryPoints
                 //    }
                 //}
             }
+
+            return levelData;
         }
+
+
     }
 }

@@ -22,6 +22,22 @@ namespace Assets.Scripts.SaveLoad
             LoadOrCreateSave();
         }
 
+        public void SaveLevelIntoGame(LevelData data)
+        {
+            if (_saveData.LevelsData.ContainsKey(_levelId))
+            {
+                _saveData.LevelsData[_levelId] = data;
+            }
+            else
+            {
+                _saveData.LevelsData.Add(_levelId, data);
+            }
+
+            _saveData.CurrentLevelId = _levelId;
+            _saveData.LastSaveTime = DateTime.Now;
+            _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
+        }
+
         public void SetLevelId(string levelId)
         {
             _levelId = levelId;
@@ -43,7 +59,7 @@ namespace Assets.Scripts.SaveLoad
 
         public void LoadLevel()
         {
-            LevelData levelData = new LevelData();
+            LevelData levelData = GetLevelData();
 
             foreach (ISaveLoad obj in _saveLoads)
             {
@@ -76,18 +92,20 @@ namespace Assets.Scripts.SaveLoad
                 obj.Save(data);
             }
 
-            if (_saveData.LevelsData.ContainsKey(_levelId))
-            {
-                _saveData.LevelsData[_levelId] = data;
-            }
-            else
-            {
-                _saveData.LevelsData.Add(_levelId, data);
-            }
+            SaveLevelIntoGame(data);
 
-            _saveData.CurrentLevelId = _levelId;
-            _saveData.LastSaveTime = DateTime.Now;
-            _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
+            //if (_saveData.LevelsData.ContainsKey(_levelId))
+            //{
+            //    _saveData.LevelsData[_levelId] = data;
+            //}
+            //else
+            //{
+            //    _saveData.LevelsData.Add(_levelId, data);
+            //}
+
+            //_saveData.CurrentLevelId = _levelId;
+            //_saveData.LastSaveTime = DateTime.Now;
+            //_saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
         }
     }
 }

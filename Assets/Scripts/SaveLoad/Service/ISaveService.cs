@@ -4,6 +4,7 @@ namespace Assets.Scripts.SaveLoad.Service
 {
     public interface ISaveService
     {
+        public void SaveLevelIntoGame(LevelData data);
         public void SetLevelId(string levelId);
         public void LoadLevel();
         public void SaveLevelData();

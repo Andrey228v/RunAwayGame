@@ -2,6 +2,7 @@
 using Assets.Scripts.SaveLoad.Service;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor.Overlays;
 using UnityEngine;
 
@@ -93,19 +94,27 @@ namespace Assets.Scripts.SaveLoad
             }
 
             SaveLevelIntoGame(data);
+        }
 
-            //if (_saveData.LevelsData.ContainsKey(_levelId))
-            //{
-            //    _saveData.LevelsData[_levelId] = data;
-            //}
-            //else
-            //{
-            //    _saveData.LevelsData.Add(_levelId, data);
-            //}
+        public async Task SaveLevelDataAsync()
+        {
+            LevelData data = GetLevelData();
 
-            //_saveData.CurrentLevelId = _levelId;
-            //_saveData.LastSaveTime = DateTime.Now;
-            //_saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
+            // Сохраняем все объекты параллельно
+            var saveTasks = new List<Task>();
+            foreach (ISaveLoad obj in _saveLoads)
+            {
+                // Предполагаем, что у ISaveLoad есть асинхронный метод SaveAsync
+                saveTasks.Add(obj.SaveAsync(data));
+            }
+
+            // Ждем завершения всех сохранений
+            await Task.WhenAll(saveTasks);
+
+            // Сохраняем уровень в файл
+            await SaveLevelIntoGameAsync(data);
+
+            Debug.Log("Асинхронное сохранение завершено");
         }
     }
 }

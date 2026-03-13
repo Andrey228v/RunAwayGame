@@ -73,13 +73,14 @@ namespace Assets.Scripts.Installers
             builder.Register<SaveLoadService>(Lifetime.Singleton);
             builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
             builder.Register<ISaveService, SaveLoadService>(Lifetime.Singleton);
-            builder.Register<CheckPointsController>(Lifetime.Singleton);
+            //builder.Register<ISaveLoad, CheckPointsController>(Lifetime.Singleton).AsSelf();
 
             builder.RegisterFactory<Character>(container => () =>
             {
                 return container.Instantiate(_characterPrefab);
             }, Lifetime.Transient);
 
+            builder.RegisterEntryPoint<CheckPointsController>().AsSelf();
             builder.RegisterEntryPoint<PlayerController>().AsSelf();
             builder.RegisterEntryPoint<GameEnteryPoint>();
         }

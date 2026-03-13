@@ -12,14 +12,6 @@ namespace Assets.Scripts.UI
 
         public event Action OnButtonLoadClick;
         public event Action OnButtonSaveClick;
-        //private SaveLoadService _saveLoadService;
-
-        //[Inject]
-        //public void Constructor(SaveLoadService saveLoadService)
-        //{
-
-        //    _saveLoadService = saveLoadService;
-        //}
 
         private void OnEnable()
         {

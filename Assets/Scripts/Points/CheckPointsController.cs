@@ -2,6 +2,7 @@
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Points
@@ -58,5 +59,7 @@ namespace Assets.Scripts.Points
                 data.CheckPoints[i] = new CheckPointData { Id = CheckPoints[i].Id, IsActivated = CheckPoints[i].IsActivated };
             }
         }
+
+
     }
 }

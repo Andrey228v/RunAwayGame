@@ -16,7 +16,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.EnteryPoints
 {
-    public class GameEnteryPoint : IStartable, IAsyncDisposable
+    public class GameEnteryPoint : IStartable, IDisposable
     {
         private PlayerController _playerController;
         private PlayerStateMachineFactory _playerStateMachineFactory;
@@ -67,22 +67,22 @@ namespace Assets.Scripts.EnteryPoints
             _saveService.LoadLevel();
         }
 
-        async ValueTask IAsyncDisposable.DisposeAsync()
+        //async ValueTask IAsyncDisposable.DisposeAsync()
+        //{
+        //    _saveService.SaveLevelData();
+
+        //    _checkPointsController.OnSave -= _saveService.SaveLevelData;
+        //    _gamePanelController.OnButtonLoadClick -= _saveService.LoadLevel;
+        //    _gamePanelController.OnButtonSaveClick -= _saveService.SaveLevelData;
+        //}
+
+        public void Dispose()
         {
             _saveService.SaveLevelData();
 
             _checkPointsController.OnSave -= _saveService.SaveLevelData;
             _gamePanelController.OnButtonLoadClick -= _saveService.LoadLevel;
             _gamePanelController.OnButtonSaveClick -= _saveService.SaveLevelData;
-        }
-
-        public void Dispose()
-        {
-            //_saveService.SaveLevelData();
-
-            //_checkPointsController.OnSave -= _saveService.SaveLevelData;
-            //_gamePanelController.OnButtonLoadClick -= _saveService.LoadLevel;
-            //_gamePanelController.OnButtonSaveClick -= _saveService.SaveLevelData;
         }
 
         private LevelData InitPlayer(LevelData levelData)

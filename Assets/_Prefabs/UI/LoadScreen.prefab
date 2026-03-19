@@ -650,7 +650,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1108805174980986914
 Transform:
   m_ObjectHideFlags: 0
@@ -680,6 +680,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 510b1102e240451418e3d3c78b8c9314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loadingScene:
+    asset: {fileID: 0}
+    guid: 00000000000000000000000000000000
   _screenRoot: {fileID: 6393345463191142867}
   _progressBar: {fileID: 565713565325374354}
   _statusText: {fileID: 3541365453314533237}

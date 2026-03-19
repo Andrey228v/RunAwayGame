@@ -2,6 +2,7 @@
 using Eflatun.SceneReference;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -15,6 +16,64 @@ namespace Assets._Scripts.SceneLoading
         [SerializeField] private TextMeshProUGUI _statusText;
         [SerializeField] private CanvasGroup _canvasGroup;
 
+        [SerializeField] private Canvas _loadingCanvas;
+        [SerializeField] private Camera _loadingCamera;
+        [SerializeField] private SceneGroup[] _sceneGroups;
+
+        private float _targetProgress;
+        private bool _isLoading;
+        private float _fillSpeed = 0.5f;
+
+        public readonly SceneGroupManager manager = new SceneGroupManager();
+
+        private void Awake()
+        {
+            manager.OnSceneLoaded += sceneName => Debug.Log("Loaded: " + sceneName);
+            manager.OnSceneUnloaded += sceneName => Debug.Log("Unloaded: " + sceneName);
+            manager.OnSceneGroupLoaded += () => Debug.Log("On scene group loaded");
+        }
+
+        private async void Start()
+        {
+            await LoadSceneGroup(0);
+        }
+
+        private void Update()
+        {
+            if (_isLoading == false) return;
+
+            float currentFillAmount = _progressBar.value;
+            float progressDif = Mathf.Abs(currentFillAmount - _targetProgress);
+            float dynamicFillSpeed = progressDif * _fillSpeed;
+
+            _progressBar.value = Mathf.Lerp(currentFillAmount, _targetProgress, Time.deltaTime * dynamicFillSpeed);
+        }
+
+        public async UniTask LoadSceneGroup(int index)
+        {
+            _progressBar.value = 0f;
+            _targetProgress = 1f;
+
+            if(index < 0 || index >= _sceneGroups.Length)
+            {
+                Debug.LogError("Invalid scene group index: " + index);
+                return;
+            }
+
+            LoadingProgress progress = new LoadingProgress();
+            progress.OnProgress += target => _targetProgress = Mathf.Max(target, _targetProgress);
+
+            EnableLoadingCanvas();
+            await manager.LoadScenes(_sceneGroups[index], progress);
+            EnableLoadingCanvas(false);
+        }
+
+        public void EnableLoadingCanvas(bool enable = true)
+        {
+            _isLoading = enable;
+            _loadingCanvas.gameObject.SetActive(enable);
+            _loadingCamera.gameObject.SetActive(enable);
+        }
 
         public void Show()
         {

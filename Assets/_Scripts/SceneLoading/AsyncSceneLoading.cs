@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Eflatun.SceneReference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,30 +15,32 @@ namespace Assets._Scripts.SceneLoading
     {
         private readonly Dictionary<string, SceneInstance> _loaderScenes = new Dictionary<string, SceneInstance>();
         private CancellationTokenSource _cancellationTokenSource;
-        private LoadScreenView _loadScreenView;
+        private SceneReference _loadingScene;
 
-        public AsyncSceneLoading(LoadScreenView loadScreenView)
+        public AsyncSceneLoading(SceneReference loadingScene)
         {
-            _loadScreenView = loadScreenView;
+            _loadingScene = loadingScene;
         }
 
         public async UniTask LoadScene(string sceneName)
         {
             _cancellationTokenSource = new CancellationTokenSource();
-            _loadScreenView.Show();
-            //await _loadScreenView.ShowAsync();
+            //_loadScreenView.Show();
+            //await _loadScreenView.ShowAsync();    
+            await SceneManager.LoadSceneAsync(_loadingScene.Name, LoadSceneMode.Additive);
+
             await UniTask.Delay(TimeSpan.FromSeconds(2f), _cancellationTokenSource.IsCancellationRequested); // ДЛЯ ТЕСТА...
             SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
             //SceneManager.SetActiveScene(loadedScene.Scene);
             //await _loadScreenView.HideAsync();
-            _loadScreenView.Hide();
+            //_loadScreenView.Hide();
 
             //if (_loaderScenes.ContainsKey(sceneName) == false)
             //{
             //    _loaderScenes.Add(sceneName, loadedScene);
             //}
 
-
+            await SceneManager.UnloadSceneAsync(_loadingScene.Name);
 
             _cancellationTokenSource.Cancel();
         }

@@ -38,6 +38,7 @@ MonoBehaviour:
     - Assembly-CSharp
     - Assembly-CSharp-firstpass
     - ECM2
+    - Eflatun.SceneReference
     - UniTask
     - UniTask.Addressables
     - UniTask.DOTween

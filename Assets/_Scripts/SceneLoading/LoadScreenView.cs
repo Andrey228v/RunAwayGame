@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Eflatun.SceneReference;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ namespace Assets._Scripts.SceneLoading
 {
     public class LoadScreenView : MonoBehaviour
     {
+        //[SerializeField] private SceneReference _loadingScene;    // Экран загрузки. Пока под вопросом так ли делать...
         [SerializeField] private GameObject _screenRoot;
         [SerializeField] private Slider _progressBar;
         [SerializeField] private TextMeshProUGUI _statusText;

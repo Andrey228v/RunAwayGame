@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Assets._Scripts.SceneLoading;
+using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Assets._Scripts.UI._1MenuWindow
 {
@@ -18,6 +20,14 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
+        //private LoadScreenView _loadScreenView;
+
+        //[Inject]
+        //public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
+        //{
+        //    _loadScreenView = loadScreenView;
+        //}
+
 
         private void Start()
         {
@@ -50,6 +60,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void StartGame()
         {
             Debug.Log("START GAME");
+            //await _loadScreenView.LoadSceneGroup(1);
         }
 
         private void ClickBackButton()

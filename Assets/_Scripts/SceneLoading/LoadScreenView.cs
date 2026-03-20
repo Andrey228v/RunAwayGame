@@ -33,10 +33,10 @@ namespace Assets._Scripts.SceneLoading
             manager.OnSceneGroupLoaded += () => Debug.Log("On scene group loaded");
         }
 
-        private async void Start()
-        {
-            await LoadSceneGroup(0);
-        }
+        //private async void Start()
+        //{
+        //    await LoadSceneGroup(0);
+        //}
 
         private void Update()
         {
@@ -61,10 +61,11 @@ namespace Assets._Scripts.SceneLoading
             }
 
             LoadingProgress progress = new LoadingProgress();
-            progress.OnProgress += target => _targetProgress = Mathf.Max(target, _targetProgress);
+            progress.OnProgress += target => _targetProgress = Mathf.Max(target, _targetProgress); // Нет отписки...
 
             EnableLoadingCanvas();
             await manager.LoadScenes(_sceneGroups[index], progress);
+            //await UniTask.Delay(1000);
             EnableLoadingCanvas(false);
         }
 

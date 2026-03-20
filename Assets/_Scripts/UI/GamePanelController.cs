@@ -1,7 +1,6 @@
-﻿using Assets.Scripts.SaveLoad;
+﻿using Assets._Scripts.SceneLoading;
 using System;
 using UnityEngine;
-using VContainer;
 
 namespace Assets.Scripts.UI
 {
@@ -9,9 +8,16 @@ namespace Assets.Scripts.UI
     {
         [SerializeField] private GameInterfacePanel _gameInterfacePanel;
         [SerializeField] private GameMenuPanel _gameMenuPanel;
-
+        
         public event Action OnButtonLoadClick;
         public event Action OnButtonSaveClick;
+        
+        //private LoadScreenView _loadScreenView;
+
+        //public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
+        //{
+        //    _loadScreenView = loadScreenView;
+        //}
 
         private void OnEnable()
         {

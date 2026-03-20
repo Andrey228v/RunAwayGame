@@ -9,11 +9,11 @@ namespace Assets._Scripts.EnteryPoints
 {
     public class BootEntryPoint : IInitializable
     {
-        //private AsyncSceneLoading _sceneLoading;
+        private LoadScreenView _screenView;
 
-        public BootEntryPoint()
+        public BootEntryPoint(LoadScreenView screenView)
         {
-            //_sceneLoading = sceneLoading;
+            _screenView = screenView;
         }
 
         public async void Initialize()
@@ -21,6 +21,8 @@ namespace Assets._Scripts.EnteryPoints
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             DOTween.SetTweensCapacity(5000, 100);
+            await _screenView.LoadSceneGroup(0);
+
             //await _sceneLoading.LoadScene(Scenes.MENU);
             //await SceneManager.LoadSceneAsync("Boot", LoadSceneMode.Single);
 

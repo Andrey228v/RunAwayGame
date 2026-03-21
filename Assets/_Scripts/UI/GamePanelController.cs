@@ -1,6 +1,7 @@
 ﻿using Assets._Scripts.SceneLoading;
 using System;
 using UnityEngine;
+using VContainer;
 
 namespace Assets.Scripts.UI
 {
@@ -11,13 +12,14 @@ namespace Assets.Scripts.UI
         
         public event Action OnButtonLoadClick;
         public event Action OnButtonSaveClick;
-        
-        //private LoadScreenView _loadScreenView;
 
-        //public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
-        //{
-        //    _loadScreenView = loadScreenView;
-        //}
+        private LoadScreenView _loadScreenView;
+
+        [Inject]
+        public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
+        {
+            _loadScreenView = loadScreenView;
+        }
 
         private void OnEnable()
         {
@@ -27,7 +29,7 @@ namespace Assets.Scripts.UI
             _gameInterfacePanel.OnLoadButtonClick += LoadGame;
             _gameInterfacePanel.OnSaveButtonClick += SaveGame;
             _gameInterfacePanel.OnSoundButtonClick += SoundChangeState;
-            _gameMenuPanel.OnBackButtonClick += BackToMenu;
+            _gameMenuPanel.OnBackToMenuButtonClick += BackToMenu;
         }
 
         private void OnDisable()
@@ -38,7 +40,7 @@ namespace Assets.Scripts.UI
             _gameInterfacePanel.OnLoadButtonClick -= LoadGame;
             _gameInterfacePanel.OnSaveButtonClick -= SaveGame;
             _gameInterfacePanel.OnSoundButtonClick -= SoundChangeState;
-            _gameMenuPanel.OnBackButtonClick -= BackToMenu;
+            _gameMenuPanel.OnBackToMenuButtonClick -= BackToMenu;
         }
 
         private void ShowMenu()
@@ -74,9 +76,10 @@ namespace Assets.Scripts.UI
         }
 
         //?????
-        private void BackToMenu()
+        private async void BackToMenu()
         {
-
+            Debug.Log("EXIT to MENU");
+           await _loadScreenView.LoadSceneGroup(0);
         }
     }
 }

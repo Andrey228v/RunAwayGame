@@ -18,8 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadScreen.unity
     guid: 002460baf61f042459263b1cbf854b8d
   - enabled: 1
-    path: Assets/Scenes/PlayerUI.unity
+    path: Assets/Scenes/PlayerHUD.unity
     guid: 611cb5b9d3d8b8d40ba6c0017d77930c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_UseUCBPForAssetBundles: 0

@@ -20,19 +20,24 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
-        //private LoadScreenView _loadScreenView;
+        private LoadScreenView _loadScreenView;
 
-        //[Inject]
-        //public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
-        //{
-        //    _loadScreenView = loadScreenView;
-        //}
-
+        [Inject]
+        public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
+        {
+            _loadScreenView = loadScreenView;
+        }
 
         private void Start()
         {
             SetupButtons();
             ShowMainPage();
+        }
+
+
+        private void OnEnable()
+        {
+            Show();
             _currentPanel = _mainPagePanel;
         }
 
@@ -57,10 +62,11 @@ namespace Assets._Scripts.UI._1MenuWindow
             _settingsPanel.SetActive(true);
         }
 
-        private void StartGame()
+        private async void StartGame()
         {
             Debug.Log("START GAME");
-            //await _loadScreenView.LoadSceneGroup(1);
+            Hide();
+            await _loadScreenView.LoadSceneGroup(1);
         }
 
         private void ClickBackButton()
@@ -90,6 +96,18 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void ClickExit()
         {
 
+        }
+
+        private void Show()
+        {
+            gameObject.SetActive(true);
+            //if (_canvasGroup != null)
+            //    _canvasGroup.alpha = 1f;
+        }
+
+        private void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

@@ -4,8 +4,6 @@ using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
-using Assets.Scripts.SaveLoad.Service;
-using Assets.Scripts.UI;
 using ECM2;
 using UnityEngine;
 using VContainer;
@@ -17,13 +15,9 @@ namespace Assets.Scripts.Installers
     {
         [SerializeField] private Character _characterPrefab;
         [SerializeField] private CameraController _cameraController;
-
-        [SerializeField] private GamePanelController _gamePanelController;
         [SerializeField] private StartPoint _startPoint;
         [SerializeField] private FinishPoint _finishPoint;
-
         [SerializeField] private Transform _checkPoints;
-
         [SerializeField] private LevelData _startData;
 
 #if UNITY_EDITOR
@@ -37,11 +31,6 @@ namespace Assets.Scripts.Installers
             if (_cameraController == null)
             {
                 Debug.LogError($"{_cameraController.name}: _cameraController is not set!", this);
-            }
-
-            if (_gamePanelController == null)
-            {
-                Debug.LogError($"{_gamePanelController.name}: _gamePanelController is not set!", this);
             }
 
             if (_startPoint == null)
@@ -64,16 +53,11 @@ namespace Assets.Scripts.Installers
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(_cameraController);
-            builder.RegisterInstance(_gamePanelController);
             builder.RegisterInstance(new GamePoints(_startPoint, _finishPoint, _checkPoints));
             builder.RegisterInstance(_startData);
 
-            builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
             builder.Register<PlayerData>(Lifetime.Singleton);
-            builder.Register<SaveLoadService>(Lifetime.Singleton);
             builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
-            builder.Register<ISaveService, SaveLoadService>(Lifetime.Singleton);
-            //builder.Register<ISaveLoad, CheckPointsController>(Lifetime.Singleton).AsSelf();
 
             builder.RegisterFactory<Character>(container => () =>
             {

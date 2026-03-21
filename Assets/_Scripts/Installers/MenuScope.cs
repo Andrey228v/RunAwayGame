@@ -1,4 +1,5 @@
-﻿using Assets._Scripts.UI._1MenuWindow;
+﻿using Assets._Scripts.EnteryPoints;
+using Assets._Scripts.UI._1MenuWindow;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -11,7 +12,13 @@ namespace Assets._Scripts.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInstance(_menuTabs);
+            //builder.RegisterInstance(_menuTabs);
+            builder.RegisterEntryPoint<MenuEnteryPoint>();
+
+            builder.RegisterFactory<MenuTabs>(container => () =>
+            {
+                return container.Instantiate(_menuTabs);
+            }, Lifetime.Singleton);
         }
     }
 }

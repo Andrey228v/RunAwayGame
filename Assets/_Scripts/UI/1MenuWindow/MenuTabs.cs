@@ -7,16 +7,22 @@ namespace Assets._Scripts.UI._1MenuWindow
 {
     public class MenuTabs : MonoBehaviour
     {
-        [Header("Панели вкладок")]
+        [Header("Tabs")]
         [SerializeField] private GameObject _mainPagePanel;
         [SerializeField] private GameObject _settingsPanel;
 
-        [Header("Кнопки (опционально)")]
-        [SerializeField] private Button _startGameButton;
-        [SerializeField] private Button _continueButton;
+        [Header("Buttons")]
+        [SerializeField] private Button _startGameButtonL1;
+        [SerializeField] private Button _startGameButtonL2;
+        [SerializeField] private Button _startGameButtonL3;
         [SerializeField] private Button _settingsButton;
+        [SerializeField] private Button _soundControllButton;
+        [SerializeField] private Button _deletSaveButton;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _exitButton;
+
+        [Header("Sliders")]
+        [SerializeField] private Slider _volumeMusicSlider;
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
@@ -28,22 +34,29 @@ namespace Assets._Scripts.UI._1MenuWindow
             _loadScreenView = loadScreenView;
         }
 
-        private void Start()
-        {
-            SetupButtons();
-            ShowMainPage();
-        }
-
-
         private void OnEnable()
         {
             Show();
             _currentPanel = _mainPagePanel;
         }
 
+        private void Start()
+        {
+            _startGameButtonL1.onClick.AddListener(() => StartGame(1));
+            _startGameButtonL2.onClick.AddListener(() => StartGame(2));
+            _startGameButtonL3.onClick.AddListener(() => StartGame(3));
+
+            SetupButtons();
+            ShowMainPage();
+        }
+
         private void OnDestroy()
         {
             UnSetupButtons();
+
+            _startGameButtonL1.onClick.RemoveAllListeners();
+            _startGameButtonL2.onClick.RemoveAllListeners();
+            _startGameButtonL3.onClick.RemoveAllListeners();
         }
 
         public void ShowMainPage()
@@ -62,11 +75,11 @@ namespace Assets._Scripts.UI._1MenuWindow
             _settingsPanel.SetActive(true);
         }
 
-        private async void StartGame()
+        private async void StartGame(int level)
         {
             Debug.Log("START GAME");
             Hide();
-            await _loadScreenView.LoadSceneGroup(1);
+            await _loadScreenView.LoadSceneGroup(level);
         }
 
         private void ClickBackButton()
@@ -78,7 +91,7 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void SetupButtons()
         {
-            _startGameButton.onClick.AddListener(StartGame);
+            //_startGameButtonL1.onClick.AddListener(StartGame);
             _settingsButton.onClick.AddListener(ShowSettings);
             _backButton.onClick.AddListener(ClickBackButton);
             _exitButton.onClick.AddListener(ClickExit);
@@ -87,16 +100,13 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void UnSetupButtons()
         {
-            _startGameButton.onClick.RemoveListener(StartGame);
+            //_startGameButtonL1.onClick.RemoveListener(StartGame);
             _settingsButton.onClick.RemoveListener(ShowSettings);
             _backButton.onClick.RemoveListener(ClickBackButton);
             _exitButton.onClick.RemoveListener(ClickExit);
         }
 
-        private void ClickExit()
-        {
 
-        }
 
         private void Show()
         {
@@ -108,6 +118,11 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void Hide()
         {
             gameObject.SetActive(false);
+        }
+
+        private void ClickExit()
+        {
+            Application.Quit();
         }
     }
 }

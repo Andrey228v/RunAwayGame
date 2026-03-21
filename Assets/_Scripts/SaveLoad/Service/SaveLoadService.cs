@@ -2,8 +2,6 @@
 using Assets.Scripts.SaveLoad.Service;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using UnityEditor.Overlays;
 using UnityEngine;
 
 namespace Assets.Scripts.SaveLoad
@@ -15,9 +13,8 @@ namespace Assets.Scripts.SaveLoad
         private GameSaveData _saveData;
         private string _levelId;
 
-        public SaveLoadService(IEnumerable<ISaveLoad> saveLoads, ISaveSystem saveSystem) 
+        public SaveLoadService(ISaveSystem saveSystem) 
         {
-            _saveLoads = saveLoads;
             _saveSystem = saveSystem;
 
             LoadOrCreateSave();
@@ -42,6 +39,11 @@ namespace Assets.Scripts.SaveLoad
         public void SetLevelId(string levelId)
         {
             _levelId = levelId;
+        }
+
+        public void SetLevelObjects(IEnumerable<ISaveLoad> saveLoads)
+        {
+            _saveLoads = saveLoads;
         }
 
         private void LoadOrCreateSave()
@@ -70,7 +72,7 @@ namespace Assets.Scripts.SaveLoad
 
         public void DeleteSave()
         {
-            
+            _saveSystem.Delete(_levelId);
         }
 
         public LevelData GetLevelData()
@@ -95,6 +97,9 @@ namespace Assets.Scripts.SaveLoad
 
             SaveLevelIntoGame(data);
         }
+
+
+
 
         //public async Task SaveLevelDataAsync()
         //{

@@ -13,25 +13,25 @@ namespace Assets.Scripts.Installers
 {
     public class GameScope : LifetimeScope
     {
-        [SerializeField] private Character _characterPrefab;
-        [SerializeField] private CameraController _cameraController;
+        //[SerializeField] private Character _characterPrefab;
+        //[SerializeField] private CameraController _cameraController;
         [SerializeField] private StartPoint _startPoint;
         [SerializeField] private FinishPoint _finishPoint;
         [SerializeField] private Transform _checkPoints;
-        [SerializeField] private LevelData _startData;
+        //[SerializeField] private LevelData _startData;
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (_characterPrefab == null)
-            {
-                Debug.LogError($"{_characterPrefab.name}: _character is not set!", this);
-            }
+            //if (_characterPrefab == null)
+            //{
+            //    Debug.LogError($"{_characterPrefab.name}: _character is not set!", this);
+            //}
 
-            if (_cameraController == null)
-            {
-                Debug.LogError($"{_cameraController.name}: _cameraController is not set!", this);
-            }
+            //if (_cameraController == null)
+            //{
+            //    Debug.LogError($"{_cameraController.name}: _cameraController is not set!", this);
+            //}
 
             if (_startPoint == null)
             {
@@ -43,29 +43,29 @@ namespace Assets.Scripts.Installers
                 Debug.LogError($"{_checkPoints.name}: _checkPointers is not set!", this);
             }
 
-            if (_startData == null)
-            {
-                Debug.LogError($"_startData is not set!", this);
-            }
+            //if (_startData == null)
+            //{
+            //    Debug.LogError($"_startData is not set!", this);
+            //}
         }
 #endif
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInstance(_cameraController);
+            //builder.RegisterInstance(_cameraController);
             builder.RegisterInstance(new GamePoints(_startPoint, _finishPoint, _checkPoints));
-            builder.RegisterInstance(_startData);
+            //builder.RegisterInstance(_startData);
 
             builder.Register<PlayerData>(Lifetime.Singleton);
-            builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
+            //builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
 
-            builder.RegisterFactory<Character>(container => () =>
-            {
-                return container.Instantiate(_characterPrefab);
-            }, Lifetime.Transient);
+            //builder.RegisterFactory<Character>(container => () =>
+            //{
+            //    return container.Instantiate(_characterPrefab);
+            //}, Lifetime.Transient);
 
             builder.RegisterEntryPoint<CheckPointsController>().AsSelf();
-            builder.RegisterEntryPoint<PlayerController>().AsSelf();
+            //builder.RegisterEntryPoint<PlayerController>().AsSelf();
             builder.RegisterEntryPoint<GameEnteryPoint>();
         }
     }

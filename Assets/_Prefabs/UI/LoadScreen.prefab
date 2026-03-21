@@ -816,6 +816,10 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
         guid: 611cb5b9d3d8b8d40ba6c0017d77930c
       sceneType: 2
+    - reference:
+        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
+        guid: 899cd15b311d7324380ea62d6275d6d2
+      sceneType: 5
   - groupName: Level_2
     scenes:
     - reference:
@@ -826,6 +830,10 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
         guid: 611cb5b9d3d8b8d40ba6c0017d77930c
       sceneType: 2
+    - reference:
+        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
+        guid: 899cd15b311d7324380ea62d6275d6d2
+      sceneType: 5
   - groupName: Level_3
     scenes:
     - reference:
@@ -836,6 +844,10 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
         guid: 611cb5b9d3d8b8d40ba6c0017d77930c
       sceneType: 2
+    - reference:
+        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
+        guid: 899cd15b311d7324380ea62d6275d6d2
+      sceneType: 5
 --- !u!1 &7862403077806685717
 GameObject:
   m_ObjectHideFlags: 0

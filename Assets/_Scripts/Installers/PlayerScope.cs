@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.Camera;
+﻿using Assets._Scripts.EnteryPoints;
+using Assets.Scripts.Camera;
+using Assets.Scripts.Player;
 using ECM2;
 using UnityEngine;
 using VContainer;
@@ -30,11 +32,17 @@ namespace Assets._Scripts.Installers
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(_cameraController);
+            builder.RegisterEntryPoint<PlayerController>().AsSelf();
+            builder.RegisterEntryPoint<PlayerEnteryPoint>();
+            builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
+
 
             builder.RegisterFactory<Character>(container => () =>
             {
                 return container.Instantiate(_characterPrefab);
             }, Lifetime.Transient);
+
+
         }
     }
 }

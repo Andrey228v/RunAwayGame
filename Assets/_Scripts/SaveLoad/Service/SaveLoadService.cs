@@ -2,19 +2,22 @@
 using Assets.Scripts.SaveLoad.Service;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.SaveLoad
 {
-    public class SaveLoadService : ISaveService
+    public class SaveLoadService
     {
-        private IEnumerable<ISaveLoad> _saveLoads;
+        private HashSet<ISaveLoad> _saveLoads;
         private ISaveSystem _saveSystem;
         private GameSaveData _saveData;
         private string _levelId;
+        private LevelConfig _levelConfig;
 
         public SaveLoadService(ISaveSystem saveSystem) 
         {
+            _saveLoads = new HashSet<ISaveLoad>();
             _saveSystem = saveSystem;
 
             LoadOrCreateSave();
@@ -36,14 +39,20 @@ namespace Assets.Scripts.SaveLoad
             _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
         }
 
-        public void SetLevelId(string levelId)
+        public void SetLevelId(LevelConfig levelConfig)
         {
-            _levelId = levelId;
+            _levelConfig = levelConfig;
+            _levelId = _levelConfig.name;
         }
 
         public void SetLevelObjects(IEnumerable<ISaveLoad> saveLoads)
         {
-            _saveLoads = saveLoads;
+            foreach (ISaveLoad obj in saveLoads) 
+            {
+                _saveLoads.Add(obj);
+            }
+
+            Debug.Log($"SaveLoadCount: {_saveLoads.Count()}");
         }
 
         private void LoadOrCreateSave()
@@ -51,12 +60,10 @@ namespace Assets.Scripts.SaveLoad
             if (_saveSystem.HasKey(SaveUtilites.GAME_SAVE_KEY))
             {
                 _saveData = _saveSystem.Load<GameSaveData>(SaveUtilites.GAME_SAVE_KEY);
-                Debug.Log("Save loaded successfully");
             }
             else
             {
                 _saveData = new GameSaveData();
-                Debug.Log("New save created");
             }
         }
 
@@ -98,7 +105,15 @@ namespace Assets.Scripts.SaveLoad
             SaveLevelIntoGame(data);
         }
 
+        public LevelConfig GetLevelConfig()
+        {
+            return _levelConfig;
+        }
 
+        public void ClearSaveLoadList()
+        {
+            _saveLoads = new HashSet<ISaveLoad>();
+        }
 
 
         //public async Task SaveLevelDataAsync()

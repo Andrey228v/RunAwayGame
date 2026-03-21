@@ -17,88 +17,76 @@ namespace Assets.Scripts.EnteryPoints
 {
     public class GameEnteryPoint : IStartable, IDisposable
     {
-        private PlayerController _playerController;
-        private PlayerStateMachineFactory _playerStateMachineFactory;
-        private CameraController _cameraController;
-        private Func<Character> _characterFactory;
+        //private PlayerController _playerController;
+        //private PlayerStateMachineFactory _playerStateMachineFactory;
+        //private CameraController _cameraController;
+        //private Func<Character> _characterFactory;
         private int _checkpointsCount;
         private GamePoints _gamePoints;
-        private SaveLoadService _saveService;
-        private LevelData _startData;
+        private SaveLoadService _saveLoadService;
+        //private LevelData _startData;
         private LevelData _loadData;
         private CheckPointsController _checkPointsController;
         private IEnumerable<ISaveLoad> _saveLoads;
 
 
-        public GameEnteryPoint(PlayerController playerController,
-            PlayerStateMachineFactory playerStateMachineFactory, 
-            CameraController cameraController,
-            Func<Character> characterFactory, PlayerData playerData,
-            IObjectResolver container, GamePoints gamePoints,
-            SaveLoadService saveService, LevelData startData,
+        public GameEnteryPoint(GamePoints gamePoints,
+            SaveLoadService saveLoadService,
             CheckPointsController checkPointsController,
             IEnumerable<ISaveLoad> saveLoads)
         {
-            _playerController = playerController;
-            _playerStateMachineFactory = playerStateMachineFactory;
-            _cameraController = cameraController;
-            _characterFactory = characterFactory;
+            //_playerController = playerController;
+            //_playerStateMachineFactory = playerStateMachineFactory;
+            //_cameraController = cameraController;
+            //_characterFactory = characterFactory;
             _gamePoints = gamePoints;
-            _startData = startData; // ситуативно пока оставить, потом придмать что-то потому что загрузка будет из общего словаря...
-            _saveService = saveService;
+            //_startData = startData; // ситуативно пока оставить, потом придмать что-то потому что загрузка будет из общего словаря...
+            _saveLoadService = saveLoadService;
             _checkPointsController = checkPointsController;
             _saveLoads = saveLoads;
-            //_gamePanelController = gamePanelController;
         }
 
         public void Start()
         {
-            _checkPointsController.OnSave += _saveService.SaveLevelData;
-            //_gamePanelController.OnButtonLoadClick += _saveService.LoadLevel;
-            //_gamePanelController.OnButtonSaveClick += _saveService.SaveLevelData;
+            _checkPointsController.OnSave += _saveLoadService.SaveLevelData;
 
+            _saveLoadService.SetLevelObjects(_saveLoads);
 
-            _saveService.SetLevelId(_startData.LevelID);
-            _saveService.SetLevelObjects(_saveLoads);
-
-            _loadData = _saveService.GetLevelData();
-
-            _loadData = InitPlayer(_loadData);
+            _loadData = _saveLoadService.GetLevelData();
             _loadData = InitCheckPoints(_loadData);
 
-            _saveService.SaveLevelIntoGame(_loadData);
-            _saveService.LoadLevel();
+            _saveLoadService.SaveLevelIntoGame(_loadData);
+            _saveLoadService.LoadLevel();
         }
 
         public void Dispose()
         {
-            _checkPointsController.OnSave -= _saveService.SaveLevelData;
-            //_gamePanelController.OnButtonLoadClick -= _saveService.LoadLevel;
-            //_gamePanelController.OnButtonSaveClick -= _saveService.SaveLevelData;
+            _checkPointsController.OnSave -= _saveLoadService.SaveLevelData;
+            _saveLoadService.ClearSaveLoadList();
         }
 
-        private LevelData InitPlayer(LevelData levelData)
-        {
-            Character character = _characterFactory();
+        //private LevelData InitPlayer(LevelData levelData)
+        //{
+        //    Character character = _characterFactory();
 
-            if (levelData.PlayerData == null)
-            {
-                var playerData = new PlayerData
-                {
-                    PlayerPosition = _gamePoints.StartPoint.transform.position,
-                    PlayerRotation = new Quaternion(0, 0, 0, 0)
-                };
+        //    if (levelData.PlayerData == null)
+        //    {
+        //        var playerData = new PlayerData
+        //        {
+        //            PlayerPosition = _gamePoints.StartPoint.transform.position,
+        //            PlayerRotation = new Quaternion(0, 0, 0, 0)
+        //        };
 
-                levelData.PlayerData = playerData;
-            }
+        //        levelData.PlayerData = playerData;
+        //    }
 
-            _cameraController.SetTarget(character.transform);
-            PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
-            _playerController.SetCharacter(character);
-            _playerController.SetPlayerStateMachine(playerStateMachine);
+        //    _cameraController.SetTarget(character.transform);
+        //    PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
+        //    _playerController.SetCharacter(character);
+        //    _playerController.SetPlayerStateMachine(playerStateMachine);
 
-            return levelData;
-        }
+        //    return levelData;
+        //}
 
         private LevelData InitCheckPoints(LevelData levelData) // ПОД ВОПРОСОМ....
         {

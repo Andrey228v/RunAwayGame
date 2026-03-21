@@ -1,5 +1,7 @@
 ﻿using Assets._Scripts.UI._1MenuWindow;
+using Assets.Scripts.SaveLoad;
 using System;
+using System.Collections.Generic;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -7,10 +9,13 @@ namespace Assets._Scripts.EnteryPoints
     public class MenuEnteryPoint : IStartable, IDisposable
     {
         private Func<MenuTabs> _menuFactory;
+        private SaveLoadService _saveLoadService;
+        private MenuTabs _menu;
 
-        public MenuEnteryPoint(Func<MenuTabs> menuFactory) 
+        public MenuEnteryPoint(Func<MenuTabs> menuFactory, SaveLoadService saveLoadService) 
         {
             _menuFactory = menuFactory;
+            _saveLoadService = saveLoadService;
         }
 
         public void Start()
@@ -20,12 +25,19 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Dispose()
         {
-           
+            _menu.OnChooseLevel -= SetLevelName;
         }
 
         public void InitMenu()
         {
-            MenuTabs menu = _menuFactory();
+            _menu = _menuFactory();
+            _menu.OnChooseLevel += SetLevelName;
+
+        }
+
+        private void SetLevelName(LevelConfig levelConfig)
+        {
+            _saveLoadService.SetLevelId(levelConfig);
         }
     }
 }

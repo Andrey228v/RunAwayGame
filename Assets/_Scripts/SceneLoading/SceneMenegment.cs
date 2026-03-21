@@ -168,6 +168,6 @@ namespace Assets._Scripts.SceneLoading
             public SceneType sceneType;
         }
 
-        public enum SceneType { ActiveScene, MainMenu, HUD, Cinematic, Enviroment }
+        public enum SceneType { ActiveScene, MainMenu, HUD, Cinematic, Enviroment, Player }
     }
 }

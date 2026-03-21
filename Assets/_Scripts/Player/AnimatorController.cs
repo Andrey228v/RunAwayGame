@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class AnimatorController
+    public class AnimatorController : IDisposable
     {
         private Animator _animator;
 
@@ -17,9 +18,16 @@ namespace Assets.Scripts.Player
             _animator = animator;
         }
 
+        public void Dispose()
+        {
+            Debug.Log("Animator CONTROLLER DESTROU");
+            _animator = null;
+        }
+
         public void SetStatic(bool isStatic)
         {
-            _animator.SetBool(StaticIdle, isStatic);
+            if(_animator  != null)
+                _animator.SetBool(StaticIdle, isStatic);
         }
 
         public void SetMove(bool isMove)

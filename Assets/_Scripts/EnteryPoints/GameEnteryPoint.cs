@@ -23,11 +23,11 @@ namespace Assets.Scripts.EnteryPoints
         private Func<Character> _characterFactory;
         private int _checkpointsCount;
         private GamePoints _gamePoints;
-        private ISaveService _saveService;
+        private SaveLoadService _saveService;
         private LevelData _startData;
         private LevelData _loadData;
         private CheckPointsController _checkPointsController;
-        private GamePanelController _gamePanelController;
+        
 
         public GameEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory, 
@@ -35,8 +35,7 @@ namespace Assets.Scripts.EnteryPoints
             Func<Character> characterFactory, PlayerData playerData,
             IObjectResolver container, GamePoints gamePoints,
             SaveLoadService saveService, LevelData startData,
-            CheckPointsController checkPointsController,
-            GamePanelController gamePanelController)
+            CheckPointsController checkPointsController)
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -46,14 +45,14 @@ namespace Assets.Scripts.EnteryPoints
             _startData = startData; // ситуативно пока оставить, потом придмать что-то потому что загрузка будет из общего словаря...
             _saveService = saveService;
             _checkPointsController = checkPointsController;
-            _gamePanelController = gamePanelController;
+            //_gamePanelController = gamePanelController;
         }
 
         public void Start()
         {
             _checkPointsController.OnSave += _saveService.SaveLevelData;
-            _gamePanelController.OnButtonLoadClick += _saveService.LoadLevel;
-            _gamePanelController.OnButtonSaveClick += _saveService.SaveLevelData;
+            //_gamePanelController.OnButtonLoadClick += _saveService.LoadLevel;
+            //_gamePanelController.OnButtonSaveClick += _saveService.SaveLevelData;
 
 
             _saveService.SetLevelId(_startData.LevelID);
@@ -69,8 +68,8 @@ namespace Assets.Scripts.EnteryPoints
         public void Dispose()
         {
             _checkPointsController.OnSave -= _saveService.SaveLevelData;
-            _gamePanelController.OnButtonLoadClick -= _saveService.LoadLevel;
-            _gamePanelController.OnButtonSaveClick -= _saveService.SaveLevelData;
+            //_gamePanelController.OnButtonLoadClick -= _saveService.LoadLevel;
+            //_gamePanelController.OnButtonSaveClick -= _saveService.SaveLevelData;
         }
 
         private LevelData InitPlayer(LevelData levelData)

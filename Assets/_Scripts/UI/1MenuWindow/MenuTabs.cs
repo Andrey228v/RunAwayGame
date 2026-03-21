@@ -1,4 +1,7 @@
 ﻿using Assets._Scripts.SceneLoading;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -24,14 +27,18 @@ namespace Assets._Scripts.UI._1MenuWindow
         [Header("Sliders")]
         [SerializeField] private Slider _volumeMusicSlider;
 
+        public event Action<LevelConfig> OnChooseLevel;
+
         private GameObject _currentPanel;
         private GameObject _previousPanel;
         private LoadScreenView _loadScreenView;
+        private List<LevelConfig> _levelConfigs;
 
         [Inject]
-        public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
+        public void Constructor(LoadScreenView loadScreenView, List<LevelConfig> levelConfigs) // так ли... не знаю. Надо подумать...
         {
             _loadScreenView = loadScreenView;
+            _levelConfigs = levelConfigs;
         }
 
         private void OnEnable()
@@ -77,8 +84,22 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private async void StartGame(int level)
         {
-            Debug.Log("START GAME");
+            //Debug.Log("START GAME");
             Hide();
+            //Заглушка...
+            if (level == 1)
+            {
+                OnChooseLevel?.Invoke(_levelConfigs[0]);
+            }
+            else if (level == 2)
+            {
+                OnChooseLevel?.Invoke(_levelConfigs[1]);
+            }
+            else if (level == 3)
+            {
+                OnChooseLevel?.Invoke(_levelConfigs[2]);
+            }
+
             await _loadScreenView.LoadSceneGroup(level);
         }
 

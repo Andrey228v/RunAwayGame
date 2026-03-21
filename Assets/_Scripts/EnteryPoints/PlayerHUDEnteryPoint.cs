@@ -21,7 +21,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            Debug.Log("ZAPUSK PlayerHUDEnteryPoint");
+            //Debug.Log("ZAPUSK PlayerHUDEnteryPoint");
             _gamePanelController = _gamePanelFactory();
         }
 

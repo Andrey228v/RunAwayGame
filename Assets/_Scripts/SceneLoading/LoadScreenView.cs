@@ -24,9 +24,9 @@ namespace Assets._Scripts.SceneLoading
 
         private void Awake()
         {
-            manager.OnSceneLoaded += sceneName => Debug.Log("Loaded: " + sceneName);
-            manager.OnSceneUnloaded += sceneName => Debug.Log("Unloaded: " + sceneName);
-            manager.OnSceneGroupLoaded += () => Debug.Log("On scene group loaded");
+            //manager.OnSceneLoaded += sceneName => Debug.Log("Loaded: " + sceneName);
+            //manager.OnSceneUnloaded += sceneName => Debug.Log("Unloaded: " + sceneName);
+            //manager.OnSceneGroupLoaded += () => Debug.Log("On scene group loaded");
         }
 
         private void Update()

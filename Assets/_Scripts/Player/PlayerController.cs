@@ -3,14 +3,20 @@ using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
 using System;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerController : IFixedTickable, ISaveLoad
+    public class PlayerController : IFixedTickable, ISaveLoad, IDisposable
     {
         private PlayerStateMachine _playerStateMachine;
         private Character _character;
+
+        public void Dispose()
+        {
+            Debug.Log("PLAYER CONTROLLER DESTROU");
+        }
 
         public void FixedTick()
         {
@@ -37,5 +43,7 @@ namespace Assets.Scripts.Player
             data.PlayerData.PlayerPosition = _character.transform.position;
             data.PlayerData.PlayerRotation = _character.transform.rotation;
         }
+
+
     }
 }

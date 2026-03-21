@@ -27,7 +27,8 @@ namespace Assets.Scripts.EnteryPoints
         private LevelData _startData;
         private LevelData _loadData;
         private CheckPointsController _checkPointsController;
-        
+        private IEnumerable<ISaveLoad> _saveLoads;
+
 
         public GameEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory, 
@@ -35,7 +36,8 @@ namespace Assets.Scripts.EnteryPoints
             Func<Character> characterFactory, PlayerData playerData,
             IObjectResolver container, GamePoints gamePoints,
             SaveLoadService saveService, LevelData startData,
-            CheckPointsController checkPointsController)
+            CheckPointsController checkPointsController,
+            IEnumerable<ISaveLoad> saveLoads)
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -45,6 +47,7 @@ namespace Assets.Scripts.EnteryPoints
             _startData = startData; // ситуативно пока оставить, потом придмать что-то потому что загрузка будет из общего словаря...
             _saveService = saveService;
             _checkPointsController = checkPointsController;
+            _saveLoads = saveLoads;
             //_gamePanelController = gamePanelController;
         }
 
@@ -56,6 +59,8 @@ namespace Assets.Scripts.EnteryPoints
 
 
             _saveService.SetLevelId(_startData.LevelID);
+            _saveService.SetLevelObjects(_saveLoads);
+
             _loadData = _saveService.GetLevelData();
 
             _loadData = InitPlayer(_loadData);

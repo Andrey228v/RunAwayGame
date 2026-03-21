@@ -1,8 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
-using Eflatun.SceneReference;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -10,8 +8,6 @@ namespace Assets._Scripts.SceneLoading
 {
     public class LoadScreenView : MonoBehaviour
     {
-        //[SerializeField] private SceneReference _loadingScene;    // Экран загрузки. Пока под вопросом так ли делать...
-        //[SerializeField] private GameObject _screenRoot;
         [SerializeField] private Slider _progressBar;
         [SerializeField] private TextMeshProUGUI _statusText;
         [SerializeField] private CanvasGroup _canvasGroup;
@@ -58,13 +54,13 @@ namespace Assets._Scripts.SceneLoading
             LoadingProgress progress = new LoadingProgress();
             progress.OnProgress += target => _targetProgress = Mathf.Max(target, _targetProgress); // Нет отписки...
 
-            EnableLoadingCanvas();
+            EnableLoadingCanvas(true);
+            await UniTask.Delay(100);
             await manager.LoadScenes(_sceneGroups[index], progress);
-            //await UniTask.Delay(1000);
             EnableLoadingCanvas(false);
         }
 
-        public void EnableLoadingCanvas(bool enable = true)
+        public void EnableLoadingCanvas(bool enable)
         {
             _isLoading = enable;
             _loadingCanvas.gameObject.SetActive(enable);

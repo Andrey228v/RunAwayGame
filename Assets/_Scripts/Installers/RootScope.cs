@@ -15,17 +15,11 @@ namespace Assets._Scripts.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInstance(_loadingScreenView);
             builder.RegisterEntryPoint<BootEntryPoint>();
             builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
-            builder.Register<ISaveService, SaveLoadService>(Lifetime.Singleton);
-
-
-            builder.RegisterFactory<LoadScreenView>(container => () =>
-            {
-                return container.Instantiate(_loadingScreenView);
-            }, Lifetime.Singleton);
+            //builder.Register<ISaveService, SaveLoadService>(Lifetime.Singleton);
+            builder.RegisterComponentInNewPrefab(_loadingScreenView, Lifetime.Singleton);
         }
     }
 }

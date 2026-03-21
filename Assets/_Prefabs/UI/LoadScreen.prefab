@@ -358,7 +358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8967847050213706894
 RectTransform:
   m_ObjectHideFlags: 0
@@ -816,6 +816,26 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
         guid: 611cb5b9d3d8b8d40ba6c0017d77930c
       sceneType: 2
+  - groupName: Level_2
+    scenes:
+    - reference:
+        asset: {fileID: 102900000, guid: bb7e8d1174cfbe84d82ba372040c8e8d, type: 3}
+        guid: bb7e8d1174cfbe84d82ba372040c8e8d
+      sceneType: 0
+    - reference:
+        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
+        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
+      sceneType: 2
+  - groupName: Level_3
+    scenes:
+    - reference:
+        asset: {fileID: 102900000, guid: 43586f51312cc4d4787ed65862f0679b, type: 3}
+        guid: 43586f51312cc4d4787ed65862f0679b
+      sceneType: 0
+    - reference:
+        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
+        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
+      sceneType: 2
 --- !u!1 &7862403077806685717
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,7 +854,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &233743515094972832
 Transform:
   m_ObjectHideFlags: 0

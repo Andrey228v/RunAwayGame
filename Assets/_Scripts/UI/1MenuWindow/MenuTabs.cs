@@ -1,6 +1,4 @@
-﻿using Assets._Scripts.SceneLoading;
-using NUnit.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,13 +29,13 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
-        private LoadScreenView _loadScreenView;
+        //private LoadScreenView _loadScreenView;
         private List<LevelConfig> _levelConfigs;
 
         [Inject]
-        public void Constructor(LoadScreenView loadScreenView, List<LevelConfig> levelConfigs) // так ли... не знаю. Надо подумать...
+        public void Constructor(List<LevelConfig> levelConfigs)
         {
-            _loadScreenView = loadScreenView;
+            //_loadScreenView = loadScreenView;
             _levelConfigs = levelConfigs;
         }
 
@@ -100,7 +98,7 @@ namespace Assets._Scripts.UI._1MenuWindow
                 OnChooseLevel?.Invoke(_levelConfigs[2]);
             }
 
-            await _loadScreenView.LoadSceneGroup(level);
+            //await _loadScreenView.LoadSceneGroup(level);
         }
 
         private void ClickBackButton()

@@ -756,7 +756,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4617404813778135127}
-  - component: {fileID: 6441238335412482266}
+  - component: {fileID: 4600628069073148330}
   m_Layer: 0
   m_Name: LoadScreen
   m_TagString: Untagged
@@ -782,7 +782,7 @@ Transform:
   - {fileID: 8967847050213706894}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6441238335412482266
+--- !u!114 &4600628069073148330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -793,61 +793,11 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 510b1102e240451418e3d3c78b8c9314, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.SceneLoading.LoadScreenView
   _progressBar: {fileID: 598814937670358400}
   _statusText: {fileID: 7376768956914941075}
-  _canvasGroup: {fileID: 0}
   _loadingCanvas: {fileID: 4424880616549208262}
   _loadingCamera: {fileID: 1887532975202624056}
-  _sceneGroups:
-  - groupName: Menu
-    scenes:
-    - reference:
-        asset: {fileID: 102900000, guid: cc38d1f82b0280643ad77969afefb0d3, type: 3}
-        guid: cc38d1f82b0280643ad77969afefb0d3
-      sceneType: 0
-  - groupName: Level_1
-    scenes:
-    - reference:
-        asset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
-        guid: 99c9720ab356a0642a771bea13969a05
-      sceneType: 0
-    - reference:
-        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
-        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
-      sceneType: 2
-    - reference:
-        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
-        guid: 899cd15b311d7324380ea62d6275d6d2
-      sceneType: 5
-  - groupName: Level_2
-    scenes:
-    - reference:
-        asset: {fileID: 102900000, guid: bb7e8d1174cfbe84d82ba372040c8e8d, type: 3}
-        guid: bb7e8d1174cfbe84d82ba372040c8e8d
-      sceneType: 0
-    - reference:
-        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
-        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
-      sceneType: 2
-    - reference:
-        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
-        guid: 899cd15b311d7324380ea62d6275d6d2
-      sceneType: 5
-  - groupName: Level_3
-    scenes:
-    - reference:
-        asset: {fileID: 102900000, guid: 43586f51312cc4d4787ed65862f0679b, type: 3}
-        guid: 43586f51312cc4d4787ed65862f0679b
-      sceneType: 0
-    - reference:
-        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
-        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
-      sceneType: 2
-    - reference:
-        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
-        guid: 899cd15b311d7324380ea62d6275d6d2
-      sceneType: 5
 --- !u!1 &7862403077806685717
 GameObject:
   m_ObjectHideFlags: 0

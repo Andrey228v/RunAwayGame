@@ -10,18 +10,28 @@ namespace Assets._Scripts.Installers
 {
     public class RootScope : LifetimeScope
     {
-        [SerializeField] private LoadScreenView _loadingScreenView;
+        //[SerializeField] private LoadScreenView _loadingScreenView;
         [SerializeField] private List<LevelConfig> _levelConfigs;
+
+        [SerializeField] private List<SceneGroupHandle> _sceneGroupHandle;
+        [SerializeField] private LoadScreenView _loadScreenView;
+
+        //[SerializeField] private List<SceneGroup> _sceneGroupHandle;
+
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterInstance(_levelConfigs);
+            builder.RegisterInstance(_sceneGroupHandle);
+            builder.RegisterInstance(_loadScreenView);
             builder.RegisterEntryPoint<BootEntryPoint>();
             builder.Register<ISaveSystem, EasySaveSystem>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
+            builder.Register<LoadManager>(Lifetime.Singleton);
+
             //builder.Register<ISaveService, SaveLoadService>(Lifetime.Singleton);
-            builder.RegisterComponentInNewPrefab(_loadingScreenView, Lifetime.Singleton);
-            
+            //builder.RegisterComponentInNewPrefab(_loadingScreenView, Lifetime.Singleton);
+
         }
     }
 }

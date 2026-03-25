@@ -13,13 +13,16 @@ namespace Assets.Scripts.UI
         public event Action OnButtonLoadClick;
         public event Action OnButtonSaveClick;
 
-        private LoadScreenView _loadScreenView;
+        //private LoadScreenView _loadScreenView;
 
-        [Inject]
-        public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
-        {
-            _loadScreenView = loadScreenView;
-        }
+        //[Inject]
+        //public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
+        //{
+        //    _loadScreenView = loadScreenView;
+        //}
+
+
+
 
         private void OnEnable()
         {
@@ -79,7 +82,7 @@ namespace Assets.Scripts.UI
         private async void BackToMenu()
         {
             Debug.Log("EXIT to MENU");
-           await _loadScreenView.LoadSceneGroup(0);
+           //await _loadScreenView.LoadSceneGroup(0);
         }
     }
 }

@@ -2,6 +2,7 @@
 using Assets._Scripts.Utilites;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -10,10 +11,14 @@ namespace Assets._Scripts.EnteryPoints
     public class BootEntryPoint : IInitializable
     {
         private LoadScreenView _screenView;
+        private LoadManager _loadManager;
+        private List<SceneGroupHandle> _scensGroups;
 
-        public BootEntryPoint(LoadScreenView loadScreenView)
+        public BootEntryPoint(LoadManager loadManager, List<SceneGroupHandle> scensGroups)
         {
-            _screenView = loadScreenView;
+            //_screenView = loadScreenView;
+            _loadManager = loadManager;
+            _scensGroups = scensGroups;
         }
 
         public async void Initialize()
@@ -22,8 +27,10 @@ namespace Assets._Scripts.EnteryPoints
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             DOTween.SetTweensCapacity(5000, 100);
 
-            await UniTask.Delay(100);
-            await _screenView.LoadSceneGroup(0);
+            await _loadManager.LoadScene(_scensGroups[0]);
+
+            //await UniTask.Delay(100);
+            //await _screenView.LoadSceneGroup(0);
         }
     }
 }

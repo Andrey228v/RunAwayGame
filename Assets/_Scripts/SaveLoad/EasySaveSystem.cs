@@ -24,6 +24,11 @@
             ES3.DeleteKey(key);
         }
 
+        public void ResetAllProgress()
+        {
+            ES3.DeleteFile();
+        }
+
         //private ES3Settings GetSettings()
         //{
         //    return new ES3Settings

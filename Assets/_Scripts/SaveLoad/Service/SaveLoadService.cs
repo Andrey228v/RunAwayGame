@@ -77,9 +77,16 @@ namespace Assets.Scripts.SaveLoad
             }
         }
 
-        public void DeleteSave()
+        public void DeleteSave(string key)
         {
-            _saveSystem.Delete(_levelId);
+            _saveSystem.Delete("GameSaveData"); // Тут вопрос... на потом...
+        }
+
+        public void ResetAllProgress() 
+        {
+            Debug.Log("RESET ALL SAVE");
+            _saveSystem.ResetAllProgress();
+            _saveData = new GameSaveData();
         }
 
         public LevelData GetLevelData()

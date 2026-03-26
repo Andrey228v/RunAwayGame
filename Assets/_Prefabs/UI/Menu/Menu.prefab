@@ -1152,11 +1152,11 @@ MonoBehaviour:
   _startGameButtonL2: {fileID: 7205486620264458315}
   _startGameButtonL3: {fileID: 4847420982115861385}
   _settingsButton: {fileID: 1407290200590352448}
-  _soundControllButton: {fileID: 0}
-  _deletSaveButton: {fileID: 0}
+  _soundControllButton: {fileID: 300116929683457175}
+  _deletSaveButton: {fileID: 5096847652835203767}
   _backButton: {fileID: 6031090757848634953}
   _exitButton: {fileID: 122835909246431705}
-  _volumeMusicSlider: {fileID: 0}
+  _volumeMusicSlider: {fileID: 8396068810804829788}
 --- !u!1 &3115947090028525707
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,7 +2364,7 @@ GameObject:
   - component: {fileID: 511707131077136026}
   - component: {fileID: 300116929683457175}
   m_Layer: 5
-  m_Name: SettingsButton (1)
+  m_Name: SoundsControllButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

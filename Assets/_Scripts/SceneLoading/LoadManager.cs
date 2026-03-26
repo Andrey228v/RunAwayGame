@@ -71,10 +71,7 @@ namespace Assets._Scripts.SceneLoading
 
                 await Addressables.UnloadSceneAsync(handle).ToUniTask(_progress);
 
-                //await Addressables.UnloadSceneAsync(handle).ToUniTask();
                 _loadsScenes.Remove(key);
-
-                //_asyncOperationGroup
             }
 
             _asyncOperationGroup.ReleaseAll();

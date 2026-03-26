@@ -36,7 +36,7 @@ namespace Assets.Scripts.Player
 
         public void Dispose()
         {
-            _animatorController.Dispose();
+           
         }
     }
 }

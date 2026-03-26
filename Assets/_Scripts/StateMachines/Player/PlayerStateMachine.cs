@@ -1,13 +1,14 @@
 ﻿using Assets.Input;
 using Assets.Scripts.Player;
 using Assets.Scripts.StateMachines.Player.States;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Assets.Scripts.StateMachines.Player
 {
-    public class PlayerStateMachine : IStateSwitcher
+    public class PlayerStateMachine : IStateSwitcher, IDisposable
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;
@@ -33,6 +34,26 @@ namespace Assets.Scripts.StateMachines.Player
             _fallController = fallController;
 
             Start();
+        }
+
+        public void Dispose()
+        {
+            _playerMovement.Dispose();
+            _inputReader.Dispose();
+            _playerGroundChecker.Dispose();
+            _playerJumper.Dispose();
+            _animatorController.Dispose();
+            _fallController.Dispose();
+
+            _states.Clear();
+            _currentState = null;
+            _prevState = null;
+            _playerMovement = null;
+            _playerRotator = null;
+            _playerGroundChecker = null;
+            _playerJumper = null;
+            _animatorController = null;
+            _fallController = null;
         }
 
         public void Start()
@@ -65,5 +86,7 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState = state;
             _currentState?.Enter();
         }
+
+
     }
 }

@@ -1,11 +1,12 @@
 ﻿using Assets._Scripts.SceneLoading;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
 namespace Assets.Scripts.UI
 {
-    public class GamePanelController : MonoBehaviour
+    public class GamePanelController : MonoBehaviour //Игровой HUD
     {
         [SerializeField] private GameInterfacePanel _gameInterfacePanel;
         [SerializeField] private GameMenuPanel _gameMenuPanel;
@@ -13,16 +14,16 @@ namespace Assets.Scripts.UI
         public event Action OnButtonLoadClick;
         public event Action OnButtonSaveClick;
 
-        //private LoadScreenView _loadScreenView;
-
-        //[Inject]
-        //public void Constructor(LoadScreenView loadScreenView) // так ли... не знаю. Надо подумать...
-        //{
-        //    _loadScreenView = loadScreenView;
-        //}
+        private LoadManager _loadManager;
+        private List<SceneGroupHandle> _scensGroups;
 
 
-
+        [Inject]
+        public void Constructor(LoadManager loadManager, List<SceneGroupHandle> scensGroups)
+        {
+            _loadManager = loadManager;
+            _scensGroups = scensGroups;
+        }
 
         private void OnEnable()
         {
@@ -78,11 +79,10 @@ namespace Assets.Scripts.UI
 
         }
 
-        //?????
         private async void BackToMenu()
         {
             Debug.Log("EXIT to MENU");
-           //await _loadScreenView.LoadSceneGroup(0);
+            await _loadManager.LoadScene(_scensGroups[0]);
         }
     }
 }

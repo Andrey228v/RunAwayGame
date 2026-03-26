@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets._Scripts.SceneLoading;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,14 +30,16 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
-        //private LoadScreenView _loadScreenView;
         private List<LevelConfig> _levelConfigs;
+        private LoadManager _loadManager;
+        private List<SceneGroupHandle> _scensGroups;
 
         [Inject]
-        public void Constructor(List<LevelConfig> levelConfigs)
+        public void Constructor(List<LevelConfig> levelConfigs, LoadManager loadManager, List<SceneGroupHandle> scensGroups)
         {
-            //_loadScreenView = loadScreenView;
             _levelConfigs = levelConfigs;
+            _loadManager = loadManager;
+            _scensGroups = scensGroups;
         }
 
         private void OnEnable()
@@ -82,9 +85,8 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private async void StartGame(int level)
         {
-            //Debug.Log("START GAME");
             Hide();
-            //Заглушка...
+
             if (level == 1)
             {
                 OnChooseLevel?.Invoke(_levelConfigs[0]);
@@ -98,7 +100,7 @@ namespace Assets._Scripts.UI._1MenuWindow
                 OnChooseLevel?.Invoke(_levelConfigs[2]);
             }
 
-            //await _loadScreenView.LoadSceneGroup(level);
+            await _loadManager.LoadScene(_scensGroups[level]);
         }
 
         private void ClickBackButton()
@@ -110,7 +112,6 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void SetupButtons()
         {
-            //_startGameButtonL1.onClick.AddListener(StartGame);
             _settingsButton.onClick.AddListener(ShowSettings);
             _backButton.onClick.AddListener(ClickBackButton);
             _exitButton.onClick.AddListener(ClickExit);
@@ -119,13 +120,10 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void UnSetupButtons()
         {
-            //_startGameButtonL1.onClick.RemoveListener(StartGame);
             _settingsButton.onClick.RemoveListener(ShowSettings);
             _backButton.onClick.RemoveListener(ClickBackButton);
             _exitButton.onClick.RemoveListener(ClickExit);
         }
-
-
 
         private void Show()
         {

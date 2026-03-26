@@ -178,9 +178,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4884070179884481798, guid: dec3bc0198b10fa4c8dba6950e501aa7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7678587421448789320, guid: dec3bc0198b10fa4c8dba6950e501aa7, type: 3}
       propertyPath: m_Name
       value: LoadScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 8565952404851384506, guid: dec3bc0198b10fa4c8dba6950e501aa7, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -252,18 +260,42 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
         guid: 99c9720ab356a0642a771bea13969a05
       type: 0
+    - scene:
+        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
+        guid: 899cd15b311d7324380ea62d6275d6d2
+      type: 4
+    - scene:
+        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
+        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
+      type: 3
   - groupName: Level_2
     scenesNames:
     - scene:
         asset: {fileID: 102900000, guid: bb7e8d1174cfbe84d82ba372040c8e8d, type: 3}
         guid: bb7e8d1174cfbe84d82ba372040c8e8d
       type: 0
+    - scene:
+        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
+        guid: 899cd15b311d7324380ea62d6275d6d2
+      type: 4
+    - scene:
+        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
+        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
+      type: 3
   - groupName: Level_3
     scenesNames:
     - scene:
         asset: {fileID: 102900000, guid: 43586f51312cc4d4787ed65862f0679b, type: 3}
         guid: 43586f51312cc4d4787ed65862f0679b
       type: 0
+    - scene:
+        asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
+        guid: 899cd15b311d7324380ea62d6275d6d2
+      type: 4
+    - scene:
+        asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
+        guid: 611cb5b9d3d8b8d40ba6c0017d77930c
+      type: 3
   _loadScreenView: {fileID: 95843569}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

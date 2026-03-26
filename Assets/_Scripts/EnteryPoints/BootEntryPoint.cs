@@ -1,6 +1,4 @@
 ﻿using Assets._Scripts.SceneLoading;
-using Assets._Scripts.Utilites;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,13 +8,11 @@ namespace Assets._Scripts.EnteryPoints
 {
     public class BootEntryPoint : IInitializable
     {
-        private LoadScreenView _screenView;
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
 
         public BootEntryPoint(LoadManager loadManager, List<SceneGroupHandle> scensGroups)
         {
-            //_screenView = loadScreenView;
             _loadManager = loadManager;
             _scensGroups = scensGroups;
         }

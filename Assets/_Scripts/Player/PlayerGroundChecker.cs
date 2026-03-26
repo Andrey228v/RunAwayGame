@@ -1,8 +1,9 @@
 ﻿using ECM2;
+using System;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerGroundChecker
+    public class PlayerGroundChecker : IDisposable
     {
         private Character _character;
 
@@ -11,13 +12,13 @@ namespace Assets.Scripts.Player
             _character = character;
         }
 
+        public void Dispose()
+        {
+            _character = null;
+        }
+
         public bool GetIsGrounded()
         {
-            //IsGrounded = isOnWalkableGround && isConstrainedToGround;
-            //IsOnGround = _currentGround.hitGround;
-            //_character.GetCharacterMovement().PauseGroundConstraint();
-            //Debug.Log($"IsGrounded:{_character.IsGrounded()}, IsOnGround: {_character.IsOnGround()}, isOnGround: {_character.GetCharacterMovement().isOnGround}");
-
             return _character.IsGrounded(); 
         }
 

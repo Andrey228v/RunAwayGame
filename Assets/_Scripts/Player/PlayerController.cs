@@ -17,6 +17,7 @@ namespace Assets.Scripts.Player
         {
             Debug.Log("PLAYER CONTROLLER DESTROU");
             _playerStateMachine.Dispose();
+
             _playerStateMachine = null;
             _character = null;
         }

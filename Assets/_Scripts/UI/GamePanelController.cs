@@ -11,8 +11,8 @@ namespace Assets.Scripts.UI
         [SerializeField] private GameInterfacePanel _gameInterfacePanel;
         [SerializeField] private GameMenuPanel _gameMenuPanel;
         
-        public event Action OnButtonLoadClick;
         public event Action OnButtonSaveClick;
+        public event Action OnButtonLoadClick;
 
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;

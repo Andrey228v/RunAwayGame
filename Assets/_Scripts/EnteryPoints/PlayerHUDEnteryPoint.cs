@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.UI._1MenuWindow;
-using Assets.Scripts.SaveLoad;
+﻿using Assets.Scripts.SaveLoad;
 using Assets.Scripts.UI;
 using System;
 using UnityEngine;
@@ -21,13 +20,17 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            //Debug.Log("ZAPUSK PlayerHUDEnteryPoint");
             _gamePanelController = _gamePanelFactory();
+            _gamePanelController.OnButtonSaveClick += _saveLoadService.SaveLevelData;
+            _gamePanelController.OnButtonLoadClick += _saveLoadService.LoadLevel;
+
         }
 
         public void Dispose()
         {
-
+            Debug.Log("HUD Destoy");
+            _gamePanelController.OnButtonSaveClick -= _saveLoadService.SaveLevelData;
+            _gamePanelController.OnButtonLoadClick -= _saveLoadService.LoadLevel;
         }
     }
 }

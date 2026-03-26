@@ -26,12 +26,14 @@ namespace Assets._Scripts.EnteryPoints
         public void Dispose()
         {
             _menu.OnChooseLevel -= SetLevelName;
+            _menu.OnSaveDelet -= _saveLoadService.ResetAllProgress;
         }
 
         public void InitMenu()
         {
             _menu = _menuFactory();
             _menu.OnChooseLevel += SetLevelName;
+            _menu.OnSaveDelet += _saveLoadService.ResetAllProgress;
 
         }
 

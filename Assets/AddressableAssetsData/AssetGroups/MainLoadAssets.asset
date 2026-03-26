@@ -39,12 +39,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Screen
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d992ac580bb110e4fb6e836a532b4424
-    m_Address: ChPoint
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefab
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b7d5ef5a172915142b0963ab894ce3ae, type: 2}
   m_SchemaSet:

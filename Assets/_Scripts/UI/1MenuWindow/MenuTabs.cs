@@ -27,6 +27,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         [SerializeField] private Slider _volumeMusicSlider;
 
         public event Action<LevelConfig> OnChooseLevel;
+        public event Action OnSaveDelet;
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
@@ -50,10 +51,6 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void Start()
         {
-            _startGameButtonL1.onClick.AddListener(() => StartGame(1));
-            _startGameButtonL2.onClick.AddListener(() => StartGame(2));
-            _startGameButtonL3.onClick.AddListener(() => StartGame(3));
-
             SetupButtons();
             ShowMainPage();
         }
@@ -112,8 +109,13 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void SetupButtons()
         {
+            _startGameButtonL1.onClick.AddListener(() => StartGame(1));
+            _startGameButtonL2.onClick.AddListener(() => StartGame(2));
+            _startGameButtonL3.onClick.AddListener(() => StartGame(3));
+
             _settingsButton.onClick.AddListener(ShowSettings);
             _backButton.onClick.AddListener(ClickBackButton);
+            _deletSaveButton.onClick.AddListener(DeletSave);
             _exitButton.onClick.AddListener(ClickExit);
 
         }
@@ -122,6 +124,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         {
             _settingsButton.onClick.RemoveListener(ShowSettings);
             _backButton.onClick.RemoveListener(ClickBackButton);
+            _deletSaveButton.onClick.RemoveListener(DeletSave);
             _exitButton.onClick.RemoveListener(ClickExit);
         }
 
@@ -140,6 +143,11 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void ClickExit()
         {
             Application.Quit();
+        }
+
+        private void DeletSave()
+        {
+            OnSaveDelet?.Invoke();
         }
     }
 }

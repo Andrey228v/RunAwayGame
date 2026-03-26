@@ -38,7 +38,7 @@ namespace Assets.Input
             _inputSystem.Player.Jump.performed -= OnJump;
             _inputSystem.Player.Jump.canceled -= OnJump;
 
-            _inputSystem = null;
+            _inputSystem.Dispose();
         }
 
         public void OnMove(InputAction.CallbackContext context)

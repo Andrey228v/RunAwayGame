@@ -28,9 +28,6 @@ namespace Assets._Scripts.EnteryPoints
             DOTween.SetTweensCapacity(5000, 100);
 
             await _loadManager.LoadScene(_scensGroups[0]);
-
-            //await UniTask.Delay(100);
-            //await _screenView.LoadSceneGroup(0);
         }
     }
 }

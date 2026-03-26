@@ -1152,8 +1152,11 @@ MonoBehaviour:
   _startGameButtonL2: {fileID: 7205486620264458315}
   _startGameButtonL3: {fileID: 4847420982115861385}
   _settingsButton: {fileID: 1407290200590352448}
+  _soundControllButton: {fileID: 0}
+  _deletSaveButton: {fileID: 0}
   _backButton: {fileID: 6031090757848634953}
   _exitButton: {fileID: 122835909246431705}
+  _volumeMusicSlider: {fileID: 0}
 --- !u!1 &3115947090028525707
 GameObject:
   m_ObjectHideFlags: 0

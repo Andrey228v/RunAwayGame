@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.PlayerScope
   parentReference:
-    TypeName: Assets._Scripts.Installers.RootScope
+    TypeName: Assets.Scripts.Installers.GameScope
   autoRun: 1
   autoInjectGameObjects: []
   _characterPrefab: {fileID: 1688571644223161820, guid: c9199760bc891b8429a05dc66cf26105, type: 3}

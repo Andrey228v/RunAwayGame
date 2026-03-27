@@ -1,9 +1,7 @@
 ﻿using Assets.Scripts.Camera;
 using Assets.Scripts.Player;
-using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
-using Assets.Scripts.SaveLoad.Service;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
 using System;

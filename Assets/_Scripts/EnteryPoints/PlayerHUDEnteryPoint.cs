@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.SaveLoad;
+﻿using Assets._Scripts.GameControllers;
+using Assets.Scripts.SaveLoad;
 using Assets.Scripts.UI;
 using System;
 using UnityEngine;
@@ -11,11 +12,16 @@ namespace Assets._Scripts.EnteryPoints
         private Func<GamePanelController> _gamePanelFactory;
         private GamePanelController _gamePanelController;
         private SaveLoadService _saveLoadService;
+        //private GameCycleController _gameCycleController;
 
-        public PlayerHUDEnteryPoint(Func<GamePanelController> gamePanelFactory, SaveLoadService saveService) 
+        public PlayerHUDEnteryPoint(Func<GamePanelController> gamePanelFactory, 
+            SaveLoadService saveService) 
         {
             _gamePanelFactory = gamePanelFactory;
             _saveLoadService = saveService;
+
+            //GameCycleController gameCycleController
+            //_gameCycleController = gameCycleController;
         }
 
         public void Start()
@@ -23,6 +29,7 @@ namespace Assets._Scripts.EnteryPoints
             _gamePanelController = _gamePanelFactory();
             _gamePanelController.OnButtonSaveClick += _saveLoadService.SaveLevelData;
             _gamePanelController.OnButtonLoadClick += _saveLoadService.LoadLevel;
+            //_gamePanelController.OnRestartButtonClick += _gameCycleController.RestartNotifySubs; // ???
 
         }
 
@@ -31,6 +38,7 @@ namespace Assets._Scripts.EnteryPoints
             Debug.Log("HUD Destoy");
             _gamePanelController.OnButtonSaveClick -= _saveLoadService.SaveLevelData;
             _gamePanelController.OnButtonLoadClick -= _saveLoadService.LoadLevel;
+            //_gamePanelController.OnRestartButtonClick -= _gameCycleController.RestartNotifySubs; // ???
         }
     }
 }

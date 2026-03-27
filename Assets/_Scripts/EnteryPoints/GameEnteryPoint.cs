@@ -1,16 +1,10 @@
-﻿using Assets.Scripts.Camera;
-using Assets.Scripts.Player;
+﻿using Assets._Scripts.GameControllers;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
-using Assets.Scripts.SaveLoad.Service;
-using Assets.Scripts.StateMachines.Player;
-using Assets.Scripts.UI;
-using ECM2;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using VContainer;
 using VContainer.Unity;
 
 namespace Assets.Scripts.EnteryPoints
@@ -23,17 +17,19 @@ namespace Assets.Scripts.EnteryPoints
         private LevelData _loadData;
         private CheckPointsController _checkPointsController;
         private IEnumerable<ISaveLoad> _saveLoads;
-
+        private IEnumerable<IRestart> _restartSub;
 
         public GameEnteryPoint(GamePoints gamePoints,
             SaveLoadService saveLoadService,
             CheckPointsController checkPointsController,
-            IEnumerable<ISaveLoad> saveLoads)
+            IEnumerable<ISaveLoad> saveLoads,
+            IEnumerable<IRestart> restartSub)
         {
             _gamePoints = gamePoints;
             _saveLoadService = saveLoadService;
             _checkPointsController = checkPointsController;
             _saveLoads = saveLoads;
+            _restartSub = restartSub;
         }
 
         public void Start()
@@ -41,7 +37,11 @@ namespace Assets.Scripts.EnteryPoints
             _checkPointsController.OnSave += _saveLoadService.SaveLevelData;
             
 
+
             _saveLoadService.SetLevelObjects(_saveLoads);
+
+
+
 
             _loadData = _saveLoadService.GetLevelData();
             _loadData = InitCheckPoints(_loadData);
@@ -76,6 +76,11 @@ namespace Assets.Scripts.EnteryPoints
             }
 
             return levelData;
+        }
+
+        public void RestartGame()
+        {
+
         }
     }
 }

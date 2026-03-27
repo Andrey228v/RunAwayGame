@@ -1,7 +1,6 @@
 ﻿using Assets._Scripts.UI._1MenuWindow;
 using Assets.Scripts.SaveLoad;
 using System;
-using System.Collections.Generic;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints

@@ -1,19 +1,22 @@
-﻿using System;
+﻿using Assets._Scripts.UI;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class GameMenuPanel : MonoBehaviour
+    public class GameMenuPanel : MonoBehaviour, IPanel
     {
         [Header("Buttons")]
         [SerializeField] private Button _backToGameButton;
         [SerializeField] private Button _backToMenuButton;
 
-        public event Action OnBackButtonClick;
+        public event Action<string> OnBackToGameButtonClick;
         public event Action OnBackToMenuButtonClick;
 
         public bool IsVisible { get; private set; }
+
+        public string Name { get; set; }
 
 #if UNITY_EDITOR
         public void OnValidate()
@@ -46,19 +49,17 @@ namespace Assets.Scripts.UI
         {
             gameObject.SetActive(true);
             IsVisible = true;
-            //_pauseController.AllPause();
         }
 
         public void Hide()
         {
             gameObject.SetActive(false);
             IsVisible = false;
-            //_pauseController.AllContinue();
         }
 
         private void ClickBackToGame()
         {
-            OnBackButtonClick?.Invoke();
+            OnBackToGameButtonClick?.Invoke("GameInterfacePanel"); // переделать...
         }
 
         private void ClickBackToMenu()

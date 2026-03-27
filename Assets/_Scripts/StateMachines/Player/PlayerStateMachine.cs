@@ -4,7 +4,6 @@ using Assets.Scripts.StateMachines.Player.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Assets.Scripts.StateMachines.Player
 {
@@ -63,7 +62,7 @@ namespace Assets.Scripts.StateMachines.Player
                 new StayState(this, _inputReader, _animatorController, _fallController),
                 new MoveState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _fallController),
                 new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _animatorController, _fallController),
-                new FallState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _playerGroundChecker, _fallController),
+                new FallState(this, _playerMovement, _playerRotator, _animatorController, _playerGroundChecker, _fallController),
             };
 
             _currentState = _states[0];
@@ -86,7 +85,5 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState = state;
             _currentState?.Enter();
         }
-
-
     }
 }

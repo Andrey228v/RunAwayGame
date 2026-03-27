@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Assets._Scripts.UI;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.UI
 {
-    public class GameInterfacePanel : MonoBehaviour
+    public class GameInterfacePanel : MonoBehaviour, IPanel
     {
         [Header("Buttons")]
         [SerializeField] private Button _menuButton;
@@ -17,12 +18,14 @@ namespace Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI _coinsCounter;
         [SerializeField] private TextMeshProUGUI _timer;
 
-        public event Action OnMenuButtonClick;
+        public event Action<string> OnMenuButtonClick;
         public event Action OnLoadButtonClick;
         public event Action OnSoundButtonClick;
         public event Action OnSaveButtonClick;
 
         public bool IsVisible { get; private set; }
+
+        public string Name { get; set; }
 
 #if UNITY_EDITOR
         public void OnValidate()
@@ -85,7 +88,7 @@ namespace Assets.Scripts.UI
 
         private void ClickMenuButton()
         {
-            OnMenuButtonClick?.Invoke();
+            OnMenuButtonClick?.Invoke("GameMenuPanel"); // переделать...
         }
 
         private void ClickLoadButton()

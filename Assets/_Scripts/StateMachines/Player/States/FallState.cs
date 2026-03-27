@@ -8,7 +8,6 @@ namespace Assets.Scripts.StateMachines.Player.States
         private readonly IStateSwitcher _stateSwitcher;
         private PlayerMovement _playerMovement;
         private PlayerRotator _playerRotator;
-        private InputReader _inputReader;
         private AnimatorController _animatorController;
         private PlayerGroundChecker _playerGroundChecker;
         private FallController _fallController;
@@ -18,18 +17,16 @@ namespace Assets.Scripts.StateMachines.Player.States
         private bool _isMove;
 
         public FallState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement,
-            PlayerRotator playerRotator, InputReader inputReader, AnimatorController animatorController,
+            PlayerRotator playerRotator, AnimatorController animatorController,
             PlayerGroundChecker playerGroundChecker, FallController fallController) 
         {
             _stateSwitcher = stateSwitcher;
             _playerMovement = playerMovement;
             _playerRotator = playerRotator;
-            _inputReader = inputReader;
             _animatorController = animatorController;
             _playerGroundChecker = playerGroundChecker;
             _fallController = fallController;
         }
-
 
         public void Enter()
         {

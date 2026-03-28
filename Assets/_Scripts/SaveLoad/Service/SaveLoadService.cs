@@ -1,6 +1,4 @@
-﻿using Assets._Scripts.GameControllers;
-using Assets.Scripts.SaveLoad.Data;
-using Assets.Scripts.SaveLoad.Service;
+﻿using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +6,15 @@ using UnityEngine;
 
 namespace Assets.Scripts.SaveLoad
 {
-    public class SaveLoadService 
+    public class SaveLoadService : IDisposable
     {
         private HashSet<ISaveLoad> _saveLoads;
-        private ISaveSystem _saveSystem;
+        private EasySaveSystem _saveSystem;
         private GameSaveData _saveData;
         private string _levelId;
         private LevelConfig _levelConfig;
 
-        public SaveLoadService(ISaveSystem saveSystem) 
+        public SaveLoadService(EasySaveSystem saveSystem) 
         {
             _saveLoads = new HashSet<ISaveLoad>();
             _saveSystem = saveSystem;
@@ -24,7 +22,88 @@ namespace Assets.Scripts.SaveLoad
             LoadOrCreateSave();
         }
 
-        public void SaveLevelIntoGame(LevelData data)
+        public void Dispose() // это надо делать только при выходе из игры, потому что он общий для всех.
+        {
+            if(_saveLoads != null)
+            {
+                _saveLoads.Clear();
+                _saveLoads = null;
+            }
+        }
+
+        public void SaveLevelData() // Сохранялка уровня.... сделать потом асинхронным SaveAsync
+        {
+            LevelData levelData = GetLevelData();
+
+            foreach (ISaveLoad obj in _saveLoads)
+            {
+                obj.Save(levelData);
+            }
+
+            SaveLevelIntoMainDictinary(levelData);
+        }
+
+        public void LoadLevel() // загрузка... сделать потом асинхронной.
+        {
+            LevelData levelData = GetLevelData();
+
+            foreach (ISaveLoad obj in _saveLoads)
+            {
+                obj.Load(levelData);
+            }
+        }
+
+        public void SetLevelId(LevelConfig levelConfig) // метод для присвоения ID уровня, который мы выбрали.
+        {
+            _levelConfig = levelConfig;
+            _levelId = _levelConfig.name;
+        }
+
+        public void AddSaveLoadSub(ISaveLoad saveLoad) // Добавляем объекты, с которыми мы можем взаимодействовать..
+        {
+            _saveLoads.Add(saveLoad);
+        }
+
+        public void AddSaveLoadSub(IEnumerable<ISaveLoad> saveLoads) // добавляется в список сохраняемые объекты.
+        {
+            foreach (ISaveLoad obj in saveLoads) 
+            {
+                _saveLoads.Add(obj);
+            }
+
+            Debug.Log($"SaveLoadCount: {_saveLoads.Count()}");
+        }
+
+        public void DeleteSave() // пока не работает как надо... 
+        {
+            _saveData.LevelsData[_levelId] = new LevelData();
+        }
+
+        public void ResetAllProgress() 
+        {
+            Debug.Log("RESET ALL SAVE");
+            _saveSystem.ResetAllProgress();
+            _saveData = new GameSaveData();
+        }
+
+        public LevelData GetLevelData()
+        {
+            if (_saveData.LevelsData.TryGetValue(_levelId, out LevelData data) == false)
+            {
+                data = new LevelData { LevelID = _levelId };
+                SaveLevelIntoMainDictinary(data);
+            }
+
+
+            return _saveData.LevelsData[_levelId]; // можно передать просто data ??
+        }
+
+        public LevelConfig GetLevelConfig()
+        {
+            return _levelConfig;
+        }
+
+        private void SaveLevelIntoMainDictinary(LevelData data) // это сохранение в общий файл вопрос так ли это делать и на до ли....
         {
             if (_saveData.LevelsData.ContainsKey(_levelId))
             {
@@ -40,22 +119,6 @@ namespace Assets.Scripts.SaveLoad
             _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
         }
 
-        public void SetLevelId(LevelConfig levelConfig)
-        {
-            _levelConfig = levelConfig;
-            _levelId = _levelConfig.name;
-        }
-
-        public void SetLevelObjects(IEnumerable<ISaveLoad> saveLoads)
-        {
-            foreach (ISaveLoad obj in saveLoads) 
-            {
-                _saveLoads.Add(obj);
-            }
-
-            Debug.Log($"SaveLoadCount: {_saveLoads.Count()}");
-        }
-
         private void LoadOrCreateSave()
         {
             if (_saveSystem.HasKey(SaveUtilites.GAME_SAVE_KEY))
@@ -65,63 +128,19 @@ namespace Assets.Scripts.SaveLoad
             else
             {
                 _saveData = new GameSaveData();
+                _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
             }
         }
 
-        public void LoadLevel()
+        public void ClearList()
         {
-            LevelData levelData = GetLevelData();
-
-            foreach (ISaveLoad obj in _saveLoads)
+            if(_saveLoads != null)
             {
-                obj.Load(levelData);
+                _saveLoads.Clear();
             }
         }
+        
 
-        public void DeleteSave(string key)
-        {
-            _saveSystem.Delete("GameSaveData"); // Тут вопрос... на потом...
-        }
-
-        public void ResetAllProgress() 
-        {
-            Debug.Log("RESET ALL SAVE");
-            _saveSystem.ResetAllProgress();
-            _saveData = new GameSaveData();
-        }
-
-        public LevelData GetLevelData()
-        {
-            if (_saveData.LevelsData.TryGetValue(_levelId, out LevelData data))
-            {
-                return data;
-            }
-
-            // Возвращаем новые данные, если для уровня нет сохранения
-            return new LevelData { LevelID = _levelId };
-        }
-
-        public void SaveLevelData()
-        {
-            LevelData data = GetLevelData();
-
-            foreach (ISaveLoad obj in _saveLoads)
-            {
-                obj.Save(data);
-            }
-
-            SaveLevelIntoGame(data);
-        }
-
-        public LevelConfig GetLevelConfig()
-        {
-            return _levelConfig;
-        }
-
-        public void ClearSaveLoadList()
-        {
-            _saveLoads = new HashSet<ISaveLoad>();
-        }
 
 
         //public async Task SaveLevelDataAsync()

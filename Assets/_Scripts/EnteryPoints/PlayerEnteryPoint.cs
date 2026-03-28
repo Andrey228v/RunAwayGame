@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Camera;
+﻿using Assets._Scripts.GameControllers;
+using Assets.Scripts.Camera;
 using Assets.Scripts.Player;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
@@ -19,14 +20,21 @@ namespace Assets._Scripts.EnteryPoints
         private Func<Character> _characterFactory;
         private SaveLoadService _saveLoadService;
         private IEnumerable<ISaveLoad> _saveLoads;
+        private IEnumerable<IRestart> _restarted;
+        private IEnumerable<IFinish> _finished;
         private LevelData _loadData;
         private LevelConfig _levelConfig;
+        private GameCycleController _cycleController;
+        private GameRestartController _gameRestartController;
 
         public PlayerEnteryPoint(PlayerController playerController, 
             PlayerStateMachineFactory playerStateMachineFactory, 
             Func<Character> characterFactory, CameraController cameraController, 
             SaveLoadService saveLoadService,
-            IEnumerable<ISaveLoad> saveLoads) 
+            IEnumerable<ISaveLoad> saveLoads,
+            GameCycleController gameCycleController,
+            GameRestartController gameRestartController,
+            IEnumerable<IRestart> restarted, IEnumerable<IFinish> fineshed) 
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -34,22 +42,39 @@ namespace Assets._Scripts.EnteryPoints
             _characterFactory = characterFactory;
             _saveLoadService = saveLoadService;
             _saveLoads = saveLoads;
+            _cycleController = gameCycleController;
+            _gameRestartController = gameRestartController;
+            _restarted = restarted;
+            _finished = fineshed;
         }
 
         public void Start()
         {
-            _loadData = _saveLoadService.GetLevelData();
-            _levelConfig = _saveLoadService.GetLevelConfig();
-
-            _saveLoadService.SetLevelObjects(_saveLoads);
-            _loadData = InitPlayer(_loadData);
-            _saveLoadService.SaveLevelIntoGame(_loadData); // Под вопросом...
-            _saveLoadService.LoadLevel();
+            InitEvents();
+            InitSaveLoadData();
         }
 
         public void Dispose()
         {
-            _saveLoadService.ClearSaveLoadList();
+            //_cycleController.OnFinishLevel -= RestartPlayer;
+        }
+
+        private void InitEvents()
+        {
+            //_cycleController.OnFinishLevel += RestartPlayer;
+        }
+
+        private void InitSaveLoadData()
+        {
+            _loadData = _saveLoadService.GetLevelData();
+            _levelConfig = _saveLoadService.GetLevelConfig();
+            _saveLoadService.AddSaveLoadSub(_playerController); // зарегестрировали ISaveLoad надо подумать может передеать по другому...
+            _loadData = InitPlayer(_loadData);
+
+            foreach (var data in _saveLoads)
+            {
+                data.Load(_loadData);
+            }
         }
 
         private LevelData InitPlayer(LevelData levelData)
@@ -74,5 +99,16 @@ namespace Assets._Scripts.EnteryPoints
 
             return levelData;
         }
+
+        //private void RestartPlayer()
+        //{
+        //    _playerController.Restart();
+
+        //    var playerData = new PlayerData
+        //    {
+        //        PlayerPosition = _levelConfig.StartPosition,
+        //        PlayerRotation = Quaternion.Euler(_levelConfig.StartRotationEuler),
+        //    };
+        //}
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7450475590644556561}
   - component: {fileID: 4777991964315702705}
+  - component: {fileID: 8007396858064703457}
   m_Layer: 0
   m_Name: '[Container]'
   m_TagString: Untagged
@@ -49,6 +50,21 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 0}
-  _startPoint: {fileID: 0}
+--- !u!114 &8007396858064703457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4559369164428635846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 086d74469868f72499e9be1e3b35e922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.LevelScope
+  parentReference:
+    TypeName: Assets.Scripts.Installers.GameScope
+  autoRun: 1
+  autoInjectGameObjects: []
   _finishPoint: {fileID: 0}
   _checkPoints: {fileID: 0}

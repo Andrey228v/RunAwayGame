@@ -1,13 +1,13 @@
-﻿using Assets.Scripts.SaveLoad;
+﻿using Assets._Scripts.GameControllers;
+using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPointsController : ISaveLoad, IDisposable
+    public class CheckPointsController : ISaveLoad, IDisposable, IRestart
     {
         public List<CheckPoint> CheckPoints { get; private set; }
 
@@ -60,6 +60,9 @@ namespace Assets.Scripts.Points
             }
         }
 
-
+        public void Restart()
+        {
+            
+        }
     }
 }

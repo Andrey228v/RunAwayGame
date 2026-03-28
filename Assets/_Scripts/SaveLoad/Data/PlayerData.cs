@@ -14,5 +14,7 @@ namespace Assets.Scripts.SaveLoad
             PlayerPosition = Vector3.zero;
             PlayerRotation = Quaternion.identity;
         }
+
+
     }
 }

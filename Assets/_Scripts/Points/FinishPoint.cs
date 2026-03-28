@@ -12,7 +12,8 @@ namespace Assets.Scripts.Points
         public bool IsActivated => _isActivated;
         private bool _isInitialized;
 
-        public event Action<FinishPoint> OnActivated;
+        public event Action OnFinishActivated;
+        public event Action OnRestartActivated;
 
         private void Awake()
         {
@@ -40,7 +41,8 @@ namespace Assets.Scripts.Points
         {
             if (_isActivated) return;
 
-            OnActivated?.Invoke(this);
+            OnFinishActivated?.Invoke();
+            OnRestartActivated?.Invoke();
         }
 
     }

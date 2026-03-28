@@ -729,6 +729,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8007396858064703457, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: _checkPoints
+      value: 
+      objectReference: {fileID: 1833616083}
+    - target: {fileID: 8007396858064703457, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: _finishPoint
+      value: 
+      objectReference: {fileID: 1762079325}
+    - target: {fileID: 8007396858064703457, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: parentReference.TypeName
+      value: Assets.Scripts.Installers.GameScope
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

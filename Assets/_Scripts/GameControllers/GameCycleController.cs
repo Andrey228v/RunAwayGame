@@ -5,25 +5,28 @@ namespace Assets._Scripts.GameControllers
 {
     public class GameCycleController : IDisposable
     {
-        private List<IFinish> _finishListSubs;
-        private List<IRestart> _restartSubs;
+        private HashSet<IFinish> _finishListSubs;
 
-        public event Action OnFinishGame;
-        public event Action OnRestartGame;
+        public event Action OnFinishLevel;
 
-        public GameCycleController(List<IFinish> finishListSubs, List<IRestart> restartSubs)
+        public GameCycleController()
         {
-            _finishListSubs = finishListSubs;
-            _restartSubs = restartSubs;
+            _finishListSubs = new HashSet<IFinish>();
         }
 
         public void Dispose()
         {
-            _finishListSubs = null;
+            if (_finishListSubs != null) 
+            {
+                _finishListSubs.Clear();
+                _finishListSubs = null;
+            }
         }
 
         public void FinishNotifySubs()
         {
+            OnFinishLevel?.Invoke();
+
             foreach (var sub in _finishListSubs)
             {
                 sub.FinishGame();
@@ -33,11 +36,6 @@ namespace Assets._Scripts.GameControllers
         public void AddFinishSub(IFinish sub)
         {
             _finishListSubs.Add(sub);
-        }
-
-        public void RestartNotifySubs()
-        {
-
         }
     }
 }

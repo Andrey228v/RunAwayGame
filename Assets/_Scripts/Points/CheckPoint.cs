@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPoint : MonoBehaviour
+    public class CheckPoint : MonoBehaviour, IDisposable
     {
         [SerializeField] private string _id;
         [SerializeField] private bool _isActivated;
@@ -16,6 +16,11 @@ namespace Assets.Scripts.Points
         public bool IsActivated => _isActivated;
 
         public event Action<CheckPoint> OnActivated;
+
+        public void Dispose()
+        {
+            //надо ли тут что-то ???....
+        }
 
         private void Awake()
         {
@@ -41,7 +46,8 @@ namespace Assets.Scripts.Points
 
         public void Activate()
         {
-            if (_isActivated) return;
+            if (_isActivated) 
+                return;
 
             SetState(true);
             OnActivated?.Invoke(this);
@@ -49,7 +55,8 @@ namespace Assets.Scripts.Points
 
         public void Deactivate()
         {
-            if (!_isActivated) return;
+            if (_isActivated == false) 
+                return;
 
             SetState(false);
         }
@@ -95,5 +102,7 @@ namespace Assets.Scripts.Points
         {
             SetState(false);
         }
+
+
     }
 }

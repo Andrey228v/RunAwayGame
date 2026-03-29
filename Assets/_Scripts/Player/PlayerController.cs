@@ -38,9 +38,20 @@ namespace Assets.Scripts.Player
             _character = character;
         }
 
-        public void Load(LevelData data)
+        public void Load(LevelData levelData, LevelConfig levelConfig)
         {
-            _character.transform.SetLocalPositionAndRotation(data.PlayerData.PlayerPosition, data.PlayerData.PlayerRotation);
+            if (levelData.PlayerData == null)
+            {
+                var playerData = new PlayerData
+                {
+                    PlayerPosition = levelConfig.StartPosition,
+                    PlayerRotation = Quaternion.Euler(levelConfig.StartRotationEuler),
+                };
+
+                levelData.PlayerData = playerData;
+            }
+
+            _character.transform.SetLocalPositionAndRotation(levelData.PlayerData.PlayerPosition, levelData.PlayerData.PlayerRotation);
         }
 
         public void Save(LevelData data)
@@ -51,10 +62,17 @@ namespace Assets.Scripts.Player
 
         public void Restart()
         {
+            if(_playerStateMachine != null)
+            {
+                _playerStateMachine.Restart();
+            }
+
             if (_character != null)
             {
                 _character.SetVelocity(Vector3.zero);
                 _character.StopJumping();
+
+                _character.SetMovementMode(Character.MovementMode.Falling);
             }
 
 
@@ -62,10 +80,16 @@ namespace Assets.Scripts.Player
 
         public void FinishGame()
         {
+            if (_playerStateMachine != null)
+            {
+                _playerStateMachine.Restart();
+            }
+
             if (_character != null)
             {
                 _character.SetVelocity(Vector3.zero);
                 _character.StopJumping();
+                _character.SetMovementMode(Character.MovementMode.Falling);
             }
         }
     }

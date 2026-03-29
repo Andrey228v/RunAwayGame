@@ -9,12 +9,12 @@ namespace Assets.Scripts.EnteryPoints
     public class GameEnteryPoint : IStartable, IDisposable
     {
         private SaveLoadService _saveLoadService;
-        private GameCycleController _cycleController;
+        private GameFinishController _cycleController;
         private GameRestartController _gameRestartController;
         private GameManager _gameManager;
 
         public GameEnteryPoint(SaveLoadService saveLoadService,
-            GameCycleController gameCycleController,
+            GameFinishController gameCycleController,
             GameRestartController gameRestartController,
             GameManager gameManager)
         {

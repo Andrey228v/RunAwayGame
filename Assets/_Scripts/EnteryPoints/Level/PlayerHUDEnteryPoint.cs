@@ -1,4 +1,5 @@
-﻿using Assets._Scripts.GameControllers;
+﻿using Assets._Scripts.EnteryPoints.Interfaces;
+using Assets._Scripts.GameControllers;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
@@ -9,30 +10,36 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class PlayerHUDEnteryPoint : IStartable, IDisposable
+    public class PlayerHUDEnteryPoint : IStartable, IDisposable, IInitSaveLoad, IInitFinish, IInitRestart
     {
         private Func<GamePanelController> _gamePanelFactory;
         private GamePanelController _gamePanelController;
         private SaveLoadService _saveLoadService;
-        private GameCycleController _gameCycleController;
-        private GameManager _gameManager;
         private LevelData _loadData;
-        private IEnumerable<ISaveLoad> _saveLoads;
-        private IEnumerable<IRestart> _restarted;
-        private IEnumerable<IFinish> _finished;
+        private GameManager _gameManager;
+        private GameFinishController _finishController;
+        private GameRestartController _gameRestartController;
+
+        public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
+
+        public IEnumerable<IFinish> Finished { get; private set; }
+
+        public IEnumerable<IRestart> Restarted { get; private set; }
 
         public PlayerHUDEnteryPoint(Func<GamePanelController> gamePanelFactory, 
-            SaveLoadService saveService, GameCycleController gameCycleController,
+            SaveLoadService saveService, GameFinishController gameFinishController,
             GameManager gameManager, IEnumerable<ISaveLoad> saveLoads,
-            IEnumerable<IRestart> restarted, IEnumerable<IFinish> finished) 
+            IEnumerable<IRestart> restarted, IEnumerable<IFinish> finished,
+            GameRestartController gameRestartController) 
         {
             _gamePanelFactory = gamePanelFactory;
             _saveLoadService = saveService;
-            _gameCycleController = gameCycleController;
+            _finishController = gameFinishController;
             _gameManager = gameManager;
-            _saveLoads = saveLoads;
-            _restarted = restarted;
-            _finished = finished;
+            SaveLoads = saveLoads;
+            Finished = finished;
+            Restarted = restarted;
+            _gameRestartController = gameRestartController;
         }
 
         public void Dispose()
@@ -49,7 +56,8 @@ namespace Assets._Scripts.EnteryPoints
             
             InitEvents();
             InitSaveLoadData();
-            InitGameCycleData();
+            InitFinishData();
+            InitRestartData();
         }
 
         private void InitEvents()
@@ -58,20 +66,22 @@ namespace Assets._Scripts.EnteryPoints
             _gamePanelController.OnButtonLoadClick += _gameManager.LoadGameSignal;
         }
 
-        private void InitSaveLoadData()
+        public void InitSaveLoadData()
         {
 
             _loadData = _saveLoadService.GetLevelData();
 
-            foreach (var data in _saveLoads)
-            {
-                data.Load(_loadData);
-            }
+            _saveLoadService.LoadPartLevelObject(SaveLoads);
         }
 
-        private void InitGameCycleData()
+        public void InitFinishData()
         {
-            _gameCycleController.AddFinishSub(_gamePanelController); // test
+            _finishController.AddFinishSub(Finished);
+        }
+
+        public void InitRestartData()
+        {
+            _gameRestartController.AddRestartSub(Restarted);
         }
     }
 }

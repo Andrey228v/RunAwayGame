@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Assets._Scripts.GameControllers;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class AnimatorController : IDisposable
+    public class AnimatorController : IDisposable, IRestart
     {
         private Animator _animator;
 
@@ -59,6 +60,14 @@ namespace Assets.Scripts.Player
         public void SetGround(bool isGround) 
         {
             _animator.SetBool(IsGround_b, isGround);
+        }
+
+        public void Restart()
+        {
+            SetMove(false);
+            SetJump(false);
+            SetFall(false);
+            SetGround(false);
         }
     }
 }

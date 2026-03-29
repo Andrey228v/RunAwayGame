@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 1879820749}
   - component: {fileID: 1879820750}
   m_Layer: 0
-  m_Name: '[ContainerRoot]'
+  m_Name: --ContainerRoot--
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -12,10 +12,17 @@ namespace Assets.Scripts.StateMachines.Player.States
         private InputReader _inputReader;
         private AnimatorController _animatorController;
         private FallController _fallController;
+        private PlayerGroundChecker _playerGroundChecker;
+
+
         private bool _isFall = false;
+        private bool _isMove = false;
+        private bool _isGround = false;
 
         public MoveState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement,
-            PlayerRotator playerRotator, InputReader inputReader, AnimatorController animatorController, FallController fallController)
+            PlayerRotator playerRotator, InputReader inputReader, 
+            AnimatorController animatorController, FallController fallController,
+            PlayerGroundChecker playerGroundChecker)
         {
             _stateSwitcher = stateSwitcher;
             _playerMovement = playerMovement;
@@ -23,18 +30,19 @@ namespace Assets.Scripts.StateMachines.Player.States
             _inputReader = inputReader;
             _animatorController = animatorController;
             _fallController = fallController;
+            _playerGroundChecker = playerGroundChecker;
         }
 
         public void Dispose()
         {
-            _inputReader.OnStoped -= ChangeStayState;
-            _inputReader.OnJumped -= ChangeJumpState;
+            //_inputReader.OnStoped -= ChangeStayState;
+            //_inputReader.OnJumped -= ChangeJumpState;
         }
 
         public void Enter()
         {
-            _inputReader.OnStoped += ChangeStayState;
-            _inputReader.OnJumped += ChangeJumpState;
+            //_inputReader.OnStoped += ChangeStayState;
+            //_inputReader.OnJumped += ChangeJumpState;
             _animatorController.SetMove(true);
             _animatorController.SetGround(true);
         }
@@ -44,12 +52,14 @@ namespace Assets.Scripts.StateMachines.Player.States
             _playerMovement.Move();
             _playerRotator.Rotate();
             _isFall = _fallController.GetIsFall();
+            _isMove = _playerMovement.IsMove;
+            _isGround = _playerGroundChecker.GetIsGrounded();
         }
 
         public void Exit()
         {
-            _inputReader.OnStoped -= ChangeStayState;
-            _inputReader.OnJumped -= ChangeJumpState;
+            //_inputReader.OnStoped -= ChangeStayState;
+            //_inputReader.OnJumped -= ChangeJumpState;
         }
 
         public void CheckChangeState()
@@ -57,6 +67,14 @@ namespace Assets.Scripts.StateMachines.Player.States
             if (_isFall)
             {
                 _stateSwitcher.ChangeState<FallState>();
+            }
+            else if (_isMove == false)
+            {
+                ChangeStayState();
+            }
+            else if (_isGround == false)
+            {
+                ChangeJumpState();
             }
         }
 

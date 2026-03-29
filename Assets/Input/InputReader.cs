@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,11 +11,14 @@ namespace Assets.Input
 
         public event Action<Vector2> OnDirectionMoveChandged;
         public event Action<bool> OnMoved;
-        public event Action OnJumped;
         public event Action OnStartMove;
         public event Action OnStoped;
-        public event Action OnJumpButtonDown;
-        public event Action OnJumpButtonUp;
+        //public event Action OnJumped;
+        //public event Action OnJumpButtonDown;
+        //public event Action OnJumpButtonUp;
+
+        private bool _isJumpPressThisFrame = false;
+        public bool IsJumpPress => _isJumpPressThisFrame;
 
         public InputReader()
         {
@@ -62,18 +66,20 @@ namespace Assets.Input
 
         public void OnJump(InputAction.CallbackContext context) 
         {
-            if(context.started == true)
+            if(context.started)
             {
-                OnJumped?.Invoke();
+                //OnJumped?.Invoke();
+                _isJumpPressThisFrame = true;
             }
-            else if(context.performed == true)
+            else if( context.canceled)
             {
-                OnJumpButtonDown?.Invoke();
+                //OnJumpButtonUp?.Invoke();
             }
-            else if( context.canceled == true)
-            {
-                OnJumpButtonUp?.Invoke();
-            }
+        }
+
+        public void ResetJump()  // Вызывать после прыжка
+        {
+            _isJumpPressThisFrame = false;
         }
     }
 }

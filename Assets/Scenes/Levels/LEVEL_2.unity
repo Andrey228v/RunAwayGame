@@ -643,7 +643,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4559369164428635846, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
       propertyPath: m_Name
-      value: '[Container]'
+      value: --Container--
       objectReference: {fileID: 0}
     - target: {fileID: 4777991964315702705, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
       propertyPath: _checkPoints

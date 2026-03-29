@@ -14,24 +14,21 @@ namespace Assets.Scripts.Player
             _character = character;
             _inputReader = inputReader;
 
-            _inputReader.OnJumped += Jump;
-            _inputReader.OnJumpButtonUp += StopJump;
+            //_inputReader.OnJumped += Jump;
+            //_inputReader.OnJumpButtonUp += StopJump;
         }
 
         public void Dispose()
         {
-            _inputReader.OnJumped -= Jump;
-            _inputReader.OnJumpButtonUp -= StopJump;
+            //_inputReader.OnJumped -= Jump;
+            //_inputReader.OnJumpButtonUp -= StopJump;
         }
 
         public void Jump()
         {
-            //Вопрос правильно ли это - хрен знает....
-            // 1. Снимаем привязку к земле!
-            _character.GetCharacterMovement().PauseGroundConstraint();
+            //_character.GetCharacterMovement().PauseGroundConstraint();
             _character.Jump();
-            // 2. Возвращаем.
-            _character.EnableGroundConstraint(true);
+            //_character.EnableGroundConstraint(true);
         }
 
         public void StopJump()

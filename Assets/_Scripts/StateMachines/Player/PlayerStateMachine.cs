@@ -61,9 +61,9 @@ namespace Assets.Scripts.StateMachines.Player
         {
             _states = new List<IState>()
             {
-                new StayState(this, _inputReader, _animatorController, _fallController),
-                new MoveState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _fallController),
-                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _animatorController, _fallController),
+                new StayState(this, _animatorController, _fallController, _playerGroundChecker, _playerMovement),
+                new MoveState(this, _playerMovement, _playerRotator, _inputReader, _animatorController, _fallController, _playerGroundChecker),
+                new JumpState(this, _playerMovement, _playerRotator, _playerGroundChecker, _animatorController, _fallController, _playerJumper),
                 new FallState(this, _playerMovement, _playerRotator, _animatorController, _playerGroundChecker, _fallController),
             };
 
@@ -75,8 +75,15 @@ namespace Assets.Scripts.StateMachines.Player
 
         public void FixedTick()
         {
-            _currentState.CheckChangeState();
+            if(_inputReader.IsJumpPress == true)
+            {
+                _playerJumper.Jump();
+                _inputReader.ResetJump();
+            }
+
             _currentState.FixedUpdate();
+            _currentState.CheckChangeState();
+            
             Debug.Log($"_currentState: {_currentState}");
         }
 

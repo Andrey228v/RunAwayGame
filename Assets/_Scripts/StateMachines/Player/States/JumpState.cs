@@ -13,6 +13,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         private PlayerGroundChecker _playerGroundChecker;
         private AnimatorController _animatorController;
         private FallController _fallController;
+        private PlayerJumper _playerJumper;
 
         private bool _isGround = false;
         private bool _isFall = false;
@@ -20,7 +21,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         public JumpState(IStateSwitcher stateSwitcher, PlayerMovement playerMovement, 
             PlayerRotator playerRotator, PlayerGroundChecker playerGroundChecker,
             AnimatorController animatorController,
-            FallController fallController)
+            FallController fallController, PlayerJumper playerJumper)
         {
             _stateSwitcher = stateSwitcher;
             _playerMovement = playerMovement;
@@ -28,6 +29,7 @@ namespace Assets.Scripts.StateMachines.Player.States
             _playerGroundChecker = playerGroundChecker;
             _animatorController = animatorController;
             _fallController = fallController;
+            _playerJumper = playerJumper;
         }
 
         public void Dispose()
@@ -41,6 +43,7 @@ namespace Assets.Scripts.StateMachines.Player.States
             _animatorController.SetJump(true);
             _animatorController.SetFall(false);
             _animatorController.SetGround(false);
+            _playerJumper.StopJump();
         }
 
         public void FixedUpdate()
@@ -54,6 +57,7 @@ namespace Assets.Scripts.StateMachines.Player.States
         public void Exit()
         {
             _animatorController.SetJump(false);
+            _playerJumper.StopJump();
         }
 
         public void CheckChangeState()

@@ -15,8 +15,254 @@ MonoBehaviour:
   m_GroupName: RemoteLoadAssetsLevel1
   m_GUID: d836468085d25c7448a3f58eb99f7ec9
   m_SerializeEntries:
+  - m_GUID: 000c23361cebffa4fa4d846dbff8b9fe
+    m_Address: Box Type 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00387d20c42fe6a45b196ada0c701077
+    m_Address: CirclePlatforn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 00445e7b9b881054f8745df434be5a12
+    m_Address: Lader4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 01ac9466490a8e449978f7c7da5ad7e5
+    m_Address: Lader4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 06ca31415bb40d9498c7f535a79c4bed
+    m_Address: Platform type 3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0802d2119e00c1049ad36b1829b74fea
+    m_Address: Platform type 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0e465f4dff4107c47956fb7f12e4ef5e
+    m_Address: GroundPlatform
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0edf31cb49b3a544babc78ccc65616cc
+    m_Address: FlyObj1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1510a2a45e68a5e48b27760c7e2421ce
+    m_Address: CheckPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 16f90225f6166b94faacf3f46cf9131a
+    m_Address: Spike1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2ba4014a845c49048b2d96c7d5276472
+    m_Address: Lader1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2eaeb47605cef7b42979a6cf0a665540
+    m_Address: Platform type 4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3198176ecad30384d818917f6213f442
+    m_Address: CylinderPlatform1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 39485b7539f883644951c63d6edd1520
+    m_Address: Spike1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3b19f887004a3b94e8e38675a94d45df
+    m_Address: StartPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4097b1805394acb4d83869c17a7d4bc8
+    m_Address: Lader5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43cc0d3a9b64cb34ea9d36248f3ad78f
+    m_Address: PlatformUp2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4417eaeee8f6602428b0338bb6ce6345
+    m_Address: Lader2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 450ca86e4cbe88d4b86700c323dfcf39
+    m_Address: Coin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59101036434b8174ea74579f3233e309
+    m_Address: PlayerHUD
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 59f4f62a39001df468945b89dd056aec
+    m_Address: CylinderPlatform1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5e4113b28ea647a4687882912e3f8994
+    m_Address: SquareWithoutCenter1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 67f38efcfd81a084b9cb05c4747eb0e5
+    m_Address: --ContainerLevel--
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f1bba34c3ff25b49b41a77b41e37fdf
+    m_Address: Arrow1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 775e52fe8fa016d4aa48cc9537be7c68
+    m_Address: Fence1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7a4beb3f18f67554c876834140f7aa44
+    m_Address: Lader2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e80eedf3a452184487c8eeb9c0711c5
+    m_Address: Table 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80944272ecf7eab4eac51f88773248c1
+    m_Address: SquareWithoutCenter1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8292e555d2fe1ed4bb6ccb1204575b09
+    m_Address: CylinderHalf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 88efe1cbad284534e81c06cd5928eb27
+    m_Address: TriangleWithoutCenter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8bf51f3e504f2724ab0cb7c6180c6956
+    m_Address: Test2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 98239cd2f5643c04aa7e01006c222605
+    m_Address: ColorPalite
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 99c9720ab356a0642a771bea13969a05
     m_Address: LEVEL_1
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Screen
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b6940a5b027d384ba42e807106b4f50
+    m_Address: Box Type 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9d7d7938b5401b248ae318881dbd163e
+    m_Address: Lader1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab965d6122cdbc44ca5953692565738b
+    m_Address: Platform type 3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ada106cf4ce2c3b49abf14f3ffdace9f
+    m_Address: Table 1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b37dc15d69a20044eb0f1036dbdd26fd
+    m_Address: TriangleWithoutCenter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b66ed6209ef00144483b5d5743d78aca
+    m_Address: Lader5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b67d0b44dd4cc9e428ad60afe6209d7b
+    m_Address: Coin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b73eb110d1a18ed41a8612a0193ae74b
+    m_Address: Arrow1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c578dbf444d918f4391be52f783569c7
+    m_Address: CylinderPlatform1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb956844eccc4834ab7d20dd7380beba
+    m_Address: FinishPoint
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7ddf7415c77d8042aaacd86fbf0ff4c
+    m_Address: Fence1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de56e05274210a9409d9bd0e2c5a68ac
+    m_Address: PlatformUp2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e1ed344cae4c4da4c90296e0699780fb
+    m_Address: Lader3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f2743e123a0cf814fafc8f90c059f3d9
+    m_Address: CylinderHalf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f37a747beca3c684a80dfbaf48b4655c
+    m_Address: CirclePlatforn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f82eaa51e9f2b0e42a9ce1f4e9c458b2
+    m_Address: FlyObj1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fca856c8aabb1af45bb312248d1c35d3
+    m_Address: Lader3
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -1,4 +1,5 @@
-﻿using Assets.Input;
+﻿using Assets._Scripts.GameControllers;
+using Assets.Input;
 using Assets.Scripts.Camera;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerStateMachineFactory : IDisposable
+    public class PlayerStateMachineFactory : IDisposable, IRestart
     {
         private InputReader _inputReader;
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
@@ -37,6 +38,11 @@ namespace Assets.Scripts.Player
         public void Dispose()
         {
            
+        }
+
+        public void Restart()
+        {
+            _animatorController.Restart();
         }
     }
 }

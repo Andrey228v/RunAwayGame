@@ -1,13 +1,21 @@
-﻿using System;
+﻿using Assets.Scripts.SaveLoad;
+using System;
 
 namespace Assets._Scripts.GameControllers
 {
     public class GameManager : IDisposable
     {
+        private SaveLoadService _saveLoadService;
+
         public event Action OnSaveGame;
         public event Action OnLoadGame;
         public event Action OnFinishGame;
         public event Action OnRestartGame;
+
+        public GameManager(SaveLoadService saveLoadService)
+        {
+            _saveLoadService = saveLoadService;
+        }
 
         public void Dispose()
         {
@@ -31,7 +39,9 @@ namespace Assets._Scripts.GameControllers
 
         public void RestartGameSignal()
         {
+            _saveLoadService.RestartLevel();
             OnRestartGame?.Invoke();
+
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Assets.Scripts.SaveLoad
             _saveSystem = saveSystem;
 
             LoadOrCreateSave();
+
+
         }
 
         public void Dispose() // это надо делать только при выходе из игры, потому что он общий для всех.
@@ -49,7 +51,19 @@ namespace Assets.Scripts.SaveLoad
 
             foreach (ISaveLoad obj in _saveLoads)
             {
-                obj.Load(levelData);
+                obj.Load(levelData, _levelConfig);
+            }
+        }
+
+        // функция, которая грузит часть объектов. Под вопросм.....
+        // смысл в том, что после инициализации части элементов нам не надо грузить именно все...
+        public void LoadPartLevelObject(IEnumerable<ISaveLoad> saveLoads) 
+        {
+            LevelData levelData = GetLevelData();
+
+            foreach (var data in saveLoads)
+            {
+                data.Load(levelData, _levelConfig);
             }
         }
 
@@ -140,7 +154,12 @@ namespace Assets.Scripts.SaveLoad
             }
         }
         
+        public void RestartLevel()
+        {
+            var data = GetLevelData();
 
+
+        }
 
 
         //public async Task SaveLevelDataAsync()

@@ -1,13 +1,15 @@
-﻿using Assets.Input;
+﻿using Assets._Scripts.GameControllers;
+using Assets.Input;
 using Assets.Scripts.Player;
 using Assets.Scripts.StateMachines.Player.States;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Scripts.StateMachines.Player
 {
-    public class PlayerStateMachine : IStateSwitcher, IDisposable
+    public class PlayerStateMachine : IStateSwitcher, IDisposable, IRestart
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;
@@ -75,6 +77,7 @@ namespace Assets.Scripts.StateMachines.Player
         {
             _currentState.CheckChangeState();
             _currentState.FixedUpdate();
+            Debug.Log($"_currentState: {_currentState}");
         }
 
         public void ChangeState<T>() where T : IState
@@ -84,6 +87,11 @@ namespace Assets.Scripts.StateMachines.Player
             _currentState.Exit();
             _currentState = state;
             _currentState?.Enter();
+        }
+
+        public void Restart()
+        {
+            _animatorController.Restart();
         }
     }
 }

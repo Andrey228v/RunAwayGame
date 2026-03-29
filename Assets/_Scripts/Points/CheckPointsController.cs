@@ -9,22 +9,41 @@ namespace Assets.Scripts.Points
 {
     public class CheckPointsController : ISaveLoad, IDisposable, IRestart
     {
-        public List<CheckPoint> CheckPoints { get; private set; }
+        private Transform _checkPointsParent;
+        private List<CheckPoint> _gameCheckPointList;
 
         public event Action OnSave;
 
+        public CheckPointsController(GamePoints points)
+        {
+            if (points != null)
+                _checkPointsParent = points.CheckPoints;
+            else
+                throw new ArgumentNullException(nameof(points), "CheckPoint parent cannot be null");
+
+
+            _gameCheckPointList = TransformToList(_checkPointsParent);
+
+        }
+
         public void Dispose()
         {
-            foreach (CheckPoint checkPoint in CheckPoints)
+            //Под вопросом...
+
+            foreach (CheckPoint checkPoint in _gameCheckPointList)
             {
+                checkPoint.Dispose();
                 checkPoint.OnActivated -= CheckPointActivated;
             }
         }
 
-        public List<CheckPoint> TransformToList(Transform checkPoints) 
+        //Из трансформа собираем CheckPoints
+        public List<CheckPoint> TransformToList(Transform checkPointsParent) 
         {
-            Transform checkPointsParent = checkPoints;
-            CheckPoints = new List<CheckPoint>();
+            if(checkPointsParent == null)
+                throw new ArgumentNullException(nameof(checkPointsParent), "checkPointsParent cannot be null");
+
+            List<CheckPoint> CheckPoints = new List<CheckPoint>();
 
             for (int i = 0; i < checkPointsParent.childCount; i++)
             {
@@ -41,28 +60,56 @@ namespace Assets.Scripts.Points
             OnSave?.Invoke();
         }
 
-        public void Load(LevelData data)
+        public void Load(LevelData levelData, LevelConfig levelConfig)
         {
-            for (int i = 0; i < CheckPoints.Count; i++)
+            //List<CheckPoint> gameCheckPointList = TransformToList(_checkPointsParent);
+            var checkpointsCount = _gameCheckPointList.Count;
+
+            if (levelData.CheckPoints == null)
             {
-                CheckPoint checkPoint = CheckPoints[i];
-                CheckPointData checkPointData = data.CheckPoints[i];
-                checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
-                checkPoint.SetState(checkPointData.IsActivated);
+                List<CheckPointData> loadCheckPointsData = levelData.CheckPoints;
+                
+                if (loadCheckPointsData == null)
+                {
+                    loadCheckPointsData = new List<CheckPointData>();
+                    
+
+                    for (int i = 0; i < _gameCheckPointList.Count; i++)
+                    {
+                        loadCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
+                    }
+
+                    levelData.CheckPoints = loadCheckPointsData;
+                    Debug.Log(checkpointsCount);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < checkpointsCount; i++)
+                {
+                    CheckPoint checkPoint = _gameCheckPointList[i];
+                    CheckPointData checkPointData = levelData.CheckPoints[i];
+                    checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
+                    checkPoint.SetState(checkPointData.IsActivated);
+                }
             }
         }
 
         public void Save(LevelData data)
         {
-            for (int i = 0; i < CheckPoints.Count; i++)
+            for (int i = 0; i < _gameCheckPointList.Count; i++)
             {
-                data.CheckPoints[i] = new CheckPointData { Id = CheckPoints[i].Id, IsActivated = CheckPoints[i].IsActivated };
+                data.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
             }
         }
 
         public void Restart()
         {
-            
+            foreach(var checkPoint in _gameCheckPointList)
+            {
+                checkPoint.Deactivate();
+            }
+
         }
     }
 }

@@ -36,8 +36,22 @@ namespace Assets._Scripts.GameControllers
             {
                 sub.Restart();
             }
+
+            _saveLoadService.LoadLevel();
         }
 
+        public void AddRestartSub(IRestart sub)
+        {
+            _restartListSubs.Add(sub);
+        }
+
+        public void AddRestartSub(IEnumerable<IRestart> subList)
+        {
+            foreach (var sub in subList)
+            {
+                AddRestartSub(sub);
+            }
+        }
 
         public void ClearRestartList()
         {

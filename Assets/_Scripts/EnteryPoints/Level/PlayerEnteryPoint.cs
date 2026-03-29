@@ -1,4 +1,5 @@
-﻿using Assets._Scripts.GameControllers;
+﻿using Assets._Scripts.EnteryPoints.Interfaces;
+using Assets._Scripts.GameControllers;
 using Assets.Scripts.Camera;
 using Assets.Scripts.Player;
 using Assets.Scripts.SaveLoad;
@@ -12,27 +13,30 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class PlayerEnteryPoint : IStartable, IDisposable
+    public class PlayerEnteryPoint : IStartable, IDisposable, IInitSaveLoad, IInitFinish, IInitRestart
     {
         private PlayerController _playerController;
         private PlayerStateMachineFactory _playerStateMachineFactory;
         private CameraController _cameraController;
         private Func<Character> _characterFactory;
         private SaveLoadService _saveLoadService;
-        private IEnumerable<ISaveLoad> _saveLoads;
-        private IEnumerable<IRestart> _restarted;
-        private IEnumerable<IFinish> _finished;
         private LevelData _loadData;
         private LevelConfig _levelConfig;
-        private GameCycleController _cycleController;
+        private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
+
+        public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
+
+        public IEnumerable<IFinish> Finished { get; private set; }
+
+        public IEnumerable<IRestart> Restarted { get; private set; }
 
         public PlayerEnteryPoint(PlayerController playerController, 
             PlayerStateMachineFactory playerStateMachineFactory, 
             Func<Character> characterFactory, CameraController cameraController, 
             SaveLoadService saveLoadService,
             IEnumerable<ISaveLoad> saveLoads,
-            GameCycleController gameCycleController,
+            GameFinishController gameFinishController,
             GameRestartController gameRestartController,
             IEnumerable<IRestart> restarted, IEnumerable<IFinish> fineshed) 
         {
@@ -41,17 +45,19 @@ namespace Assets._Scripts.EnteryPoints
             _cameraController = cameraController;
             _characterFactory = characterFactory;
             _saveLoadService = saveLoadService;
-            _saveLoads = saveLoads;
-            _cycleController = gameCycleController;
+            _finishController = gameFinishController;
             _gameRestartController = gameRestartController;
-            _restarted = restarted;
-            _finished = fineshed;
+            SaveLoads = saveLoads;
+            Finished = fineshed;
+            Restarted = restarted;
         }
 
         public void Start()
         {
             InitEvents();
             InitSaveLoadData();
+            InitFinishData();
+            InitRestartData();
         }
 
         public void Dispose()
@@ -64,33 +70,29 @@ namespace Assets._Scripts.EnteryPoints
             //_cycleController.OnFinishLevel += RestartPlayer;
         }
 
-        private void InitSaveLoadData()
+        public void InitSaveLoadData()
         {
             _loadData = _saveLoadService.GetLevelData();
             _levelConfig = _saveLoadService.GetLevelConfig();
             _saveLoadService.AddSaveLoadSub(_playerController); // зарегестрировали ISaveLoad надо подумать может передеать по другому...
             _loadData = InitPlayer(_loadData);
 
-            foreach (var data in _saveLoads)
-            {
-                data.Load(_loadData);
-            }
+            _saveLoadService.LoadPartLevelObject(SaveLoads);
+        }
+
+        public void InitFinishData()
+        {
+            _finishController.AddFinishSub(Finished);
+        }
+
+        public void InitRestartData()
+        {
+            _gameRestartController.AddRestartSub(Restarted);
         }
 
         private LevelData InitPlayer(LevelData levelData)
         {
             Character character = _characterFactory();
-
-            if (levelData.PlayerData == null)
-            {
-                var playerData = new PlayerData
-                {
-                    PlayerPosition = _levelConfig.StartPosition,
-                    PlayerRotation = Quaternion.Euler(_levelConfig.StartRotationEuler),
-                };
-
-                levelData.PlayerData = playerData;
-            }
 
             _cameraController.SetTarget(character.transform);
             PlayerStateMachine playerStateMachine = _playerStateMachineFactory.Create(character, _cameraController);
@@ -99,16 +101,5 @@ namespace Assets._Scripts.EnteryPoints
 
             return levelData;
         }
-
-        //private void RestartPlayer()
-        //{
-        //    _playerController.Restart();
-
-        //    var playerData = new PlayerData
-        //    {
-        //        PlayerPosition = _levelConfig.StartPosition,
-        //        PlayerRotation = Quaternion.Euler(_levelConfig.StartRotationEuler),
-        //    };
-        //}
     }
 }

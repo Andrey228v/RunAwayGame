@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Assets._Scripts.GameControllers
 {
-    public class GameCycleController : IDisposable
+    public class GameFinishController : IDisposable
     {
         private HashSet<IFinish> _finishListSubs;
 
         public event Action OnFinishLevel;
 
-        public GameCycleController()
+        public GameFinishController()
         {
             _finishListSubs = new HashSet<IFinish>();
         }
@@ -36,6 +36,14 @@ namespace Assets._Scripts.GameControllers
         public void AddFinishSub(IFinish sub)
         {
             _finishListSubs.Add(sub);
+        }
+
+        public void AddFinishSub(IEnumerable<IFinish> subList)
+        {
+            foreach (var sub in subList)
+            {
+                AddFinishSub(sub);
+            }
         }
     }
 }

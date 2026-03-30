@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: MainLoadAssets
   m_GUID: 8f53451090cc78b4d9138ee583e11536
   m_SerializeEntries:
+  - m_GUID: 34be3bdd9f777c04abbad388982ec017
+    m_Address: Boot
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 611cb5b9d3d8b8d40ba6c0017d77930c
     m_Address: PlayerHUD
     m_ReadOnly: 0

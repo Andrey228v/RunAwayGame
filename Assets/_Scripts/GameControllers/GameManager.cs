@@ -34,7 +34,7 @@ namespace Assets._Scripts.GameControllers
 
         public void FinishGameSignal()
         {
-            //OnFinishGame?.Invoke();
+            OnFinishGame?.Invoke();
         }
 
         public void RestartGameSignal()

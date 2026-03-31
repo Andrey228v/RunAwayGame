@@ -57,6 +57,9 @@ namespace Assets.Scripts.UI
             _gameInterfacePanel.OnLoadButtonClick += LoadGame;
             _gameInterfacePanel.OnSaveButtonClick += SaveGame;
             _gameInterfacePanel.OnSoundButtonClick += SoundChangeState;
+
+            _gameWinPanel.OnReloudButtonClick += _gameWinPanel.Hide;
+            _gameWinPanel.OnBackToMenuButtonClick += BackToMenu;
         }
 
         private void OnDisable()
@@ -69,6 +72,9 @@ namespace Assets.Scripts.UI
             _gameInterfacePanel.OnLoadButtonClick -= LoadGame;
             _gameInterfacePanel.OnSaveButtonClick -= SaveGame;
             _gameInterfacePanel.OnSoundButtonClick -= SoundChangeState;
+
+            _gameWinPanel.OnReloudButtonClick -= _gameWinPanel.Hide;
+            _gameWinPanel.OnBackToMenuButtonClick -= BackToMenu;
         }
 
         // под вопросом...

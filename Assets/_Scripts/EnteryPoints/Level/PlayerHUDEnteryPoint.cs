@@ -77,6 +77,7 @@ namespace Assets._Scripts.EnteryPoints
         public void InitFinishData()
         {
             _finishController.AddFinishSub(Finished);
+            _finishController.AddFinishSub(_gamePanelController);
         }
 
         public void InitRestartData()

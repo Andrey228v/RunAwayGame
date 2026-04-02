@@ -15,7 +15,7 @@ namespace Assets._Scripts.EnteryPoints
         private Func<GamePanelController> _gamePanelFactory;
         private GamePanelController _gamePanelController;
         private SaveLoadService _saveLoadService;
-        private LevelData _loadData;
+        //private LevelData _loadData;
         private GameManager _gameManager;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
@@ -69,7 +69,7 @@ namespace Assets._Scripts.EnteryPoints
         public void InitSaveLoadData()
         {
 
-            _loadData = _saveLoadService.GetLevelData();
+            //_loadData = _saveLoadService.GetLevelData();
 
             _saveLoadService.LoadPartLevelObject(SaveLoads);
         }

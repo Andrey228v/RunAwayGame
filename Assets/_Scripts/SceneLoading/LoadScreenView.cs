@@ -13,25 +13,16 @@ namespace Assets._Scripts.SceneLoading
         [SerializeField] private TextMeshProUGUI _statusText;
         [SerializeField] private Canvas _loadingCanvas;
         [SerializeField] private Camera _loadingCamera;
-        //[SerializeField] private SceneGroup[] _sceneGroups;
-
-        private float _targetProgress;
-        private bool _isLoading;
-        private float _fillSpeed = 0.5f;
-
-        //public readonly SceneGroupManager manager = new SceneGroupManager();
 
 
         public void Show()
         {
-            _isLoading = true;
             _loadingCanvas.gameObject.SetActive(true);
             _loadingCamera.gameObject.SetActive(true);
         }
 
         public void Hide()
         {
-            _isLoading = false;
             _loadingCanvas.gameObject.SetActive(false);
             _loadingCamera.gameObject.SetActive(false);
         }

@@ -11,6 +11,7 @@ namespace Assets.Scripts.Points
     {
         private Transform _checkPointsParent;
         private List<CheckPoint> _gameCheckPointList;
+        private CheckPoint _lastCheckPointActiveted;
 
         public event Action OnSave;
 
@@ -21,9 +22,7 @@ namespace Assets.Scripts.Points
             else
                 throw new ArgumentNullException(nameof(points), "CheckPoint parent cannot be null");
 
-
             _gameCheckPointList = TransformToList(_checkPointsParent);
-
         }
 
         public void Dispose()
@@ -36,6 +35,7 @@ namespace Assets.Scripts.Points
                 checkPoint.OnActivated -= CheckPointActivated;
             }
         }
+
 
         //Из трансформа собираем CheckPoints
         public List<CheckPoint> TransformToList(Transform checkPointsParent) 
@@ -57,31 +57,25 @@ namespace Assets.Scripts.Points
 
         public void CheckPointActivated(CheckPoint checkPoint) // Вопрос надо ли передавать checkPoint
         {
+            _lastCheckPointActiveted = checkPoint;
             OnSave?.Invoke();
         }
 
         public void Load(LevelData levelData, LevelConfig levelConfig)
         {
-            //List<CheckPoint> gameCheckPointList = TransformToList(_checkPointsParent);
             var checkpointsCount = _gameCheckPointList.Count;
 
             if (levelData.CheckPoints == null)
             {
-                List<CheckPointData> loadCheckPointsData = levelData.CheckPoints;
-                
-                if (loadCheckPointsData == null)
+                List<CheckPointData> loadCheckPointsData = new List<CheckPointData>();
+
+                for (int i = 0; i < _gameCheckPointList.Count; i++)
                 {
-                    loadCheckPointsData = new List<CheckPointData>();
-                    
-
-                    for (int i = 0; i < _gameCheckPointList.Count; i++)
-                    {
-                        loadCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
-                    }
-
-                    levelData.CheckPoints = loadCheckPointsData;
-                    Debug.Log(checkpointsCount);
+                    loadCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
                 }
+
+                levelData.CheckPoints = loadCheckPointsData;
+                Debug.Log(checkpointsCount);
             }
             else
             {
@@ -95,11 +89,15 @@ namespace Assets.Scripts.Points
             }
         }
 
-        public void Save(LevelData data)
+        public void Save(LevelData levelData)
         {
+            Debug.Log("SAVE COIN CONTROLLER");
+
+            levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform;
+
             for (int i = 0; i < _gameCheckPointList.Count; i++)
             {
-                data.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
+                levelData.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
             }
         }
 
@@ -109,7 +107,7 @@ namespace Assets.Scripts.Points
             {
                 checkPoint.Deactivate();
             }
-
         }
+
     }
 }

@@ -8,10 +8,13 @@ namespace Assets.Scripts.Points
 
         public Transform CheckPoints { get; private set; }
 
-        public GamePoints(FinishPoint finishPoint, Transform checkPoints)
+        public Transform Coins { get; private set; }
+
+        public GamePoints(FinishPoint finishPoint, Transform checkPoints, Transform coins)
         {
             FinishPoint = finishPoint;
             CheckPoints = checkPoints;
+            Coins = coins;
         }
     }
 }

@@ -29,7 +29,8 @@ namespace Assets.Scripts.Points
 
         private void Initialize()
         {
-            if (_isInitialized) return;
+            if (_isInitialized) 
+                return;
 
             _isActivated = false;
             _isInitialized = true;
@@ -37,9 +38,11 @@ namespace Assets.Scripts.Points
 
         private void OnTriggerEnter(Collider other)
         {
-            if (IsActivated) return;
+            if (IsActivated) 
+                return;
 
-            if (!other.TryGetComponent<PlayerMB>(out _)) return;
+            if (other.TryGetComponent<PlayerMB>(out _) == false) 
+                return;
 
             Activate();
         }

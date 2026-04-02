@@ -59,6 +59,7 @@ namespace Assets.Scripts.UI
             _gameInterfacePanel.OnSoundButtonClick += SoundChangeState;
 
             _gameWinPanel.OnReloudButtonClick += _gameWinPanel.Hide;
+            _gameWinPanel.OnReloudButtonClick += _gameInterfacePanel.Show;
             _gameWinPanel.OnBackToMenuButtonClick += BackToMenu;
         }
 
@@ -74,6 +75,7 @@ namespace Assets.Scripts.UI
             _gameInterfacePanel.OnSoundButtonClick -= SoundChangeState;
 
             _gameWinPanel.OnReloudButtonClick -= _gameWinPanel.Hide;
+            _gameWinPanel.OnReloudButtonClick -= _gameInterfacePanel.Show;
             _gameWinPanel.OnBackToMenuButtonClick -= BackToMenu;
         }
 

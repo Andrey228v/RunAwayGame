@@ -7,6 +7,7 @@ namespace Assets._Scripts.GameControllers
     {
         private SaveLoadService _saveLoadService;
 
+        public event Action OnInitGame;
         public event Action OnSaveGame;
         public event Action OnLoadGame;
         public event Action OnFinishGame;
@@ -22,6 +23,11 @@ namespace Assets._Scripts.GameControllers
             
         }
 
+        public void InitGameSignal()
+        {
+            OnInitGame?.Invoke();
+        }
+
         public void SaveGameSignal()
         {
             OnSaveGame?.Invoke();
@@ -35,6 +41,7 @@ namespace Assets._Scripts.GameControllers
         public void FinishGameSignal()
         {
             OnFinishGame?.Invoke();
+            _saveLoadService.FinishLevel();
         }
 
         public void RestartGameSignal()

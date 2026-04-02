@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.GameControllers;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -157,8 +158,11 @@ namespace Assets.Scripts.SaveLoad
         public void RestartLevel()
         {
             var data = GetLevelData();
+        }
 
-
+        public void FinishLevel()
+        {
+            SaveLevelData();
         }
 
 

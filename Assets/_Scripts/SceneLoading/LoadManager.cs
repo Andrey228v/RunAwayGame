@@ -43,8 +43,6 @@ namespace Assets._Scripts.SceneLoading
 
         public async UniTask LoadScene(SceneGroupHandle sceneGroup)
         {
-
-
             await ShowLoadScreen();
             await UnloadCurrentContent();
 

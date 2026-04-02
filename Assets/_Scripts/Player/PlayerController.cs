@@ -40,6 +40,8 @@ namespace Assets.Scripts.Player
 
         public void Load(LevelData levelData, LevelConfig levelConfig)
         {
+            Reset();
+
             if (levelData.PlayerData == null)
             {
                 var playerData = new PlayerData
@@ -51,7 +53,7 @@ namespace Assets.Scripts.Player
                 levelData.PlayerData = playerData;
             }
 
-            _character.transform.SetLocalPositionAndRotation(levelData.PlayerData.PlayerPosition, levelData.PlayerData.PlayerRotation);
+            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition.position, levelData.PlayerData.PlayerRotation);
         }
 
         public void Save(LevelData data)
@@ -62,23 +64,17 @@ namespace Assets.Scripts.Player
 
         public void Restart()
         {
-            if(_playerStateMachine != null)
-            {
-                _playerStateMachine.Restart();
-            }
-
-            if (_character != null)
-            {
-                _character.SetVelocity(Vector3.zero);
-                _character.StopJumping();
-
-                _character.SetMovementMode(Character.MovementMode.Falling);
-            }
+            Reset();
 
 
         }
 
         public void FinishGame()
+        {
+            Reset();
+        }
+
+        private void Reset()
         {
             if (_playerStateMachine != null)
             {
@@ -89,8 +85,11 @@ namespace Assets.Scripts.Player
             {
                 _character.SetVelocity(Vector3.zero);
                 _character.StopJumping();
+
                 _character.SetMovementMode(Character.MovementMode.Falling);
             }
         }
+
+
     }
 }

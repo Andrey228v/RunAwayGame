@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.EnteryPoints;
+using Assets._Scripts.ObjectsScripts.Coins;
 using Assets.Scripts.EnteryPoints;
 using Assets.Scripts.Points;
 using UnityEngine;
@@ -11,11 +12,13 @@ namespace Assets._Scripts.Installers
     {
         [SerializeField] private FinishPoint _finishPoint;
         [SerializeField] private Transform _checkPoints;
+        [SerializeField] private Transform _coins;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInstance(new GamePoints(_finishPoint, _checkPoints));
+            builder.RegisterInstance(new GamePoints(_finishPoint, _checkPoints, _coins));
 
+            builder.RegisterEntryPoint<CoinController>().AsSelf();
             builder.RegisterEntryPoint<CheckPointsController>().AsSelf();
             builder.RegisterEntryPoint<LevelEnteryPoint>();
         }

@@ -9,7 +9,7 @@ namespace Assets.Scripts.EnteryPoints
     public class GameEnteryPoint : IStartable, IDisposable
     {
         private SaveLoadService _saveLoadService;
-        private GameFinishController _cycleController;
+        private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
         private GameManager _gameManager;
 
@@ -19,7 +19,7 @@ namespace Assets.Scripts.EnteryPoints
             GameManager gameManager)
         {
             _saveLoadService = saveLoadService;
-            _cycleController = gameCycleController;
+            _finishController = gameCycleController;
             _gameRestartController = gameRestartController;
             _gameManager = gameManager;
         }
@@ -35,7 +35,7 @@ namespace Assets.Scripts.EnteryPoints
         public void Dispose()
         {
             _saveLoadService.ClearList(); // тут очищаем лист, под вопросом.
-            _cycleController.Dispose();
+            _finishController.Dispose();
             _gameRestartController.Dispose();
 
             _gameManager.OnSaveGame -= SaveGame;
@@ -60,7 +60,7 @@ namespace Assets.Scripts.EnteryPoints
         public void FinishGame()
         {
             Debug.Log("FINISH GAME");
-            _cycleController.FinishNotifySubs();
+            _finishController.FinishNotifySubs();
         }
 
         public void RestartGame()

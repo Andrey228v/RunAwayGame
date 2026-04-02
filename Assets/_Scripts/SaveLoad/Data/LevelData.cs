@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.Points;
+﻿using Assets._Scripts.SaveLoad.Data;
+using Assets.Scripts.Points;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.SaveLoad.Data
 {
@@ -9,9 +11,9 @@ namespace Assets.Scripts.SaveLoad.Data
     {
         public string LevelID;
         public bool IsLevelWasStarted; // Был ли уровень запущен до этого запуска ??
-        public CheckPoint LastCheckpointPosition;
+        public Transform LastCheckPointPosition;
         public PlayerData PlayerData;
         public List<CheckPointData> CheckPoints;
-        public bool IsLevelCompleted;
+        public List<CoinData> Coins;
     }
 }

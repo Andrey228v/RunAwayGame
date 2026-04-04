@@ -9,5 +9,7 @@ namespace Assets.Scripts.SaveLoad.Data
         public Dictionary<string, LevelData> LevelsData = new Dictionary<string, LevelData>();
         public string CurrentLevelId;
         public DateTime LastSaveTime;
+        public int Coins;
+        public int Gobelets;
     }
 }

@@ -14,6 +14,8 @@ namespace Assets.Scripts.Camera
 
         public event Action<Quaternion> OnCameraAngleChanged;
 
+        public CinemachineCamera CameraCinemachine => _cameraCinemachine;
+
         public void Start()
         {
             _cameraTransform = _cameraCinemachine.transform;

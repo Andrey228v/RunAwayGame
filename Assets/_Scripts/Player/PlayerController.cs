@@ -11,7 +11,7 @@ namespace Assets.Scripts.Player
 {
     public class PlayerController : IFixedTickable, ISaveLoad, IDisposable, IRestart, IFinish
     {
-        private PlayerStateMachine _playerStateMachine;
+        private UnitStateMachine _playerStateMachine;
         private Character _character;
 
         public void Dispose()
@@ -28,7 +28,7 @@ namespace Assets.Scripts.Player
             _playerStateMachine.FixedTick();
         }
 
-        public void SetPlayerStateMachine(PlayerStateMachine playerStateMachine)
+        public void SetPlayerStateMachine(UnitStateMachine playerStateMachine)
         {
             _playerStateMachine = playerStateMachine;
         }
@@ -51,9 +51,10 @@ namespace Assets.Scripts.Player
                 };
 
                 levelData.PlayerData = playerData;
+                levelData.LastCheckPointPosition = levelConfig.StartPosition;
             }
 
-            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition.position, levelData.PlayerData.PlayerRotation);
+            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
         }
 
         public void Save(LevelData data)

@@ -93,7 +93,10 @@ namespace Assets.Scripts.Points
         {
             Debug.Log("SAVE COIN CONTROLLER");
 
-            levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform;
+            if(_lastCheckPointActiveted != null)
+            {
+                levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform.position;
+            }
 
             for (int i = 0; i < _gameCheckPointList.Count; i++)
             {

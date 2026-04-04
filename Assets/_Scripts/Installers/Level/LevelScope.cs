@@ -1,6 +1,6 @@
 ﻿using Assets._Scripts.EnteryPoints;
+using Assets._Scripts.GameControllers;
 using Assets._Scripts.ObjectsScripts.Coins;
-using Assets.Scripts.EnteryPoints;
 using Assets.Scripts.Points;
 using UnityEngine;
 using VContainer;

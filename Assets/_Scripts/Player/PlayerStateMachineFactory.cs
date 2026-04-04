@@ -10,8 +10,6 @@ namespace Assets.Scripts.Player
 {
     public class PlayerStateMachineFactory : IDisposable, IRestart
     {
-        private InputReader _inputReader;
-        private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
         private PlayerMovement _playerMovement;
         private PlayerRotator _playerRotator;
         private PlayerGroundChecker _playerGroundChecker;
@@ -19,18 +17,19 @@ namespace Assets.Scripts.Player
         private AnimatorController _animatorController;
         private FallController _fallController;
 
-        public PlayerStateMachine Create(Character character, CameraController cameraController)
+        public UnitStateMachine Create(Character character, CameraController cameraController, 
+            InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
-            _inputReader = new InputReader();
-            _playerMoveDirectionCalculator = new PlayerMoveDirectionCalculator(cameraController, _inputReader);
-            _playerMovement = new PlayerMovement(character, _inputReader, _playerMoveDirectionCalculator);
-            _playerRotator = new PlayerRotator(character, _playerMoveDirectionCalculator);
+            
+            //_playerMoveDirectionCalculator = new PlayerMoveDirectionCalculator(cameraController, inputReader);
+            _playerMovement = new PlayerMovement(character, inputReader, playerMoveDirectionCalculator);
+            _playerRotator = new PlayerRotator(character, playerMoveDirectionCalculator);
             _playerGroundChecker = new PlayerGroundChecker(character);
-            _playerJumper = new PlayerJumper(character, _inputReader);
+            _playerJumper = new PlayerJumper(character, inputReader);
             _animatorController = new AnimatorController(character.animator);
             _fallController = new FallController(character);
 
-            PlayerStateMachine playerStateMachine = new PlayerStateMachine(_playerMovement, _playerRotator, _inputReader, _playerGroundChecker, _playerJumper, _animatorController, _fallController);
+            UnitStateMachine playerStateMachine = new UnitStateMachine(_playerMovement, _playerRotator, inputReader, _playerGroundChecker, _playerJumper, _animatorController, _fallController);
 
             return playerStateMachine;
         }

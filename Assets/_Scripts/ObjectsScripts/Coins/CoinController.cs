@@ -86,9 +86,12 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             {
                 for (int i = 0; i < objectCount; i++)
                 {
-                    Coin obj = _objectList[i];
-                    CoinData objData = levelData.Coins[i];
-                    obj.SetState(objData.IsActivated);
+                    if(_objectList[i].IsActivated == false)
+                    {
+                        Coin obj = _objectList[i];
+                        CoinData objData = levelData.Coins[i];
+                        obj.SetState(objData.IsActivated);
+                    }
                 }
             }
         }

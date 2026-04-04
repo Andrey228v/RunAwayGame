@@ -566,6 +566,10 @@ PrefabInstance:
       propertyPath: _finishPoint
       value: 
       objectReference: {fileID: 1307114829}
+    - target: {fileID: 4777991964315702705, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: _unitInfoUIPrefab
+      value: 
+      objectReference: {fileID: 3597315204418880215, guid: 4bac61530990eaf48ae34bd692cbca54, type: 3}
     - target: {fileID: 6104445872681076743, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -106.7

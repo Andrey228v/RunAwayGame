@@ -11,7 +11,7 @@ namespace Assets.Scripts.SaveLoad.Data
     {
         public string LevelID;
         public bool IsLevelWasStarted; // Был ли уровень запущен до этого запуска ??
-        public Transform LastCheckPointPosition;
+        public Vector3 LastCheckPointPosition;
         public PlayerData PlayerData;
         public List<CheckPointData> CheckPoints;
         public List<CoinData> Coins;

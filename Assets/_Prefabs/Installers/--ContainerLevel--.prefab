@@ -49,7 +49,8 @@ MonoBehaviour:
     TypeName: Assets._Scripts.Installers.RootScope
   autoRun: 1
   autoInjectGameObjects:
-  - {fileID: 0}
+  - {fileID: 837595671595236542, guid: 4bac61530990eaf48ae34bd692cbca54, type: 3}
+  _unitInfoUIPrefab: {fileID: 0}
 --- !u!114 &8007396858064703457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,3 +69,4 @@ MonoBehaviour:
   autoInjectGameObjects: []
   _finishPoint: {fileID: 0}
   _checkPoints: {fileID: 0}
+  _coins: {fileID: 0}

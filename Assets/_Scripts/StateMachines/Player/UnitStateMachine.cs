@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.StateMachines.Player
 {
-    public class PlayerStateMachine : IStateSwitcher, IDisposable, IRestart
+    public class UnitStateMachine : IStateSwitcher, IDisposable, IRestart
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;
@@ -22,7 +22,7 @@ namespace Assets.Scripts.StateMachines.Player
         private AnimatorController _animatorController;
         private FallController _fallController;
 
-        public PlayerStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, InputReader inputReader,
+        public UnitStateMachine(PlayerMovement playerMovement, PlayerRotator playerRotator, InputReader inputReader,
             PlayerGroundChecker playerGroundChecker,
             PlayerJumper playerJumper, AnimatorController animatorController, FallController fallController)
         {

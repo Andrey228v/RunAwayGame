@@ -29,7 +29,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public IEnumerable<IRestart> Restarted { get; private set; }
 
-        public IEnumerable<IInit> Inited => throw new NotImplementedException();
+        public IEnumerable<IInit> Inited { get; private set; } // Надо ли ?....
 
         public LevelEnteryPoint(GamePoints gamePoints,
             SaveLoadService saveLoadService,

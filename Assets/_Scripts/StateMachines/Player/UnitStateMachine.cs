@@ -83,8 +83,6 @@ namespace Assets.Scripts.StateMachines.Player
 
             _currentState.FixedUpdate();
             _currentState.CheckChangeState();
-            
-            Debug.Log($"_currentState: {_currentState}");
         }
 
         public void ChangeState<T>() where T : IState

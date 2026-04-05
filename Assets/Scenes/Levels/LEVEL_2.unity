@@ -253,6 +253,37 @@ Transform:
   - {fileID: 1833616083}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &857176176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 857176177}
+  m_Layer: 0
+  m_Name: Bots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &857176177
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 857176176}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.83611, y: -0, z: -16.56177}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1183551680
 GameObject:
   m_ObjectHideFlags: 0
@@ -648,6 +679,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 1765903083933108152, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: _botsParent
+      value: 
+      objectReference: {fileID: 857176177}
     - target: {fileID: 3051909748476792093, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -676,6 +711,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: --Container--
       objectReference: {fileID: 0}
+    - target: {fileID: 4777991964315702705, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: _coins
+      value: 
+      objectReference: {fileID: 235748054}
     - target: {fileID: 4777991964315702705, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
       propertyPath: _checkPoints
       value: 
@@ -802,3 +841,4 @@ SceneRoots:
   - {fileID: 1901349385}
   - {fileID: 820796690}
   - {fileID: 235748054}
+  - {fileID: 857176177}

@@ -12,9 +12,9 @@ TagManager:
   - Water
   - UI
   - Post Processing
-  - 
-  - 
-  - 
+  - Ground
+  - Player
+  - Bot
   - 
   - 
   - 
@@ -50,3 +50,4 @@ TagManager:
   - Light Layer 5
   - Light Layer 6
   - Light Layer 7
+  m_MigratedRenderPipelines: []

@@ -403,6 +403,37 @@ Transform:
   - {fileID: 2107824032}
   m_Father: {fileID: 717150711}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1497935011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1497935012}
+  m_Layer: 0
+  m_Name: Bots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1497935012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497935011}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 50.00502, y: 6.27577, z: 3.40569}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1753234011
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +577,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 12.1
       objectReference: {fileID: 0}
+    - target: {fileID: 1765903083933108152, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: _botsParent
+      value: 
+      objectReference: {fileID: 1497935012}
     - target: {fileID: 3779064126204483503, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.1
@@ -558,6 +593,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: --Container--
       objectReference: {fileID: 0}
+    - target: {fileID: 4777991964315702705, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
+      propertyPath: _coins
+      value: 
+      objectReference: {fileID: 2114965238}
     - target: {fileID: 4777991964315702705, guid: 67f38efcfd81a084b9cb05c4747eb0e5, type: 3}
       propertyPath: _checkPoints
       value: 
@@ -758,3 +797,4 @@ SceneRoots:
   - {fileID: 2049392026}
   - {fileID: 717150711}
   - {fileID: 2114965238}
+  - {fileID: 1497935012}

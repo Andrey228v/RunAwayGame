@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using VContainer.Unity;
 
 namespace Assets._Scripts.Bots
 {
-    public class BotAIReader
+    public class BotAIReader 
     {
+
+
 
     }
 }

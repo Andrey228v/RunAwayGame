@@ -20,5 +20,7 @@ namespace Assets._Scripts.Bots
         {
             _botAISM.FixedTick();
         }
+
+
     }
 }

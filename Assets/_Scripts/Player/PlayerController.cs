@@ -13,6 +13,9 @@ namespace Assets.Scripts.Player
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
+        private PlayerMB _playerMB;
+
+        public PlayerMB PlayerMB => _playerMB;
 
         public void Dispose()
         {
@@ -91,6 +94,16 @@ namespace Assets.Scripts.Player
             }
         }
 
+        public void SetPlayerMB(PlayerMB playerMB)
+        {
+            _playerMB = playerMB;
+        }
 
+        public void DieRestart(LevelData levelData)
+        {
+            Reset();
+
+            _playerMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+        }
     }
 }

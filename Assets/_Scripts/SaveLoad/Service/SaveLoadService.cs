@@ -20,8 +20,6 @@ namespace Assets.Scripts.SaveLoad
             _saveSystem = saveSystem;
 
             LoadOrCreateSave();
-
-
         }
 
         public void Dispose() // это надо делать только при выходе из игры, потому что он общий для всех.
@@ -162,6 +160,11 @@ namespace Assets.Scripts.SaveLoad
         public void FinishLevel()
         {
             SaveLevelData();
+        }
+
+        public void DieLoad()
+        {
+
         }
 
 

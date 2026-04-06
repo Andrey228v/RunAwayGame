@@ -1,9 +1,13 @@
 ﻿using Assets._Scripts.Bots.BotStateMachine;
+using Assets.Scripts.Player;
 using Assets.Scripts.Points;
+using Assets.Scripts.SaveLoad;
+using Assets.Scripts.SaveLoad.Data;
 using ECM2;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using VContainer.Unity;
 
 namespace Assets._Scripts.Bots
@@ -14,11 +18,13 @@ namespace Assets._Scripts.Bots
         private List<Bot> _bots = new List<Bot>();
         private BotFactory _botFactory;
         private GamePoints _gamePoints;
+        private SaveLoadService _saveLoadService;
 
-        public BotsController(BotFactory botFactory, GamePoints gamePoints)
+        public BotsController(BotFactory botFactory, GamePoints gamePoints, SaveLoadService saveLoadService)
         {
             _botFactory = botFactory;
             _gamePoints = gamePoints;
+            _saveLoadService = saveLoadService;
         }
 
         public void FixedTick()
@@ -44,6 +50,10 @@ namespace Assets._Scripts.Bots
 
                 Bot bot = _botFactory.CreateBot(agent, _gamePoints);
 
+                BotMB botMB = agent.gameObject.GetComponent<BotMB>();
+                botMB.OnDie += DieRestartEntery;
+
+
                 AddBot(bot);
             }
         }
@@ -56,6 +66,14 @@ namespace Assets._Scripts.Bots
         public void RemoveBot(Bot bot) 
         {
             _bots.Remove(bot);
+        }
+
+        private void DieRestartEntery(BotMB botMB)
+        {
+
+            LevelData levelData = _saveLoadService.GetLevelData();
+            botMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+
         }
     }
 }

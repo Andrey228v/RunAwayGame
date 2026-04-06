@@ -60,20 +60,20 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            InitEvents();
             InitSaveLoadData();
             InitFinishData();
             InitRestartData();
+            InitEvents();
         }
 
         public void Dispose()
         {
-            //_cycleController.OnFinishLevel -= RestartPlayer;
+            _playerController.PlayerMB.OnDie -= DieRestartEntery;
         }
 
         private void InitEvents()
         {
-            //_cycleController.OnFinishLevel += RestartPlayer;
+            _playerController.PlayerMB.OnDie += DieRestartEntery;
         }
 
         public void InitSaveLoadData()
@@ -81,7 +81,7 @@ namespace Assets._Scripts.EnteryPoints
             _loadData = _saveLoadService.GetLevelData();
             _levelConfig = _saveLoadService.GetLevelConfig();
             _saveLoadService.AddSaveLoadSub(_playerController); // зарегестрировали ISaveLoad надо подумать может передеать по другому...
-            _loadData = InitPlayer(_loadData, _cameraController, _characterFactory, 
+            InitPlayer(_loadData, _cameraController, _characterFactory, 
                 _playerStateMachineFactory, _playerController, _unitInfoUIFactory, _billboardManager);
 
             _saveLoadService.LoadPartLevelObject(SaveLoads);
@@ -97,7 +97,7 @@ namespace Assets._Scripts.EnteryPoints
             _gameRestartController.AddRestartSub(Restarted);
         }
 
-        private LevelData InitPlayer(LevelData levelData, CameraController cameraController, 
+        private void InitPlayer(LevelData levelData, CameraController cameraController, 
             Func<Character> characterFactory, PlayerStateMachineFactory playerStateMachineFactory, PlayerController playerController,
             Func<UnitInfoUI> unitInfoUIFactory, BillboardManager billboardManager)
         {
@@ -107,8 +107,10 @@ namespace Assets._Scripts.EnteryPoints
             InputReader inputReader = new InputReader();
             PlayerMoveDirectionCalculator playerMoveDirectionCalculator = new PlayerMoveDirectionCalculator(cameraController, inputReader);
             UnitStateMachine playerStateMachine = playerStateMachineFactory.Create(character, cameraController, inputReader, playerMoveDirectionCalculator);
+            
             playerController.SetCharacter(character);
             playerController.SetPlayerStateMachine(playerStateMachine);
+
 
             UnitInfoUI unitInfoUI = unitInfoUIFactory();
             unitInfoUI.transform.parent = character.transform;
@@ -117,7 +119,18 @@ namespace Assets._Scripts.EnteryPoints
             billboardManager.SetDirectionCalculator(playerMoveDirectionCalculator);
             billboardManager.SetCameraController(cameraController);
 
-            return levelData;
+            PlayerMB playerMB =  character.gameObject.GetComponent<PlayerMB>();
+            playerController.SetPlayerMB(playerMB);
         }
+
+
+        //Не правильно. Подумать потом как исправить. Надо переместить создание в контролле как в Бот контроллере.
+        private void DieRestartEntery() 
+        {
+
+            _loadData = _saveLoadService.GetLevelData();
+            _playerController.DieRestart(_loadData);
+        }
+
     }
 }

@@ -20,8 +20,6 @@ namespace Assets.Scripts.Player
         public UnitStateMachine Create(Character character, CameraController cameraController, 
             InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
-            
-            //_playerMoveDirectionCalculator = new PlayerMoveDirectionCalculator(cameraController, inputReader);
             _playerMovement = new PlayerMovement(character, inputReader, playerMoveDirectionCalculator);
             _playerRotator = new PlayerRotator(character, playerMoveDirectionCalculator);
             _playerGroundChecker = new PlayerGroundChecker(character);

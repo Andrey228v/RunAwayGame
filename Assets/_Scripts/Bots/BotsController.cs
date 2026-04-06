@@ -3,11 +3,7 @@ using Assets.Scripts.Points;
 using ECM2;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AI;
 using VContainer.Unity;
 
 namespace Assets._Scripts.Bots

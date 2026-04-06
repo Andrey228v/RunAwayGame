@@ -1,10 +1,5 @@
 ﻿using Assets._Scripts.Bots.BotStateMachine;
 using ECM2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets._Scripts.Bots
 {
@@ -25,6 +20,5 @@ namespace Assets._Scripts.Bots
         {
             _botAISM.FixedTick();
         }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.Bots;
-using Assets._Scripts.SceneLoading;
+﻿using Assets._Scripts.SceneLoading;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;

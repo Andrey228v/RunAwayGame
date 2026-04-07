@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7450475590644556561}
   - component: {fileID: 4777991964315702705}
   - component: {fileID: 8007396858064703457}
-  - component: {fileID: 1765903083933108152}
   m_Layer: 0
   m_Name: --ContainerLevel--
   m_TagString: Untagged
@@ -53,6 +52,9 @@ MonoBehaviour:
   - {fileID: 0}
   _unitInfoUIPrefab: {fileID: 3597315204418880215, guid: 4bac61530990eaf48ae34bd692cbca54, type: 3}
   _characterPrefab: {fileID: 1688571644223161820, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
+  _finishPoint: {fileID: 0}
+  _checkPoints: {fileID: 0}
+  _coins: {fileID: 0}
 --- !u!114 &8007396858064703457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,23 +71,3 @@ MonoBehaviour:
     TypeName: Assets.Scripts.Installers.GameScope
   autoRun: 1
   autoInjectGameObjects: []
-  _finishPoint: {fileID: 0}
-  _checkPoints: {fileID: 0}
-  _coins: {fileID: 0}
---- !u!114 &1765903083933108152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4559369164428635846}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb80dec8fdc25964fbcbec1658f21911, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.Level.BotScope
-  parentReference:
-    TypeName: Assets.Scripts.Installers.GameScope
-  autoRun: 1
-  autoInjectGameObjects: []
-  _botsParent: {fileID: 0}

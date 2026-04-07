@@ -19,13 +19,13 @@ namespace Assets._Scripts.Bots.BotStateMachine
 
         private NavMeshCharacter _agent;
         private AnimatorController _animatorController;
-        private GamePoints _gamePoints;
+        //private GamePoints _gamePoints;
 
-        public BotAISM(NavMeshCharacter agent, AnimatorController animatorController, GamePoints gamePoints) 
+        public BotAISM(NavMeshCharacter agent, AnimatorController animatorController) 
         {
             _agent = agent;
             _animatorController = animatorController;
-            _gamePoints = gamePoints;
+            //_gamePoints = gamePoints;
 
             Start();
         }
@@ -40,8 +40,8 @@ namespace Assets._Scripts.Bots.BotStateMachine
         {
             _states = new List<IState>()
             {
-               new MoveAI(this, _agent, _animatorController, _gamePoints),
-               new JumpAI(this, _agent, _animatorController, _gamePoints),
+               new MoveAI(this, _agent, _animatorController),
+               new JumpAI(this, _agent, _animatorController),
                new StayAI(),
             };
 

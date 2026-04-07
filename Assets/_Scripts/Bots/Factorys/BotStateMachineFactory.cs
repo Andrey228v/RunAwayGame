@@ -7,12 +7,12 @@ namespace Assets._Scripts.Bots.Factorys
 {
     public class BotStateMachineFactory
     {
-        public BotAISM Create(NavMeshCharacter agent, GamePoints gamePoints)
+        public BotAISM Create(NavMeshCharacter agent)
         {
 
             AnimatorController animatorController = new AnimatorController(agent.character.animator);
 
-            BotAISM botAISM = new BotAISM(agent, animatorController, gamePoints);
+            BotAISM botAISM = new BotAISM(agent, animatorController);
 
             return botAISM;
         }

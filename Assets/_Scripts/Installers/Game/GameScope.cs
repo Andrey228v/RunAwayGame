@@ -2,7 +2,6 @@
 using Assets._Scripts.UI;
 using Assets.Scripts.EnteryPoints;
 using Assets.Scripts.Points;
-using Assets.Scripts.UI;
 using ECM2;
 using UnityEngine;
 using VContainer;
@@ -13,11 +12,13 @@ namespace Assets.Scripts.Installers
     public class GameScope : LifetimeScope
     {
         [SerializeField] private UnitInfoUI _unitInfoUIPrefab;
-        [SerializeField] private Character _characterPrefab;
+        [SerializeField] private Character _characterPrefab; // префаб Unit, тут надо префаб делать пустой без Player и Bot. Потом переделать.
 
-        [SerializeField] private FinishPoint _finishPoint;
-        [SerializeField] private Transform _checkPoints;
-        [SerializeField] private Transform _coins;
+
+        [SerializeField] private FinishPoint _finishPoint; // Переделать
+        [SerializeField] private Transform _checkPoints; // Переделать
+        [SerializeField] private Transform _coins; // Переделать
+        [SerializeField] private Transform _botsRoad; // Переделать
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -38,7 +39,7 @@ namespace Assets.Scripts.Installers
         {
             builder.RegisterEntryPoint<GameEnteryPoint>();
 
-            builder.RegisterInstance(new GamePoints(_finishPoint, _checkPoints, _coins));
+            builder.RegisterInstance(new GamePoints(_finishPoint, _checkPoints, _coins, _botsRoad));
 
             builder.Register<GameFinishController>(Lifetime.Singleton); // под вопросом...
             builder.Register<GameRestartController>(Lifetime.Singleton); // под вопросом...

@@ -9,6 +9,7 @@ namespace Assets._Scripts.Bots
         private BotAISM _botAISM;
         private BotAIReader _botAIReader;
 
+
         public Bot(NavMeshCharacter agent, BotAISM botAISM, BotAIReader botAIReader) 
         {
             _agent = agent;

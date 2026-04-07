@@ -10,11 +10,14 @@ namespace Assets.Scripts.Points
 
         public Transform Coins { get; private set; }
 
-        public GamePoints(FinishPoint finishPoint, Transform checkPoints, Transform coins)
+        public  Transform BotsRoad { get; private set; }
+
+        public GamePoints(FinishPoint finishPoint, Transform checkPoints, Transform coins, Transform botsRoad)
         {
             FinishPoint = finishPoint;
             CheckPoints = checkPoints;
             Coins = coins;
+            BotsRoad = botsRoad;
         }
     }
 }

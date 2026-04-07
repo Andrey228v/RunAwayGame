@@ -623,7 +623,6 @@ GameObject:
   - component: {fileID: 3523320025556527813}
   - component: {fileID: 2031853157857313241}
   - component: {fileID: 1688571644223161820}
-  - component: {fileID: 8450606358449791920}
   m_Layer: 8
   m_Name: Unit
   m_TagString: Untagged
@@ -813,18 +812,6 @@ MonoBehaviour:
   _pushForceScale: 1
   _standingDownwardForceScale: 1
   _camera: {fileID: 0}
---- !u!114 &8450606358449791920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6032692036256444754}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99fc6f8bada9e4844bd7f6c33b881f52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Player.PlayerMB
 --- !u!1 &6446766628028455161
 GameObject:
   m_ObjectHideFlags: 0

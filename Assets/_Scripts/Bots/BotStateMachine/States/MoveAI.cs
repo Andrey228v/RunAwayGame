@@ -11,14 +11,15 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
     {
         private NavMeshCharacter _agent;
         private AnimatorController _animatorController;
-        private GamePoints _gamePoints;
+        //private GamePoints _gamePoints;
         private BotAISM _botAISM;
 
-        public MoveAI(BotAISM botAISM, NavMeshCharacter agent, AnimatorController animatorController, GamePoints gamePoints)
+        public MoveAI(BotAISM botAISM, NavMeshCharacter agent, 
+            AnimatorController animatorController)
         {
             _agent = agent;
             _animatorController = animatorController;
-            _gamePoints = gamePoints;
+            //_gamePoints = gamePoints;
             _botAISM = botAISM;
         }
 
@@ -35,7 +36,7 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
 
         public void FixedUpdate()
         {
-            _agent.MoveToDestination(_gamePoints.FinishPoint.transform.position);
+            //_agent.MoveToDestination(_gamePoints.FinishPoint.transform.position);
 
             
         }

@@ -10,6 +10,7 @@ using Assets.Scripts.StateMachines.Player;
 using ECM2;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -21,7 +22,7 @@ namespace Assets._Scripts.EnteryPoints
         private CameraController _cameraController;
         private Func<Character> _characterFactory;
         private SaveLoadService _saveLoadService;
-        private LevelData _loadData;
+        private LevelData _levelData;
         private LevelConfig _levelConfig;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
@@ -61,9 +62,14 @@ namespace Assets._Scripts.EnteryPoints
         public void Start()
         {
             InitSaveLoadData();
+            InitPlayer(_levelData, _cameraController, _characterFactory, //Переделать...
+                        _playerStateMachineFactory, _playerController,
+                        _unitInfoUIFactory, _billboardManager);
             InitFinishData();
             InitRestartData();
             InitEvents();
+
+            _saveLoadService.LoadPartLevelObject(SaveLoads);
         }
 
         public void Dispose()
@@ -78,13 +84,9 @@ namespace Assets._Scripts.EnteryPoints
 
         public void InitSaveLoadData()
         {
-            _loadData = _saveLoadService.GetLevelData();
+            _levelData = _saveLoadService.GetLevelData();
             _levelConfig = _saveLoadService.GetLevelConfig();
             _saveLoadService.AddSaveLoadSub(_playerController); // зарегестрировали ISaveLoad надо подумать может передеать по другому...
-            InitPlayer(_loadData, _cameraController, _characterFactory, 
-                _playerStateMachineFactory, _playerController, _unitInfoUIFactory, _billboardManager);
-
-            _saveLoadService.LoadPartLevelObject(SaveLoads);
         }
 
         public void InitFinishData()
@@ -102,6 +104,7 @@ namespace Assets._Scripts.EnteryPoints
             Func<UnitInfoUI> unitInfoUIFactory, BillboardManager billboardManager)
         {
             Character character = characterFactory();
+            character.AddComponent<PlayerMB>(); // Тут подумать так ли делать ...
 
             cameraController.SetTarget(character.transform);
             InputReader inputReader = new InputReader();
@@ -128,8 +131,8 @@ namespace Assets._Scripts.EnteryPoints
         private void DieRestartEntery() 
         {
 
-            _loadData = _saveLoadService.GetLevelData();
-            _playerController.DieRestart(_loadData);
+            _levelData = _saveLoadService.GetLevelData();
+            _playerController.DieRestart(_levelData);
         }
 
     }

@@ -334,6 +334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 671443412}
   - component: {fileID: 671443411}
+  - component: {fileID: 671443413}
   m_Layer: 0
   m_Name: --ContainerPlayer--
   m_TagString: Untagged
@@ -357,7 +358,6 @@ MonoBehaviour:
     TypeName: Assets.Scripts.Installers.GameScope
   autoRun: 1
   autoInjectGameObjects: []
-  _characterPrefab: {fileID: 1688571644223161820, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
   _cameraController: {fileID: 683915514}
 --- !u!4 &671443412
 Transform:
@@ -374,6 +374,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &671443413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671443410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb80dec8fdc25964fbcbec1658f21911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.Level.BotAIScope
+  parentReference:
+    TypeName: Assets.Scripts.Installers.GameScope
+  autoRun: 1
+  autoInjectGameObjects: []
+  _botsParent: {fileID: 1540461991}
 --- !u!1 &683915513
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,9 +775,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 683915515}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1540461990
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1540461991}
+  m_Layer: 0
+  m_Name: Bots
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1540461991
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1540461990}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 4.17226, y: -0, z: 14.70785}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 671443412}
   - {fileID: 683915515}
+  - {fileID: 1540461991}

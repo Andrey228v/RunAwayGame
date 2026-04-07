@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Points;
+﻿using Assets._Scripts.ObjectsScripts.Points;
+using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using Cysharp.Threading.Tasks;
@@ -45,6 +46,8 @@ namespace Assets._Scripts.Bots
         public Bot CreateBot()
         {
             Bot bot = _botFactory.CreateBot();
+
+            //Тут мы должны передать точки боту по которым он побежит.
             AddBot(bot);
 
             return bot;

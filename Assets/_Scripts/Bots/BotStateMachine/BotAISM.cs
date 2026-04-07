@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.Bots.BotStateMachine.States;
 using Assets._Scripts.GameControllers;
+using Assets._Scripts.ObjectsScripts.Points;
 using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using Assets.Scripts.StateMachines;
@@ -19,12 +20,17 @@ namespace Assets._Scripts.Bots.BotStateMachine
 
         private NavMeshCharacter _agent;
         private AnimatorController _animatorController;
+        private RoadPointAIController _roadPointAIController;
+
         //private GamePoints _gamePoints;
 
-        public BotAISM(NavMeshCharacter agent, AnimatorController animatorController) 
+        public BotAISM(NavMeshCharacter agent, 
+            AnimatorController animatorController, 
+            RoadPointAIController roadPointAIController) 
         {
             _agent = agent;
             _animatorController = animatorController;
+            _roadPointAIController = roadPointAIController;
             //_gamePoints = gamePoints;
 
             Start();
@@ -40,8 +46,8 @@ namespace Assets._Scripts.Bots.BotStateMachine
         {
             _states = new List<IState>()
             {
-               new MoveAI(this, _agent, _animatorController),
-               new JumpAI(this, _agent, _animatorController),
+               new MoveAI(this, _agent, _animatorController, _roadPointAIController),
+               new JumpAI(this, _agent, _animatorController, _roadPointAIController),
                new StayAI(),
             };
 

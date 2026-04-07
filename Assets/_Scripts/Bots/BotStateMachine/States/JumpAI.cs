@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets._Scripts.ObjectsScripts.Points;
+using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using Assets.Scripts.StateMachines;
 using Cysharp.Threading.Tasks;
@@ -16,14 +17,16 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
         //private GamePoints _gamePoints;
         private BotAISM _botAISM;
         private CancellationTokenSource _jumpCts;
+        private RoadPointAIController _roadPointAIController;
 
         public JumpAI(BotAISM botAISM, NavMeshCharacter agent, 
-            AnimatorController animatorController)
+            AnimatorController animatorController, RoadPointAIController roadPointAIController)
         {
             _agent = agent;
             _animatorController = animatorController;
             //_gamePoints = gamePoints;
             _botAISM = botAISM;
+            _roadPointAIController = roadPointAIController;
         }
 
         public async void Enter()
@@ -42,6 +45,7 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
         public void FixedUpdate()
         {
             //_agent.MoveToDestination(_gamePoints.FinishPoint.transform.position);
+            _agent.MoveToDestination(_roadPointAIController.GetNextPoint());
         }
 
         public void CheckChangeState()

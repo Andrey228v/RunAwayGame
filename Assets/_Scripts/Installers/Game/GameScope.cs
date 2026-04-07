@@ -13,6 +13,7 @@ namespace Assets.Scripts.Installers
     {
         [SerializeField] private UnitInfoUI _unitInfoUIPrefab;
         [SerializeField] private Character _characterPrefab; // префаб Unit, тут надо префаб делать пустой без Player и Bot. Потом переделать.
+        [SerializeField] private NavMeshCharacter _navMeshCharacterPrefab;
 
 
         [SerializeField] private FinishPoint _finishPoint; // Переделать
@@ -54,6 +55,11 @@ namespace Assets.Scripts.Installers
             builder.RegisterFactory<Character>(container => () =>
             {
                 return container.Instantiate(_characterPrefab);
+            }, Lifetime.Transient);
+
+            builder.RegisterFactory<NavMeshCharacter>(container => () =>
+            {
+                return container.Instantiate(_navMeshCharacterPrefab);
             }, Lifetime.Transient);
         }
     }

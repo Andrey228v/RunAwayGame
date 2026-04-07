@@ -23,7 +23,7 @@ namespace Assets._Scripts.Installers.Level
 
             builder.RegisterEntryPoint<BotAIEnteryPoint>();
 
-
+            //Не надо...
             //Сделать фабрику RoadPointAIController. Мы для каждого бота будем создавать свою систему точек.
             //builder.RegisterFactory<RoadPointAIController>(container => () =>
             //{

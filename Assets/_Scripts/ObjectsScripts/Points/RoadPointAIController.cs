@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Points;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,11 +9,25 @@ namespace Assets._Scripts.ObjectsScripts.Points
 	{
         private Transform _parent;
         private List<RoadPoint> _gamePointList;
+        private int indexPoint = 0;
+        
+        public void AddPointCounter()
+        {
+            if(indexPoint < _gamePointList.Count)
+            {
+                indexPoint++;
+            }
+        }
 
-        public RoadPointAIController(GamePoints points)
+        public Vector3 GetNextPoint()
+        {
+            return _gamePointList[indexPoint].transform.position;
+        }
+
+        public void SetRoadPointAIController(GamePoints points)
 		{
             if (points != null)
-                _parent = points.CheckPoints;
+                _parent = points.BotsRoad;
             else
                 throw new ArgumentNullException(nameof(points), "CheckPoint parent cannot be null");
 
@@ -33,7 +46,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
             {
                 RoadPoint point = parent.GetChild(i).GetComponent<RoadPoint>();
                 Points.Add(point);
-                //point.OnActivated += CheckPointActivated;
+                //point.OnActivated += AddPointCounter;
             }
 
 

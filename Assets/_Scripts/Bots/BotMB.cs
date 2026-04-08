@@ -9,11 +9,11 @@ namespace Assets._Scripts.Bots
 {
     public class BotMB : MonoBehaviour, IDie
     {
-        public event Action<BotMB> OnDie;
+        public event Action OnDie;
 
         public void Die()
         {
-            OnDie?.Invoke(this);
+            OnDie?.Invoke();
         }
     }
 }

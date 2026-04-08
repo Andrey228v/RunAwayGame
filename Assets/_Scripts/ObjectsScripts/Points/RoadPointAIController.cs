@@ -9,19 +9,25 @@ namespace Assets._Scripts.ObjectsScripts.Points
 	{
         private Transform _parent;
         private List<RoadPoint> _gamePointList;
-        private int indexPoint = 0;
+        private int _indexPoint = 0;
+
+        public event Action OnBotFinish;
         
         public void AddPointCounter()
         {
-            if(indexPoint < _gamePointList.Count)
+            if(_indexPoint < _gamePointList.Count - 1)
             {
-                indexPoint++;
+                _indexPoint++;
+            }
+            else
+            {
+                OnBotFinish?.Invoke();
             }
         }
 
         public Vector3 GetNextPoint()
         {
-            return _gamePointList[indexPoint].transform.position;
+            return _gamePointList[_indexPoint].transform.position;
         }
 
         public void SetRoadPointAIController(GamePoints points)
@@ -51,6 +57,11 @@ namespace Assets._Scripts.ObjectsScripts.Points
 
 
             return Points;
+        }
+
+        public void Restart()
+        {
+            _indexPoint = 0;
         }
 
     }

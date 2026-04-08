@@ -4,7 +4,6 @@ using Assets._Scripts.ObjectsScripts.Points;
 using Assets.Scripts.Points;
 using ECM2;
 using System;
-using Unity.VisualScripting;
 
 namespace Assets._Scripts.Bots
 {
@@ -33,6 +32,9 @@ namespace Assets._Scripts.Bots
 
 
             agent.DestinationReached += roadPointAIController.AddPointCounter;
+
+
+
 
             BotAISM botAISM = _botStateMachineFactory.Create(agent, roadPointAIController);
 

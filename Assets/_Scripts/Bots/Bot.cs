@@ -2,6 +2,7 @@
 using Assets._Scripts.ObjectsScripts.Points;
 using ECM2;
 using System;
+using UnityEngine;
 
 namespace Assets._Scripts.Bots
 {
@@ -10,24 +11,31 @@ namespace Assets._Scripts.Bots
         private NavMeshCharacter _agent;
         private BotAISM _botAISM;
         private RoadPointAIController _roadPointAIController;
+        private BotMB _botMB;
 
         public Bot(NavMeshCharacter agent, BotAISM botAISM, RoadPointAIController roadPointAIController) 
         {
             _agent = agent;
             _botAISM = botAISM;
             _roadPointAIController = roadPointAIController;
+            _botMB = agent.GetComponent<BotMB>(); // Переделать ... ??
+            Sub();
         }
 
         public void Sub()
         {
-            _agent.DestinationReached += OnDestinationReached;
+            //_agent.DestinationReached += OnDestinationReached;
+            _botMB.OnDie += SetPointPosition;
+            _roadPointAIController.OnBotFinish += RestartBot;
         }
 
         public void Dispose()
         {
             if (_agent != null)
             {
-                _agent.DestinationReached -= OnDestinationReached;
+                //_agent.DestinationReached -= OnDestinationReached;
+                _botMB.OnDie -= SetPointPosition;
+                _roadPointAIController.OnBotFinish -= RestartBot;
             }
         }
 
@@ -36,9 +44,25 @@ namespace Assets._Scripts.Bots
             _botAISM.FixedTick();
         }
 
-        private void OnDestinationReached()
+        //private void OnDestinationReached()
+        //{
+        //    _roadPointAIController.AddPointCounter();
+        //}
+
+        public void SetPointPosition()
         {
-            _roadPointAIController.AddPointCounter();
+            //_roadPointAIController.AddPointCounter();
+
+            
+
+            Vector3 position = _roadPointAIController.GetNextPoint();
+            _agent.transform.position = position;
+        }
+
+        private void RestartBot()
+        {
+            _roadPointAIController.Restart();
+            SetPointPosition();
         }
 
         //public void SetRoadPointAIController(RoadPointAIController roadPointAIController)

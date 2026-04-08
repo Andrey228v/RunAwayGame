@@ -11,11 +11,11 @@ namespace Assets._Scripts.ObjectsScripts.Points
 
         public event Action OnActivated;
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent<BotMB>(out _))
-                OnActivated?.Invoke();
-        }
+        //private void OnTriggerEnter(Collider other)
+        //{
+        //    if (other.TryGetComponent<BotMB>(out _))
+        //        OnActivated?.Invoke();
+        //}
 
     }
 }

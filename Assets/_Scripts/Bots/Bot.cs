@@ -24,7 +24,7 @@ namespace Assets._Scripts.Bots
 
         public void Sub()
         {
-            //_agent.DestinationReached += OnDestinationReached;
+            _agent.DestinationReached += OnDestinationReached;
             _botMB.OnDie += SetPointPosition;
             _roadPointAIController.OnBotFinish += RestartBot;
         }
@@ -33,7 +33,7 @@ namespace Assets._Scripts.Bots
         {
             if (_agent != null)
             {
-                //_agent.DestinationReached -= OnDestinationReached;
+                _agent.DestinationReached -= OnDestinationReached;
                 _botMB.OnDie -= SetPointPosition;
                 _roadPointAIController.OnBotFinish -= RestartBot;
             }
@@ -44,30 +44,20 @@ namespace Assets._Scripts.Bots
             _botAISM.FixedTick();
         }
 
-        //private void OnDestinationReached()
-        //{
-        //    _roadPointAIController.AddPointCounter();
-        //}
+        private void OnDestinationReached()
+        {
+            _roadPointAIController.AddPointCounter();
+        }
 
         public void SetPointPosition()
         {
-            //_roadPointAIController.AddPointCounter();
-
-            
-
             Vector3 position = _roadPointAIController.GetNextPoint();
             _agent.transform.position = position;
         }
 
         private void RestartBot()
         {
-            _roadPointAIController.Restart();
             SetPointPosition();
         }
-
-        //public void SetRoadPointAIController(RoadPointAIController roadPointAIController)
-        //{
-        //    _roadPointAIController = roadPointAIController;
-        //}
     }
 }

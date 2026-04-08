@@ -44,7 +44,6 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
 
         public void FixedUpdate()
         {
-            //_agent.MoveToDestination(_gamePoints.FinishPoint.transform.position);
             _agent.MoveToDestination(_roadPointAIController.GetNextPoint());
         }
 

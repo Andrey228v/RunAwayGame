@@ -304,7 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b8353732406ae7418b47f5928e333c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: ECM2::ECM2.NavMeshCharacter
-  _autoBraking: 1
+  _autoBraking: 0
   _brakingDistance: 4
   _stoppingDistance: 4
 --- !u!114 &1477990515374656598

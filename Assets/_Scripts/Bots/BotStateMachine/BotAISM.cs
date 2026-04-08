@@ -22,8 +22,6 @@ namespace Assets._Scripts.Bots.BotStateMachine
         private AnimatorController _animatorController;
         private RoadPointAIController _roadPointAIController;
 
-        //private GamePoints _gamePoints;
-
         public BotAISM(NavMeshCharacter agent, 
             AnimatorController animatorController, 
             RoadPointAIController roadPointAIController) 
@@ -31,7 +29,6 @@ namespace Assets._Scripts.Bots.BotStateMachine
             _agent = agent;
             _animatorController = animatorController;
             _roadPointAIController = roadPointAIController;
-            //_gamePoints = gamePoints;
 
             Start();
         }

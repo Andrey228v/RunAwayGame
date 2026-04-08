@@ -29,8 +29,8 @@ namespace Assets._Scripts.Bots
         public async void Start()
         {
             CreateBot();
-            await UniTask.Delay(2000);
-            CreateBot();
+            //await UniTask.Delay(2000);
+            //CreateBot();
         }
 
         public void FixedTick()
@@ -40,7 +40,6 @@ namespace Assets._Scripts.Bots
                 bot.FixedUpdateSM();
             }
         }
-
 
         //Сделать Пул объектов потом...
         public Bot CreateBot()
@@ -63,14 +62,10 @@ namespace Assets._Scripts.Bots
             _bots.Remove(bot);
         }
 
-        public void DieRestartEntery(BotMB botMB)
-        {
-
-            LevelData levelData = _saveLoadService.GetLevelData();
-            botMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
-
-        }
-
-
+        //public void DieRestartEntery(BotMB botMB)
+        //{
+        //    LevelData levelData = _saveLoadService.GetLevelData();
+        //    botMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+        //}
     }
 }

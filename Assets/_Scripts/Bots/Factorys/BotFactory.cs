@@ -24,18 +24,8 @@ namespace Assets._Scripts.Bots
         public Bot CreateBot()
         {
             NavMeshCharacter agent = _characterFactory();
-            //NavMeshCharacter agent = character.AddComponent<NavMeshCharacter>(); // Тут подумать так ли делать ...
-            //BotMB botMB = character.AddComponent<BotMB>();
-
             RoadPointAIController roadPointAIController = new RoadPointAIController();
             roadPointAIController.SetRoadPointAIController(_gamePoints);
-
-
-            agent.DestinationReached += roadPointAIController.AddPointCounter;
-
-
-
-
             BotAISM botAISM = _botStateMachineFactory.Create(agent, roadPointAIController);
 
             return new Bot(agent, botAISM, roadPointAIController);

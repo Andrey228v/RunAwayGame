@@ -21,12 +21,14 @@ namespace Assets._Scripts.ObjectsScripts.Points
             }
             else
             {
+                Restart();
                 OnBotFinish?.Invoke();
             }
         }
 
         public Vector3 GetNextPoint()
         {
+            Debug.Log($"Index{_indexPoint} position: {_gamePointList[_indexPoint].transform.position}");
             return _gamePointList[_indexPoint].transform.position;
         }
 

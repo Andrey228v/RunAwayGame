@@ -39,7 +39,7 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
 
         public void FixedUpdate()
         {
-            _agent.MoveToDestination(_roadPointAIController.GetNextPoint());
+            _agent.MoveToDestination(_roadPointAIController.GetCurrentPoint());
 
             Debug.Log(_agent.GetDestination());
         }

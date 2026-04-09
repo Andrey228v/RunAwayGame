@@ -51,8 +51,9 @@ namespace Assets._Scripts.Bots
 
         public void SetPointPosition()
         {
-            Vector3 position = _roadPointAIController.GetNextPoint();
-            _agent.transform.position = position;
+            Vector3 position = _roadPointAIController.GetCurrentPoint();
+            _botMB.transform.position = position;
+            _roadPointAIController.AddPointCounter();
         }
 
         private void RestartBot()

@@ -9,7 +9,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
 	public class RoadPoint: MonoBehaviour
 	{
 
-        public event Action OnActivated;
+        //public event Action OnActivated;
 
         //private void OnTriggerEnter(Collider other)
         //{

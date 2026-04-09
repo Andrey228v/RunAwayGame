@@ -26,9 +26,8 @@ namespace Assets._Scripts.ObjectsScripts.Points
             }
         }
 
-        public Vector3 GetNextPoint()
+        public Vector3 GetCurrentPoint()
         {
-            Debug.Log($"Index{_indexPoint} position: {_gamePointList[_indexPoint].transform.position}");
             return _gamePointList[_indexPoint].transform.position;
         }
 
@@ -42,7 +41,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
             _gamePointList = TransformToList(_parent);
         }
 
-        public List<RoadPoint> TransformToList(Transform parent)
+        private List<RoadPoint> TransformToList(Transform parent)
 		{
             if (parent == null)
                 throw new ArgumentNullException(nameof(parent), "parent cannot be null");
@@ -63,6 +62,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
 
         public void Restart()
         {
+
             _indexPoint = 0;
         }
 

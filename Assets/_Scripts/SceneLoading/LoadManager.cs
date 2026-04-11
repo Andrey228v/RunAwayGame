@@ -43,16 +43,15 @@ namespace Assets._Scripts.SceneLoading
 
         public async UniTask LoadScene(SceneGroupHandle sceneGroup)
         {
-            await ShowLoadScreen();
+            ShowLoadScreen();
             await UnloadCurrentContent();
 
             await LoadNewContent(sceneGroup);
             PrepareToTransition(sceneGroup);
-            await HideLoadScreen();
-
+            HideLoadScreen();
         }
 
-        private async UniTask ShowLoadScreen()
+        private void ShowLoadScreen()
         {
             _loadScreenView.SetProgress(0f);
             _loadScreenView.Show();
@@ -111,7 +110,7 @@ namespace Assets._Scripts.SceneLoading
             Debug.Log("3)_____SetActiveScene_______");
         }
 
-        private async UniTask HideLoadScreen()
+        private void HideLoadScreen()
         {
             _loadScreenView.Hide();
 

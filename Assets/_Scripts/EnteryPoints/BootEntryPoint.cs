@@ -3,6 +3,7 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer.Unity;
+using static UnityEngine.InputSystem.LowLevel.InputEventTrace;
 
 namespace Assets._Scripts.EnteryPoints
 {
@@ -22,6 +23,8 @@ namespace Assets._Scripts.EnteryPoints
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             DOTween.SetTweensCapacity(5000, 100);
+
+            
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

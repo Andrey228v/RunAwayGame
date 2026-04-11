@@ -30,15 +30,12 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void Dispose()
         {
-            //_inputReader.OnStartMove -= ChangeMoveState;
-            //_inputReader.OnJumped -= ChangeJumpState;
+
         }
 
 
         public void Enter()
         {
-            //_inputReader.OnStartMove += ChangeMoveState;
-            //_inputReader.OnJumped += ChangeJumpState;
             _animatorController.SetStatic(true);
             _animatorController.SetGround(true);
         }
@@ -48,13 +45,11 @@ namespace Assets.Scripts.StateMachines.Player.States
             _isFall = _fallController.GetIsFall();
             _isMove = _playerMovement.IsMove;
             _isGround = _playerGroundChecker.GetIsGrounded();
-
         }
 
         public void Exit()
         {
-            //_inputReader.OnStartMove -= ChangeMoveState;
-            //_inputReader.OnJumped -= ChangeJumpState;
+
         }
 
         public void CheckChangeState()

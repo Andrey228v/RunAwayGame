@@ -114,9 +114,8 @@ namespace Assets._Scripts.EnteryPoints
             playerController.SetCharacter(character);
             playerController.SetPlayerStateMachine(playerStateMachine);
 
-
             UnitInfoUI unitInfoUI = unitInfoUIFactory();
-            unitInfoUI.transform.parent = character.transform;
+            unitInfoUI.transform.SetParent(character.transform);
 
             billboardManager.AddUnitUI(unitInfoUI);
             billboardManager.SetDirectionCalculator(playerMoveDirectionCalculator);

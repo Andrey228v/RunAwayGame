@@ -19,7 +19,6 @@ namespace Assets.Scripts.Player
 
         public void Dispose()
         {
-            Debug.Log("PLAYER CONTROLLER DESTROU");
             _playerStateMachine.Dispose();
 
             _playerStateMachine = null;

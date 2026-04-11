@@ -35,14 +35,11 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void Dispose()
         {
-            //_inputReader.OnStoped -= ChangeStayState;
-            //_inputReader.OnJumped -= ChangeJumpState;
+
         }
 
         public void Enter()
         {
-            //_inputReader.OnStoped += ChangeStayState;
-            //_inputReader.OnJumped += ChangeJumpState;
             _animatorController.SetMove(true);
             _animatorController.SetGround(true);
         }
@@ -58,8 +55,7 @@ namespace Assets.Scripts.StateMachines.Player.States
 
         public void Exit()
         {
-            //_inputReader.OnStoped -= ChangeStayState;
-            //_inputReader.OnJumped -= ChangeJumpState;
+
         }
 
         public void CheckChangeState()

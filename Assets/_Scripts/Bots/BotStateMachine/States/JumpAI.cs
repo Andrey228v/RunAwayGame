@@ -5,6 +5,9 @@ using Assets.Scripts.StateMachines;
 using Cysharp.Threading.Tasks;
 using ECM2;
 using System.Threading;
+using Unity.AI.Navigation;
+using UnityEngine;
+using UnityEngine.AI;
 
 
 namespace Assets._Scripts.Bots.BotStateMachine.States
@@ -31,10 +34,20 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
 
         public async void Enter()
         {
-            _agent.character.Jump();
-            await UniTask.Delay(500);
-            _agent.character.StopJumping();
-            _agent.character.Jump();
+            var distance = CalculateDistanceJump();
+
+            if(distance > 14)
+            {
+                _agent.character.Jump();
+                await UniTask.Delay(500);
+                _agent.character.StopJumping();
+                _agent.character.Jump();
+            }
+            else
+            {
+                _agent.character.Jump();
+            }
+            
         }
 
         public void Exit()
@@ -44,7 +57,8 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
 
         public void FixedUpdate()
         {
-            _agent.MoveToDestination(_roadPointAIController.GetCurrentPoint());
+            if (_roadPointAIController != null) // надо подумать как сделать по другому...
+                _agent.MoveToDestination(_roadPointAIController.GetCurrentPoint());
         }
 
         public void CheckChangeState()
@@ -55,9 +69,45 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
             }
         }
         
-        private void CalculateDistanceJump()
+        private float CalculateDistanceJump()
         {
+            //Vector3 startPoint = transform.TransformPoint(navMeshLink.startPoint);
+            //Vector3 endPoint = transform.TransformPoint(navMeshLink.endPoint);
 
+            //// Вычисляем евклидово расстояние (прямую линию)
+            //float length = Vector3.Distance(startPoint, endPoint);
+
+            var data = TryGetCurrentNavMeshLink();
+            var distance = Vector3.Distance(data.startPos, data.endPos);
+
+
+            return distance;
+        }
+
+        private OffMeshLinkData TryGetCurrentNavMeshLink()
+        {
+            // Получаем данные текущего линка
+            OffMeshLinkData linkData = _agent.agent.currentOffMeshLinkData;
+
+            // Пытаемся получить компонент линка через navMeshOwner
+            // Это работает как для NavMeshLink, так и для OffMeshLink [citation:3]
+            if (_agent.agent.navMeshOwner is NavMeshLink navMeshLink)
+            {
+                Debug.Log($"Найден NavMeshLink: {navMeshLink.name}");
+                // Здесь вы можете получить доступ к свойствам NavMeshLink
+                // например, к navMeshLink.startPoint, navMeshLink.endPoint, navMeshLink.area и т.д.
+            }
+            // Если это старый компонент OffMeshLink, он будет доступен напрямую
+            else if (linkData.owner != null)
+            {
+                Debug.Log($"Найден OffMeshLink: {linkData.owner.name}");
+            }
+            else
+            {
+                Debug.Log("Агент на линке, но компонент линка не найден.");
+            }
+
+            return linkData;
         }
     }
 }

@@ -8,10 +8,10 @@ namespace Assets._Scripts.Bots
 {
     public class Bot : IDisposable
     {
-        private NavMeshCharacter _agent;
-        private BotAISM _botAISM;
-        private RoadPointAIController _roadPointAIController;
-        private BotMB _botMB;
+        private readonly NavMeshCharacter _agent;
+        private readonly BotAISM _botAISM;
+        private readonly RoadPointAIController _roadPointAIController;
+        private readonly BotMB _botMB;
 
         public Bot(NavMeshCharacter agent, BotAISM botAISM, RoadPointAIController roadPointAIController) 
         {
@@ -36,6 +36,9 @@ namespace Assets._Scripts.Bots
                 _agent.DestinationReached -= OnDestinationReached;
                 _botMB.OnDie -= SetPointPosition;
                 _roadPointAIController.OnBotFinish -= RestartBot;
+
+                _botAISM.Dispose();
+                _roadPointAIController.Dispose();
             }
         }
 
@@ -52,13 +55,23 @@ namespace Assets._Scripts.Bots
         public void SetPointPosition()
         {
             Vector3 position = _roadPointAIController.GetCurrentPoint();
-            _botMB.transform.position = position;
+            _agent.agent.Warp(position);
             _roadPointAIController.AddPointCounter();
         }
 
         private void RestartBot()
         {
             SetPointPosition();
+
+            if (_agent.character != null)
+            {
+                _agent.character.SetVelocity(Vector3.zero);
+                _agent.character.StopJumping();
+                _agent.character.SetMovementMode(Character.MovementMode.Falling);
+
+            }
+            _agent.agent.ResetPath();
+            _agent.agent.velocity = Vector3.zero;
         }
     }
 }

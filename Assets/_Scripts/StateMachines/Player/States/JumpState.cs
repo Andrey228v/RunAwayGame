@@ -1,5 +1,4 @@
-﻿using Assets.Input;
-using Assets.Scripts.Player;
+﻿using Assets.Scripts.Player;
 using System;
 
 

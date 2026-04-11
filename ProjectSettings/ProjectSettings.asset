@@ -51,7 +51,7 @@ PlayerSettings:
   m_SpriteBatchMaxVertexCount: 65535
   m_SpriteBatchVertexThreshold: 300
   m_MTRendering: 1
-  mipStripping: 0
+  mipStripping: 1
   numberOfMipsStripped: 0
   numberOfMipsStrippedPerMipmapLimitGroup: {}
   m_StackTraceTypes: 010000000100000001000000010000000100000001000000
@@ -187,9 +187,9 @@ PlayerSettings:
   CreateWallpaper: 0
   androidSplitApplicationBinary: 0
   keepLoadedShadersAlive: 0
-  StripUnusedMeshComponents: 0
+  StripUnusedMeshComponents: 1
   strictShaderVariantMatching: 0
-  VertexChannelCompressionMask: 4054
+  VertexChannelCompressionMask: 222
   iPhoneSdkVersion: 988
   iOSSimulatorArchitecture: 0
   iOSTargetOSVersionString: 15.0
@@ -854,7 +854,7 @@ PlayerSettings:
     Server: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI
     Standalone: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI;UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
     VisionOS: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI;UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
-    WebGL: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI;UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
+    WebGL: ES3_TMPRO;ES3_UGUI;DOTWEEN;UNITY_POST_PROCESSING_STACK_V2;UNITY_VISUAL_SCRIPTING
     Windows Store Apps: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI;DOTWEEN
     XboxOne: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI;UNITY_POST_PROCESSING_STACK_V2;DOTWEEN
     iPhone: UNITY_VISUAL_SCRIPTING;ES3_TMPRO;ES3_UGUI;DOTWEEN
@@ -863,10 +863,12 @@ PlayerSettings:
   platformArchitecture: {}
   scriptingBackend:
     Android: 1
+    Standalone: 1
   il2cppCompilerConfiguration: {}
   il2cppCodeGeneration: {}
   il2cppStacktraceInformation: {}
-  managedStrippingLevel: {}
+  managedStrippingLevel:
+    Standalone: 3
   incrementalIl2cppBuild: {}
   suppressCommonWarnings: 1
   allowUnsafeCode: 0
@@ -963,6 +965,7 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 1
   windowsGamepadBackendHint: 0
+  enableDirectStorage: 0
   cloudProjectId: 0abe874d-3fff-41a7-8946-6bfc25ff5494
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []

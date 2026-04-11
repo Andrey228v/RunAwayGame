@@ -1,9 +1,4 @@
-﻿using Assets._Scripts.ObjectsScripts.Points;
-using Assets.Scripts.Points;
-using Assets.Scripts.SaveLoad;
-using Assets.Scripts.SaveLoad.Data;
-using Cysharp.Threading.Tasks;
-using ECM2;
+﻿using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,25 +7,31 @@ using VContainer.Unity;
 namespace Assets._Scripts.Bots
 {
     //Класс, который хранит в себе всех ботом и запускает их StateMachine. Контролирует их количество, и создаёт/уничтожает.
-    public class BotsController : IFixedTickable, IStartable
+    public class BotsController : IFixedTickable, IStartable, IDisposable
     {
         private List<Bot> _bots = new List<Bot>();
         private BotFactory _botFactory;
-        private GamePoints _gamePoints;
-        private SaveLoadService _saveLoadService;
 
-        public BotsController(BotFactory botFactory, GamePoints gamePoints, SaveLoadService saveLoadService)
+        public BotsController(BotFactory botFactory)
         {
             _botFactory = botFactory;
-            _gamePoints = gamePoints;
-            _saveLoadService = saveLoadService;
+        }
+
+        public void Dispose()
+        {
+            foreach (Bot bot in _bots)
+            {
+                bot.Dispose();
+            }
+
+            _bots.Clear();
         }
 
         public async void Start()
         {
             CreateBot();
-            //await UniTask.Delay(2000);
-            //CreateBot();
+            await UniTask.Delay(2000);
+            CreateBot();
         }
 
         public void FixedTick()
@@ -61,11 +62,5 @@ namespace Assets._Scripts.Bots
         {
             _bots.Remove(bot);
         }
-
-        //public void DieRestartEntery(BotMB botMB)
-        //{
-        //    LevelData levelData = _saveLoadService.GetLevelData();
-        //    botMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
-        //}
     }
 }

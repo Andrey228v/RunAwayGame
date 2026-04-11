@@ -450,7 +450,6 @@ GameObject:
   - component: {fileID: 1345623979}
   - component: {fileID: 1345623985}
   - component: {fileID: 1345623984}
-  - component: {fileID: 1345623983}
   - component: {fileID: 1345623982}
   - component: {fileID: 1345623981}
   - component: {fileID: 1345623980}
@@ -651,23 +650,6 @@ MonoBehaviour:
         DecelTime: 0
   PlayerIndex: -1
   AutoEnableInputs: 1
---- !u!114 &1345623983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1345623978}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a076c17fe76165e4f8ed21498b877bf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Easing: 0
-  Modifiers: []
-  references:
-    version: 2
-    RefIds: []
 --- !u!114 &1345623984
 MonoBehaviour:
   m_ObjectHideFlags: 0

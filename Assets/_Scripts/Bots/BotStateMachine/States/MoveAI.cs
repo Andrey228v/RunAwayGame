@@ -25,7 +25,8 @@ namespace Assets._Scripts.Bots.BotStateMachine.States
 
         public void Dispose()
         {
-            
+            _roadPointAIController.Dispose();
+            _roadPointAIController = null;
         }
 
         public void Enter()

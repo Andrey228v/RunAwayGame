@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using VContainer.Unity;
 
 namespace Assets._Scripts.Bots
@@ -25,13 +26,16 @@ namespace Assets._Scripts.Bots
             }
 
             _bots.Clear();
+            _botFactory = null;
         }
 
         public async void Start()
         {
-            CreateBot();
-            await UniTask.Delay(2000);
-            CreateBot();
+            for(int i = 0; i < 15; i++)
+            {
+                CreateBot();
+                await UniTask.Delay(1000);
+            }
         }
 
         public void FixedTick()
@@ -45,11 +49,16 @@ namespace Assets._Scripts.Bots
         //Сделать Пул объектов потом...
         public Bot CreateBot()
         {
-            Bot bot = _botFactory.CreateBot();
+            Bot bot = null;
 
-            //Тут мы должны передать точки боту по которым он побежит.
-            AddBot(bot);
+            if (_botFactory != null)
+            {
+                bot = _botFactory.CreateBot();
+                
+                AddBot(bot);
 
+            }
+            
             return bot;
         }
 

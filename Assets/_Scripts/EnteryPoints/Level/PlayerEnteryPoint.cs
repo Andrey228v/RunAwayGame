@@ -74,6 +74,8 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Dispose()
         {
+            _billboardManager = null;
+            _unitInfoUIFactory = null;
             _playerController.PlayerMB.OnDie -= DieRestartEntery;
         }
 

@@ -10,6 +10,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
         private Transform _parent;
         private List<Transform> _gamePointList;
         private int _indexPoint = 0;
+        private int _count;
 
         public event Action OnBotFinish;
 
@@ -33,7 +34,29 @@ namespace Assets._Scripts.ObjectsScripts.Points
 
         public Vector3 GetCurrentPoint()
         {
-            return _gamePointList[_indexPoint].transform.position;
+            Vector3 position = Vector3.zero;
+
+            if(_gamePointList.Count != 0 || _gamePointList != null)
+            {
+                if (_gamePointList[_indexPoint] != null) 
+                {
+                    position = _gamePointList[_indexPoint].transform.position;
+                }
+                else
+                {
+                    position = Vector3.zero;
+                }
+            }
+
+            return position;
+        }
+
+        public Vector3 GetRandomPosition()
+        {
+            int indexRandom = UnityEngine.Random.Range(0, _count - 1);
+            _indexPoint = indexRandom;
+
+            return _gamePointList[indexRandom].transform.position;
         }
 
         public void SetRoadPointAIController(GamePoints points)
@@ -44,6 +67,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
                 throw new ArgumentNullException(nameof(points), "CheckPoint parent cannot be null");
 
             _gamePointList = TransformToList(_parent);
+            _count = _gamePointList.Count;
         }
 
         private List<Transform> TransformToList(Transform parent)

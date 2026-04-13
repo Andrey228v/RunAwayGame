@@ -19,6 +19,8 @@ namespace Assets.Scripts.Camera
         public void Start()
         {
             _cameraTransform = _cameraCinemachine.transform;
+            
+
         }
 
         public void FixedUpdate()

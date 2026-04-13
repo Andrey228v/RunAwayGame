@@ -2,13 +2,11 @@
 using Assets._Scripts.GameControllers;
 using Assets._Scripts.ObjectsScripts.Points;
 using Assets.Scripts.Player;
-using Assets.Scripts.Points;
 using Assets.Scripts.StateMachines;
 using ECM2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.AI;
 
 namespace Assets._Scripts.Bots.BotStateMachine
 {
@@ -35,7 +33,7 @@ namespace Assets._Scripts.Bots.BotStateMachine
 
         public void Dispose()
         {
-
+            _states.Clear();
         }
 
 

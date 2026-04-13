@@ -4,6 +4,7 @@ using Assets._Scripts.ObjectsScripts.Points;
 using Assets.Scripts.Points;
 using ECM2;
 using System;
+using UnityEngine;
 
 namespace Assets._Scripts.Bots
 {
@@ -28,7 +29,12 @@ namespace Assets._Scripts.Bots
             roadPointAIController.SetRoadPointAIController(_gamePoints);
             BotAISM botAISM = _botStateMachineFactory.Create(agent, roadPointAIController);
 
-            return new Bot(agent, botAISM, roadPointAIController);
+            //Определить стартовую позицию и передать..
+            Vector3 startPosition = roadPointAIController.GetRandomPosition();
+            roadPointAIController.AddPointCounter();
+            Vector3 destination = roadPointAIController.GetCurrentPoint();
+
+            return new Bot(agent, botAISM, roadPointAIController, startPosition, destination);
         }
     }
 }

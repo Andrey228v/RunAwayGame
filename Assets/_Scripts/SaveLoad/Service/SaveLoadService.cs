@@ -26,6 +26,7 @@ namespace Assets.Scripts.SaveLoad
         {
             if(_saveLoads != null)
             {
+                _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
                 _saveLoads.Clear();
                 _saveLoads = null;
             }
@@ -34,6 +35,8 @@ namespace Assets.Scripts.SaveLoad
         public void SaveLevelData() // Сохранялка уровня.... сделать потом асинхронным SaveAsync
         {
             LevelData levelData = GetLevelData();
+
+
 
             foreach (ISaveLoad obj in _saveLoads)
             {
@@ -100,10 +103,10 @@ namespace Assets.Scripts.SaveLoad
 
         public LevelData GetLevelData()
         {
-            if (_saveData.LevelsData.TryGetValue(_levelId, out LevelData data) == false)
+            if (_saveData.LevelsData.TryGetValue(_levelId, out LevelData levelData) == false)
             {
-                data = new LevelData { LevelID = _levelId };
-                SaveLevelIntoMainDictinary(data);
+                levelData = new LevelData { LevelID = _levelId };
+                SaveLevelIntoMainDictinary(levelData);
             }
 
 
@@ -166,27 +169,5 @@ namespace Assets.Scripts.SaveLoad
         {
 
         }
-
-
-        //public async Task SaveLevelDataAsync()
-        //{
-        //    LevelData data = GetLevelData();
-
-        //    // Сохраняем все объекты параллельно
-        //    var saveTasks = new List<Task>();
-        //    foreach (ISaveLoad obj in _saveLoads)
-        //    {
-        //        // Предполагаем, что у ISaveLoad есть асинхронный метод SaveAsync
-        //        saveTasks.Add(obj.SaveAsync(data));
-        //    }
-
-        //    // Ждем завершения всех сохранений
-        //    await Task.WhenAll(saveTasks);
-
-        //    // Сохраняем уровень в файл
-        //    await SaveLevelIntoGameAsync(data);
-
-        //    Debug.Log("Асинхронное сохранение завершено");
-        //}
     }
 }

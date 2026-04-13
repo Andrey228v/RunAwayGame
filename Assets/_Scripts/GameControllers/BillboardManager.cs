@@ -26,8 +26,11 @@ namespace Assets._Scripts.GameControllers
                 {
                     foreach (UnitInfoUI ui in _unitsUI)
                     {
-                        ui.transform.LookAt(_cameraController.CameraCinemachine.transform);
-                        ui.transform.Rotate(0, 180, 0);
+                        if (ui != null)
+                        {
+                            ui.transform.LookAt(_cameraController.CameraCinemachine.transform);
+                            ui.transform.Rotate(0, 180, 0);
+                        }
                     }
                 }
             }

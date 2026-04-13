@@ -2,7 +2,10 @@
 using Assets._Scripts.ObjectsScripts.Points;
 using ECM2;
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 namespace Assets._Scripts.Bots
 {
@@ -13,12 +16,15 @@ namespace Assets._Scripts.Bots
         private readonly RoadPointAIController _roadPointAIController;
         private readonly BotMB _botMB;
 
-        public Bot(NavMeshCharacter agent, BotAISM botAISM, RoadPointAIController roadPointAIController) 
+        public Bot(NavMeshCharacter agent, BotAISM botAISM, RoadPointAIController roadPointAIController, Vector3 startPosition, Vector3 destination) 
         {
             _agent = agent;
             _botAISM = botAISM;
             _roadPointAIController = roadPointAIController;
             _botMB = agent.GetComponent<BotMB>(); // Переделать ... ??
+            _agent.agent.Warp(startPosition);
+            _agent.agent.SetDestination(destination);   
+
             Sub();
         }
 
@@ -54,9 +60,12 @@ namespace Assets._Scripts.Bots
 
         public void SetPointPosition()
         {
-            Vector3 position = _roadPointAIController.GetCurrentPoint();
-            _agent.agent.Warp(position);
-            _roadPointAIController.AddPointCounter();
+            if (_roadPointAIController != null) 
+            {
+                Vector3 position = _roadPointAIController.GetCurrentPoint();
+                _agent.agent.Warp(position);
+                _roadPointAIController.AddPointCounter();
+            }
         }
 
         private void RestartBot()

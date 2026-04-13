@@ -23,7 +23,7 @@ namespace Assets.Scripts.Player
             _playerMovement = new PlayerMovement(character, inputReader, playerMoveDirectionCalculator);
             _playerRotator = new PlayerRotator(character, playerMoveDirectionCalculator);
             _playerGroundChecker = new PlayerGroundChecker(character);
-            _playerJumper = new PlayerJumper(character, inputReader);
+            _playerJumper = new PlayerJumper(character);
             _animatorController = new AnimatorController(character.animator);
             _fallController = new FallController(character);
 

@@ -248,7 +248,7 @@ MonoBehaviour:
   _jumpMaxCount: 2
   _jumpImpulse: 30
   _jumpMaxHoldTime: 0
-  _jumpMaxPreGroundedTime: 1
+  _jumpMaxPreGroundedTime: 0
   _jumpMaxPostGroundedTime: 5
   _maxFlySpeed: 5
   _brakingDecelerationFlying: 0

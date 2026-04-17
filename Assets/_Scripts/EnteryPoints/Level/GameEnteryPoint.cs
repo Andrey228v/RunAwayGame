@@ -12,6 +12,7 @@ namespace Assets.Scripts.EnteryPoints
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
         private GameManager _gameManager;
+        private LevelConfig _levelConfig;
 
         public GameEnteryPoint(SaveLoadService saveLoadService,
             GameFinishController gameCycleController,
@@ -22,6 +23,8 @@ namespace Assets.Scripts.EnteryPoints
             _finishController = gameCycleController;
             _gameRestartController = gameRestartController;
             _gameManager = gameManager;
+            _levelConfig = _saveLoadService.LevelConfig;
+
         }
 
         public void Start()
@@ -46,26 +49,22 @@ namespace Assets.Scripts.EnteryPoints
 
         public void SaveGame()
         {
-            Debug.Log("SAVE GAME");
-            _saveLoadService.SaveLevelData();
+            _saveLoadService.SaveLevelData(_levelConfig);
 
         }
 
         public void LoadGame()
         {
-            Debug.Log("LOAD GAME");
-            _saveLoadService.LoadLevel();
+            _saveLoadService.LoadLevel(_levelConfig);
         }
 
         public void FinishGame()
         {
-            Debug.Log("FINISH GAME");
             _finishController.FinishNotifySubs();
         }
 
         public void RestartGame()
         {
-            Debug.Log("RESTART GAME");
             _gameRestartController.RestartNotifySubs();
         }
     }

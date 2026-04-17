@@ -15,10 +15,11 @@ namespace Assets._Scripts.EnteryPoints
         private Func<GamePanelController> _gamePanelFactory;
         private GamePanelController _gamePanelController;
         private SaveLoadService _saveLoadService;
-        //private LevelData _loadData;
         private GameManager _gameManager;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
+
+        private LevelConfig _levelConfig;
 
         public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
 
@@ -27,19 +28,20 @@ namespace Assets._Scripts.EnteryPoints
         public IEnumerable<IRestart> Restarted { get; private set; }
 
         public PlayerHUDEnteryPoint(Func<GamePanelController> gamePanelFactory, 
-            SaveLoadService saveService, GameFinishController gameFinishController,
+            SaveLoadService saveLoadService, GameFinishController gameFinishController,
             GameManager gameManager, IEnumerable<ISaveLoad> saveLoads,
             IEnumerable<IRestart> restarted, IEnumerable<IFinish> finished,
             GameRestartController gameRestartController) 
         {
             _gamePanelFactory = gamePanelFactory;
-            _saveLoadService = saveService;
+            _saveLoadService = saveLoadService;
             _finishController = gameFinishController;
             _gameManager = gameManager;
             SaveLoads = saveLoads;
             Finished = finished;
             Restarted = restarted;
             _gameRestartController = gameRestartController;
+            _levelConfig = saveLoadService.LevelConfig;
         }
 
         public void Dispose()
@@ -55,7 +57,7 @@ namespace Assets._Scripts.EnteryPoints
             _gamePanelController = _gamePanelFactory();
             
             InitEvents();
-            InitSaveLoadData();
+            InitSaveLoadData(_levelConfig);
             InitFinishData();
             InitRestartData();
         }
@@ -66,12 +68,9 @@ namespace Assets._Scripts.EnteryPoints
             _gamePanelController.OnButtonLoadClick += _gameManager.LoadGameSignal;
         }
 
-        public void InitSaveLoadData()
+        public void InitSaveLoadData(LevelConfig levelConfig)
         {
-
-            //_loadData = _saveLoadService.GetLevelData();
-
-            _saveLoadService.LoadPartLevelObject(SaveLoads);
+            _saveLoadService.LoadPartLevelObject(SaveLoads, levelConfig);
         }
 
         public void InitFinishData()

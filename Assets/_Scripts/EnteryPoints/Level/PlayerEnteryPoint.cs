@@ -23,11 +23,12 @@ namespace Assets._Scripts.EnteryPoints
         private Func<Character> _characterFactory;
         private SaveLoadService _saveLoadService;
         private LevelData _levelData;
-        private LevelConfig _levelConfig;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
         private BillboardManager _billboardManager;
         private Func<UnitInfoUI> _unitInfoUIFactory;
+
+        private LevelConfig _levelConfig;
 
         public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
 
@@ -57,11 +58,12 @@ namespace Assets._Scripts.EnteryPoints
             Restarted = restarted;
             _billboardManager = billboardManager;
             _unitInfoUIFactory = unitInfoUIFactory;
+            _levelConfig = saveLoadService.LevelConfig;
         }
 
         public void Start()
         {
-            InitSaveLoadData();
+            InitSaveLoadData(_levelConfig);
             InitPlayer(_levelData, _cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
                         _unitInfoUIFactory, _billboardManager);
@@ -69,7 +71,7 @@ namespace Assets._Scripts.EnteryPoints
             InitRestartData();
             InitEvents();
 
-            _saveLoadService.LoadPartLevelObject(SaveLoads);
+            _saveLoadService.LoadPartLevelObject(SaveLoads, _levelConfig);
         }
 
         public void Dispose()
@@ -84,10 +86,9 @@ namespace Assets._Scripts.EnteryPoints
             _playerController.PlayerMB.OnDie += DieRestartEntery;
         }
 
-        public void InitSaveLoadData()
+        public void InitSaveLoadData(LevelConfig levelConfig)
         {
-            _levelData = _saveLoadService.GetLevelData();
-            _levelConfig = _saveLoadService.GetLevelConfig();
+            _levelData = _saveLoadService.GetLevelData(levelConfig);
             _saveLoadService.AddSaveLoadSub(_playerController); // зарегестрировали ISaveLoad надо подумать может передеать по другому...
         }
 
@@ -127,14 +128,11 @@ namespace Assets._Scripts.EnteryPoints
             playerController.SetPlayerMB(playerMB);
         }
 
-
         //Не правильно. Подумать потом как исправить. Надо переместить создание в контролле как в Бот контроллере.
         private void DieRestartEntery() 
         {
-
-            _levelData = _saveLoadService.GetLevelData();
+            _levelData = _saveLoadService.GetLevelData(_levelConfig);
             _playerController.DieRestart(_levelData);
         }
-
     }
 }

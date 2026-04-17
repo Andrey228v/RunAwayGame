@@ -7,6 +7,6 @@ namespace Assets._Scripts.EnteryPoints.Interfaces
     {
         public IEnumerable<ISaveLoad> SaveLoads { get; }
 
-        public void InitSaveLoadData();
+        public void InitSaveLoadData(LevelConfig levelConfig);
     }
 }

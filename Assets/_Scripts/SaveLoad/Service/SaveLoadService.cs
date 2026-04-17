@@ -11,8 +11,9 @@ namespace Assets.Scripts.SaveLoad
         private HashSet<ISaveLoad> _saveLoads;
         private EasySaveSystem _saveSystem;
         private GameSaveData _saveData;
-        private string _levelId;
         private LevelConfig _levelConfig;
+
+        public LevelConfig LevelConfig => _levelConfig;
 
         public SaveLoadService(EasySaveSystem saveSystem) 
         {
@@ -32,23 +33,21 @@ namespace Assets.Scripts.SaveLoad
             }
         }
 
-        public void SaveLevelData() // Сохранялка уровня.... сделать потом асинхронным SaveAsync
+        public void SaveLevelData(LevelConfig levelConfig) // Сохранялка уровня.... сделать потом асинхронным SaveAsync
         {
-            LevelData levelData = GetLevelData();
-
-
+            LevelData levelData = GetLevelData(levelConfig);
 
             foreach (ISaveLoad obj in _saveLoads)
             {
                 obj.Save(levelData);
             }
 
-            SaveLevelIntoMainDictinary(levelData);
+            SaveLevelIntoMainDictinary(levelData, levelConfig);
         }
 
-        public void LoadLevel() // загрузка... сделать потом асинхронной.
+        public void LoadLevel(LevelConfig levelConfig) // загрузка... сделать потом асинхронной.
         {
-            LevelData levelData = GetLevelData();
+            LevelData levelData = GetLevelData(levelConfig);
 
             foreach (ISaveLoad obj in _saveLoads)
             {
@@ -58,20 +57,19 @@ namespace Assets.Scripts.SaveLoad
 
         // функция, которая грузит часть объектов. Под вопросм.....
         // смысл в том, что после инициализации части элементов нам не надо грузить именно все...
-        public void LoadPartLevelObject(IEnumerable<ISaveLoad> saveLoads) 
+        public void LoadPartLevelObject(IEnumerable<ISaveLoad> saveLoads, LevelConfig levelConfig) 
         {
-            LevelData levelData = GetLevelData();
+            LevelData levelData = GetLevelData(levelConfig);
 
             foreach (var data in saveLoads)
             {
-                data.Load(levelData, _levelConfig);
+                data.Load(levelData, levelConfig);
             }
         }
 
-        public void SetLevelId(LevelConfig levelConfig) // метод для присвоения ID уровня, который мы выбрали.
+        public void SetLevelConfig(LevelConfig levelConfig) // метод для присвоения ID уровня, который мы выбрали.
         {
             _levelConfig = levelConfig;
-            _levelId = _levelConfig.name;
         }
 
         public void AddSaveLoadSub(ISaveLoad saveLoad) // Добавляем объекты, с которыми мы можем взаимодействовать..
@@ -89,9 +87,9 @@ namespace Assets.Scripts.SaveLoad
             Debug.Log($"SaveLoadCount: {_saveLoads.Count()}");
         }
 
-        public void DeleteSave() // пока не работает как надо... 
+        public void DeleteSave(LevelConfig levelConfig) // пока не работает как надо... 
         {
-            _saveData.LevelsData[_levelId] = new LevelData();
+            _saveData.LevelsData[levelConfig.LevelName] = new LevelData();
         }
 
         public void ResetAllProgress() 
@@ -101,35 +99,33 @@ namespace Assets.Scripts.SaveLoad
             _saveData = new GameSaveData();
         }
 
-        public LevelData GetLevelData()
+        public LevelData GetLevelData(LevelConfig levelConfig)
         {
-            if (_saveData.LevelsData.TryGetValue(_levelId, out LevelData levelData) == false)
+            string levelName = levelConfig.LevelName;
+
+            if (_saveData.LevelsData.TryGetValue(levelName, out LevelData levelData) == false)
             {
-                levelData = new LevelData { LevelID = _levelId };
-                SaveLevelIntoMainDictinary(levelData);
+                levelData = new LevelData { LevelName = levelName };
+                SaveLevelIntoMainDictinary(levelData, levelConfig);
             }
 
-
-            return _saveData.LevelsData[_levelId]; // можно передать просто data ??
+            return _saveData.LevelsData[levelName]; // можно передать просто data ??
         }
 
-        public LevelConfig GetLevelConfig()
+        private void SaveLevelIntoMainDictinary(LevelData data, LevelConfig levelConfig) // это сохранение в общий файл вопрос так ли это делать и на до ли....
         {
-            return _levelConfig;
-        }
+            string levelName = levelConfig.LevelName;
 
-        private void SaveLevelIntoMainDictinary(LevelData data) // это сохранение в общий файл вопрос так ли это делать и на до ли....
-        {
-            if (_saveData.LevelsData.ContainsKey(_levelId))
+            if (_saveData.LevelsData.ContainsKey(levelName))
             {
-                _saveData.LevelsData[_levelId] = data;
+                _saveData.LevelsData[levelName] = data;
             }
             else
             {
-                _saveData.LevelsData.Add(_levelId, data);
+                _saveData.LevelsData.Add(levelName, data);
             }
 
-            _saveData.CurrentLevelId = _levelId;
+            _saveData.CurrentLevelId = levelName;
             _saveData.LastSaveTime = DateTime.Now;
             _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
         }
@@ -155,14 +151,15 @@ namespace Assets.Scripts.SaveLoad
             }
         }
         
-        public void RestartLevel()
+        //Непонятно что это...
+        public void RestartLevel(LevelConfig levelConfig)
         {
-            var data = GetLevelData();
+            var data = GetLevelData(levelConfig);
         }
 
-        public void FinishLevel()
+        public void FinishLevel(LevelConfig levelConfig)
         {
-            SaveLevelData();
+            SaveLevelData(levelConfig);
         }
 
         public void DieLoad()

@@ -13,9 +13,12 @@ namespace Assets._Scripts.GameControllers
         public event Action OnFinishGame;
         public event Action OnRestartGame;
 
+        private LevelConfig _levelConfig;
+
         public GameManager(SaveLoadService saveLoadService)
         {
             _saveLoadService = saveLoadService;
+            _levelConfig = saveLoadService.LevelConfig;
         }
 
         public void Dispose()
@@ -41,12 +44,12 @@ namespace Assets._Scripts.GameControllers
         public void FinishGameSignal()
         {
             OnFinishGame?.Invoke();
-            _saveLoadService.FinishLevel();
+            _saveLoadService.FinishLevel(_levelConfig);
         }
 
         public void RestartGameSignal()
         {
-            _saveLoadService.RestartLevel();
+            _saveLoadService.RestartLevel(_levelConfig);
             OnRestartGame?.Invoke();
 
         }

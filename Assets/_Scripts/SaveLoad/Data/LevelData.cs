@@ -9,7 +9,7 @@ namespace Assets.Scripts.SaveLoad.Data
     [Serializable]
     public class LevelData
     {
-        public string LevelID;
+        public string LevelName;
         public bool IsLevelWasStarted; // Был ли уровень запущен до этого запуска ??
         public Vector3 LastCheckPointPosition;
         public PlayerData PlayerData;

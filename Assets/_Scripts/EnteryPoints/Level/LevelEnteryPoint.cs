@@ -6,14 +6,12 @@ using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class LevelEnteryPoint : IStartable, IDisposable, IInitSaveLoad, IInitFinish, IInitRestart, IInitLevel
+    public class LevelEnteryPoint : IStartable, IDisposable, IInitSaveLoad, IInitFinish, IInitRestart
     {
-        private int _checkpointsCount;
         private GamePoints _gamePoints;
         private SaveLoadService _saveLoadService;
         private LevelData _loadData;
@@ -22,6 +20,8 @@ namespace Assets._Scripts.EnteryPoints
         private GameManager _gameManager;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
+
+        private LevelConfig _levelConfig;
 
         public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
 
@@ -38,7 +38,8 @@ namespace Assets._Scripts.EnteryPoints
             IEnumerable<IRestart> restartSub,
             IEnumerable<IFinish> finished,
             GameFinishController gameFinishController,
-            GameManager gameManager, GameRestartController gameRestartController,
+            GameManager gameManager, 
+            GameRestartController gameRestartController,
             CoinController coinController)
         {
             _gamePoints = gamePoints;
@@ -51,13 +52,13 @@ namespace Assets._Scripts.EnteryPoints
             Finished = finished;
             Restarted = restartSub;
             _coinController = coinController;
+            _levelConfig = saveLoadService.LevelConfig;
         }
 
         public void Start()
         {
             InitEvents();
-            InitLevelData();
-            InitSaveLoadData();
+            InitSaveLoadData(_levelConfig);
             InitFinishData();
             InitRestartData();
         }
@@ -79,20 +80,13 @@ namespace Assets._Scripts.EnteryPoints
             _gamePoints.FinishPoint.OnRestartActivated += _gameManager.RestartGameSignal;
         }
 
-        public void InitLevelData()
+        public void InitSaveLoadData(LevelConfig levelConfig)
         {
-            //_gameManager.InitGameSignal();
-
-        }
-
-        public void InitSaveLoadData()
-        {
-            _loadData = _saveLoadService.GetLevelData();
+            _loadData = _saveLoadService.GetLevelData(levelConfig);
             _saveLoadService.AddSaveLoadSub(_checkPointsController);
             _saveLoadService.AddSaveLoadSub(_coinController);
-            _loadData = InitCheckPoints(_loadData); // убрать ?....
             _loadData.IsLevelWasStarted = true;
-            _saveLoadService.LoadPartLevelObject(SaveLoads);
+            _saveLoadService.LoadPartLevelObject(SaveLoads, levelConfig);
         }
 
         public void InitFinishData()
@@ -104,34 +98,5 @@ namespace Assets._Scripts.EnteryPoints
         {
             _gameRestartController.AddRestartSub(Restarted);
         }
-
-
-        private LevelData InitCheckPoints(LevelData levelData) // ПОД ВОПРОСОМ....
-        {
-
-            //_checkPointsController.SetCheckPointsParent(_gamePoints.CheckPoints);
-
-
-            //List<CheckPointData> loadCheckPointsData = levelData.CheckPoints;
-            //List<CheckPoint> gameCheckPointList = _checkPointsController.TransformToList(_gamePoints.CheckPoints);
-
-            //if (loadCheckPointsData == null)
-            //{
-            //    loadCheckPointsData = new List<CheckPointData>();
-            //    _checkpointsCount = gameCheckPointList.Count;
-
-            //    for (int i = 0; i < gameCheckPointList.Count; i++)
-            //    {
-            //        loadCheckPointsData.Add(new CheckPointData { Id = gameCheckPointList[i].Id, IsActivated = gameCheckPointList[i].IsActivated });
-            //    }
-
-            //    _loadData.CheckPoints = loadCheckPointsData;
-            //    Debug.Log(_checkpointsCount);
-            //}
-
-            return levelData;
-        }
-
-
     }
 }

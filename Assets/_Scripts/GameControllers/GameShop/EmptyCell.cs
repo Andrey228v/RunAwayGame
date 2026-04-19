@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Assets._Scripts.GameControllers
+namespace Assets._Scripts.GameControllers.GameShop
 {
-    public class SkinController
+    public class EmptyCell
     {
-
     }
 }

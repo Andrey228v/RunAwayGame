@@ -11,7 +11,8 @@ namespace Assets._Scripts.UI._1MenuWindow
     {
         Menu,
         Settings,
-        Shop
+        Shop,
+        Achievements
     }
 
 
@@ -19,23 +20,27 @@ namespace Assets._Scripts.UI._1MenuWindow
     {
         [Header("Tabs")]
         [SerializeField] private List<GameObject> _panels;
-        //[SerializeField] private GameObject _mainPagePanel;
-        //[SerializeField] private GameObject _settingsPanel;
-        //[SerializeField] private GameObject _shopPanel;
 
         [Header("Buttons")]
-        [SerializeField] private List<Button> _levelsButtons;
         [SerializeField] private Button _startGameButtonL1;
         [SerializeField] private Button _startGameButtonL2;
         [SerializeField] private Button _startGameButtonL3;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _soundControllButton;
+        [SerializeField] private Button _shopButton;
+        [SerializeField] private Button _achievementsButton;
         [SerializeField] private Button _deletSaveButton;
-        [SerializeField] private Button _backButton;
+        [SerializeField] private Button _backButtonSetting;
+        [SerializeField] private Button _backButtonShop;
+        [SerializeField] private Button _backButtonAchievements;
         [SerializeField] private Button _exitButton;
 
         [Header("Sliders")]
         [SerializeField] private Slider _volumeMusicSlider;
+
+        [Header("Parents")]
+        [SerializeField] private Transform _achievmentsParent;
+
 
         public event Action<LevelConfig> OnChooseLevel;
         public event Action OnSaveDelet;
@@ -45,6 +50,8 @@ namespace Assets._Scripts.UI._1MenuWindow
         private List<LevelConfig> _levelConfigs;
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
+
+        public Transform AchievmentsParent => _achievmentsParent;
 
         [Inject]
         public void Constructor(List<LevelConfig> levelConfigs, LoadManager loadManager, List<SceneGroupHandle> scensGroups)
@@ -56,7 +63,6 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void OnEnable()
         {
-            //Show();
             _currentPanel = _panels[0];
             _previousPanel = null;
         }
@@ -64,17 +70,19 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void Start()
         {
             SetupButtons();
+
+            //Закрыли все окна.
+            for(int i = 0; i < _panels.Count; i++)
+            {
+                _panels[i].SetActive(false);
+            }
+
             ShowPage(PageName.Menu);
-            //ShowMainPage();
         }
 
         private void OnDestroy()
         {
             UnSetupButtons();
-
-            _startGameButtonL1.onClick.RemoveAllListeners();
-            _startGameButtonL2.onClick.RemoveAllListeners();
-            _startGameButtonL3.onClick.RemoveAllListeners();
         }
 
         public void ShowPage(PageName pageName)
@@ -93,6 +101,10 @@ namespace Assets._Scripts.UI._1MenuWindow
             {
                 _currentPanel = _panels[2];
             }
+            else if (pageName == PageName.Achievements)
+            {
+                _currentPanel = _panels[3];
+            }
             else
             {
                 throw new Exception(); // так ли ....
@@ -102,26 +114,8 @@ namespace Assets._Scripts.UI._1MenuWindow
             _currentPanel.SetActive(true);
         }
 
-        //public void ShowMainPage()
-        //{
-        //    //_currentPanel = _mainPagePanel;
-        //    //_previousPanel = null;
-        //    //_mainPagePanel.SetActive(true);
-        //    //_settingsPanel.SetActive(false);
-        //}
-
-        //public void ShowSettings()
-        //{
-        //    //_previousPanel = _mainPagePanel;
-        //    //_currentPanel = _settingsPanel;
-        //    //_mainPagePanel.SetActive(false);
-        //    //_settingsPanel.SetActive(true);
-        //}
-
         private async void StartGame(int level)
         {
-            //Hide();
-
             if (level == 1)
             {
                 OnChooseLevel?.Invoke(_levelConfigs[0]);
@@ -140,9 +134,8 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void ClickBackButton()
         {
-            _currentPanel = _previousPanel; // тут надо переставить...
-
             _currentPanel.SetActive(false);
+            _currentPanel = _previousPanel;
             _previousPanel.SetActive(true);
         }
 
@@ -153,29 +146,34 @@ namespace Assets._Scripts.UI._1MenuWindow
             _startGameButtonL3.onClick.AddListener(() => StartGame(3));
 
             _settingsButton.onClick.AddListener(()=> ShowPage(PageName.Settings));
-            _backButton.onClick.AddListener(ClickBackButton);
+            _shopButton.onClick.AddListener(() => ShowPage(PageName.Shop));
+            _achievementsButton.onClick.AddListener(() => ShowPage(PageName.Achievements));
+
+            _backButtonSetting.onClick.AddListener(ClickBackButton);
+            _backButtonShop.onClick.AddListener(ClickBackButton);
+            _backButtonAchievements.onClick.AddListener(ClickBackButton);
+
             _deletSaveButton.onClick.AddListener(DeletSave);
             _exitButton.onClick.AddListener(ClickExit);
-
         }
 
         private void UnSetupButtons()
         {
             _settingsButton.onClick.RemoveListener(() => ShowPage(PageName.Settings));
-            _backButton.onClick.RemoveListener(ClickBackButton);
+            _shopButton.onClick.RemoveListener(() => ShowPage(PageName.Shop));
+            _achievementsButton.onClick.RemoveListener(() => ShowPage(PageName.Achievements));
+
+            _backButtonSetting.onClick.RemoveListener(ClickBackButton);
+            _backButtonShop.onClick.RemoveListener(ClickBackButton);
+            _backButtonAchievements.onClick.RemoveListener(ClickBackButton);
+
             _deletSaveButton.onClick.RemoveListener(DeletSave);
             _exitButton.onClick.RemoveListener(ClickExit);
+
+            _startGameButtonL1.onClick.RemoveAllListeners();
+            _startGameButtonL2.onClick.RemoveAllListeners();
+            _startGameButtonL3.onClick.RemoveAllListeners();
         }
-
-        //private void Show()
-        //{
-        //    gameObject.SetActive(true);
-        //}
-
-        //private void Hide()
-        //{
-        //    gameObject.SetActive(false);
-        //}
 
         private void ClickExit()
         {

@@ -168,6 +168,10 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects: []
   _menuTabs: {fileID: 7125559611388467430, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+  _unitButtonSkinViewPrefab: {fileID: 6217150662217162583, guid: 33e81fb8ef33cb9419381b671637c07b, type: 3}
+  _conditionSkinViewPrefab: {fileID: 76440864217939401, guid: 9f47190c5f270bb4890670384c69756a, type: 3}
+  _achievementPrefab: {fileID: 3994185680666412377, guid: adba67dbd3de4724a9d55ac14050469b, type: 3}
+  _achievmentsCellsViewPrefab: {fileID: 5683541399876667333, guid: 7f031645a13792a429f8ef5264a1b654, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

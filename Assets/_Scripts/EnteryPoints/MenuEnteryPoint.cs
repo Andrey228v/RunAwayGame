@@ -56,7 +56,7 @@ namespace Assets._Scripts.EnteryPoints
             foreach(AchievmentModel ach in _achievmentsModels)
             {
                 var achView = _achievmentsViewFactory();
-                achView.Construct(ach.Name, ach.Description, ach.IsUnlock);
+                achView.Construct(ach);
                 _achievments.AddAchievment(achView);
             }
 

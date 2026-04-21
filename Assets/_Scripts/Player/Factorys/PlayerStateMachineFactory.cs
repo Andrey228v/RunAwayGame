@@ -4,7 +4,6 @@ using Assets.Scripts.Camera;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
 using System;
-using UnityEngine;
 
 namespace Assets.Scripts.Player
 {

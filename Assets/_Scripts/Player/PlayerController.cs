@@ -68,8 +68,6 @@ namespace Assets.Scripts.Player
         public void Restart()
         {
             Reset();
-
-
         }
 
         public void FinishGame()

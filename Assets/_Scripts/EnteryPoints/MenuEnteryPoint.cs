@@ -1,4 +1,5 @@
-﻿using Assets._Scripts.GameControllers.Achievments;
+﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets.Scripts.SaveLoad;
@@ -17,23 +18,27 @@ namespace Assets._Scripts.EnteryPoints
         private SaveLoadService _saveLoadService;
         private MenuTabs _menu;
         private AchievmentsCellsView _achievments;
+        private GameManager _gameManger;
 
         private List<AchievmentModel> _achievmentsModels = new List<AchievmentModel>
         {
-            new AchievmentModel("1", "fawfwa", false),
-            new AchievmentModel("2", "fawfaf", false),
-            new AchievmentModel("3", "123", true),
+            new AchievmentModel("1", "fawfwa", false, false),
+            new AchievmentModel("2", "fawfaf", false, false),
+            new AchievmentModel("3", "123", true, false),
+            new AchievmentModel("4", "123faw", true, true),
         };
 
         public MenuEnteryPoint(Func<MenuTabs> menuFactory, 
             SaveLoadService saveLoadService,
             Func<AchievmentsCellsView> achievmentsCellsFactory,
-            Func<AchievementView> achievmentsViewFactory) 
+            Func<AchievementView> achievmentsViewFactory,
+            GameManager gameManager) 
         {
             _menuFactory = menuFactory;
             _saveLoadService = saveLoadService;
             _achievmentsCellsFactory = achievmentsCellsFactory;
             _achievmentsViewFactory = achievmentsViewFactory;
+            _gameManger = gameManager;
         }
 
         public void Start()

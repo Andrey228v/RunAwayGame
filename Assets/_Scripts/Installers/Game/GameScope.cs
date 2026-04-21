@@ -15,7 +15,6 @@ namespace Assets.Scripts.Installers
         [SerializeField] private Character _characterPrefab; // префаб Unit, тут надо префаб делать пустой без Player и Bot. Потом переделать.
         [SerializeField] private NavMeshCharacter _navMeshCharacterPrefab;
 
-
         [SerializeField] private FinishPoint _finishPoint; // Переделать
         [SerializeField] private Transform _checkPoints; // Переделать
         [SerializeField] private Transform _coins; // Переделать
@@ -44,7 +43,7 @@ namespace Assets.Scripts.Installers
 
             builder.Register<GameFinishController>(Lifetime.Singleton); // под вопросом...
             builder.Register<GameRestartController>(Lifetime.Singleton); // под вопросом...
-            builder.Register<GameManager>(Lifetime.Singleton);
+            //builder.Register<GameManager>(Lifetime.Singleton);
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 
             builder.RegisterFactory<UnitInfoUI>(container => () =>

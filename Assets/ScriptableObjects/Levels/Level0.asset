@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 120d1b4f172210240a871269c8299a63, type: 3}
-  m_Name: Level3
+  m_Name: Level0
   m_EditorClassIdentifier: Assembly-CSharp::LevelConfig
-  _levelId: 3
-  _levelName: Lvl3
-  _sceneName: LEVEL_3
-  _startPoint: {x: 128, y: 13, z: 0}
-  _finishPoint: {x: -128, y: 13, z: 0}
+  _levelId: 0
+  _levelName: Lvl0
+  _sceneName: LEVEL_0
+  _startPoint: {x: 45, y: 6, z: 0}
+  _finishPoint: {x: -237, y: -13, z: 12}
   _playerStartRotation: {x: 0, y: 0, z: 0}

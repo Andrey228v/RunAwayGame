@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
@@ -23,11 +20,12 @@ namespace Assets._Scripts.GameControllers.Achievments
         public bool CanClaim => _isUnlock && !_isClaimed;
 
 
-        public AchievmentModel(string name, string description, bool isUnlock)
+        public AchievmentModel(string name, string description, bool isUnlock, bool isClaimed)
         {
             _name = name;
             _description = description;
             _isUnlock = isUnlock;
+            _isClaimed = isClaimed;
         }
 
         public void SetUnlock(bool isUnlock) 

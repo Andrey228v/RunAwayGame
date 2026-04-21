@@ -4,13 +4,11 @@ using UnityEngine;
 using VContainer;
 using VContainer.Unity;
 
-
 namespace Assets._Scripts.Installers
 {
     public class PlayerHUDScope : LifetimeScope
     {
         [SerializeField] private GamePanelController _gamePanelControllerPrefab;
-
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -30,7 +28,6 @@ namespace Assets._Scripts.Installers
             {
                 return container.Instantiate(_gamePanelControllerPrefab);
             }, Lifetime.Transient);
-
         }
     }
 }

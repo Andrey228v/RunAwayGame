@@ -15,6 +15,8 @@ namespace Assets.Scripts.SaveLoad
 
         public LevelConfig LevelConfig => _levelConfig;
 
+        public GameSaveData SaveData => _saveData;
+
         public SaveLoadService(EasySaveSystem saveSystem) 
         {
             _saveLoads = new HashSet<ISaveLoad>();
@@ -31,6 +33,11 @@ namespace Assets.Scripts.SaveLoad
                 _saveLoads.Clear();
                 _saveLoads = null;
             }
+        }
+
+        public void SaveGameData()
+        {
+            _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
         }
 
         public void SaveLevelData(LevelConfig levelConfig) // Сохранялка уровня.... сделать потом асинхронным SaveAsync

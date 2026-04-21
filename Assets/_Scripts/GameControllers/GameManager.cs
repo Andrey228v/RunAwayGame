@@ -25,7 +25,6 @@ namespace Assets._Scripts.GameControllers
         public GameManager(SaveLoadService saveLoadService)
         {
             _saveLoadService = saveLoadService;
-            _levelConfig = saveLoadService.LevelConfig;
         }
 
         public void Dispose()
@@ -50,15 +49,16 @@ namespace Assets._Scripts.GameControllers
 
         public void FinishGameSignal()
         {
+            _levelConfig = _saveLoadService.LevelConfig; // переделать ... 
             OnFinishGame?.Invoke(_levelConfig);
             _saveLoadService.FinishLevel(_levelConfig);
         }
 
         public void RestartGameSignal()
         {
+            _levelConfig = _saveLoadService.LevelConfig; // переделать ... 
             _saveLoadService.RestartLevel(_levelConfig);
             OnRestartGame?.Invoke();
-
         }
 
         public void StartLevel0()

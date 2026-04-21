@@ -14,13 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: RemoteLoadAssetsLevel3
   m_GUID: de510f3c2c7580047858aa627588a218
-  m_SerializeEntries:
-  - m_GUID: 43586f51312cc4d4787ed65862f0679b
-    m_Address: LEVEL_3
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Screen
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: b7d5ef5a172915142b0963ab894ce3ae, type: 2}
   m_SchemaSet:

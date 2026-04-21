@@ -99,5 +99,11 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         {
             transform.DOScale(_originalScale, _duration).SetEase(Ease.OutQuad);
         }
+
+        public void Unlock()
+        {
+            _blockImage.gameObject.SetActive(false);
+            _claimButton.gameObject.SetActive(true);
+        }
     }
 }

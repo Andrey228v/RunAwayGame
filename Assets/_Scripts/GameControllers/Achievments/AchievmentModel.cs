@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
@@ -31,6 +32,11 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void SetUnlock(bool isUnlock) 
         {
             _isUnlock = isUnlock;
+        }
+
+        public void Unlock()
+        {
+            _isUnlock = true;
         }
 
         //картинку сделать..

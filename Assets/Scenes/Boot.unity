@@ -254,7 +254,7 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: cc38d1f82b0280643ad77969afefb0d3, type: 3}
         guid: cc38d1f82b0280643ad77969afefb0d3
       type: 0
-  - groupName: Level_1
+  - groupName: Level_0
     scenesNames:
     - scene:
         asset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
@@ -268,7 +268,7 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
         guid: 611cb5b9d3d8b8d40ba6c0017d77930c
       type: 3
-  - groupName: Level_2
+  - groupName: Level_1
     scenesNames:
     - scene:
         asset: {fileID: 102900000, guid: bb7e8d1174cfbe84d82ba372040c8e8d, type: 3}
@@ -282,7 +282,7 @@ MonoBehaviour:
         asset: {fileID: 102900000, guid: 611cb5b9d3d8b8d40ba6c0017d77930c, type: 3}
         guid: 611cb5b9d3d8b8d40ba6c0017d77930c
       type: 3
-  - groupName: Level_3
+  - groupName: Level_2
     scenesNames:
     - scene:
         asset: {fileID: 102900000, guid: 43586f51312cc4d4787ed65862f0679b, type: 3}

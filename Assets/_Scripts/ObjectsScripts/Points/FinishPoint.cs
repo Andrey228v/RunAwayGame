@@ -8,6 +8,7 @@ namespace Assets.Scripts.Points
     {
         //При достижении финиша мы получаем кубок, буст и нас кидает в начало...
         [SerializeField] private bool _isActivated = false;
+        [SerializeField] private int _lvlName; // Переделать.... тут надо передавать это значение, а не передвать
 
         public bool IsActivated => _isActivated;
         private bool _isInitialized;

@@ -2,12 +2,9 @@
 using Assets.Input;
 using Assets.Scripts.Player;
 using Assets.Scripts.StateMachines.Player.States;
-using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Scripts.StateMachines.Player
 {
@@ -73,7 +70,6 @@ namespace Assets.Scripts.StateMachines.Player
             _prevState = _states[0];
             _currentState.Enter();
         }
-
 
         public void FixedTick()
         {

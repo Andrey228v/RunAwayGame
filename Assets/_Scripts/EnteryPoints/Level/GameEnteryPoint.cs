@@ -58,9 +58,11 @@ namespace Assets.Scripts.EnteryPoints
             _saveLoadService.LoadLevel(_levelConfig);
         }
 
-        public void FinishGame()
+        public void FinishGame(LevelConfig levelConfig)
         {
             _finishController.FinishNotifySubs();
+
+            //if(levelConfig.SceneName == "")
         }
 
         public void RestartGame()

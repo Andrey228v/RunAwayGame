@@ -1,4 +1,5 @@
-﻿using Assets._Scripts.SceneLoading;
+﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.SceneLoading;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,16 +16,15 @@ namespace Assets._Scripts.UI._1MenuWindow
         Achievements
     }
 
-
     public class MenuTabs : MonoBehaviour
     {
         [Header("Tabs")]
         [SerializeField] private List<GameObject> _panels;
 
         [Header("Buttons")]
+        [SerializeField] private Button _startGameButtonL0;
         [SerializeField] private Button _startGameButtonL1;
         [SerializeField] private Button _startGameButtonL2;
-        [SerializeField] private Button _startGameButtonL3;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _soundControllButton;
         [SerializeField] private Button _shopButton;
@@ -50,15 +50,20 @@ namespace Assets._Scripts.UI._1MenuWindow
         private List<LevelConfig> _levelConfigs;
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
+        private GameManager _gameManger;
 
         public Transform AchievmentsParent => _achievmentsParent;
 
         [Inject]
-        public void Constructor(List<LevelConfig> levelConfigs, LoadManager loadManager, List<SceneGroupHandle> scensGroups)
+        public void Constructor(List<LevelConfig> levelConfigs, 
+            LoadManager loadManager, 
+            List<SceneGroupHandle> scensGroups,
+            GameManager gameManager)
         {
             _levelConfigs = levelConfigs;
             _loadManager = loadManager;
             _scensGroups = scensGroups;
+            _gameManger = gameManager;
         }
 
         private void OnEnable()
@@ -116,17 +121,20 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private async void StartGame(int level)
         {
-            if (level == 1)
+            if (level == 1) // переделать...
             {
                 OnChooseLevel?.Invoke(_levelConfigs[0]);
+                _gameManger.StartLevel0();
             }
-            else if (level == 2)
+            else if (level == 2) // переделать...
             {
                 OnChooseLevel?.Invoke(_levelConfigs[1]);
+                _gameManger.StartLevel1();
             }
-            else if (level == 3)
+            else if (level == 3) // переделать...
             {
                 OnChooseLevel?.Invoke(_levelConfigs[2]);
+                _gameManger.StartLevel2();
             }
 
             await _loadManager.LoadScene(_scensGroups[level]);
@@ -141,9 +149,9 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void SetupButtons()
         {
-            _startGameButtonL1.onClick.AddListener(() => StartGame(1));
-            _startGameButtonL2.onClick.AddListener(() => StartGame(2));
-            _startGameButtonL3.onClick.AddListener(() => StartGame(3));
+            _startGameButtonL0.onClick.AddListener(() => StartGame(1)); // переделать...
+            _startGameButtonL1.onClick.AddListener(() => StartGame(2)); // переделать...
+            _startGameButtonL2.onClick.AddListener(() => StartGame(3)); // переделать...
 
             _settingsButton.onClick.AddListener(()=> ShowPage(PageName.Settings));
             _shopButton.onClick.AddListener(() => ShowPage(PageName.Shop));
@@ -170,9 +178,9 @@ namespace Assets._Scripts.UI._1MenuWindow
             _deletSaveButton.onClick.RemoveListener(DeletSave);
             _exitButton.onClick.RemoveListener(ClickExit);
 
+            _startGameButtonL0.onClick.RemoveAllListeners();
             _startGameButtonL1.onClick.RemoveAllListeners();
             _startGameButtonL2.onClick.RemoveAllListeners();
-            _startGameButtonL3.onClick.RemoveAllListeners();
         }
 
         private void ClickExit()

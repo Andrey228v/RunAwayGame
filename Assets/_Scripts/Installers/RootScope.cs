@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.EnteryPoints;
+using Assets._Scripts.GameControllers;
 using Assets._Scripts.SceneLoading;
 using Assets.Scripts.SaveLoad;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace Assets._Scripts.Installers
             builder.Register<EasySaveSystem>(Lifetime.Singleton);
             builder.Register<SaveLoadService>(Lifetime.Singleton);
             builder.Register<LoadManager>(Lifetime.Singleton);
+            builder.Register<GameManager>(Lifetime.Singleton);
         }
     }
 }

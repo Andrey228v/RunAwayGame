@@ -66,8 +66,6 @@ namespace Assets._Scripts.Bots.BotStateMachine
             _currentState?.Enter();
         }
 
-
-
         public void Restart()
         {
             //_animatorController.Restart();

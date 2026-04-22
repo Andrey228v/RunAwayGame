@@ -54,7 +54,9 @@ namespace Assets._Scripts.EnteryPoints
                         new AchievmentModel("fLvl 2", "Finish lvl 2", false, false),
                         new AchievmentModel("fLvl 3", "Finish lvl 3", false, false),
                     };
-
+            }
+            else
+            {
                 
             }
 
@@ -107,17 +109,7 @@ namespace Assets._Scripts.EnteryPoints
                 _achievments.AddAchievment(achView);
 
                 _achievementViews.Add(achView);
-
-                //if(ach.IsUnlock == false)
-                //{
-                //    _actions[counter] += achView.Unlock;
-                //    _actions[counter] += ach.Unlock;
-                //}
-
-
-
             }
-
 
             _menu.OnChooseLevel += _saveLoadService.SetLevelConfig;
             _menu.OnSaveDelet += _saveLoadService.ResetAllProgress;

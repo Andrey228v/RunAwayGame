@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Assets.Scripts.SaveLoad;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.SaveLoad.Service
 {
-    public class LevelSaveLoadService
+    public class LevelSaveLoadService : ISaveLoadService
     {
         //private LevelConfig _levelConfig;
 
@@ -12,6 +11,18 @@ namespace Assets._Scripts.SaveLoad.Service
         //{
         //    _levelConfig = levelConfig;
         //}
+
+        private HashSet<ISaveLoad> _saveLoads;
+
+        public void AddSaveLoadSub(ISaveLoad saveLoad) // Добавляем объекты, с которыми мы можем взаимодействовать..
+        {
+            _saveLoads.Add(saveLoad);
+        }
+
+        public void Dispose()
+        {
+
+        }
 
         public void Save()
         {

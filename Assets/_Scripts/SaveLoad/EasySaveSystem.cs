@@ -2,8 +2,6 @@
 {
     public class EasySaveSystem : ISaveSystem
     {
-        private readonly string _encryptionPassword = "I`m going to Stars"; // Для шифрования
-
         public void Save<T>(string key, T data)
         {
             ES3.Save(key, data);
@@ -28,15 +26,5 @@
         {
             ES3.DeleteFile();
         }
-
-        //private ES3Settings GetSettings()
-        //{
-        //    return new ES3Settings
-        //    {
-        //        encryptionType = ES3.EncryptionType.AES,
-        //        encryptionPassword = _encryptionPassword,
-        //        format = ES3.Format.JSON // Для читаемости, можно Binary
-        //    };
-        //}
     }
 }

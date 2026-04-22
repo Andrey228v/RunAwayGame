@@ -3,7 +3,6 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer.Unity;
-using static UnityEngine.InputSystem.LowLevel.InputEventTrace;
 
 namespace Assets._Scripts.EnteryPoints
 {

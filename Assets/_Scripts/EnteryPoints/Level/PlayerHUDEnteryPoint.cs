@@ -10,38 +10,38 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class PlayerHUDEnteryPoint : IStartable, IDisposable, IInitSaveLoad, IInitFinish, IInitRestart
+    public class PlayerHUDEnteryPoint : IStartable, IDisposable, IInitFinish, IInitRestart //IInitSaveLoad
     {
         private Func<GamePanelController> _gamePanelFactory;
         private GamePanelController _gamePanelController;
-        private SaveLoadService _saveLoadService;
+        //private SaveLoadService _saveLoadService;
         private GameManager _gameManager;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
 
         private LevelConfig _levelConfig;
 
-        public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
+        //public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
 
         public IEnumerable<IFinish> Finished { get; private set; }
 
         public IEnumerable<IRestart> Restarted { get; private set; }
 
         public PlayerHUDEnteryPoint(Func<GamePanelController> gamePanelFactory, 
-            SaveLoadService saveLoadService, GameFinishController gameFinishController,
-            GameManager gameManager, IEnumerable<ISaveLoad> saveLoads,
+            GameFinishController gameFinishController,
+            GameManager gameManager,
             IEnumerable<IRestart> restarted, IEnumerable<IFinish> finished,
             GameRestartController gameRestartController) 
         {
             _gamePanelFactory = gamePanelFactory;
-            _saveLoadService = saveLoadService;
+            //_saveLoadService = saveLoadService;
             _finishController = gameFinishController;
             _gameManager = gameManager;
-            SaveLoads = saveLoads;
+            //SaveLoads = saveLoads;
             Finished = finished;
             Restarted = restarted;
             _gameRestartController = gameRestartController;
-            _levelConfig = saveLoadService.LevelConfig;
+            //_levelConfig = saveLoadService.LevelConfig;
         }
 
         public void Dispose()
@@ -70,7 +70,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public void InitSaveLoadData(LevelConfig levelConfig)
         {
-            _saveLoadService.LoadPartLevelObject(SaveLoads, levelConfig);
+            //_saveLoadService.LoadPartLevelObject(SaveLoads, levelConfig);
         }
 
         public void InitFinishData()

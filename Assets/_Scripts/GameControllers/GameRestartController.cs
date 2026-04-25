@@ -7,17 +7,17 @@ namespace Assets._Scripts.GameControllers
     public class GameRestartController : IDisposable
     {
         private HashSet<IRestart> _restartListSubs;
-        private SaveLoadService _saveLoadService;
+        //private SaveLoadService _saveLoadService;
 
         private LevelConfig _levelConfig;
 
         public event Action OnRestartLevel;
 
-        public GameRestartController(SaveLoadService saveLoadService) 
+        public GameRestartController() 
         {
             _restartListSubs = new HashSet<IRestart>();
-            _saveLoadService = saveLoadService;
-            _levelConfig = saveLoadService.LevelConfig;
+            //_saveLoadService = saveLoadService;
+            //_levelConfig = saveLoadService.LevelConfig;
         }
 
         public void Dispose()
@@ -31,7 +31,7 @@ namespace Assets._Scripts.GameControllers
 
         public void RestartNotifySubs()
         {
-            _saveLoadService.DeleteSave(_levelConfig);
+            //_saveLoadService.DeleteSave(_levelConfig);
 
             OnRestartLevel?.Invoke();
 
@@ -40,7 +40,7 @@ namespace Assets._Scripts.GameControllers
                 sub.Restart();
             }
 
-            _saveLoadService.LoadLevel(_levelConfig);
+            //_saveLoadService.LoadLevel(_levelConfig);
         }
 
         public void AddRestartSub(IRestart sub)

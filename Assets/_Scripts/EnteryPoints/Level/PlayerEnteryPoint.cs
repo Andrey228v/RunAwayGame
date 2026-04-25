@@ -1,5 +1,7 @@
 ﻿using Assets._Scripts.EnteryPoints.Interfaces;
 using Assets._Scripts.GameControllers;
+using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI;
 using Assets.Input;
 using Assets.Scripts.Camera;
@@ -15,22 +17,23 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class PlayerEnteryPoint : IStartable, IDisposable, IInitSaveLoad, IInitFinish, IInitRestart
+    public class PlayerEnteryPoint : IStartable, IDisposable, IInitFinish, IInitRestart  // IInitSaveLoad
     {
         private PlayerController _playerController;
         private PlayerStateMachineFactory _playerStateMachineFactory;
         private CameraController _cameraController;
         private Func<Character> _characterFactory;
-        private SaveLoadService _saveLoadService;
+        //private SaveLoadService _saveLoadService;
         private LevelData _levelData;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
         private BillboardManager _billboardManager;
         private Func<UnitInfoUI> _unitInfoUIFactory;
+        private GameSaveLoadService _gameSaveLoadService;
 
         private LevelConfig _levelConfig;
 
-        public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
+        //public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
 
         public IEnumerable<IFinish> Finished { get; private set; }
 
@@ -38,31 +41,34 @@ namespace Assets._Scripts.EnteryPoints
 
         public PlayerEnteryPoint(PlayerController playerController, 
             PlayerStateMachineFactory playerStateMachineFactory, 
-            Func<Character> characterFactory, CameraController cameraController, 
-            SaveLoadService saveLoadService,
-            IEnumerable<ISaveLoad> saveLoads,
+            Func<Character> characterFactory, CameraController cameraController,
             GameFinishController gameFinishController,
             GameRestartController gameRestartController,
             IEnumerable<IRestart> restarted, IEnumerable<IFinish> fineshed,
-            BillboardManager billboardManager, Func<UnitInfoUI> unitInfoUIFactory) 
+            BillboardManager billboardManager, Func<UnitInfoUI> unitInfoUIFactory,
+            GameSaveLoadService gameSaveLoadService) 
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
             _cameraController = cameraController;
             _characterFactory = characterFactory;
-            _saveLoadService = saveLoadService;
+            //_saveLoadService = saveLoadService;
             _finishController = gameFinishController;
             _gameRestartController = gameRestartController;
-            SaveLoads = saveLoads;
+            //SaveLoads = saveLoads;
             Finished = fineshed;
             Restarted = restarted;
             _billboardManager = billboardManager;
             _unitInfoUIFactory = unitInfoUIFactory;
-            _levelConfig = saveLoadService.LevelConfig;
+            //_levelConfig = saveLoadService.LevelConfig;
+            _gameSaveLoadService = gameSaveLoadService;
         }
 
         public void Start()
         {
+            var saveLoadServise =  _gameSaveLoadService.GetService<LevelsController>();
+            saveLoadServise.AddSerice(_playerController);
+
             InitSaveLoadData(_levelConfig);
             InitPlayer(_levelData, _cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
@@ -71,7 +77,7 @@ namespace Assets._Scripts.EnteryPoints
             InitRestartData();
             InitEvents();
 
-            _saveLoadService.LoadPartLevelObject(SaveLoads, _levelConfig);
+            //_saveLoadService.LoadPartLevelObject(SaveLoads, _levelConfig);
         }
 
         public void Dispose()
@@ -88,8 +94,8 @@ namespace Assets._Scripts.EnteryPoints
 
         public void InitSaveLoadData(LevelConfig levelConfig)
         {
-            _levelData = _saveLoadService.GetLevelData(levelConfig);
-            _saveLoadService.AddSaveLoadSub(_playerController); // зарегестрировали ISaveLoad надо подумать может передеать по другому...
+            //_levelData = _saveLoadService.GetLevelData(levelConfig);
+            //_saveLoadService.AddSaveLoadSub(_playerController); // зарегестрировали ISaveLoad надо подумать может передеать по другому...
         }
 
         public void InitFinishData()
@@ -131,7 +137,7 @@ namespace Assets._Scripts.EnteryPoints
         //Не правильно. Подумать потом как исправить. Надо переместить создание в контролле как в Бот контроллере.
         private void DieRestartEntery() 
         {
-            _levelData = _saveLoadService.GetLevelData(_levelConfig);
+            //_levelData = _saveLoadService.GetLevelData(_levelConfig);
             _playerController.DieRestart(_levelData);
         }
     }

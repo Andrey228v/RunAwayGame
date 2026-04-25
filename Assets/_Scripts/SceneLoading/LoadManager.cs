@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using Assets._Scripts.SaveLoad.Service;
+using Cysharp.Threading.Tasks;
 using Eflatun.SceneReference;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,15 @@ namespace Assets._Scripts.SceneLoading
         private LoadScreenView _loadScreenView;
         private AsyncOperationGroup _asyncOperationGroup;
         private IProgress<float> _progress;
+        private GameSaveLoadService _gameSaveLoadService;
 
-        public LoadManager(LoadScreenView loadScreenView)
+        public LoadManager(LoadScreenView loadScreenView, GameSaveLoadService gameSaveLoadService)
         {
             _loadsScenes = new Dictionary<string, AsyncOperationHandle>();
             _loadScreenView = loadScreenView;
             _asyncOperationGroup = new AsyncOperationGroup();
             _progress = _loadScreenView.CreateProgressReporter();
+            _gameSaveLoadService = gameSaveLoadService;
         }
 
         public void Dispose()
@@ -48,6 +51,10 @@ namespace Assets._Scripts.SceneLoading
 
             await LoadNewContent(sceneGroup);
             PrepareToTransition(sceneGroup);
+
+            _gameSaveLoadService.InitializeAllServices();
+            _gameSaveLoadService.LoadAllServices();
+
             HideLoadScreen();
         }
 

@@ -43,7 +43,7 @@ namespace Assets.Scripts.Installers
 
             builder.Register<GameFinishController>(Lifetime.Singleton); // под вопросом...
             builder.Register<GameRestartController>(Lifetime.Singleton); // под вопросом...
-            //builder.Register<GameManager>(Lifetime.Singleton);
+
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 
             builder.RegisterFactory<UnitInfoUI>(container => () =>

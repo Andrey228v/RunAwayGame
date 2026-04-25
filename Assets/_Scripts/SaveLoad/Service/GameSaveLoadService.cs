@@ -1,49 +1,54 @@
-﻿using Assets.Scripts.SaveLoad;
+﻿using Assets._Scripts.GameControllers.Levels;
+using Assets.Scripts.SaveLoad;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Assets.Scripts.SaveLoad.Data;
 
 namespace Assets._Scripts.SaveLoad.Service
 {
     public class GameSaveLoadService : IDisposable
     {
         private EasySaveSystem _saveSystem;
-        private GameSaveData _saveData;
-        private LevelConfig _currentLevel;
+        private GameSaveData _gameSaveData;
+        private LevelConfig _levelConfig;
 
-        private Dictionary<Type, ISaveLoadService> _services = new Dictionary<Type, ISaveLoadService>();
-        
+        public GameSaveData GameSaveData => _gameSaveData;
+
+        public Dictionary<Type, ISaveLoadService> Services { get; }
+
         public GameSaveLoadService(EasySaveSystem saveSystem) 
         {
             _saveSystem = saveSystem;
-
-            LevelSaveLoadService levelSaveLoadService = new LevelSaveLoadService();
-            AchievmentsSaveLoadService achievmentsSaveLoadService = new AchievmentsSaveLoadService();
-            ShopSaveLoadService shopSaveLoadService = new ShopSaveLoadService();
-
-            _services.Add(levelSaveLoadService.GetType(), levelSaveLoadService);
-            _services.Add(achievmentsSaveLoadService.GetType(), achievmentsSaveLoadService);
-            _services.Add(shopSaveLoadService.GetType(), shopSaveLoadService);
+            Services = new Dictionary<Type, ISaveLoadService>();
 
             LoadOrCreateSave();
+            InitializeAllServices();
+            LoadAllServices();
         }
 
         public void Dispose() // это надо делать только при выходе из игры, потому что он общий для всех.
         {
-            foreach (var key in _services.Keys)
+            foreach (var key in Services.Keys)
             {
-                _services[key].Dispose();
+                Services[key].Dispose();
             }
 
             SaveGame();
         }
 
-        public void SaveAllSevices()
+        public void InitializeAllServices()
         {
-            foreach (var key in _services.Keys) 
+            foreach (var key in Services.Keys)
             {
-                _services[key].Save();
+                Services[key].Initialize();
+            }
+        }
+
+        public void SaveAllServices()
+        {
+            foreach (var key in Services.Keys)
+            {
+                Services[key].SaveAllServices(_gameSaveData, _levelConfig);
             }
 
             SaveGame();
@@ -51,32 +56,55 @@ namespace Assets._Scripts.SaveLoad.Service
 
         public void LoadAllServices() 
         {
-            foreach (var key in _services.Keys)
+            foreach (var key in Services.Keys)
             {
-                _services[key].Load();
+                Services[key].LoadAllServices(_gameSaveData, _levelConfig);
             }
         }
 
-        public void SaveGame()
+        public void AddSerice(ISaveLoadService service)
         {
-            _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
+            Services[service.GetType()] = service;
         }
 
-        public void SetLevel(LevelConfig levelConfig)
+        public void SetLevelConfig(LevelConfig levelConfig)
         {
-            _currentLevel = levelConfig;
+            _levelConfig = levelConfig;
+            //LoadAllServices();
+        }
+
+        public void ResetAllProgress()
+        {
+            _saveSystem.ResetAllProgress();
+            _gameSaveData = new GameSaveData();
+        }
+
+        public T GetService<T>() where T : ISaveLoadService
+        {
+            if (Services.TryGetValue(typeof(T), out var service))
+            {
+                return (T)service;
+            }
+
+            throw new KeyNotFoundException($"Service of type {typeof(T)} not registered");
+        }
+
+        private void SaveGame()
+        {
+            _gameSaveData.LastSaveTime = DateTime.Now;
+            _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
         }
 
         private void LoadOrCreateSave()
         {
             if (_saveSystem.HasKey(SaveUtilites.GAME_SAVE_KEY))
             {
-                _saveData = _saveSystem.Load<GameSaveData>(SaveUtilites.GAME_SAVE_KEY);
+                _gameSaveData = _saveSystem.Load<GameSaveData>(SaveUtilites.GAME_SAVE_KEY);
             }
             else
             {
-                _saveData = new GameSaveData();
-                _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _saveData);
+                _gameSaveData = new GameSaveData();
+                _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
             }
         }
     }

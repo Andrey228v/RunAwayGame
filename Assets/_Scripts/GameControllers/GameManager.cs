@@ -3,9 +3,10 @@ using System;
 
 namespace Assets._Scripts.GameControllers
 {
+    //Класс который связывает всё эвентами
     public class GameManager : IDisposable
     {
-        private SaveLoadService _saveLoadService;
+        //private SaveLoadService _saveLoadService;
 
         public event Action OnInitGame;
         public event Action OnSaveGame;
@@ -22,10 +23,10 @@ namespace Assets._Scripts.GameControllers
 
         private LevelConfig _levelConfig;
 
-        public GameManager(SaveLoadService saveLoadService)
-        {
-            _saveLoadService = saveLoadService;
-        }
+        //public GameManager(SaveLoadService saveLoadService)
+        //{
+        //    _saveLoadService = saveLoadService;
+        //}
 
         public void Dispose()
         {
@@ -49,15 +50,15 @@ namespace Assets._Scripts.GameControllers
 
         public void FinishGameSignal()
         {
-            _levelConfig = _saveLoadService.LevelConfig; // переделать ... 
-            OnFinishGame?.Invoke(_levelConfig);
-            _saveLoadService.FinishLevel(_levelConfig);
+            //_levelConfig = _saveLoadService.LevelConfig; // переделать ... 
+            //OnFinishGame?.Invoke(_levelConfig);
+            //_saveLoadService.FinishLevel(_levelConfig);
         }
 
         public void RestartGameSignal()
         {
-            _levelConfig = _saveLoadService.LevelConfig; // переделать ... 
-            _saveLoadService.RestartLevel(_levelConfig);
+            //_levelConfig = _saveLoadService.LevelConfig; // переделать ... 
+            //_saveLoadService.RestartLevel(_levelConfig);
             OnRestartGame?.Invoke();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
@@ -9,7 +10,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class CoinController : ISaveLoad, IDisposable, IRestart
+    public class CoinController : IDisposable, IRestart, ISaveLoadService //ISaveLoadService //ISaveLoad
     {
         private Transform _objectParent;
         private List<Coin> _objectList;
@@ -23,6 +24,11 @@ namespace Assets._Scripts.ObjectsScripts.Coins
                 obj.Dispose();
                 obj.OnActivated -= CoinActivated;
             }
+        }
+
+        public void Initialize()
+        {
+
         }
 
         public CoinController(GamePoints points)
@@ -59,16 +65,32 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             OnTake?.Invoke();
         }
 
-        public void Save(LevelData levelData)
+        public void Restart()
         {
-            for (int i = 0; i < _objectList.Count; i++)
+            foreach (var obj in _objectList)
             {
-                levelData.Coins[i] = new CoinData {IsActivated = _objectList[i].IsActivated };
+                obj.Deactivate();
             }
         }
 
-        public void Load(LevelData levelData, LevelConfig levelConfig)
+        public void AddSerice(ISaveLoadService service)
         {
+            
+        }
+
+        public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
+
+            for (int i = 0; i < _objectList.Count; i++)
+            {
+                levelData.Coins[i] = new CoinData { IsActivated = _objectList[i].IsActivated };
+            }
+        }
+
+        public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
             var objectCount = _objectList.Count;
 
             if (levelData.Coins == null)
@@ -86,7 +108,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             {
                 for (int i = 0; i < objectCount; i++)
                 {
-                    if(_objectList[i].IsActivated == false)
+                    if (_objectList[i].IsActivated == false)
                     {
                         Coin obj = _objectList[i];
                         CoinData objData = levelData.Coins[i];
@@ -96,12 +118,41 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
         }
 
-        public void Restart()
-        {
-            foreach (var obj in _objectList)
-            {
-                obj.Deactivate();
-            }
-        }
+        //public void Save(LevelData levelData)
+        //{
+        //    for (int i = 0; i < _objectList.Count; i++)
+        //    {
+        //        levelData.Coins[i] = new CoinData {IsActivated = _objectList[i].IsActivated };
+        //    }
+        //}
+
+        //public void Load(LevelData levelData, LevelConfig levelConfig)
+        //{
+        //    var objectCount = _objectList.Count;
+
+        //    if (levelData.Coins == null)
+        //    {
+        //        List<CoinData> objectData = new List<CoinData>();
+
+        //        for (int i = 0; i < _objectList.Count; i++)
+        //        {
+        //            objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
+        //        }
+
+        //        levelData.Coins = objectData;
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < objectCount; i++)
+        //        {
+        //            if(_objectList[i].IsActivated == false)
+        //            {
+        //                Coin obj = _objectList[i];
+        //                CoinData objData = levelData.Coins[i];
+        //                obj.SetState(objData.IsActivated);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }

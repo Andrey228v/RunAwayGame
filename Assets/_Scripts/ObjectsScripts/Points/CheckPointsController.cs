@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPointsController : ISaveLoad, IDisposable, IRestart
+    public class CheckPointsController : IDisposable, IRestart, ISaveLoadService //ISaveLoadService //ISaveLoad
     {
         private Transform _checkPointsParent;
         private List<CheckPoint> _gameCheckPointList;
@@ -36,6 +37,10 @@ namespace Assets.Scripts.Points
             }
         }
 
+        public void Initialize()
+        {
+
+        }
 
         //Из трансформа собираем CheckPoints
         public List<CheckPoint> TransformToList(Transform checkPointsParent) 
@@ -61,8 +66,38 @@ namespace Assets.Scripts.Points
             OnSave?.Invoke();
         }
 
-        public void Load(LevelData levelData, LevelConfig levelConfig)
+        public void Restart()
         {
+            foreach(var checkPoint in _gameCheckPointList)
+            {
+                checkPoint.Deactivate();
+            }
+        }
+
+        public void AddSerice(ISaveLoadService service)
+        {
+
+        }
+
+        public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
+
+            if (_lastCheckPointActiveted != null)
+            {
+                levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform.position;
+            }
+
+            for (int i = 0; i < _gameCheckPointList.Count; i++)
+            {
+                levelData.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
+            }
+        }
+
+        public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
+
             var checkpointsCount = _gameCheckPointList.Count;
 
             if (levelData.CheckPoints == null)
@@ -89,28 +124,49 @@ namespace Assets.Scripts.Points
             }
         }
 
-        public void Save(LevelData levelData)
-        {
-            Debug.Log("SAVE COIN CONTROLLER");
 
-            if(_lastCheckPointActiveted != null)
-            {
-                levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform.position;
-            }
+        //public void Load(LevelData levelData, LevelConfig levelConfig)
+        //{
+        //    var checkpointsCount = _gameCheckPointList.Count;
 
-            for (int i = 0; i < _gameCheckPointList.Count; i++)
-            {
-                levelData.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
-            }
-        }
+        //    if (levelData.CheckPoints == null)
+        //    {
+        //        List<CheckPointData> loadCheckPointsData = new List<CheckPointData>();
 
-        public void Restart()
-        {
-            foreach(var checkPoint in _gameCheckPointList)
-            {
-                checkPoint.Deactivate();
-            }
-        }
+        //        for (int i = 0; i < _gameCheckPointList.Count; i++)
+        //        {
+        //            loadCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
+        //        }
+
+        //        levelData.CheckPoints = loadCheckPointsData;
+        //        Debug.Log(checkpointsCount);
+        //    }
+        //    else
+        //    {
+        //        for (int i = 0; i < checkpointsCount; i++)
+        //        {
+        //            CheckPoint checkPoint = _gameCheckPointList[i];
+        //            CheckPointData checkPointData = levelData.CheckPoints[i];
+        //            checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
+        //            checkPoint.SetState(checkPointData.IsActivated);
+        //        }
+        //    }
+        //}
+
+        //public void Save(LevelData levelData)
+        //{
+        //    Debug.Log("SAVE COIN CONTROLLER");
+
+        //    if(_lastCheckPointActiveted != null)
+        //    {
+        //        levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform.position;
+        //    }
+
+        //    for (int i = 0; i < _gameCheckPointList.Count; i++)
+        //    {
+        //        levelData.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
+        //    }
+        //}
 
     }
 }

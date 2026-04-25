@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Assets._Scripts.EnteryPoints.Interfaces
 {
-    public interface IInitSaveLoad
-    {
-        public IEnumerable<ISaveLoad> SaveLoads { get; }
+    //public interface IInitSaveLoad
+    //{
+    //    public IEnumerable<ISaveLoad> SaveLoads { get; }
 
-        public void InitSaveLoadData(LevelConfig levelConfig);
-    }
+    //    public void InitSaveLoadData(LevelConfig levelConfig);
+    //}
 }

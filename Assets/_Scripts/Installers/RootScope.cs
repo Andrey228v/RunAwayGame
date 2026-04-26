@@ -31,13 +31,8 @@ namespace Assets._Scripts.Installers
             builder.RegisterInstance(_loadScreenView);
             builder.RegisterEntryPoint<BootEntryPoint>();
             builder.Register<EasySaveSystem>(Lifetime.Singleton);
-            //builder.Register<SaveLoadService>(Lifetime.Singleton);
             builder.Register<LoadManager>(Lifetime.Singleton);
             builder.Register<GameManager>(Lifetime.Singleton);
-
-            //builder.Register<LevelSaveLoadService>(Lifetime.Singleton);
-            //builder.Register<AchievmentsSaveLoadService>(Lifetime.Singleton);
-            //builder.Register<ShopSaveLoadService>(Lifetime.Singleton);
             builder.Register<GameSaveLoadService>(Lifetime.Singleton);
             builder.RegisterEntryPoint<LevelsController>().AsSelf();
             builder.RegisterEntryPoint<AchievmentsController>().AsSelf();

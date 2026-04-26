@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.SaveLoad.Service;
 using System;
 using VContainer.Unity;
 
@@ -9,15 +10,18 @@ namespace Assets.Scripts.EnteryPoints
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
         private GameManager _gameManager;
+        private GameSaveLoadService _gameSaveLoadService;
 
         public GameEnteryPoint(
             GameFinishController gameCycleController,
             GameRestartController gameRestartController,
-            GameManager gameManager)
+            GameManager gameManager,
+            GameSaveLoadService gameSaveLoadService)
         {
             _finishController = gameCycleController;
             _gameRestartController = gameRestartController;
             _gameManager = gameManager;
+            _gameSaveLoadService = gameSaveLoadService;
         }
 
         public void Start()
@@ -43,15 +47,16 @@ namespace Assets.Scripts.EnteryPoints
         public void SaveGame()
         {
             //_saveLoadService.SaveLevelData(_levelConfig);
-
+            _gameSaveLoadService.SaveAllServices();
         }
 
         public void LoadGame()
         {
             //_saveLoadService.LoadLevel(_levelConfig);
+            _gameSaveLoadService.LoadAllServices();
         }
 
-        public void FinishGame(LevelConfig levelConfig)
+        public void FinishGame()
         {
             _finishController.FinishNotifySubs();
 

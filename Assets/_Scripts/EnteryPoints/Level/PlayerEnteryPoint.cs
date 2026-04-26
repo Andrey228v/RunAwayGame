@@ -30,6 +30,7 @@ namespace Assets._Scripts.EnteryPoints
         private BillboardManager _billboardManager;
         private Func<UnitInfoUI> _unitInfoUIFactory;
         private GameSaveLoadService _gameSaveLoadService;
+        private LevelsController _levelsController;
 
         private LevelConfig _levelConfig;
 
@@ -46,7 +47,8 @@ namespace Assets._Scripts.EnteryPoints
             GameRestartController gameRestartController,
             IEnumerable<IRestart> restarted, IEnumerable<IFinish> fineshed,
             BillboardManager billboardManager, Func<UnitInfoUI> unitInfoUIFactory,
-            GameSaveLoadService gameSaveLoadService) 
+            GameSaveLoadService gameSaveLoadService,
+            LevelsController levelsController) 
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -62,12 +64,15 @@ namespace Assets._Scripts.EnteryPoints
             _unitInfoUIFactory = unitInfoUIFactory;
             //_levelConfig = saveLoadService.LevelConfig;
             _gameSaveLoadService = gameSaveLoadService;
+            _levelsController = levelsController;
         }
 
         public void Start()
         {
-            var saveLoadServise =  _gameSaveLoadService.GetService<LevelsController>();
-            saveLoadServise.AddSerice(_playerController);
+            //var saveLoadServise =  _gameSaveLoadService.GetService<LevelsController>();
+            //saveLoadServise.AddSerice(_playerController);
+
+            _levelsController.SetPlayerController(_playerController);
 
             InitSaveLoadData(_levelConfig);
             InitPlayer(_levelData, _cameraController, _characterFactory, //Переделать...
@@ -138,7 +143,8 @@ namespace Assets._Scripts.EnteryPoints
         private void DieRestartEntery() 
         {
             //_levelData = _saveLoadService.GetLevelData(_levelConfig);
-            _playerController.DieRestart(_levelData);
+            //_playerController.DieRestart(_levelData);
+            _gameSaveLoadService.DieRestart();
         }
     }
 }

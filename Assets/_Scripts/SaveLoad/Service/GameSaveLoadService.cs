@@ -1,8 +1,9 @@
-﻿using Assets._Scripts.GameControllers.Levels;
+﻿using Assets._Scripts.GameControllers.Achievments;
+using Assets._Scripts.GameControllers.GameShop;
+using Assets._Scripts.GameControllers.Levels;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
-using System.Collections.Generic;
 
 namespace Assets._Scripts.SaveLoad.Service
 {
@@ -11,66 +12,62 @@ namespace Assets._Scripts.SaveLoad.Service
         private EasySaveSystem _saveSystem;
         private GameSaveData _gameSaveData;
         private LevelConfig _levelConfig;
+        private LevelsController _levelsController;
+        private AchievmentsController _achievmentsController;
+        private ShopController _shopController;
 
         public GameSaveData GameSaveData => _gameSaveData;
 
-        public Dictionary<Type, ISaveLoadService> Services { get; }
-
-        public GameSaveLoadService(EasySaveSystem saveSystem) 
+        public GameSaveLoadService(EasySaveSystem saveSystem,
+            LevelsController levelsController,
+            AchievmentsController achievmentsController,
+            ShopController shopController) 
         {
             _saveSystem = saveSystem;
-            Services = new Dictionary<Type, ISaveLoadService>();
+            _levelsController = levelsController;
+            _achievmentsController = achievmentsController;
+            _shopController = shopController;
 
             LoadOrCreateSave();
             InitializeAllServices();
             LoadAllServices();
         }
 
-        public void Dispose() // это надо делать только при выходе из игры, потому что он общий для всех.
+        public void Dispose()
         {
-            foreach (var key in Services.Keys)
-            {
-                Services[key].Dispose();
-            }
+            _levelsController.Dispose();
+            _achievmentsController.Dispose();
+            _shopController.Dispose();
 
             SaveGame();
         }
 
         public void InitializeAllServices()
         {
-            foreach (var key in Services.Keys)
-            {
-                Services[key].Initialize();
-            }
+            _levelsController.Initialize();
+            _achievmentsController.Initialize();
+            _shopController.Initialize();
         }
 
         public void SaveAllServices()
         {
-            foreach (var key in Services.Keys)
-            {
-                Services[key].SaveAllServices(_gameSaveData, _levelConfig);
-            }
+            _levelsController.SaveAllServices(_gameSaveData, _levelConfig);
+            _achievmentsController.SaveAllServices(_gameSaveData, _levelConfig);
+            _shopController.SaveAllServices(_gameSaveData, _levelConfig);
 
             SaveGame();
         }
 
         public void LoadAllServices() 
         {
-            foreach (var key in Services.Keys)
-            {
-                Services[key].LoadAllServices(_gameSaveData, _levelConfig);
-            }
-        }
-
-        public void AddSerice(ISaveLoadService service)
-        {
-            Services[service.GetType()] = service;
+            _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
+            _achievmentsController.LoadAllServices(_gameSaveData, _levelConfig);
+            _shopController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 
         public void SetLevelConfig(LevelConfig levelConfig)
         {
             _levelConfig = levelConfig;
-            //LoadAllServices();
         }
 
         public void ResetAllProgress()
@@ -79,14 +76,25 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameSaveData = new GameSaveData();
         }
 
-        public T GetService<T>() where T : ISaveLoadService
+        public void CloseLevel()
         {
-            if (Services.TryGetValue(typeof(T), out var service))
-            {
-                return (T)service;
-            }
+            _levelConfig = null;
+            _levelsController.Dispose();
+        }
 
-            throw new KeyNotFoundException($"Service of type {typeof(T)} not registered");
+        public void RestartLevel()
+        {
+            _gameSaveData = new GameSaveData();
+        }
+
+        public void FinishLevel()
+        {
+            SaveGame();
+        }
+
+        public void DieRestart()
+        {
+            _levelsController.DieRestart(_gameSaveData, _levelConfig);
         }
 
         private void SaveGame()

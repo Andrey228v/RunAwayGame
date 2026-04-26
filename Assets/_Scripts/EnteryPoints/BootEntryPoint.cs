@@ -17,17 +17,14 @@ namespace Assets._Scripts.EnteryPoints
 
         public BootEntryPoint(LoadManager loadManager, 
             List<SceneGroupHandle> scensGroups,
-            GameSaveLoadService gameSaveLoadService,
-            LevelsController levelController,
-            AchievmentsController achievmentsController,
-            ShopController shopController)
+            GameSaveLoadService gameSaveLoadService)
         {
             _loadManager = loadManager;
             _scensGroups = scensGroups;
 
-            gameSaveLoadService.AddSerice(levelController);
-            gameSaveLoadService.AddSerice(achievmentsController);
-            gameSaveLoadService.AddSerice(shopController);
+            //gameSaveLoadService.AddSerice(levelController);
+            //gameSaveLoadService.AddSerice(achievmentsController);
+            //gameSaveLoadService.AddSerice(shopController);
         }
 
         public async void Initialize()

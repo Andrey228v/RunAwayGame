@@ -1,4 +1,6 @@
-﻿using Assets._Scripts.SaveLoad.Service;
+﻿using Assets._Scripts.ObjectsScripts.Coins;
+using Assets.Scripts.Player;
+using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
@@ -6,18 +8,16 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Levels
 {
-    public class LevelsController : IStartable, IDisposable, ISaveLoadService
+    public class LevelsController : IStartable, IDisposable //, ISaveLoadService
     {
         private bool _isLevelWasStart;
-
-        public Dictionary<string, Level> _levels = new ();
-
-        public Dictionary<Type, ISaveLoadService> Services { get; }
+        private PlayerController _playerController;
+        private CoinController _coinController;
+        private CheckPointsController _checkPointsController;
 
         public LevelsController()
         {
             _isLevelWasStart = false;
-            Services = new Dictionary<Type, ISaveLoadService>();
         }
 
         public void Start()
@@ -35,14 +35,28 @@ namespace Assets._Scripts.GameControllers.Levels
             // под вопросом...
         }
 
-        public void AddSerice(ISaveLoadService service)
+        public void SetPlayerController(PlayerController playerController)
         {
-            Services.Add(service.GetType(), service);
+            _playerController = playerController;
+        }
+
+        public void SetCoinController(CoinController coinController) 
+        {
+            _coinController = coinController;
+        }
+
+        public void SetCheckPointsController(CheckPointsController checkPointsController)
+        {
+            _checkPointsController = checkPointsController;
         }
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            if(gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData))
+            _playerController.SaveAllServices(gameSaveData, levelConfig);
+            _coinController.SaveAllServices(gameSaveData, levelConfig);
+            _checkPointsController.SaveAllServices(gameSaveData, levelConfig);
+
+            if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData))
             {
                 levelData.IsLevelWasStarted = _isLevelWasStart;
             }
@@ -51,19 +65,33 @@ namespace Assets._Scripts.GameControllers.Levels
                 LevelData newLevelData = new LevelData { };
                 gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
             }
-
-            foreach (var key in Services.Keys)
-            {
-                Services[key].SaveAllServices(gameSaveData, levelConfig);
-            }
         }
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            foreach (var key in Services.Keys)
+            if(levelConfig == null)
             {
-                Services[key].LoadAllServices(gameSaveData, levelConfig);
+                return;
             }
+
+            var levelsData = gameSaveData.LevelsData;
+
+            if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData) == false)
+            {
+                levelData = new LevelData { };
+                gameSaveData.LevelsData.Add(levelConfig.LevelName, levelData);
+            }
+
+            _playerController?.LoadAllServices(gameSaveData, levelConfig);
+            _coinController?.LoadAllServices(gameSaveData, levelConfig);
+            _checkPointsController?.LoadAllServices(gameSaveData, levelConfig);
+        }
+
+        public void DieRestart(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            var LevelData = gameSaveData.LevelsData[levelConfig.LevelName];
+
+            _playerController.DieRestart(LevelData);
         }
 
         public void LoadLevel()

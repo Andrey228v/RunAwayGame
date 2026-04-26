@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPointsController : IDisposable, IRestart, ISaveLoadService //ISaveLoadService //ISaveLoad
+    public class CheckPointsController : IDisposable, IRestart //ISaveLoadService //ISaveLoadService //ISaveLoad
     {
         private Transform _checkPointsParent;
         private List<CheckPoint> _gameCheckPointList;
@@ -74,10 +74,10 @@ namespace Assets.Scripts.Points
             }
         }
 
-        public void AddSerice(ISaveLoadService service)
-        {
+        //public void AddSerice(ISaveLoadService service)
+        //{
 
-        }
+        //}
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {

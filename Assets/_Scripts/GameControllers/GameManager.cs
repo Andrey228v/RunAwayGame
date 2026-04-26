@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.SaveLoad;
+﻿using Assets._Scripts.SaveLoad.Service;
+using Assets.Scripts.SaveLoad;
 using System;
 
 namespace Assets._Scripts.GameControllers
@@ -6,12 +7,12 @@ namespace Assets._Scripts.GameControllers
     //Класс который связывает всё эвентами
     public class GameManager : IDisposable
     {
-        //private SaveLoadService _saveLoadService;
+        private GameSaveLoadService _gameSaveLoadService;
 
         public event Action OnInitGame;
         public event Action OnSaveGame;
         public event Action OnLoadGame;
-        public event Action<LevelConfig> OnFinishGame;
+        public event Action OnFinishGame;
         public event Action OnRestartGame;
 
         public event Action OnLevelStart0;
@@ -21,12 +22,10 @@ namespace Assets._Scripts.GameControllers
         public event Action OnLevelFinish1;
         public event Action OnLevelFinish2;
 
-        private LevelConfig _levelConfig;
-
-        //public GameManager(SaveLoadService saveLoadService)
-        //{
-        //    _saveLoadService = saveLoadService;
-        //}
+        public GameManager(GameSaveLoadService gameSaveLoadService)
+        {
+            _gameSaveLoadService = gameSaveLoadService;
+        }
 
         public void Dispose()
         {
@@ -50,16 +49,18 @@ namespace Assets._Scripts.GameControllers
 
         public void FinishGameSignal()
         {
-            //_levelConfig = _saveLoadService.LevelConfig; // переделать ... 
-            //OnFinishGame?.Invoke(_levelConfig);
-            //_saveLoadService.FinishLevel(_levelConfig);
+            _gameSaveLoadService.FinishLevel();
         }
 
         public void RestartGameSignal()
         {
-            //_levelConfig = _saveLoadService.LevelConfig; // переделать ... 
-            //_saveLoadService.RestartLevel(_levelConfig);
+            _gameSaveLoadService.RestartLevel();
             OnRestartGame?.Invoke();
+        }
+
+        public void CloseLevel()
+        {
+            _gameSaveLoadService.CloseLevel();
         }
 
         public void StartLevel0()

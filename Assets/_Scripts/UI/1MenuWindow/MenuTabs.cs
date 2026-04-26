@@ -124,17 +124,17 @@ namespace Assets._Scripts.UI._1MenuWindow
             if (level == 1) // переделать...
             {
                 OnChooseLevel?.Invoke(_levelConfigs[0]);
-                _gameManger.StartLevel0();
+                _gameManger.StartLevel0(); // убрать в MenuEnteryPoint
             }
             else if (level == 2) // переделать...
             {
                 OnChooseLevel?.Invoke(_levelConfigs[1]);
-                _gameManger.StartLevel1();
+                _gameManger.StartLevel1(); // убрать в MenuEnteryPoint
             }
             else if (level == 3) // переделать...
             {
                 OnChooseLevel?.Invoke(_levelConfigs[2]);
-                _gameManger.StartLevel2();
+                _gameManger.StartLevel2(); // убрать в MenuEnteryPoint
             }
 
             await _loadManager.LoadScene(_scensGroups[level]);

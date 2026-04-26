@@ -26,7 +26,7 @@ namespace Assets._Scripts.EnteryPoints
         private GameSaveLoadService _gameSaveLoadService;
 
         //private LevelConfig _levelConfig;
-        //private LevelsController _levelController;
+        private LevelsController _levelsController;
         //public IEnumerable<ISaveLoad> SaveLoads { get; private set; }
 
         public IEnumerable<IFinish> Finished { get; private set; }
@@ -44,7 +44,8 @@ namespace Assets._Scripts.EnteryPoints
             GameManager gameManager, 
             GameRestartController gameRestartController,
             CoinController coinController,
-            GameSaveLoadService gameSaveLoadService)
+            GameSaveLoadService gameSaveLoadService,
+            LevelsController levelsController)
         {
             _gamePoints = gamePoints;
             //_saveLoadService = saveLoadService;
@@ -56,16 +57,21 @@ namespace Assets._Scripts.EnteryPoints
             Finished = finished;
             Restarted = restartSub;
             _coinController = coinController;
-            //_levelController = levelController;
+            _levelsController = levelsController;
             //_levelConfig = saveLoadService.LevelConfig;
             _gameSaveLoadService = gameSaveLoadService;
         }
 
         public void Start()
         {
-            var saveLoadServise = _gameSaveLoadService.GetService<LevelsController>();
-            saveLoadServise.AddSerice(_coinController);
-            saveLoadServise.AddSerice(_checkPointsController);
+            //var saveLoadServise = _gameSaveLoadService.GetService<LevelsController>();
+            //saveLoadServise.AddSerice(_coinController);
+            //saveLoadServise.AddSerice(_checkPointsController);
+
+            //_levelsController.SetControllers()
+
+            _levelsController.SetCoinController(_coinController);
+            _levelsController.SetCheckPointsController(_checkPointsController);
 
             InitEvents();
             InitSaveLoadData();

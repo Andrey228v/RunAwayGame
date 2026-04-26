@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Assets._Scripts.GameControllers.GameShop
 {
-    public class ShopController : ISaveLoadService
+    public class ShopController //:ISaveLoadService
     {
-        public Dictionary<Type, ISaveLoadService> Services { get; }
+        //public Dictionary<Type, ISaveLoadService> Services { get; }
 
         public void Dispose()
         {
@@ -19,10 +19,10 @@ namespace Assets._Scripts.GameControllers.GameShop
 
         }
 
-        public void AddSerice(ISaveLoadService service)
-        {
+        //public void AddSerice(ISaveLoadService service)
+        //{
 
-        }
+        //}
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {

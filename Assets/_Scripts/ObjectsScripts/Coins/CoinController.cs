@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class CoinController : IDisposable, IRestart, ISaveLoadService //ISaveLoadService //ISaveLoad
+    public class CoinController : IDisposable, IRestart //, ISaveLoadService //ISaveLoadService //ISaveLoad
     {
         private Transform _objectParent;
         private List<Coin> _objectList;
@@ -73,10 +73,10 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
         }
 
-        public void AddSerice(ISaveLoadService service)
-        {
+        //public void AddSerice(ISaveLoadService service)
+        //{
             
-        }
+        //}
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {

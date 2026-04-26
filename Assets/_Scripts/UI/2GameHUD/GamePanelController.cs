@@ -18,6 +18,7 @@ namespace Assets.Scripts.UI
         public event Action OnButtonSaveClick;
         public event Action OnButtonLoadClick;
         public event Action OnRestartButtonClick;
+        public event Action OnBackToMenu;
 
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
@@ -121,9 +122,8 @@ namespace Assets.Scripts.UI
         private async void BackToMenu()
         {
             Debug.Log("EXIT to MENU");
+            OnBackToMenu?.Invoke();
             await _loadManager.LoadScene(_scensGroups[0]);
         }
-
-
     }
 }

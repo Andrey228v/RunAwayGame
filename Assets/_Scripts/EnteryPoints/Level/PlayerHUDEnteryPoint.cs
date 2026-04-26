@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.EnteryPoints.Interfaces;
 using Assets._Scripts.GameControllers;
+using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
@@ -18,6 +19,7 @@ namespace Assets._Scripts.EnteryPoints
         private GameManager _gameManager;
         private GameFinishController _finishController;
         private GameRestartController _gameRestartController;
+        private GameSaveLoadService _gameSaveLoadService;
 
         private LevelConfig _levelConfig;
 
@@ -30,8 +32,10 @@ namespace Assets._Scripts.EnteryPoints
         public PlayerHUDEnteryPoint(Func<GamePanelController> gamePanelFactory, 
             GameFinishController gameFinishController,
             GameManager gameManager,
-            IEnumerable<IRestart> restarted, IEnumerable<IFinish> finished,
-            GameRestartController gameRestartController) 
+            IEnumerable<IRestart> restarted, 
+            IEnumerable<IFinish> finished,
+            GameRestartController gameRestartController,
+            GameSaveLoadService gameSaveLoadService) 
         {
             _gamePanelFactory = gamePanelFactory;
             //_saveLoadService = saveLoadService;
@@ -42,6 +46,7 @@ namespace Assets._Scripts.EnteryPoints
             Restarted = restarted;
             _gameRestartController = gameRestartController;
             //_levelConfig = saveLoadService.LevelConfig;
+            _gameSaveLoadService = gameSaveLoadService;
         }
 
         public void Dispose()
@@ -50,6 +55,7 @@ namespace Assets._Scripts.EnteryPoints
 
             _gamePanelController.OnButtonSaveClick -= _gameManager.SaveGameSignal;
             _gamePanelController.OnButtonLoadClick -= _gameManager.LoadGameSignal;
+            _gamePanelController.OnBackToMenu -= _gameManager.CloseLevel;
         }
 
         public void Start()
@@ -66,6 +72,7 @@ namespace Assets._Scripts.EnteryPoints
         {
             _gamePanelController.OnButtonSaveClick += _gameManager.SaveGameSignal;
             _gamePanelController.OnButtonLoadClick += _gameManager.LoadGameSignal;
+            _gamePanelController.OnBackToMenu += _gameManager.CloseLevel;
         }
 
         public void InitSaveLoadData(LevelConfig levelConfig)

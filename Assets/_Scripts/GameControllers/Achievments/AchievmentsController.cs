@@ -6,13 +6,13 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentsController : IStartable, IDisposable, ISaveLoadService
+    public class AchievmentsController : IStartable, IDisposable //, ISaveLoadService
     {
         private GameSaveLoadService _gameSaveLoadService;
         private GameSaveData _gameSaveData;
         private List<AchievmentModel> _achievments;
 
-        public Dictionary<Type, ISaveLoadService> Services { get; }
+        //public Dictionary<Type, ISaveLoadService> Services { get; }
 
         public AchievmentsController() 
         {
@@ -55,10 +55,10 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         }
 
-        public void AddSerice(ISaveLoadService service)
-        {
+        //public void AddSerice(ISaveLoadService service)
+        //{
 
-        }
+        //}
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {

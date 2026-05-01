@@ -1,32 +1,31 @@
-﻿using Assets._Scripts.GameControllers;
+﻿using Assets._Scripts.EventBusGame;
 using Assets._Scripts.SceneLoading;
 using Assets._Scripts.UI;
 using Assets._Scripts.UI._2GameHUD;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
 
 namespace Assets.Scripts.UI
 {
-    public class GamePanelController : MonoBehaviour, IFinish //Игровой HUD
+    public class GamePanelController : MonoBehaviour //Игровой HUD
     {
         [SerializeField] private GameInterfacePanel _gameInterfacePanel;
         [SerializeField] private GameMenuPanel _gameMenuPanel;
         [SerializeField] private GameWinPanel _gameWinPanel;
 
-        public event Action OnButtonSaveClick;
-        public event Action OnButtonLoadClick;
-        public event Action OnRestartButtonClick;
-        public event Action OnBackToMenu;
+        private EventBus _eventBus;
 
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
         private List<IPanel> _panelsList = new List<IPanel>();
 
         [Inject]
-        public void Constructor(LoadManager loadManager, List<SceneGroupHandle> scensGroups)
+        public void Constructor(LoadManager loadManager, 
+            List<SceneGroupHandle> scensGroups, 
+            EventBus eventBus)
         {
+            _eventBus = eventBus;
             _loadManager = loadManager;
             _scensGroups = scensGroups;
         }
@@ -49,39 +48,20 @@ namespace Assets.Scripts.UI
 
         private void OnEnable()
         {
-            _gameInterfacePanel.OnMenuButtonClick += ShowPanel;
-            _gameMenuPanel.OnBackToGameButtonClick += ShowPanel;
-
-            _gameMenuPanel.OnBackToMenuButtonClick += BackToMenu;
-
- 
-            _gameInterfacePanel.OnLoadButtonClick += LoadGame;
-            _gameInterfacePanel.OnSaveButtonClick += SaveGame;
-            _gameInterfacePanel.OnSoundButtonClick += SoundChangeState;
-
-            _gameWinPanel.OnReloudButtonClick += _gameWinPanel.Hide;
-            _gameWinPanel.OnReloudButtonClick += _gameInterfacePanel.Show;
-            _gameWinPanel.OnBackToMenuButtonClick += BackToMenu;
+            _eventBus.Subscribe<LevelCompletedEvent>(FinishGame);
+            _eventBus.Subscribe<TransitToPanelEvent>(OnShowPanel);
+            _eventBus.Subscribe<TransitToWindowEvent>(OnBackToMenu);
         }
 
         private void OnDisable()
         {
-            _gameInterfacePanel.OnMenuButtonClick -= ShowPanel;
-            _gameMenuPanel.OnBackToGameButtonClick -= ShowPanel;
-
-            _gameMenuPanel.OnBackToMenuButtonClick -= BackToMenu;
-
-            _gameInterfacePanel.OnLoadButtonClick -= LoadGame;
-            _gameInterfacePanel.OnSaveButtonClick -= SaveGame;
-            _gameInterfacePanel.OnSoundButtonClick -= SoundChangeState;
-
-            _gameWinPanel.OnReloudButtonClick -= _gameWinPanel.Hide;
-            _gameWinPanel.OnReloudButtonClick -= _gameInterfacePanel.Show;
-            _gameWinPanel.OnBackToMenuButtonClick -= BackToMenu;
+            _eventBus.Unsubscribe<LevelCompletedEvent>(FinishGame);
+            _eventBus.Unsubscribe<TransitToPanelEvent>(OnShowPanel);
+            _eventBus.Unsubscribe<TransitToWindowEvent>(OnBackToMenu);
         }
 
         // под вопросом...
-        public void FinishGame()
+        public void FinishGame(LevelCompletedEvent args)
         {
             ShowPanel("GameWinPanel");
         }
@@ -102,27 +82,15 @@ namespace Assets.Scripts.UI
             }
         }
 
-
-        private void LoadGame()
+        private void OnShowPanel(TransitToPanelEvent args)
         {
-            OnButtonLoadClick?.Invoke();
+            ShowPanel(args.windowName);
         }
 
-        private void SaveGame()
-        {
-            OnButtonSaveClick?.Invoke();
-        }
-
-        //?????
-        private void SoundChangeState()
-        {
-
-        }
-
-        private async void BackToMenu()
+        private async void OnBackToMenu(TransitToWindowEvent args)
         {
             Debug.Log("EXIT to MENU");
-            OnBackToMenu?.Invoke();
+            //OnBackToMenu?.Invoke();
             await _loadManager.LoadScene(_scensGroups[0]);
         }
     }

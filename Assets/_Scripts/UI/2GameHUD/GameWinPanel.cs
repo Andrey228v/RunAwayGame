@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Assets._Scripts.EventBusGame;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Assets._Scripts.UI._2GameHUD
 {
@@ -10,8 +11,7 @@ namespace Assets._Scripts.UI._2GameHUD
         [SerializeField] private Button _backToMenuButton;
         [SerializeField] private Button _reloudButton;
 
-        public event Action OnBackToMenuButtonClick;
-        public event Action OnReloudButtonClick;
+        private IEventPublisher _eventBus;
 
         public bool IsVisible { get; private set; }
 
@@ -31,6 +31,12 @@ namespace Assets._Scripts.UI._2GameHUD
             }
         }
 #endif
+
+        [Inject]
+        public void Construct(IEventPublisher eventBus)
+        {
+            _eventBus = eventBus;
+        }
 
         private void OnEnable()
         {
@@ -58,12 +64,13 @@ namespace Assets._Scripts.UI._2GameHUD
 
         private void ClickBackToMenu()
         {
-            OnBackToMenuButtonClick?.Invoke();
+            _eventBus.Publish(new TransitToWindowEvent { });
+
         }
 
         private void ReloudLevel()
         {
-            OnReloudButtonClick?.Invoke();
+            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameInterfacePanel" });
         }
     }
 }

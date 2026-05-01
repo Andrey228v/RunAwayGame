@@ -41,9 +41,6 @@ namespace Assets.Scripts.Installers
 
             builder.RegisterInstance(new GamePoints(_finishPoint, _checkPoints, _coins, _botsRoad));
 
-            builder.Register<GameFinishController>(Lifetime.Singleton); // под вопросом...
-            builder.Register<GameRestartController>(Lifetime.Singleton); // под вопросом...
-
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 
             builder.RegisterFactory<UnitInfoUI>(container => () =>

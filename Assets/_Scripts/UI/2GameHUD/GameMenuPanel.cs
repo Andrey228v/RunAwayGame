@@ -1,7 +1,8 @@
-﻿using Assets._Scripts.UI;
-using System;
+﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Assets.Scripts.UI
 {
@@ -11,8 +12,7 @@ namespace Assets.Scripts.UI
         [SerializeField] private Button _backToGameButton;
         [SerializeField] private Button _backToMenuButton;
 
-        public event Action<string> OnBackToGameButtonClick;
-        public event Action OnBackToMenuButtonClick;
+        private IEventPublisher _eventBus;
 
         public bool IsVisible { get; private set; }
 
@@ -32,6 +32,11 @@ namespace Assets.Scripts.UI
             }
         }
 #endif
+        [Inject]
+        public void Construct(IEventPublisher eventBus)
+        {
+            _eventBus = eventBus;
+        }
 
         private void OnEnable()
         {
@@ -59,12 +64,12 @@ namespace Assets.Scripts.UI
 
         private void ClickBackToGame()
         {
-            OnBackToGameButtonClick?.Invoke("GameInterfacePanel"); // переделать...
+            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameInterfacePanel" });
         }
 
         private void ClickBackToMenu()
         {
-            OnBackToMenuButtonClick?.Invoke();
+            _eventBus.Publish(new TransitToWindowEvent { });
         }
     }
 }

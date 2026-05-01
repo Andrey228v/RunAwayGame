@@ -6,5 +6,10 @@ namespace Assets._Scripts.SaveLoad.Data
     public class CoinData
     {
         public bool IsActivated;
+
+        public void ResetData(LevelConfig levelConfig)
+        {
+            IsActivated = false;
+        }
     }
 }

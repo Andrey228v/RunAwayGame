@@ -1,9 +1,9 @@
-﻿using Assets._Scripts.ObjectsScripts.Coins;
+﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.ObjectsScripts.Coins;
 using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
-using System.Collections.Generic;
 using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Levels
@@ -97,6 +97,13 @@ namespace Assets._Scripts.GameControllers.Levels
         public void LoadLevel()
         {
 
+        }
+
+        public void FinishLevel(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            _playerController.FinishGame(gameSaveData, levelConfig);
+            _coinController.FinishGame();
+            _checkPointsController.FinishGame();
         }
     }
 }

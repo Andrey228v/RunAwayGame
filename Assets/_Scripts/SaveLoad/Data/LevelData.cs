@@ -14,5 +14,21 @@ namespace Assets.Scripts.SaveLoad.Data
         public PlayerData PlayerData;
         public List<CheckPointData> CheckPoints;
         public List<CoinData> Coins;
+
+        public void ResetData(LevelConfig levelConfig)
+        {
+            LastCheckPointPosition = levelConfig.StartPosition;
+            PlayerData.ResetData(levelConfig);
+
+            foreach (var checkPoint in CheckPoints) 
+            {
+                checkPoint.ResetData(levelConfig);
+            }
+
+            foreach(var coin in Coins)
+            {
+                coin.ResetData(levelConfig);
+            }
+        }
     }
 }

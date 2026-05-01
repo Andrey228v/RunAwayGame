@@ -1,8 +1,9 @@
-﻿using Assets._Scripts.UI;
-using System;
+﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace Assets.Scripts.UI
 {
@@ -18,10 +19,7 @@ namespace Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI _coinsCounter;
         [SerializeField] private TextMeshProUGUI _timer;
 
-        public event Action<string> OnMenuButtonClick;
-        public event Action OnLoadButtonClick;
-        public event Action OnSoundButtonClick;
-        public event Action OnSaveButtonClick;
+        private IEventPublisher _eventBus;
 
         public bool IsVisible { get; private set; }
 
@@ -57,6 +55,12 @@ namespace Assets.Scripts.UI
         }
 #endif
 
+        [Inject]
+        public void Construct(IEventPublisher eventBus)
+        {
+            _eventBus = eventBus;
+        }
+
         private void OnEnable()
         {
             _menuButton.onClick.AddListener(ClickMenuButton);
@@ -88,23 +92,23 @@ namespace Assets.Scripts.UI
 
         private void ClickMenuButton()
         {
-            OnMenuButtonClick?.Invoke("GameMenuPanel"); // переделать...
+            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameMenuPanel"});
+
         }
 
         private void ClickLoadButton()
         {
-            OnLoadButtonClick?.Invoke();
+            _eventBus.Publish(new LoadGameEvent { });
         }
 
         private void ClickSoundButton()
         {
-            OnSoundButtonClick?.Invoke();
+            _eventBus.Publish(new ButtonSoundChangeStateEvent { });
         }
 
         private void ClickSaveButton()
         {
-            Debug.Log("SAVE");
-            OnSaveButtonClick?.Invoke();
+            _eventBus.Publish(new SaveGameEvent { });
         }
     }
 }

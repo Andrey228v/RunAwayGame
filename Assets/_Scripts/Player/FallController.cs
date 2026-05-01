@@ -21,6 +21,5 @@ namespace Assets.Scripts.Player
         {
             return _character.IsFalling() && _character.velocity.y < 0;
         }
-
     }
 }

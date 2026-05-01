@@ -7,5 +7,10 @@ namespace Assets.Scripts.SaveLoad.Data
     {
         public string Id;
         public bool IsActivated;
+
+        public void ResetData(LevelConfig levelConfig)
+        {
+            IsActivated = false;
+        }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets._Scripts.EventBusGame;
+using Assets.Scripts.Player;
 using System;
 using UnityEngine;
+using VContainer;
 
 namespace Assets.Scripts.Points
 {
@@ -10,15 +12,24 @@ namespace Assets.Scripts.Points
         [SerializeField] private bool _isActivated = false;
         [SerializeField] private int _lvlName; // Переделать.... тут надо передавать это значение, а не передвать
 
-        public bool IsActivated => _isActivated;
         private bool _isInitialized;
 
+        private IEventPublisher _eventBus;
+
+        public bool IsActivated => _isActivated;
+        
         public event Action OnFinishActivated;
         public event Action OnRestartActivated;
 
         private void Awake()
         {
             Initialize();
+        }
+
+        [Inject]
+        public void Construct(IEventPublisher eventBus)
+        {
+            _eventBus = eventBus;
         }
 
         private void Initialize()
@@ -42,9 +53,7 @@ namespace Assets.Scripts.Points
         {
             if (_isActivated) return;
 
-            OnFinishActivated?.Invoke();
-            OnRestartActivated?.Invoke();
+            _eventBus.Publish(new LevelCompletedEvent { });
         }
-
     }
 }

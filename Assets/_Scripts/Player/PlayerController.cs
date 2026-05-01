@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.GameControllers;
-using Assets.Scripts.SaveLoad;
+﻿using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
@@ -9,7 +8,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerController : IFixedTickable, IDisposable, IRestart, IFinish, IStartable //, ISaveLoadService //ISaveLoad ISaveLoadService
+    public class PlayerController : IFixedTickable, IDisposable
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
@@ -17,22 +16,12 @@ namespace Assets.Scripts.Player
 
         public PlayerMB PlayerMB => _playerMB;
 
-        public void Start()
-        {
-            
-        }
-
         public void Dispose()
         {
             _playerStateMachine.Dispose();
 
             _playerStateMachine = null;
             _character = null;
-        }
-
-        public void Initialize()
-        {
-            
         }
 
         public void FixedTick()
@@ -50,14 +39,11 @@ namespace Assets.Scripts.Player
             _character = character;
         }
 
-        public void Restart()
+        public void FinishGame(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             Reset();
-        }
+            _character.transform.SetLocalPositionAndRotation(levelConfig.StartPosition, Quaternion.Euler(levelConfig.StartRotationEuler));
 
-        public void FinishGame()
-        {
-            Reset();
         }
 
         private void Reset()

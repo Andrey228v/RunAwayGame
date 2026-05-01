@@ -80,11 +80,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 67f38efcfd81a084b9cb05c4747eb0e5
-    m_Address: --ContainerLevel--
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 775e52fe8fa016d4aa48cc9537be7c68
     m_Address: Fence1
     m_ReadOnly: 0

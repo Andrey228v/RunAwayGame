@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class CoinController : IDisposable, IRestart //, ISaveLoadService //ISaveLoadService //ISaveLoad
+    public class CoinController : IDisposable
     {
         private Transform _objectParent;
         private List<Coin> _objectList;
@@ -60,23 +60,23 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             return Coins;
         }
 
+        public void FinishGame()
+        {
+            Restart();
+        }
+
         public void CoinActivated(Coin coin)
         {
             OnTake?.Invoke();
         }
 
-        public void Restart()
+        private void Restart()
         {
             foreach (var obj in _objectList)
             {
                 obj.Deactivate();
             }
         }
-
-        //public void AddSerice(ISaveLoadService service)
-        //{
-            
-        //}
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
@@ -117,42 +117,5 @@ namespace Assets._Scripts.ObjectsScripts.Coins
                 }
             }
         }
-
-        //public void Save(LevelData levelData)
-        //{
-        //    for (int i = 0; i < _objectList.Count; i++)
-        //    {
-        //        levelData.Coins[i] = new CoinData {IsActivated = _objectList[i].IsActivated };
-        //    }
-        //}
-
-        //public void Load(LevelData levelData, LevelConfig levelConfig)
-        //{
-        //    var objectCount = _objectList.Count;
-
-        //    if (levelData.Coins == null)
-        //    {
-        //        List<CoinData> objectData = new List<CoinData>();
-
-        //        for (int i = 0; i < _objectList.Count; i++)
-        //        {
-        //            objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
-        //        }
-
-        //        levelData.Coins = objectData;
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < objectCount; i++)
-        //        {
-        //            if(_objectList[i].IsActivated == false)
-        //            {
-        //                Coin obj = _objectList[i];
-        //                CoinData objData = levelData.Coins[i];
-        //                obj.SetState(objData.IsActivated);
-        //            }
-        //        }
-        //    }
-        //}
     }
 }

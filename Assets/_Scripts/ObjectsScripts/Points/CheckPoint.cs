@@ -1,25 +1,27 @@
-﻿using Assets.Scripts.Player;
+﻿using Assets._Scripts.EventBusGame;
+using Assets.Scripts.Player;
 using System;
 using UnityEngine;
+using VContainer;
 
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPoint : MonoBehaviour, IDisposable
+    public class CheckPoint : MonoBehaviour
     {
         [SerializeField] private string _id;
         [SerializeField] private bool _isActivated;
 
         private bool _isInitialized;
+        private IEventPublisher _eventBus;
 
         public string Id => _id;
         public bool IsActivated => _isActivated;
 
-        public event Action<CheckPoint> OnActivated;
-
-        public void Dispose()
+        [Inject]
+        public void Construct(IEventPublisher eventBus)
         {
-            //надо ли тут что-то ???....
+            _eventBus = eventBus;
         }
 
         private void Awake()
@@ -53,7 +55,9 @@ namespace Assets.Scripts.Points
                 return;
 
             SetState(true);
-            OnActivated?.Invoke(this);
+
+            _eventBus.Publish(new CheckPoinActivatedEvent{checkPoint = this});
+            _eventBus.Publish(new SaveGameEvent { });
         }
 
         public void Deactivate()
@@ -105,7 +109,5 @@ namespace Assets.Scripts.Points
         {
             SetState(false);
         }
-
-
     }
 }

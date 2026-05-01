@@ -1,6 +1,4 @@
-﻿using Assets._Scripts.GameControllers;
-using Assets._Scripts.SaveLoad.Service;
-using Assets.Scripts.SaveLoad;
+﻿using Assets._Scripts.EventBusGame;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
@@ -8,15 +6,15 @@ using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPointsController : IDisposable, IRestart //ISaveLoadService //ISaveLoadService //ISaveLoad
+    public class CheckPointsController : IDisposable
     {
         private Transform _checkPointsParent;
         private List<CheckPoint> _gameCheckPointList;
         private CheckPoint _lastCheckPointActiveted;
 
-        public event Action OnSave;
+        private EventBus _eventBus;
 
-        public CheckPointsController(GamePoints points)
+        public CheckPointsController(GamePoints points, EventBus eventBus)
         {
             if (points != null)
                 _checkPointsParent = points.CheckPoints;
@@ -24,22 +22,14 @@ namespace Assets.Scripts.Points
                 throw new ArgumentNullException(nameof(points), "CheckPoint parent cannot be null");
 
             _gameCheckPointList = TransformToList(_checkPointsParent);
+
+            _eventBus = eventBus;
+            _eventBus.Subscribe<CheckPoinActivatedEvent>(CheckPointActivated);
         }
 
         public void Dispose()
         {
-            //Под вопросом...
-
-            foreach (CheckPoint checkPoint in _gameCheckPointList)
-            {
-                checkPoint.Dispose();
-                checkPoint.OnActivated -= CheckPointActivated;
-            }
-        }
-
-        public void Initialize()
-        {
-
+            _eventBus.Unsubscribe<CheckPoinActivatedEvent>(CheckPointActivated);
         }
 
         //Из трансформа собираем CheckPoints
@@ -54,16 +44,19 @@ namespace Assets.Scripts.Points
             {
                 CheckPoint checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPoint>();
                 CheckPoints.Add(checkpoint);
-                checkpoint.OnActivated += CheckPointActivated;
             }
 
             return CheckPoints;
         }
 
-        public void CheckPointActivated(CheckPoint checkPoint) // Вопрос надо ли передавать checkPoint
+        public void CheckPointActivated(CheckPoinActivatedEvent args)
         {
-            _lastCheckPointActiveted = checkPoint;
-            OnSave?.Invoke();
+            _lastCheckPointActiveted = args.checkPoint;
+        }
+
+        public void FinishGame()
+        {
+            Restart();
         }
 
         public void Restart()
@@ -73,11 +66,6 @@ namespace Assets.Scripts.Points
                 checkPoint.Deactivate();
             }
         }
-
-        //public void AddSerice(ISaveLoadService service)
-        //{
-
-        //}
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
@@ -123,50 +111,5 @@ namespace Assets.Scripts.Points
                 }
             }
         }
-
-
-        //public void Load(LevelData levelData, LevelConfig levelConfig)
-        //{
-        //    var checkpointsCount = _gameCheckPointList.Count;
-
-        //    if (levelData.CheckPoints == null)
-        //    {
-        //        List<CheckPointData> loadCheckPointsData = new List<CheckPointData>();
-
-        //        for (int i = 0; i < _gameCheckPointList.Count; i++)
-        //        {
-        //            loadCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
-        //        }
-
-        //        levelData.CheckPoints = loadCheckPointsData;
-        //        Debug.Log(checkpointsCount);
-        //    }
-        //    else
-        //    {
-        //        for (int i = 0; i < checkpointsCount; i++)
-        //        {
-        //            CheckPoint checkPoint = _gameCheckPointList[i];
-        //            CheckPointData checkPointData = levelData.CheckPoints[i];
-        //            checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
-        //            checkPoint.SetState(checkPointData.IsActivated);
-        //        }
-        //    }
-        //}
-
-        //public void Save(LevelData levelData)
-        //{
-        //    Debug.Log("SAVE COIN CONTROLLER");
-
-        //    if(_lastCheckPointActiveted != null)
-        //    {
-        //        levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform.position;
-        //    }
-
-        //    for (int i = 0; i < _gameCheckPointList.Count; i++)
-        //    {
-        //        levelData.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
-        //    }
-        //}
-
     }
 }

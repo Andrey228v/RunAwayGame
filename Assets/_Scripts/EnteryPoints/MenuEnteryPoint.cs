@@ -1,15 +1,8 @@
 ﻿using Assets._Scripts.GameControllers;
-using Assets._Scripts.GameControllers.Achievments;
-using Assets._Scripts.GameControllers.Levels;
-using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
-using Assets.Scripts.SaveLoad;
-using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AdaptivePerformance.Provider;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -22,27 +15,18 @@ namespace Assets._Scripts.EnteryPoints
 
         private MenuTabs _menuTabs;
         private AchievmentsCellsView _achievments;
-        private GameManager _gameManger;
 
-        private GameSaveLoadService _gameSaveLoadService;
         private List<AchievementView> _achievementViews;
-        //private GameSaveData _gameSaveData;
 
         public MenuEnteryPoint(Func<MenuTabs> menuFactory,
             Func<AchievmentsCellsView> achievmentsCellsFactory,
-            Func<AchievementView> achievmentsViewFactory,
-            GameManager gameManager,
-            GameSaveLoadService gameSaveLoadService) 
+            Func<AchievementView> achievmentsViewFactory) 
         {
             _menuFactory = menuFactory;
             _achievmentsCellsFactory = achievmentsCellsFactory;
             _achievmentsViewFactory = achievmentsViewFactory;
-            _gameManger = gameManager;
 
             _achievementViews = new List<AchievementView>();
-
-            _gameSaveLoadService = gameSaveLoadService;
-            //_gameSaveData = gameSaveLoadService.GameSaveData;
         }
 
         public void Start()
@@ -53,8 +37,8 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Dispose()
         {
-            _menuTabs.OnChooseLevel -= _gameSaveLoadService.SetLevelConfig;
-            _menuTabs.OnSaveDelet -= _gameSaveLoadService.ResetAllProgress;
+            //_menuTabs.OnChooseLevel -= _gameSaveLoadService.SetLevelConfig;
+            //_menuTabs.OnSaveDelet -= _gameSaveLoadService.ResetAllProgress;
 
             //_menu.OnChooseLevel -= _saveLoadService.SetLevelConfig;
             //_menu.OnSaveDelet -= _saveLoadService.ResetAllProgress;
@@ -88,8 +72,8 @@ namespace Assets._Scripts.EnteryPoints
             _achievments = _achievmentsCellsFactory();
             _achievments.transform.SetParent(_menuTabs.AchievmentsParent, false);
 
-            _menuTabs.OnChooseLevel += _gameSaveLoadService.SetLevelConfig; // убрать ???...
-            _menuTabs.OnSaveDelet += _gameSaveLoadService.ResetAllProgress;
+            //_menuTabs.OnChooseLevel += _gameSaveLoadService.SetLevelConfig; // убрать ???...
+            //_menuTabs.OnSaveDelet += _gameSaveLoadService.ResetAllProgress;
             //_menuTabs.OnChooseLevel += _levelController.SetLevelConfig;
         }
 

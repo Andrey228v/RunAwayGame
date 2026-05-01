@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Assets._Scripts.Bots.BotStateMachine
 {
-    public class BotAISM : IStateSwitcher, IDisposable, IRestart
+    public class BotAISM : IStateSwitcher, IDisposable
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;
@@ -64,11 +64,6 @@ namespace Assets._Scripts.Bots.BotStateMachine
             _currentState.Exit();
             _currentState = state;
             _currentState?.Enter();
-        }
-
-        public void Restart()
-        {
-            //_animatorController.Restart();
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿using Assets._Scripts.GameControllers.Achievments;
-using Assets._Scripts.GameControllers.GameShop;
-using Assets._Scripts.GameControllers.Levels;
-using Assets._Scripts.SaveLoad.Service;
+﻿using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
 using DG.Tweening;
 using System.Collections.Generic;
@@ -21,10 +18,6 @@ namespace Assets._Scripts.EnteryPoints
         {
             _loadManager = loadManager;
             _scensGroups = scensGroups;
-
-            //gameSaveLoadService.AddSerice(levelController);
-            //gameSaveLoadService.AddSerice(achievmentsController);
-            //gameSaveLoadService.AddSerice(shopController);
         }
 
         public async void Initialize()
@@ -32,8 +25,6 @@ namespace Assets._Scripts.EnteryPoints
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             DOTween.SetTweensCapacity(5000, 100);
-
-            
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

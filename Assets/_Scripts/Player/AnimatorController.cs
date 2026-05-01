@@ -1,10 +1,9 @@
-﻿using Assets._Scripts.GameControllers;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class AnimatorController : IDisposable, IRestart
+    public class AnimatorController : IDisposable
     {
         private Animator _animator;
 

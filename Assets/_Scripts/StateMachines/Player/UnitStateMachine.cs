@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Assets.Scripts.StateMachines.Player
 {
-    public class UnitStateMachine : IStateSwitcher, IDisposable, IRestart
+    public class UnitStateMachine : IStateSwitcher, IDisposable
     {
         private List<IState> _states = new List<IState>();
         private IState _currentState;

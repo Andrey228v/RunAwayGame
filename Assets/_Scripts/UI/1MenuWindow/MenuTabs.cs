@@ -1,4 +1,5 @@
-﻿using Assets._Scripts.GameControllers;
+﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.GameControllers;
 using Assets._Scripts.SceneLoading;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         private List<LevelConfig> _levelConfigs;
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
-        private GameManager _gameManger;
+        private EventBus _eventBus;
 
         public Transform AchievmentsParent => _achievmentsParent;
 
@@ -58,12 +59,12 @@ namespace Assets._Scripts.UI._1MenuWindow
         public void Constructor(List<LevelConfig> levelConfigs, 
             LoadManager loadManager, 
             List<SceneGroupHandle> scensGroups,
-            GameManager gameManager)
+            EventBus eventBus)
         {
             _levelConfigs = levelConfigs;
             _loadManager = loadManager;
             _scensGroups = scensGroups;
-            _gameManger = gameManager;
+            _eventBus = eventBus;
         }
 
         private void OnEnable()
@@ -123,18 +124,16 @@ namespace Assets._Scripts.UI._1MenuWindow
         {
             if (level == 1) // переделать...
             {
-                OnChooseLevel?.Invoke(_levelConfigs[0]);
-                _gameManger.StartLevel0(); // убрать в MenuEnteryPoint
+                _eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[0] });
+
             }
             else if (level == 2) // переделать...
             {
-                OnChooseLevel?.Invoke(_levelConfigs[1]);
-                _gameManger.StartLevel1(); // убрать в MenuEnteryPoint
+                _eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[1] });
             }
             else if (level == 3) // переделать...
             {
-                OnChooseLevel?.Invoke(_levelConfigs[2]);
-                _gameManger.StartLevel2(); // убрать в MenuEnteryPoint
+                _eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[2] });
             }
 
             await _loadManager.LoadScene(_scensGroups[level]);

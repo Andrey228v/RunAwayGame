@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UnityEngine;
 
 namespace Assets._Scripts.EventBusGame
 {
@@ -35,6 +36,38 @@ namespace Assets._Scripts.EventBusGame
     public struct ChooseLevelEvent 
     {
         public LevelConfig levelConfig;
+    }
+
+    public struct AchievementProgressUpdatedEvent
+    {
+        public string AchievementId;
+        public float Progress;
+        public int CurrentValue;
+        public int TargetValue;
+    }
+
+    public struct AchievementUnlockedEvent
+    {
+        public string AchievementId;
+        public string Title;
+        public string Description;
+        public Sprite Icon;
+    }
+
+    public struct RewardClaimedEvent
+    {
+        public string AchievementId;
+        public int RewardCoins;
+    }
+
+    public struct AddCoinsEvent
+    {
+        public int CoinCount;
+    }
+
+    public struct AddGobeletsEvent
+    {
+        public int GobeletCount;
     }
 
 }

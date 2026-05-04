@@ -3,6 +3,7 @@ using Assets._Scripts.GameControllers;
 using Assets._Scripts.SceneLoading;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
@@ -36,12 +37,18 @@ namespace Assets._Scripts.UI._1MenuWindow
         [SerializeField] private Button _backButtonAchievements;
         [SerializeField] private Button _exitButton;
 
+        [Header("Amounts")]
+        [SerializeField] private TextMeshProUGUI _goldsText;
+        [SerializeField] private TextMeshProUGUI _gobeletsText;
+
         [Header("Sliders")]
         [SerializeField] private Slider _volumeMusicSlider;
 
         [Header("Parents")]
         [SerializeField] private Transform _achievmentsParent;
 
+        private int _currentGold;
+        private int _currentGobelets;
 
         public event Action<LevelConfig> OnChooseLevel;
         public event Action OnSaveDelet;
@@ -65,6 +72,7 @@ namespace Assets._Scripts.UI._1MenuWindow
             _loadManager = loadManager;
             _scensGroups = scensGroups;
             _eventBus = eventBus;
+            _currentGold = 0;
         }
 
         private void OnEnable()
@@ -162,6 +170,9 @@ namespace Assets._Scripts.UI._1MenuWindow
 
             _deletSaveButton.onClick.AddListener(DeletSave);
             _exitButton.onClick.AddListener(ClickExit);
+
+            _eventBus.Subscribe<AddCoinsEvent>(OnGoldChanded);
+            _eventBus.Subscribe<AddGobeletsEvent>(OnGabeletsChanged);
         }
 
         private void UnSetupButtons()
@@ -180,6 +191,9 @@ namespace Assets._Scripts.UI._1MenuWindow
             _startGameButtonL0.onClick.RemoveAllListeners();
             _startGameButtonL1.onClick.RemoveAllListeners();
             _startGameButtonL2.onClick.RemoveAllListeners();
+
+            _eventBus.Unsubscribe<AddCoinsEvent>(OnGoldChanded);
+            _eventBus.Unsubscribe<AddGobeletsEvent>(OnGabeletsChanged);
         }
 
         private void ClickExit()
@@ -190,6 +204,18 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void DeletSave()
         {
             OnSaveDelet?.Invoke();
+        }
+
+        private void OnGoldChanded(AddCoinsEvent args)
+        {
+            _currentGold += args.CoinCount;
+            _goldsText.text = _currentGold.ToString();
+        }
+
+        private void OnGabeletsChanged(AddGobeletsEvent args)
+        {
+            _currentGobelets += args.GobeletCount;
+            _gobeletsText.text = _currentGobelets.ToString();
         }
     }
 }

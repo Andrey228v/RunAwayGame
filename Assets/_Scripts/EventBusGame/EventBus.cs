@@ -22,10 +22,11 @@ namespace Assets._Scripts.EventBusGame
         public void Publish<TEvent>(TEvent eventToPublish)
         {
             var eventType = typeof(TEvent);
-            if (!_subscriptions.ContainsKey(eventType)) return;
+            if (_subscriptions.ContainsKey(eventType) == false) return;
 
             // Создаём копию списка, чтобы избежать ошибок при изменении коллекции во время итерации
             var handlers = new List<object>(_subscriptions[eventType]);
+
             foreach (var handler in handlers)
             {
                 var typedHandler = handler as Action<TEvent>;

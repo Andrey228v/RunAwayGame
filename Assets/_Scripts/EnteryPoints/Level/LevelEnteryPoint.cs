@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.GameControllers;
-using Assets._Scripts.GameControllers.Levels;
+﻿using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;

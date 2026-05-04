@@ -16,7 +16,7 @@ namespace Assets._Scripts.EnteryPoints
         private MenuTabs _menuTabs;
         private AchievmentsCellsView _achievments;
 
-        private List<AchievementView> _achievementViews;
+        //private List<AchievementView> _achievementViews;
 
         public MenuEnteryPoint(Func<MenuTabs> menuFactory,
             Func<AchievmentsCellsView> achievmentsCellsFactory,
@@ -26,7 +26,7 @@ namespace Assets._Scripts.EnteryPoints
             _achievmentsCellsFactory = achievmentsCellsFactory;
             _achievmentsViewFactory = achievmentsViewFactory;
 
-            _achievementViews = new List<AchievementView>();
+            
         }
 
         public void Start()
@@ -43,27 +43,6 @@ namespace Assets._Scripts.EnteryPoints
             //_menu.OnChooseLevel -= _saveLoadService.SetLevelConfig;
             //_menu.OnSaveDelet -= _saveLoadService.ResetAllProgress;
 
-            //Debug.Log("DISPOSE MEP");
-
-            //_gameManger.OnLevelStart0 -= _achievementViews[0].Unlock;
-            //_gameManger.OnLevelStart0 -= _saveLoadService.SaveData.AchievmentsModels[0].Unlock;
-
-            //_gameManger.OnLevelStart1 -= _achievementViews[1].Unlock;
-            //_gameManger.OnLevelStart1 -= _saveLoadService.SaveData.AchievmentsModels[1].Unlock;
-
-            //_gameManger.OnLevelStart2 -= _achievementViews[2].Unlock;
-            //_gameManger.OnLevelStart2 -= _saveLoadService.SaveData.AchievmentsModels[2].Unlock;
-
-            //_gameManger.OnLevelFinish0 -= _achievementViews[3].Unlock;
-            //_gameManger.OnLevelFinish0 -= _saveLoadService.SaveData.AchievmentsModels[3].Unlock;
-
-            //_gameManger.OnLevelFinish1 -= _achievementViews[4].Unlock;
-            //_gameManger.OnLevelFinish1 -= _saveLoadService.SaveData.AchievmentsModels[4].Unlock;
-
-            //_gameManger.OnLevelFinish2 -= _achievementViews[5].Unlock;
-            //_gameManger.OnLevelFinish2 -= _saveLoadService.SaveData.AchievmentsModels[5].Unlock;
-
-            //_saveLoadService.SaveGameData();
         }
 
         public void InitMenu()
@@ -71,10 +50,6 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabs = _menuFactory();
             _achievments = _achievmentsCellsFactory();
             _achievments.transform.SetParent(_menuTabs.AchievmentsParent, false);
-
-            //_menuTabs.OnChooseLevel += _gameSaveLoadService.SetLevelConfig; // убрать ???...
-            //_menuTabs.OnSaveDelet += _gameSaveLoadService.ResetAllProgress;
-            //_menuTabs.OnChooseLevel += _levelController.SetLevelConfig;
         }
 
         public void InitAchievments()
@@ -88,24 +63,6 @@ namespace Assets._Scripts.EnteryPoints
             //    _achievementViews.Add(achView);
             //}
 
-
-            //_gameManger.OnLevelStart0 += _achievementViews[0].Unlock;
-            //_gameManger.OnLevelStart0 += _saveLoadService.SaveData.AchievmentsModels[0].Unlock;
-
-            //_gameManger.OnLevelStart1 += _achievementViews[1].Unlock;
-            //_gameManger.OnLevelStart1 += _saveLoadService.SaveData.AchievmentsModels[1].Unlock;
-
-            //_gameManger.OnLevelStart2 += _achievementViews[2].Unlock;
-            //_gameManger.OnLevelStart2 += _saveLoadService.SaveData.AchievmentsModels[2].Unlock;
-
-            //_gameManger.OnLevelFinish0 += _achievementViews[3].Unlock;
-            //_gameManger.OnLevelFinish0 += _saveLoadService.SaveData.AchievmentsModels[3].Unlock;
-
-            //_gameManger.OnLevelFinish1 += _achievementViews[4].Unlock;
-            //_gameManger.OnLevelFinish1 += _saveLoadService.SaveData.AchievmentsModels[4].Unlock;
-
-            //_gameManger.OnLevelFinish2 += _achievementViews[5].Unlock;
-            //_gameManger.OnLevelFinish2 += _saveLoadService.SaveData.AchievmentsModels[5].Unlock;
         }
     }
 }

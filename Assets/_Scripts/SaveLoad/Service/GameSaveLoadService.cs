@@ -2,6 +2,7 @@
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Wallets;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -16,6 +17,7 @@ namespace Assets._Scripts.SaveLoad.Service
         private LevelsController _levelsController;
         private AchievmentsController _achievmentsController;
         private ShopController _shopController;
+        private WalletController _walletController;
 
         private IEventSubscriber _eventBus;
 
@@ -25,12 +27,14 @@ namespace Assets._Scripts.SaveLoad.Service
             LevelsController levelsController,
             AchievmentsController achievmentsController,
             ShopController shopController,
+            WalletController walletController,
             IEventSubscriber eventBus) 
         {
             _saveSystem = saveSystem;
             _levelsController = levelsController;
             _achievmentsController = achievmentsController;
             _shopController = shopController;
+            _walletController = walletController;
 
             _eventBus = eventBus;
 
@@ -56,6 +60,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelsController.Dispose();
             _achievmentsController.Dispose();
             _shopController.Dispose();
+            _walletController.Dispose();
 
             SaveGame();
         }
@@ -65,6 +70,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelsController.Initialize();
             _achievmentsController.Initialize();
             _shopController.Initialize();
+            _walletController.Initialize();
         }
 
         public void SaveAllServices()
@@ -72,6 +78,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelsController.SaveAllServices(_gameSaveData, _levelConfig);
             _achievmentsController.SaveAllServices(_gameSaveData, _levelConfig);
             _shopController.SaveAllServices(_gameSaveData, _levelConfig);
+            _walletController.SaveAllServices(_gameSaveData, _levelConfig);
 
             SaveGame();
         }
@@ -81,6 +88,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
             _achievmentsController.LoadAllServices(_gameSaveData, _levelConfig);
             _shopController.LoadAllServices(_gameSaveData, _levelConfig);
+            _walletController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 
         public void OnSetLevelConfig(ChooseLevelEvent args)

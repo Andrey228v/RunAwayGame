@@ -4,6 +4,7 @@ using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
 using Assets.Scripts.SaveLoad;
@@ -32,6 +33,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<LevelsController>().AsSelf();
             builder.RegisterEntryPoint<AchievmentsController>().AsSelf();
             builder.RegisterEntryPoint<ShopController>().AsSelf();
+            builder.RegisterEntryPoint<WalletController>().AsSelf();
             builder.Register<EventBus>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
     }

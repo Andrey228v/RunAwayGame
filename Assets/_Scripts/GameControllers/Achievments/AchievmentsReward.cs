@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-
     public interface IRevard
     {
-        public Action GetReward();
+        public void GetReward();
     }
 
     public class AchievmentsReward
@@ -15,50 +14,56 @@ namespace Assets._Scripts.GameControllers.Achievments
         private EventBus _eventBus;
         private List<IRevard> _rewardList = new List<IRevard>();
 
+        public AchievmentsReward(EventBus eventBus)
+        {
+            _eventBus = eventBus;
+        }
+
         public void AddRevard(IRevard revard)
         {
             _rewardList.Add(revard);
         }
 
-        public void GetReward()
+        public void GetRewards()
         {
-            foreach (var reward in _rewardList)
+            foreach (IRevard reward in _rewardList)
             {
-                _eventBus.Publish(reward.GetReward());
+                reward.GetReward();
             }
         }
     }
 
     public class CoinReward : IRevard
     {
+        private EventBus _eventBus;
         private int _coinCount;
 
-        public CoinReward(int coinCount)
+        public CoinReward(EventBus eventBus, int coinCount)
         {
+            _eventBus= eventBus;
             _coinCount = coinCount;
         }
 
-        public Action GetReward()
+        public void GetReward()
         {
-
-            return () => new AddCoinsEvent { CoinCount = _coinCount };
-            //_eventBus.Publish(new AddCoinsEvent { CoinCount = coinCount });
+            _eventBus.Publish(new AddCoinsEvent { CoinCount = _coinCount });
         }
     }
 
     public class GobeletReward : IRevard
     {
+        private EventBus _eventBus;
         private int _gobeletCount;
 
-        public GobeletReward(int gobeletCount)
+        public GobeletReward(EventBus eventBus, int gobeletCount)
         {
+            _eventBus = eventBus;
             _gobeletCount = gobeletCount;
         }
 
-        public Action GetReward()
+        public void GetReward()
         {
-            return () => new AddGobeletsEvent { GobeletCount = _gobeletCount };
-            //_eventBus.Publish(new AddGobeletsEvent { GobeletCount = gobeletCount });
+            _eventBus.Publish(new AddGobeletsEvent { GobeletCount = _gobeletCount });
         }
     }
 }

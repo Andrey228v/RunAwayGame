@@ -70,4 +70,18 @@ namespace Assets._Scripts.EventBusGame
         public int GobeletCount;
     }
 
+    public struct FinishLevelEvent
+    {
+        public LevelConfig levelConfig;
+    }
+
+    public struct StartLevel1 { }
+
+    public struct StartLevel2 { }
+
+    public struct StartLevel3 { }
+
+    public struct FinishLevel1 { }
+    public struct FinishLevel2 { }
+    public struct FinishLevel3 { }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentModel
+    public class AchievmentModel<T>: IAchievement where T : struct
     {
         private string _id;
         private string _name;
@@ -16,23 +16,31 @@ namespace Assets._Scripts.GameControllers.Achievments
         private int _currentValue;
         private bool _isClaimed;
         private AchievmentsReward _achievmentsReward;
-        private Action _action;
         private EventBus _eventBus;
 
-        public float Progress => (float)_currentValue / _targetValue;
+        public string Id => _id;
         public string Name => _name;
+        public bool IsUnlocked => _isUnlock;
+        public bool IsClaimed => _isClaimed;
+        public float Progress => (float)_currentValue / _targetValue;
         public string Description => _description;
         public bool IsUnlock => _isUnlock;
         public bool CanClaim => _isUnlock && !_isClaimed;
 
-        public AchievmentModel(EventBus eventBus, string name, string description, bool isUnlock, bool isClaimed, AchievmentsReward achievmentsReward, Action action)
+        public AchievmentModel(EventBus eventBus, 
+            string name, 
+            string description, 
+            bool isUnlock, 
+            bool isClaimed, 
+            AchievmentsReward achievmentsReward)
         {
+            _eventBus = eventBus;
             _name = name;
             _description = description;
             _isUnlock = isUnlock;
             _isClaimed = isClaimed;
             _achievmentsReward = achievmentsReward;
-            _eventBus.Subscribe < action.GetType() > (Unlock);
+            _eventBus.Subscribe<T>(Unlock);
         }
 
         public void SetUnlock(bool isUnlock) 
@@ -40,10 +48,11 @@ namespace Assets._Scripts.GameControllers.Achievments
             _isUnlock = isUnlock;
         }
 
-        public void Unlock()
+        public void Unlock(T args)
         {
+            Debug.Log($"UNLOCK ACH {_name}");
             _isUnlock = true;
-            _achievmentsReward.GetReward();
+            _achievmentsReward.GetRewards();
         }
 
         public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -54,6 +63,11 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
 
+        }
+
+        public void ClaimReward()
+        {
+            
         }
 
         //картинку сделать..

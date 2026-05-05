@@ -32,7 +32,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
             var models = _achievmentsController.GetAchievmentsModels();
 
-            foreach (AchievmentModel ach in models)
+            foreach (IAchievement ach in models)
             {
                 var achView = _achievmentsViewFactory();
                 achView.Construct(ach);

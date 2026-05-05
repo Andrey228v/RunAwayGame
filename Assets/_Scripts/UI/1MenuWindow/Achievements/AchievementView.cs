@@ -28,7 +28,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         [SerializeField] private float _hoverScale = 1.05f;
         [SerializeField] private float _duration = 0.2f;
 
-        private AchievmentModel _achievmentModel;
+        private IAchievement _achievmentModel;
 
         private bool _isUnlock;
         private bool _isSelected = false;
@@ -58,7 +58,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             _originalScale = transform.localScale;
         }
 
-        public void Construct(AchievmentModel achievmentModel)
+        public void Construct(IAchievement achievmentModel)
         {
             if(achievmentModel == null)
             {
@@ -68,13 +68,13 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             _achievmentModel = achievmentModel;
             _name.text = achievmentModel.Name;
             _descroption.text = achievmentModel.Description;
-            _isUnlock = achievmentModel.IsUnlock;
+            _isUnlock = achievmentModel.IsUnlocked;
             
             if (_isUnlock)
             {
                 _blockImage.gameObject.SetActive(false);
 
-                if (_achievmentModel.CanClaim == false)
+                if (_achievmentModel.IsClaimed == false)
                 {
                     _claimButton.gameObject.SetActive(false);
                 }

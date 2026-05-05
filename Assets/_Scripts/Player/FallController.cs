@@ -3,7 +3,7 @@ using System;
 
 namespace Assets.Scripts.Player
 {
-    public class FallController : IDisposable
+    public class FallController
     {
         private Character _character;
 

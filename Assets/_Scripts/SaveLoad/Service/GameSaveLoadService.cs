@@ -78,7 +78,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelsController.SaveAllServices(_gameSaveData, _levelConfig);
             _achievmentsController.SaveAllServices(_gameSaveData, _levelConfig);
             _shopController.SaveAllServices(_gameSaveData, _levelConfig);
-            _walletController.SaveAllServices(_gameSaveData, _levelConfig);
+            _walletController.SaveAllServices(_gameSaveData);
 
             SaveGame();
         }
@@ -88,7 +88,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
             _achievmentsController.LoadAllServices(_gameSaveData, _levelConfig);
             _shopController.LoadAllServices(_gameSaveData, _levelConfig);
-            _walletController.LoadAllServices(_gameSaveData, _levelConfig);
+            _walletController.LoadAllServices(_gameSaveData);
         }
 
         public void OnSetLevelConfig(ChooseLevelEvent args)
@@ -110,10 +110,7 @@ namespace Assets._Scripts.SaveLoad.Service
 
         public void RestartLevel()
         {
-
-            //_gameSaveData = new GameSaveData();
             _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData(_levelConfig);
-
         }
 
         public void OnFinishLevel(LevelCompletedEvent args) // переделать...
@@ -139,7 +136,6 @@ namespace Assets._Scripts.SaveLoad.Service
         private void OnSaveGame(SaveGameEvent args)
         {
             SaveAllServices();
-            //SaveGame();
         }
 
         private void OnLoad(LoadGameEvent args)

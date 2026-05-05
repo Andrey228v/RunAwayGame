@@ -52,7 +52,6 @@ namespace Assets._Scripts.SceneLoading
             await LoadNewContent(sceneGroup);
             PrepareToTransition(sceneGroup);
 
-            _gameSaveLoadService.InitializeAllServices();
             _gameSaveLoadService.LoadAllServices();
 
             HideLoadScreen();

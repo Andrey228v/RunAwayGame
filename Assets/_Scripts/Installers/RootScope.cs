@@ -33,7 +33,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<LevelsController>().AsSelf();
             builder.RegisterEntryPoint<AchievmentsController>().AsSelf();
             builder.RegisterEntryPoint<ShopController>().AsSelf();
-            builder.RegisterEntryPoint<WalletController>().AsSelf();
+            builder.Register<WalletController>(Lifetime.Singleton).AsSelf();
             builder.Register<EventBus>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         }
     }

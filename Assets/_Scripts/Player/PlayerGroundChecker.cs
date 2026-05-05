@@ -3,7 +3,7 @@ using System;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerGroundChecker : IDisposable
+    public class PlayerGroundChecker
     {
         private Character _character;
 

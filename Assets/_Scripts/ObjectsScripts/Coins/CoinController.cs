@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class CoinController : IDisposable
+    public class CoinController
     {
         private Transform _objectParent;
         private List<Coin> _objectList;

@@ -7,7 +7,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentsController : IStartable, IDisposable
+    public class AchievmentsController : IStartable
     {
         private GameSaveLoadService _gameSaveLoadService;
         private GameSaveData _gameSaveData;

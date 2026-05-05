@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace Assets.Input
 {
-    public class InputReader : IDisposable
+    public class InputReader
     {
         private InputSystem_Actions _inputSystem;
 

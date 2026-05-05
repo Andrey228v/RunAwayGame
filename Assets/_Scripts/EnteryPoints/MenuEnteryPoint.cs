@@ -16,8 +16,6 @@ namespace Assets._Scripts.EnteryPoints
         private MenuTabs _menuTabs;
         private AchievmentsCellsView _achievments;
 
-        //private List<AchievementView> _achievementViews;
-
         public MenuEnteryPoint(Func<MenuTabs> menuFactory,
             Func<AchievmentsCellsView> achievmentsCellsFactory,
             Func<AchievementView> achievmentsViewFactory) 
@@ -25,8 +23,6 @@ namespace Assets._Scripts.EnteryPoints
             _menuFactory = menuFactory;
             _achievmentsCellsFactory = achievmentsCellsFactory;
             _achievmentsViewFactory = achievmentsViewFactory;
-
-            
         }
 
         public void Start()
@@ -37,12 +33,6 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Dispose()
         {
-            //_menuTabs.OnChooseLevel -= _gameSaveLoadService.SetLevelConfig;
-            //_menuTabs.OnSaveDelet -= _gameSaveLoadService.ResetAllProgress;
-
-            //_menu.OnChooseLevel -= _saveLoadService.SetLevelConfig;
-            //_menu.OnSaveDelet -= _saveLoadService.ResetAllProgress;
-
         }
 
         public void InitMenu()
@@ -54,15 +44,6 @@ namespace Assets._Scripts.EnteryPoints
 
         public void InitAchievments()
         {
-            //foreach (AchievmentModel ach in _gameSaveData.AchievmentsModels)
-            //{
-            //    var achView = _achievmentsViewFactory();
-            //    achView.Construct(ach);
-            //    _achievments.AddAchievment(achView);
-
-            //    _achievementViews.Add(achView);
-            //}
-
         }
     }
 }

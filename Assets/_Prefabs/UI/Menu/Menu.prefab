@@ -2734,8 +2734,8 @@ MonoBehaviour:
   _backButtonShop: {fileID: 6571528084718737264}
   _backButtonAchievements: {fileID: 3360717212195295752}
   _exitButton: {fileID: 122835909246431705}
-  _goldsText: {fileID: 6087654553744384919}
-  _gobeletsText: {fileID: 6658022268003035124}
+  _goldsText: {fileID: 3746322247130723685}
+  _gobeletsText: {fileID: 259979420258679262}
   _volumeMusicSlider: {fileID: 0}
   _achievmentsParent: {fileID: 4022847633930411246}
 --- !u!1 &3254360259685432278

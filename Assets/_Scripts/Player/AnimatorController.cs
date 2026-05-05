@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class AnimatorController : IDisposable
+    public class AnimatorController
     {
         private Animator _animator;
 

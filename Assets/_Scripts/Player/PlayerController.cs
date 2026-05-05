@@ -8,16 +8,19 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerController : IFixedTickable, IDisposable
+    public class PlayerController : IFixedTickable
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
         private PlayerMB _playerMB;
+        private bool _isDisposed = false;
 
         public PlayerMB PlayerMB => _playerMB;
 
         public void Dispose()
         {
+            _isDisposed = true;
+
             _playerStateMachine.Dispose();
 
             _playerStateMachine = null;
@@ -26,6 +29,7 @@ namespace Assets.Scripts.Player
 
         public void FixedTick()
         {
+            if (_isDisposed) return;
             _playerStateMachine.FixedTick();
         }
 
@@ -76,6 +80,8 @@ namespace Assets.Scripts.Player
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
+
+
             var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
 
             levelData.PlayerData.PlayerPosition = _character.transform.position;

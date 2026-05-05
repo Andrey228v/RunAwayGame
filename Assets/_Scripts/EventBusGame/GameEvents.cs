@@ -84,4 +84,6 @@ namespace Assets._Scripts.EventBusGame
     public struct FinishLevel1 { }
     public struct FinishLevel2 { }
     public struct FinishLevel3 { }
+
+    public struct UpdateUI { }
 }

@@ -4,7 +4,7 @@ using System;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerJumper : IDisposable
+    public class PlayerJumper
     {
         private Character _character;
 

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPointsController : IDisposable
+    public class CheckPointsController
     {
         private Transform _checkPointsParent;
         private List<CheckPoint> _gameCheckPointList;

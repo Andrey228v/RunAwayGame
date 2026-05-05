@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Levels
 {
-    public class LevelsController : IStartable, IDisposable //, ISaveLoadService
+    public class LevelsController : IStartable
     {
         private bool _isLevelWasStart;
         private PlayerController _playerController;
@@ -27,7 +27,13 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public void Dispose()
         {
+            _playerController.Dispose();
+            _coinController.Dispose();
+            _checkPointsController.Dispose();
 
+            _playerController = null;
+            _coinController = null;
+            _checkPointsController = null;
         }
 
         public void Initialize()
@@ -52,6 +58,10 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
+
+            if (_playerController == null || _coinController == null || _checkPointsController == null)
+                return;
+
             _playerController.SaveAllServices(gameSaveData, levelConfig);
             _coinController.SaveAllServices(gameSaveData, levelConfig);
             _checkPointsController.SaveAllServices(gameSaveData, levelConfig);

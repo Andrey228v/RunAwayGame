@@ -10,6 +10,7 @@ namespace Assets.Scripts.SaveLoad.Data
         public Dictionary<string, LevelData> LevelsData = new Dictionary<string, LevelData>(); // LevelController
         public AchievmentsData AchievmentsData; // AchievmentsController
         public ShopData ShopData; // ShopController
+        public WalletData WalletData;
         public DateTime LastSaveTime;
     }
 }

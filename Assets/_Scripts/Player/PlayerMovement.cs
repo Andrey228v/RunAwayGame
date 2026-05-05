@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerMovement : IDisposable
+    public class PlayerMovement
     {
         private Character _character;
         private readonly InputReader _inputReader;

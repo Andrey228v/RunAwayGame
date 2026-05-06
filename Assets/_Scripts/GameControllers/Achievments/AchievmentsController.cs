@@ -78,6 +78,10 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             //gameSaveData.AchievmentsData
+            foreach(var item in _achievments)
+            {
+                //gameSaveData.AchievmentsData
+            }
         }
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)

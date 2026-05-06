@@ -89,8 +89,6 @@ namespace Assets.Scripts.UI
 
         private async void OnBackToMenu(TransitToWindowEvent args)
         {
-            Debug.Log("EXIT to MENU");
-            //OnBackToMenu?.Invoke();
             await _loadManager.LoadScene(_scensGroups[0]);
         }
     }

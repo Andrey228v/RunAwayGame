@@ -20,7 +20,6 @@ namespace Assets.Scripts.Player
 
         public void Dispose()
         {
-            Debug.Log("Animator CONTROLLER DESTROU");
             _animator = null;
         }
 

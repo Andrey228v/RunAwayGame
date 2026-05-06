@@ -5,6 +5,7 @@ using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
 using Assets.Scripts.SaveLoad;
@@ -35,6 +36,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<ShopController>().AsSelf();
             builder.Register<WalletController>(Lifetime.Singleton).AsSelf();
             builder.Register<EventBus>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
+            builder.Register<IGameLogger>(container => new UnityLogger("Game"), Lifetime.Singleton);
         }
     }
 }

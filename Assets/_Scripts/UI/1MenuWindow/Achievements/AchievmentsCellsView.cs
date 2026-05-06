@@ -6,7 +6,7 @@ using VContainer;
 
 namespace Assets._Scripts.UI._1MenuWindow.Achievements
 {
-    public class AchievmentsCellsView : MonoBehaviour
+    public class AchievmentsCellsView : MonoBehaviour, IDisposable
     {
         [SerializeField] private GameObject _cellsParent;
 
@@ -16,6 +16,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private Func<AchievementView> _achievmentsViewFactory;
 
         private List<AchievementView> _achievementViews;
+        private List<IAchievement> _subscribedAchievements;
 
         [Inject]
         public void Construct(AchievmentsController achievmentsController, Func<AchievementView> achievmentsViewFactory)
@@ -24,6 +25,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             _achievmentsViewFactory = achievmentsViewFactory;
             _achievementViews = new List<AchievementView>();
             _cells = new List<Transform>();
+            _subscribedAchievements = new List<IAchievement>();
 
             for (int i = 0; i < _cellsParent.transform.childCount; i++)
             {
@@ -31,22 +33,52 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             }
 
             var models = _achievmentsController.GetAchievmentsModels();
+            int cellIndex = 0;
 
-            foreach (IAchievement ach in models)
+            foreach (IAchievement achModel in models)
             {
                 var achView = _achievmentsViewFactory();
-                achView.Construct(ach);
+                achView.Construct(achModel);
+
+                // Настраиваем позицию ячейки
+                if (cellIndex < _cells.Count)
+                {
+                    achView.transform.SetParent(_cells[cellIndex], false);
+                }
+
                 AddAchievment(achView);
                 _achievementViews.Add(achView);
+
+                //здесь надо проверку будет сделать...
+                achModel.OnUnlock += achView.Unlock;
+                achModel.OnChanged += achView.UpdateProgress;
+                _subscribedAchievements.Add(achModel);  // ← СОХРАНЯЕМ
+
+                cellIndex++;
             }
         }
 
-
-        private void Awake()
+        public void Dispose()
         {
-            
+            for(int i = 0; i < _subscribedAchievements.Count; i++)
+            {
+                var achModel = _subscribedAchievements[i];
+                var achView = _achievementViews[i];
 
+                achModel.OnUnlock += achView.Unlock;
+                achModel.OnChanged += achView.UpdateProgress;
+            }
 
+            _subscribedAchievements.Clear();
+            _achievementViews.Clear();
+        }
+
+        private void Start()
+        {
+            foreach(var achievementView in _achievementViews)
+            {
+                achievementView.UpdateProgress();
+            }
         }
 
         private void AddAchievment(AchievementView achievementView)
@@ -58,5 +90,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
                 _countAchievments++;
             }
         }
+
+
     }
 }

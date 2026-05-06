@@ -53,7 +53,6 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void Unlock(T args)
         {
-            Debug.Log($"UNLOCK ACH {_name}");
             _isUnlock = true;
             _achievmentsReward.GetRewards();
 

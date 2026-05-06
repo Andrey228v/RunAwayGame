@@ -40,7 +40,6 @@ namespace Assets._Scripts.SaveLoad.Service
             _eventBus = eventBus;
             _gameLogger = gameLogger;
 
-            _gameLogger.WithTag("SaveLoad");
             _gameLogger.Log("Инициализация GameSaveLoadService", "Service");
 
             _eventBus.Subscribe<LevelCompletedEvent>(OnFinishLevel);
@@ -90,7 +89,7 @@ namespace Assets._Scripts.SaveLoad.Service
 
         public void SaveAllServices()
         {
-            _gameLogger.Log("GameSaveLoadService save all services", "Service");
+            _gameLogger.Log("GameSaveLoadService save all services", "Save");
 
             _levelsController.SaveAllServices(_gameSaveData, _levelConfig);
             _achievmentsController.SaveAllServices(_gameSaveData, _levelConfig);
@@ -99,19 +98,19 @@ namespace Assets._Scripts.SaveLoad.Service
 
             SaveGame();
 
-            _gameLogger.Log("GameSaveLoadService save all services complite", "Service");
+            _gameLogger.Log("GameSaveLoadService save all services complite", "Save");
         }
 
         public void LoadAllServices() 
         {
-            _gameLogger.Log("GameSaveLoadService load all services", "Service");
+            _gameLogger.Log("GameSaveLoadService load all services", "Load");
 
             _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
             _achievmentsController.LoadAllServices(_gameSaveData, _levelConfig);
             _shopController.LoadAllServices(_gameSaveData, _levelConfig);
             _walletController.LoadAllServices(_gameSaveData);
 
-            _gameLogger.Log("GameSaveLoadService load all services complite", "Service");
+            _gameLogger.Log("GameSaveLoadService load all services complite", "Load");
         }
 
         public void OnSetLevelConfig(ChooseLevelEvent args)
@@ -159,20 +158,20 @@ namespace Assets._Scripts.SaveLoad.Service
 
         private void SaveGame()
         {
-            _gameLogger.Log("GameSaveLoadService Save game", "Service");
+            _gameLogger.Log("GameSaveLoadService Save game", "Save");
             _gameSaveData.LastSaveTime = DateTime.Now;
             _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
         }
 
         private void OnSaveGame(SaveGameEvent args)
         {
-            _gameLogger.Log("GameSaveLoadService SaveGameEvent", "Service");
+            _gameLogger.Log("GameSaveLoadService OnSaveGame", "Save");
             SaveAllServices();
         }
 
         private void OnLoad(LoadGameEvent args)
         {
-            _gameLogger.Log("GameSaveLoadService LoadGameEvent", "Service");
+            _gameLogger.Log("GameSaveLoadService LoadGameEvent", "Load");
             _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 

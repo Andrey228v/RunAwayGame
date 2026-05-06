@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.Loger;
 using Assets._Scripts.UI;
 using TMPro;
 using UnityEngine;
@@ -20,6 +21,7 @@ namespace Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI _timer;
 
         private IEventPublisher _eventBus;
+        private IGameLogger _gameLogger;
 
         public bool IsVisible { get; private set; }
 
@@ -56,9 +58,11 @@ namespace Assets.Scripts.UI
 #endif
 
         [Inject]
-        public void Construct(IEventPublisher eventBus)
+        public void Construct(IEventPublisher eventBus,
+            IGameLogger gameLogger)
         {
             _eventBus = eventBus;
+            _gameLogger = gameLogger;
         }
 
         private void OnEnable()
@@ -92,22 +96,25 @@ namespace Assets.Scripts.UI
 
         private void ClickMenuButton()
         {
+            _gameLogger.Log("ClickMenuButton", "Event");
             _eventBus.Publish(new TransitToPanelEvent { windowName = "GameMenuPanel"});
-
         }
 
         private void ClickLoadButton()
         {
+            _gameLogger.Log("ClickLoadButton", "Event");
             _eventBus.Publish(new LoadGameEvent { });
         }
 
         private void ClickSoundButton()
         {
+            _gameLogger.Log("ClickSoundButton", "Event");
             _eventBus.Publish(new ButtonSoundChangeStateEvent { });
         }
 
         private void ClickSaveButton()
         {
+            _gameLogger.Log("ClickSaveButton", "Event");
             _eventBus.Publish(new SaveGameEvent { });
         }
     }

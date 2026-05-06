@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.GameControllers.Achievments;
+using Assets._Scripts.Loger;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -34,6 +35,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private bool _isUnlock;
         private bool _isSelected = false;
         private Vector3 _originalScale;
+        private IGameLogger _gameLogger;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -57,9 +59,15 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private void Start()
         {
             _originalScale = transform.localScale;
+
         }
 
-        public void Construct(IAchievement achievmentModel)
+        private void OnDestroy()
+        {
+            _gameLogger.Log("AchievmentsView OnDestroy", "Warning");
+        }
+
+        public void Construct(IAchievement achievmentModel, IGameLogger gameLogger)
         {
             if(achievmentModel == null)
             {
@@ -70,7 +78,9 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             _name.text = achievmentModel.Name;
             _descroption.text = achievmentModel.Description;
             _isUnlock = achievmentModel.IsUnlocked;
-            
+            _gameLogger = gameLogger;
+
+
             if (_isUnlock)
             {
                 //_blockImage.gameObject.SetActive(false);
@@ -103,15 +113,16 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public void UpdateProgress()
         {
-            if(_isUnlock) // Переделать...
-                Unlock();
+            //if(_isUnlock) // Переделать...
+                //Unlock();
 
 
         }
 
         public void Unlock()
         {
-            //_blockImage.gameObject.SetActive(false);
+            _gameLogger.Log("AchievmentsView Unlock", "Success");
+            _isUnlock = true;
             _claimButton.gameObject.SetActive(true);
         }
     }

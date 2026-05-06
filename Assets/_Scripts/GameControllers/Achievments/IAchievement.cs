@@ -6,6 +6,9 @@ namespace Assets._Scripts.GameControllers.Achievments
 {
     public interface IAchievement
     {
+        public event Action OnUnlock;
+        public event Action OnChanged;
+
         string Id { get; }
         string Name { get; }
         string Description { get; }

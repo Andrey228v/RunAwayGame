@@ -40,7 +40,6 @@ namespace Assets._Scripts.SceneLoading
                     Addressables.Release(handle);
                 }
             }
-
             _loadsScenes.Clear();
         }
 
@@ -52,7 +51,7 @@ namespace Assets._Scripts.SceneLoading
             await LoadNewContent(sceneGroup);
             PrepareToTransition(sceneGroup);
 
-            _gameSaveLoadService.LoadAllServices();
+            //_gameSaveLoadService.LoadAllServices();
 
             HideLoadScreen();
         }
@@ -99,8 +98,6 @@ namespace Assets._Scripts.SceneLoading
 
             await _asyncOperationGroup.WhenAll(_progress);
 
-            Debug.Log("1)_____WhenAll_______");
-            Debug.Log("2)_____WAIT_UNTIL_______");
         }
 
         private void PrepareToTransition(SceneGroupHandle sceneGroup)
@@ -113,14 +110,11 @@ namespace Assets._Scripts.SceneLoading
 
             SceneManager.SetActiveScene(scene);
 
-            Debug.Log("3)_____SetActiveScene_______");
         }
 
         private void HideLoadScreen()
         {
             _loadScreenView.Hide();
-
-            Debug.Log("4)_____HideLoadScreen_______");
         }
     }
 }

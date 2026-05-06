@@ -27,9 +27,9 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public void Dispose()
         {
-            _playerController.Dispose();
-            _coinController.Dispose();
-            _checkPointsController.Dispose();
+            _playerController?.Dispose();
+            _coinController?.Dispose();
+            _checkPointsController?.Dispose();
 
             _playerController = null;
             _coinController = null;

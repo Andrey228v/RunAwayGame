@@ -18,6 +18,9 @@ namespace Assets._Scripts.GameControllers.Achievments
         private AchievmentsReward _achievmentsReward;
         private EventBus _eventBus;
 
+        public event Action OnUnlock;
+        public event Action OnChanged;
+
         public string Id => _id;
         public string Name => _name;
         public bool IsUnlocked => _isUnlock;
@@ -53,6 +56,8 @@ namespace Assets._Scripts.GameControllers.Achievments
             Debug.Log($"UNLOCK ACH {_name}");
             _isUnlock = true;
             _achievmentsReward.GetRewards();
+
+            OnUnlock?.Invoke();
         }
 
         public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)

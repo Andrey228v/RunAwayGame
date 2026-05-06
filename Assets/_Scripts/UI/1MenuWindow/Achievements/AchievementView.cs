@@ -10,12 +10,13 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
     public class AchievementView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [Header("UI Elements")]
-        [SerializeField] private Image _icon;
+        //[SerializeField] private Image _icon;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _descroption;
-        [SerializeField] private Image _blockImage;
+        //[SerializeField] private Image _blockImage;
         [SerializeField] private Slider _progressBar;
-        [SerializeField] private TextMeshProUGUI _progressText;
+        [SerializeField] private TextMeshProUGUI _currentCountText;
+        [SerializeField] private TextMeshProUGUI _goalCountText;
         [SerializeField] private Button _claimButton;
         [SerializeField] private GameObject _lockOverlay;
 
@@ -72,7 +73,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             
             if (_isUnlock)
             {
-                _blockImage.gameObject.SetActive(false);
+                //_blockImage.gameObject.SetActive(false);
 
                 if (_achievmentModel.IsClaimed == false)
                 {
@@ -85,7 +86,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             }
             else
             {
-                _blockImage.gameObject.SetActive(true);
+                //_blockImage.gameObject.SetActive(true);
                 _claimButton.gameObject.SetActive(false);
             }
         }
@@ -100,9 +101,17 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             transform.DOScale(_originalScale, _duration).SetEase(Ease.OutQuad);
         }
 
+        public void UpdateProgress()
+        {
+            if(_isUnlock) // Переделать...
+                Unlock();
+
+
+        }
+
         public void Unlock()
         {
-            _blockImage.gameObject.SetActive(false);
+            //_blockImage.gameObject.SetActive(false);
             _claimButton.gameObject.SetActive(true);
         }
     }

@@ -35,12 +35,9 @@ MonoBehaviour:
     referenceMode: 2
     serializationDepthLimit: 64
     assemblyNames:
-    - AsblEM
-    - Assembly-CSharp
-    - Assembly-CSharp-firstpass
     - ECM2
     - Eflatun.SceneReference
-    - Tests
+    - MainGameAssemble
     - UniTask
     - UniTask.Addressables
     - UniTask.DOTween

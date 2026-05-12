@@ -1,8 +1,4 @@
 ﻿<Solution>
-  <Project Path="Assembly-CSharp-firstpass.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="Assembly-CSharp-Editor-firstpass.csproj" />
+  <Project Path="MainGameAssemble.csproj" />
   <Project Path="ECM2.csproj" />
-  <Project Path="AsblEM.csproj" />
-  <Project Path="Tests.csproj" />
 </Solution>

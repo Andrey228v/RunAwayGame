@@ -78,7 +78,7 @@ namespace Assets._Scripts.SceneLoading
             {
                 var handle = _loadsScenes[key];
 
-                await Addressables.UnloadSceneAsync(handle).ToUniTask(_progress);
+                await Addressables.UnloadSceneAsync(handle).ToUniTask();
 
                 _loadsScenes.Remove(key);
             }

@@ -55,6 +55,8 @@ namespace Assets._Scripts.SceneLoading
 
             _gameLogger.WithTag(sceneGroup.FindSceneNameByType(SceneType.Active));
 
+            _gameSaveLoadService.InitializeLevel();
+
             await LoadNewContent(sceneGroup);
             PrepareToTransition(sceneGroup);
 

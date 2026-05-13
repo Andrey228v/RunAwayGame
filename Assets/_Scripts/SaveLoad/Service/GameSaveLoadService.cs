@@ -9,10 +9,11 @@ using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using VContainer.Unity;
 
 namespace Assets._Scripts.SaveLoad.Service
 {
-    public class GameSaveLoadService : IDisposable
+    public class GameSaveLoadService : IDisposable, IStartable
     {
         private EasySaveSystem _saveSystem;
         private GameSaveData _gameSaveData;
@@ -42,19 +43,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _eventBus = eventBus;
             _gameLogger = gameLogger;
 
-            _gameLogger.Log("Инициализация GameSaveLoadService", "Service");
 
-            _eventBus.Subscribe<LevelCompletedEvent>(OnFinishLevel);
-            _eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
-            _eventBus.Subscribe<LoadGameEvent>(OnLoad);
-            _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
-            _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
-
-            LoadOrCreateSave();
-            InitializeAllServices();
-            LoadAllServices();
-
-            _gameLogger.Log("GameSaveLoadService инициализирован успешно", "Service");
         }
 
         public void Dispose()
@@ -77,16 +66,39 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService Dispose complite", "Service");
         }
 
+        public void Start()
+        {
+            _gameLogger.Log("Инициализация GameSaveLoadService", "Service");
+
+            _eventBus.Subscribe<LevelCompletedEvent>(OnFinishLevel);
+            _eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
+            _eventBus.Subscribe<LoadGameEvent>(OnLoad);
+            _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
+            _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
+
+            InitializeAllServices();
+            LoadAllServices();
+
+            _gameLogger.Log("GameSaveLoadService инициализирован успешно", "Service");
+        }
+
         public void InitializeAllServices()
         {
             _gameLogger.Log("GameSaveLoadService initing all services", "Service");
 
-            _levelsController.Initialize();
+            LoadOrCreateSave();
+
+            //_levelsController.Initialize(_gameSaveData, _levelConfig);
             _achievmentsController.Initialize();
             _shopController.Initialize();
             _walletController.Initialize();
 
             _gameLogger.Log("GameSaveLoadService have inited all services", "Service");
+        }
+
+        public void InitializeLevel()
+        {
+            //_levelsController.Initialize(_gameSaveData, _levelConfig);
         }
 
         public void SaveAllServices()

@@ -1,9 +1,12 @@
 ﻿using Assets._Scripts.EventBusGame;
 using Assets._Scripts.ObjectsScripts.Coins;
+using Assets._Scripts.SaveLoad.Data;
 using Assets.Scripts.Player;
 using Assets.Scripts.Points;
+using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
+using System.Collections.Generic;
 using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Levels
@@ -36,9 +39,10 @@ namespace Assets._Scripts.GameControllers.Levels
             _checkPointsController = null;
         }
 
-        public void Initialize()
+        public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             // под вопросом...
+            //_coinController.Initialize();
         }
 
         public void SetPlayerController(PlayerController playerController)
@@ -68,8 +72,13 @@ namespace Assets._Scripts.GameControllers.Levels
             }
             else
             {
-                //LevelData newLevelData = new LevelData { };
-                //gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
+                LevelData newLevelData = new LevelData(false, 
+                    levelConfig.StartPosition, 
+                    new PlayerData(), 
+                    new List<CheckPointData>(), 
+                    new List<CoinData>()){ };
+
+                gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
             }
 
             _playerController.SaveAllServices(gameSaveData, levelConfig);
@@ -90,8 +99,8 @@ namespace Assets._Scripts.GameControllers.Levels
 
             if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData) == false)
             {
-                //levelData = new LevelData { };
-                //gameSaveData.LevelsData.Add(levelConfig.LevelName, levelData);
+                LevelData newLevelData = new LevelData(false, levelConfig.StartPosition, new PlayerData(), new List<CheckPointData>(), new List<CoinData>()) { };
+                gameSaveData.LevelsData.Add(levelConfig.LevelName, levelData);
             }
 
             _playerController?.LoadAllServices(gameSaveData, levelConfig);

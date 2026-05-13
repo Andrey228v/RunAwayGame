@@ -14,8 +14,21 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     {
         private Transform _objectParent;
         private List<Coin> _objectList;
+        private List<CoinData> _objectData;
 
         public event Action OnTake;
+
+        public CoinController(GamePoints points)
+        {
+            if (points != null)
+                _objectParent = points.Coins;
+            else
+                throw new ArgumentNullException(nameof(points), "CoinController parent cannot be null");
+
+
+            _objectList = TransformToList(_objectParent);
+
+        }
 
         public void Dispose()
         {
@@ -28,18 +41,13 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
         public void Initialize()
         {
+            _objectData = new List<CoinData>();
 
-        }
+            for (int i = 0; i < _objectList.Count; i++)
+            {
+                _objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
+            }
 
-        public CoinController(GamePoints points)
-        {
-            if (points != null)
-                _objectParent = points.Coins;
-            else
-                throw new ArgumentNullException(nameof(points), "CoinController parent cannot be null");
-
-
-            _objectList = TransformToList(_objectParent);
 
         }
 
@@ -95,14 +103,15 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             if (levelData.Coins == null)
             {
-                List<CoinData> objectData = new List<CoinData>();
+                //List<CoinData> objectData = new List<CoinData>();
 
-                for (int i = 0; i < _objectList.Count; i++)
-                {
-                    objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
-                }
+                //for (int i = 0; i < _objectList.Count; i++)
+                //{
+                //    objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
+                //}
 
-                levelData.Coins = objectData;
+                //levelData.Coins = objectData;
+                levelData.Coins = _objectData;
             }
             else
             {

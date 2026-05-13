@@ -62,19 +62,21 @@ namespace Assets._Scripts.GameControllers.Levels
             if (_playerController == null || _coinController == null || _checkPointsController == null)
                 return;
 
-            _playerController.SaveAllServices(gameSaveData, levelConfig);
-            _coinController.SaveAllServices(gameSaveData, levelConfig);
-            _checkPointsController.SaveAllServices(gameSaveData, levelConfig);
-
             if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData))
             {
                 levelData.IsLevelWasStarted = _isLevelWasStart;
             }
             else
             {
-                LevelData newLevelData = new LevelData { };
-                gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
+                //LevelData newLevelData = new LevelData { };
+                //gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
             }
+
+            _playerController.SaveAllServices(gameSaveData, levelConfig);
+            _coinController.SaveAllServices(gameSaveData, levelConfig);
+            _checkPointsController.SaveAllServices(gameSaveData, levelConfig);
+
+
         }
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -88,8 +90,8 @@ namespace Assets._Scripts.GameControllers.Levels
 
             if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData) == false)
             {
-                levelData = new LevelData { };
-                gameSaveData.LevelsData.Add(levelConfig.LevelName, levelData);
+                //levelData = new LevelData { };
+                //gameSaveData.LevelsData.Add(levelConfig.LevelName, levelData);
             }
 
             _playerController?.LoadAllServices(gameSaveData, levelConfig);

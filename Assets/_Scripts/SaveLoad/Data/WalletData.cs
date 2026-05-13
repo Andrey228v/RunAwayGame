@@ -16,7 +16,7 @@ namespace Assets._Scripts.SaveLoad.Data
             Gobelets = gobelets;
         }
 
-        public void ResetData()
+        public void ResetData(LevelConfig levelConfig)
         {
             Coins = 0;
             Gobelets = 0;

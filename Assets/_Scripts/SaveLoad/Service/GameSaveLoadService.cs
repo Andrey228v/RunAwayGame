@@ -4,9 +4,11 @@ using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.Loger;
+using Assets._Scripts.SaveLoad.Data;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
+using System.Collections.Generic;
 
 namespace Assets._Scripts.SaveLoad.Service
 {
@@ -123,7 +125,12 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
             _saveSystem.ResetAllProgress();
-            _gameSaveData = new GameSaveData();
+            _gameSaveData = new GameSaveData(new Dictionary<string,
+                LevelData>(),
+                new AchievmentsData(),
+                new ShopData(),
+                new WalletData(),
+                DateTime.Now){ };
         }
 
         public void CloseLevel(TransitToWindowEvent args)
@@ -185,7 +192,13 @@ namespace Assets._Scripts.SaveLoad.Service
             }
             else
             {
-                _gameSaveData = new GameSaveData();
+                _gameSaveData = new GameSaveData(new Dictionary<string,
+                    LevelData>(),
+                    new AchievmentsData(),
+                    new ShopData(),
+                    new WalletData(),
+                    DateTime.Now){ };
+
                 _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
             }
         }

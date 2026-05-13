@@ -15,6 +15,19 @@ namespace Assets.Scripts.SaveLoad.Data
         public List<CheckPointData> CheckPoints;
         public List<CoinData> Coins;
 
+        public LevelData(bool isLevelWasStarted, 
+            Vector3 lastCheckPointPosition, 
+            PlayerData playerData, 
+            List<CheckPointData> checkPoints, 
+            List<CoinData> coins)
+        {
+            IsLevelWasStarted = isLevelWasStarted;
+            LastCheckPointPosition = lastCheckPointPosition;
+            PlayerData = playerData;
+            CheckPoints = checkPoints;
+            Coins = coins;
+        }
+
         public void ResetData(LevelConfig levelConfig)
         {
             LastCheckPointPosition = levelConfig.StartPosition;

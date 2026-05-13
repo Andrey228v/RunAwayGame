@@ -42,9 +42,7 @@
     "overrideReferences": true,
     "precompiledReferences": [
         "DOTween.dll",
-        "DOTweenEditor.dll",
-        "Unity.Collections.LowLevel.ILSupport.dll",
-        ""
+        "DOTweenEditor.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

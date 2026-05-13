@@ -15,5 +15,10 @@ namespace Assets._Scripts.SaveLoad.Data
         public int CurrentValue;
         public bool IsClaimed;
 
+
+        public void ResetData(LevelConfig levelConfig)
+        {
+
+        }
     }
 }

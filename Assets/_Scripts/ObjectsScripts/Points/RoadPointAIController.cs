@@ -7,7 +7,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
 {
 	public class RoadPointAIController : IDisposable
 	{
-        private Transform _parent;
+        //private Transform _parent;
         private List<Transform> _gamePointList;
         private int _indexPoint = 0;
         private int _count;
@@ -61,12 +61,14 @@ namespace Assets._Scripts.ObjectsScripts.Points
 
         public void SetRoadPointAIController(GamePoints points)
 		{
+            Transform parent;
+
             if (points != null)
-                _parent = points.BotsRoad;
+                parent = points.BotsRoad;
             else
                 throw new ArgumentNullException(nameof(points), "CheckPoint parent cannot be null");
 
-            _gamePointList = TransformToList(_parent);
+            _gamePointList = TransformToList(parent);
             _count = _gamePointList.Count;
         }
 

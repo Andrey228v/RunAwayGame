@@ -98,7 +98,8 @@ namespace Assets._Scripts.SaveLoad.Service
 
         public void InitializeLevel()
         {
-            //_levelsController.Initialize(_gameSaveData, _levelConfig);
+            _levelsController.Initialize(_gameSaveData, _levelConfig);
+            _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 
         public void SaveAllServices()
@@ -131,6 +132,7 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _levelConfig = args.levelConfig;
             _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
+            InitializeLevel();
         }
 
         public void ResetAllProgress()

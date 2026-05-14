@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.Loger;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.SaveLoad.Data;
 using Assets.Scripts.Player;
@@ -17,10 +18,12 @@ namespace Assets._Scripts.GameControllers.Levels
         private PlayerController _playerController;
         private CoinController _coinController;
         private CheckPointsController _checkPointsController;
+        private IGameLogger _gameLogger;
 
-        public LevelsController()
+        public LevelsController(IGameLogger gameLogger)
         {
             _isLevelWasStart = false;
+            _gameLogger = gameLogger;
         }
 
         public void Start()
@@ -48,6 +51,7 @@ namespace Assets._Scripts.GameControllers.Levels
         public void SetPlayerController(PlayerController playerController)
         {
             _playerController = playerController;
+            //_playerController?.LoadAllServices(gameSaveData, levelConfig);
         }
 
         public void SetCoinController(CoinController coinController) 
@@ -84,8 +88,6 @@ namespace Assets._Scripts.GameControllers.Levels
             _playerController.SaveAllServices(gameSaveData, levelConfig);
             _coinController.SaveAllServices(gameSaveData, levelConfig);
             _checkPointsController.SaveAllServices(gameSaveData, levelConfig);
-
-
         }
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -101,6 +103,11 @@ namespace Assets._Scripts.GameControllers.Levels
             {
                 LevelData newLevelData = new LevelData(false, levelConfig.StartPosition, new PlayerData(), new List<CheckPointData>(), new List<CoinData>()) { };
                 gameSaveData.LevelsData.Add(levelConfig.LevelName, levelData);
+            }
+
+            if (_playerController == null || _coinController == null || _checkPointsController == null)
+            {
+                _gameLogger.LogError("_plaer, _coin, _ckeck NULL");
             }
 
             _playerController?.LoadAllServices(gameSaveData, levelConfig);

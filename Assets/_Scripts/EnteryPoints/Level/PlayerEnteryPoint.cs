@@ -13,7 +13,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class PlayerEnteryPoint : IStartable, IDisposable
+    public class PlayerEnteryPoint : IDisposable, ILevelInit // IStartable
     {
         private PlayerController _playerController;
         private PlayerStateMachineFactory _playerStateMachineFactory;
@@ -42,14 +42,24 @@ namespace Assets._Scripts.EnteryPoints
             //_levelsController = levelsController;
         }
 
-        public void Start()
+        public void Initialize()
         {
-            //_levelsController.SetPlayerController(_playerController);
-
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
                         _unitInfoUIFactory, _billboardManager);
             InitEvents();
+        }
+
+        public void Start()
+        {
+            ////_levelsController.SetPlayerController(_playerController);
+
+            //InitPlayer(_cameraController, _characterFactory, //Переделать...
+            //            _playerStateMachineFactory, _playerController,
+            //            _unitInfoUIFactory, _billboardManager);
+            //InitEvents();
+
+
         }
 
         public void Dispose()
@@ -65,8 +75,11 @@ namespace Assets._Scripts.EnteryPoints
         }
 
         private void InitPlayer(CameraController cameraController, 
-            Func<Character> characterFactory, PlayerStateMachineFactory playerStateMachineFactory, PlayerController playerController,
-            Func<UnitInfoUI> unitInfoUIFactory, BillboardManager billboardManager)
+            Func<Character> characterFactory, 
+            PlayerStateMachineFactory playerStateMachineFactory, 
+            PlayerController playerController,
+            Func<UnitInfoUI> unitInfoUIFactory, 
+            BillboardManager billboardManager)
         {
             Character character = characterFactory();
             character.AddComponent<PlayerMB>(); // Тут подумать так ли делать ...
@@ -95,5 +108,7 @@ namespace Assets._Scripts.EnteryPoints
         {
             _gameSaveLoadService.DieRestart();
         }
+
+
     }
 }

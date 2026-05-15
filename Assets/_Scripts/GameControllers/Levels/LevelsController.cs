@@ -46,23 +46,24 @@ namespace Assets._Scripts.GameControllers.Levels
         {
             // под вопросом...
             //_coinController.Initialize();
+
         }
 
-        public void SetPlayerController(PlayerController playerController)
-        {
-            _playerController = playerController;
-            //_playerController?.LoadAllServices(gameSaveData, levelConfig);
-        }
+        //public void SetPlayerController(PlayerController playerController)
+        //{
+        //    _playerController = playerController;
+        //    //_playerController?.LoadAllServices(gameSaveData, levelConfig);
+        //}
 
-        public void SetCoinController(CoinController coinController) 
-        {
-            _coinController = coinController;
-        }
+        //public void SetCoinController(CoinController coinController) 
+        //{
+        //    _coinController = coinController;
+        //}
 
-        public void SetCheckPointsController(CheckPointsController checkPointsController)
-        {
-            _checkPointsController = checkPointsController;
-        }
+        //public void SetCheckPointsController(CheckPointsController checkPointsController)
+        //{
+        //    _checkPointsController = checkPointsController;
+        //}
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {

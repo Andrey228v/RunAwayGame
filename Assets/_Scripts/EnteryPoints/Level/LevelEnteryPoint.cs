@@ -7,33 +7,39 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class LevelEnteryPoint : IStartable, IDisposable
+    public class LevelEnteryPoint :  IDisposable, ILevelInit //IStartable,
     {
         private CheckPointsController _checkPointsController;
         private CoinController _coinController;
-        private LevelsController _levelsController;
+        //private LevelsController _levelsController;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController, 
             CoinController coinController,
-            GameSaveLoadService gameSaveLoadService,
-            LevelsController levelsController)
+            //LevelsController levelsController,
+            GameSaveLoadService gameSaveLoadService
+            )
         {
             _checkPointsController = checkPointsController;
             _coinController = coinController;
-            _levelsController = levelsController;
+            //_levelsController = levelsController;
         }
 
         public void Start()
         {
-            _levelsController.SetCoinController(_coinController);
-            _levelsController.SetCheckPointsController(_checkPointsController);
+            //_levelsController.SetCoinController(_coinController);
+            //_levelsController.SetCheckPointsController(_checkPointsController);
         }
 
         public void Dispose()
         {
             _checkPointsController.Dispose();
             _coinController.Dispose();
+        }
+
+        public void Initialize()
+        {
+            
         }
     }
 }

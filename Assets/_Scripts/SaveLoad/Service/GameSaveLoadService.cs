@@ -5,6 +5,7 @@ using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SceneLoading;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -24,14 +25,19 @@ namespace Assets._Scripts.SaveLoad.Service
         private WalletController _walletController;
         private IEventSubscriber _eventBus;
         private IGameLogger _gameLogger;
+        //private LoadManager _loadManager;
+        //private List<SceneGroupHandle> _scensGroups;
 
         public GameSaveData GameSaveData => _gameSaveData;
+        public LevelConfig levelConfig => _levelConfig;
 
         public GameSaveLoadService(EasySaveSystem saveSystem,
             LevelsController levelsController,
             AchievmentsController achievmentsController,
             ShopController shopController,
             WalletController walletController,
+            //LoadManager loadManager,
+            //List<SceneGroupHandle> scensGroups,
             IEventSubscriber eventBus,
             IGameLogger gameLogger) 
         {
@@ -42,6 +48,8 @@ namespace Assets._Scripts.SaveLoad.Service
             _walletController = walletController;
             _eventBus = eventBus;
             _gameLogger = gameLogger;
+            //_loadManager = loadManager;
+            //_scensGroups = scensGroups;
 
 
         }
@@ -88,7 +96,7 @@ namespace Assets._Scripts.SaveLoad.Service
 
             LoadOrCreateSave();
 
-            //_levelsController.Initialize(_gameSaveData, _levelConfig);
+            _levelsController.Initialize(_gameSaveData, _levelConfig);
             _achievmentsController.Initialize();
             _shopController.Initialize();
             _walletController.Initialize();
@@ -98,8 +106,8 @@ namespace Assets._Scripts.SaveLoad.Service
 
         public void InitializeLevel()
         {
-            _levelsController.Initialize(_gameSaveData, _levelConfig);
-            _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
+            //_levelsController.Initialize(_gameSaveData, _levelConfig);
+            //_levelsController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 
         public void SaveAllServices()
@@ -128,11 +136,15 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService load all services complite", "Load");
         }
 
-        public void OnSetLevelConfig(ChooseLevelEvent args)
+        public async void OnSetLevelConfig(ChooseLevelEvent args)
         {
             _levelConfig = args.levelConfig;
             _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
-            InitializeLevel();
+            _levelsController.Initialize(_gameSaveData, _levelConfig);
+
+            //await _loadManager.LoadScene(_scensGroups[_levelConfig.LevelId]);
+
+            //InitializeLevel();
         }
 
         public void ResetAllProgress()

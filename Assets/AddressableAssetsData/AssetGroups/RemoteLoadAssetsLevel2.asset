@@ -15,8 +15,8 @@ MonoBehaviour:
   m_GroupName: RemoteLoadAssetsLevel2
   m_GUID: 4035c020891cf574e9956c2db30c34a8
   m_SerializeEntries:
-  - m_GUID: bb7e8d1174cfbe84d82ba372040c8e8d
-    m_Address: LEVEL_2
+  - m_GUID: 99c9720ab356a0642a771bea13969a05
+    m_Address: LEVEL_1
     m_ReadOnly: 0
     m_SerializedLabels:
     - Screen

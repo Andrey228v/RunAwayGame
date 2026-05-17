@@ -245,8 +245,8 @@ MonoBehaviour:
   autoInjectGameObjects: []
   _levelConfigs:
   - {fileID: 11400000, guid: 1c1f2358ae338fd498033474b819d6f3, type: 2}
+  - {fileID: 11400000, guid: c353f04d9a5dec14c97f13f12949e822, type: 2}
   - {fileID: 11400000, guid: 1d0c3ca4670592c438a94e5e327d1ae9, type: 2}
-  - {fileID: 11400000, guid: 2cc6379b0c69543418eb06de053433e8, type: 2}
   _sceneGroupHandle:
   - groupName: Menu
     scenesNames:
@@ -271,8 +271,8 @@ MonoBehaviour:
   - groupName: Level_1
     scenesNames:
     - scene:
-        asset: {fileID: 102900000, guid: bb7e8d1174cfbe84d82ba372040c8e8d, type: 3}
-        guid: bb7e8d1174cfbe84d82ba372040c8e8d
+        asset: {fileID: 102900000, guid: 99c9720ab356a0642a771bea13969a05, type: 3}
+        guid: 99c9720ab356a0642a771bea13969a05
       type: 0
     - scene:
         asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}
@@ -285,8 +285,8 @@ MonoBehaviour:
   - groupName: Level_2
     scenesNames:
     - scene:
-        asset: {fileID: 102900000, guid: 43586f51312cc4d4787ed65862f0679b, type: 3}
-        guid: 43586f51312cc4d4787ed65862f0679b
+        asset: {fileID: 102900000, guid: bb7e8d1174cfbe84d82ba372040c8e8d, type: 3}
+        guid: bb7e8d1174cfbe84d82ba372040c8e8d
       type: 0
     - scene:
         asset: {fileID: 102900000, guid: 899cd15b311d7324380ea62d6275d6d2, type: 3}

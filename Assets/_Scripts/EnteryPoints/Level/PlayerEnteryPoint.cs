@@ -22,14 +22,14 @@ namespace Assets._Scripts.EnteryPoints
         private BillboardManager _billboardManager;
         private Func<UnitInfoUI> _unitInfoUIFactory;
         private GameSaveLoadService _gameSaveLoadService;
-        //private LevelsController _levelsController;
+        private LevelsController _levelsController;
 
         public PlayerEnteryPoint(PlayerController playerController, 
             PlayerStateMachineFactory playerStateMachineFactory, 
             Func<Character> characterFactory, CameraController cameraController,
             BillboardManager billboardManager, Func<UnitInfoUI> unitInfoUIFactory,
-            GameSaveLoadService gameSaveLoadService
-            //LevelsController levelsController
+            GameSaveLoadService gameSaveLoadService,
+            LevelsController levelsController
             ) 
         {
             _playerController = playerController;
@@ -39,17 +39,25 @@ namespace Assets._Scripts.EnteryPoints
             _billboardManager = billboardManager;
             _unitInfoUIFactory = unitInfoUIFactory;
             _gameSaveLoadService = gameSaveLoadService;
-            //_levelsController = levelsController;
+            _levelsController = levelsController;
         }
 
         public void Start()
         {
             //_levelsController.SetPlayerController(_playerController);
+            _levelsController.AddInitialization(_playerController);
+            _levelsController.AddSave(_playerController);
+            _levelsController.AddLoad(_playerController);
+            _levelsController.AddRestart(_playerController);
+            _levelsController.AddFinish(_playerController);
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
                         _unitInfoUIFactory, _billboardManager);
             InitEvents();
+
+            _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
+            _playerController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
         }
 
         public void Dispose()

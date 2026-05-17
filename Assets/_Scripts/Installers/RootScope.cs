@@ -27,7 +27,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterInstance(_levelConfigs);
             builder.RegisterInstance(_sceneGroupHandle);
             builder.RegisterInstance(_loadScreenView);
-            builder.RegisterEntryPoint<BootEntryPoint>();
+            builder.RegisterEntryPoint<BootEntryPoint>().AsSelf();
             builder.Register<EasySaveSystem>(Lifetime.Singleton);
             builder.Register<LoadManager>(Lifetime.Singleton);
             builder.Register<GameSaveLoadService>(Lifetime.Singleton);

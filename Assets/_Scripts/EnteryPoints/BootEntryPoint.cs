@@ -3,6 +3,7 @@ using Assets._Scripts.SceneLoading;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -12,6 +13,7 @@ namespace Assets._Scripts.EnteryPoints
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
 
+        [Inject]
         public BootEntryPoint(LoadManager loadManager, 
             List<SceneGroupHandle> scensGroups,
             GameSaveLoadService gameSaveLoadService)

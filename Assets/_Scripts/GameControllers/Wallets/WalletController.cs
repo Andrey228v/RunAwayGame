@@ -58,7 +58,7 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             _coins += args.CoinCount;
             _eventBus.Publish(new SaveGameEvent { });
-            _eventBus.Publish(new UpdateUI { });
+            _eventBus.Publish(new UpdateUIEvent { });
 
 
         }
@@ -67,7 +67,7 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             _gobelets += args.GobeletCount;
             _eventBus.Publish(new SaveGameEvent { });
-            _eventBus.Publish(new UpdateUI { });
+            _eventBus.Publish(new UpdateUIEvent { });
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using Assets._Scripts.Loger;
-using Assets._Scripts.ObjectsScripts.Coins;
+﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
-using Assets.Scripts.Player;
-using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System.Collections.Generic;
@@ -13,10 +11,8 @@ namespace Assets._Scripts.GameControllers.Levels
     public class LevelsController : IStartable
     {
         private bool _isLevelWasStart;
-        private PlayerController _playerController;
-        private CoinController _coinController;
-        private CheckPointsController _checkPointsController;
         private IGameLogger _gameLogger;
+        private EventBus _eventBus;
 
         private List<IInitialzation> _initList;
         private List<ISave> _saveList;
@@ -24,7 +20,8 @@ namespace Assets._Scripts.GameControllers.Levels
         private List<IRestart> _restartList;
         private List<IFinish> _finishList;
 
-        public LevelsController(IGameLogger gameLogger)
+
+        public LevelsController(IGameLogger gameLogger, EventBus eventBus)
         {
             _isLevelWasStart = false;
             _gameLogger = gameLogger;
@@ -34,6 +31,7 @@ namespace Assets._Scripts.GameControllers.Levels
             _loadList = new List<ILoad>();
             _restartList = new List<IRestart>();
             _finishList = new List<IFinish>();
+            _eventBus = eventBus;
         }
 
         public void Start()
@@ -43,14 +41,6 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public void Dispose()
         {
-            //_playerController?.Dispose();
-            //_coinController?.Dispose();
-            //_checkPointsController?.Dispose();
-
-            //_playerController = null;
-            //_coinController = null;
-            //_checkPointsController = null;
-
             _initList.Clear();
             _saveList.Clear();
             _loadList.Clear();
@@ -60,36 +50,14 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            // под вопросом...
-            //_coinController.Initialize();
-
             foreach(IInitialzation init in _initList)
             {
                 init.Initialzation(gameSaveData, levelConfig);
             }
         }
 
-        //public void SetPlayerController(PlayerController playerController)
-        //{
-        //    _playerController = playerController;
-        //    //_playerController?.LoadAllServices(gameSaveData, levelConfig);
-        //}
-
-        //public void SetCoinController(CoinController coinController) 
-        //{
-        //    _coinController = coinController;
-        //}
-
-        //public void SetCheckPointsController(CheckPointsController checkPointsController)
-        //{
-        //    _checkPointsController = checkPointsController;
-        //}
-
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-
-            //if (_playerController == null || _coinController == null || _checkPointsController == null)
-            //    return;
 
             if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData))
             {
@@ -110,10 +78,6 @@ namespace Assets._Scripts.GameControllers.Levels
             {
                 save.Save(gameSaveData, levelConfig);
             }
-
-            //_playerController.Save(gameSaveData, levelConfig);
-            //_coinController.Save(gameSaveData, levelConfig);
-            //_checkPointsController.Save(gameSaveData, levelConfig);
         }
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -135,19 +99,6 @@ namespace Assets._Scripts.GameControllers.Levels
             {
                 load.Load(gameSaveData, levelConfig);
             }
-
-            //if (_playerController == null || _coinController == null || _checkPointsController == null)
-            //{
-            //    _gameLogger.LogError("_plaer, _coin, _ckeck NULL");
-            //}
-
-            //_playerController.Initialzation(gameSaveData, levelConfig);
-            //_coinController.Initialzation(gameSaveData, levelConfig);
-            //_checkPointsController.Initialize(gameSaveData, levelConfig);
-
-            //_playerController.Load(gameSaveData, levelConfig);
-            //_coinController.Load(gameSaveData, levelConfig);
-            //_checkPointsController.LoadAllServices(gameSaveData, levelConfig);
         }
 
         public void DieRestart(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -158,8 +109,6 @@ namespace Assets._Scripts.GameControllers.Levels
             {
                 restart.Restart(LevelData);
             }
-
-            //_playerController.DieRestart(LevelData);
         }
 
         public void LoadLevel()
@@ -167,15 +116,24 @@ namespace Assets._Scripts.GameControllers.Levels
 
         }
 
-        public void FinishLevel(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void FinishLevel(GameSaveData gameSaveData, LevelConfig levelConfig, LevelCompletedEvent args)
         {
-            //_playerController.FinishGame(gameSaveData, levelConfig);
-            //_coinController.FinishGame();
-            //_checkPointsController.FinishGame();
-
             foreach (IFinish finish in _finishList) 
             {
                 finish.Finish(gameSaveData, levelConfig);
+            }
+
+            if (args.LvlId == "0") // переделать. Это не тут должно быть
+            {
+                _eventBus.Publish(new FinishLevel1());
+            }
+            else if (args.LvlId == "1")
+            {
+                _eventBus.Publish(new FinishLevel2());
+            }
+            else if (args.LvlId == "2")
+            {
+                _eventBus.Publish(new FinishLevel3());
             }
         }
 

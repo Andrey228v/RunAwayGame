@@ -1286,12 +1286,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.UI._1MenuWindow.Achievements.AchievementView
   _name: {fileID: 8805564627755809890}
-  _descroption: {fileID: 1413785939607943448}
+  _description: {fileID: 1413785939607943448}
+  _blockImage: {fileID: 6717840759430118059}
   _progressBar: {fileID: 4832925299020245486}
   _currentCountText: {fileID: 543329206106406533}
   _goalCountText: {fileID: 310464567685705283}
   _claimButton: {fileID: 3962592276260742931}
   _lockOverlay: {fileID: 827024063180919821}
+  _progressBlock: {fileID: 4896172267501239124}
   _selectionHighlight: {fileID: 0}
   _normalColor: {r: 1, g: 1, b: 1, a: 1}
   _selectedColor: {r: 1, g: 0.8, b: 0.2, a: 1}

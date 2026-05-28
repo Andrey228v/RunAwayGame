@@ -1,28 +1,37 @@
 ﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.SaveLoad.Service;
+using Assets._Scripts.Loger;
+using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets.Scripts.SaveLoad.Data;
-using System;
 using System.Collections.Generic;
-using VContainer.Unity;
+using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentsController : IStartable
+    public class AchievmentsController
     {
-        private GameSaveLoadService _gameSaveLoadService;
-        private GameSaveData _gameSaveData;
-        private List<IAchievement> _achievments;
         private EventBus _eventBus;
-        
+        private IGameLogger _gameLogger;
 
-        //public Dictionary<Type, ISaveLoadService> Services { get; }
+        private AchievmentsCellsView _achievmentsCellsView;
 
-        public AchievmentsController(EventBus eventBus) 
+        private List<IAchievement> _modelsAchievments;
+        private List<AchievementView> _achievementViews;
+        private List<Transform> _cells;
+        private int _countAchievmentsMode;
+
+        public AchievmentsController(EventBus eventBus, IGameLogger gameLogger) 
         {
-            //_gameSaveLoadService = gameSaveLoadService;
-            //_gameSaveData = gameSaveLoadService.GameSaveData;
-
             _eventBus = eventBus;
+            _gameLogger = gameLogger;
+        }
+
+        public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            _achievementViews = new List<AchievementView>();
+            _cells = new List<Transform>();
+
+            _gameLogger.Log("AchievmentsController Initialize", "Success");
 
             var rewardType1 = new AchievmentsReward(_eventBus);
             rewardType1.AddRevard(new CoinReward(_eventBus, 10));
@@ -34,64 +43,200 @@ namespace Assets._Scripts.GameControllers.Achievments
             rewardType3.AddRevard(new CoinReward(_eventBus, 5));
             rewardType3.AddRevard(new GobeletReward(_eventBus, 2));
 
-            _achievments = new List<IAchievement>
+            AchievmentData achData1 = new AchievmentData() { 
+                Id = "1", 
+                Name = "sLvl 1", 
+                Description = "Start lvl 1", 
+                IsUnlock = false, 
+                IsClaimed = false };
+
+            AchievmentData achData2 = new AchievmentData()
+            {
+                Id = "2",
+                Name = "sLvl 2",
+                Description = "Start lvl 2",
+                IsUnlock = false,
+                IsClaimed = false
+            };
+
+            AchievmentData achData3 = new AchievmentData()
+            {
+                Id = "3",
+                Name = "sLvl 3",
+                Description = "Start lvl 3",
+                IsUnlock = false,
+                IsClaimed = false
+            };
+
+            AchievmentData achData4 = new AchievmentData()
+            {
+                Id = "4",
+                Name = "fLvl 1",
+                Description = "Finish lvl 1",
+                IsUnlock = false,
+                IsClaimed = false
+            };
+
+            AchievmentData achData5 = new AchievmentData()
+            {
+                Id = "5",
+                Name = "fLvl 2",
+                Description = "Finish lvl 2",
+                IsUnlock = false,
+                IsClaimed = false
+            };
+
+            AchievmentData achData6 = new AchievmentData()
+            {
+                Id = "6",
+                Name = "fLvl 3",
+                Description = "Finish lvl 3",
+                IsUnlock = false,
+                IsClaimed = false
+            };
+
+            AchievmentData achData7 = new AchievmentData()
+            {
+                Id = "7",
+                Name = "CollectGols",
+                Description = "Collect 10 gold",
+                IsUnlock = false,
+                IsClaimed = false
+            };
+
+            AchievmentData achData8 = new AchievmentData()
+            {
+                Id = "8",
+                Name = "Die",
+                Description = "Die",
+                IsUnlock = false,
+                IsClaimed = false
+            };
+
+            _modelsAchievments = new List<IAchievement>
                     {
-                        new AchievmentModel<StartLevel1>(_eventBus, "sLvl 1", "Start lvl 1", false, false, rewardType1),
-                        new AchievmentModel<StartLevel2>(_eventBus, "sLvl 2", "Start lvl 2", false, false, rewardType2),
-                        new AchievmentModel<StartLevel3>(_eventBus, "sLvl 3", "Start lvl 3", false, false, rewardType3),
-                        new AchievmentModel<FinishLevel1>(_eventBus, "fLvl 1", "Finish lvl 1", false, false, rewardType2),
-                        new AchievmentModel<FinishLevel2>(_eventBus, "fLvl 2", "Finish lvl 2", false, false, rewardType2),
-                        new AchievmentModel<FinishLevel3>(_eventBus, "fLvl 3", "Finish lvl 3", false, false, rewardType3),
+                        new AchievmentModel<StartLevel1>(_eventBus, achData1, rewardType1, _gameLogger),
+                        new AchievmentModel<StartLevel2>(_eventBus, achData2, rewardType2, _gameLogger),
+                        new AchievmentModel<StartLevel3>(_eventBus, achData3, rewardType3, _gameLogger),
+                        new AchievmentModel<FinishLevel1>(_eventBus, achData4, rewardType2, _gameLogger),
+                        new AchievmentModel<FinishLevel2>(_eventBus, achData5, rewardType2, _gameLogger),
+                        new AchievmentModel<FinishLevel3>(_eventBus, achData6, rewardType3, _gameLogger),
+                        new AchievmentModel<CollectGoldEvent>(_eventBus, achData7, rewardType1, _gameLogger),
+                        new AchievmentModel<DieEvent>(_eventBus, achData8, rewardType2, _gameLogger),
                     };
-        }
 
-        public void Start()
-        {
+            if(gameSaveData.AchievmentsData ==  null || gameSaveData.AchievmentsData.Count == 0)
+            {
+                gameSaveData.AchievmentsData = new List<AchievmentData>() { achData1, achData2, achData3, achData4, achData5, achData6, achData7, achData8 };
+            }
 
-
-            //if (_gameSaveData.AchievmentsModels.Count == 0 || _gameSaveData.AchievmentsModels == null)
-            //{
-            //    _gameSaveData.AchievmentsModels = _achievments;
-            //}
-            //else
-            //{
-            //    //тут надо дописать момент, что если мы изменяем список ачивок, то он должен пробигать по этом списку
-            //    //сравнивать ID и перезаписывать ачивки, потому что получается так что список сейчас жёстко зафиксирован.
-            //}
+            _countAchievmentsMode = _modelsAchievments.Count;
         }
 
         public void Dispose()
         {
-
+            _achievementViews.Clear();
+            _cells.Clear();
         }
-
-        public void Initialize()
-        {
-
-        }
-
-        //public void AddSerice(ISaveLoadService service)
-        //{
-
-        //}
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            //gameSaveData.AchievmentsData
-            foreach(var item in _achievments)
+            List<AchievmentData> achievmentsData = gameSaveData.AchievmentsData;
+
+            for(int i = 0; i < _achievementViews.Count; i++)
             {
-                //gameSaveData.AchievmentsData
+                var achModel = _modelsAchievments[i];
+                achievmentsData[i] = achModel.GetData();
             }
         }
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            
+            List<AchievmentData> achievmentsData = gameSaveData.AchievmentsData;
+
+            for (int i = 0; i < _modelsAchievments.Count; i++)
+            {
+                var achModel = _modelsAchievments[i];
+                var data = achievmentsData[i];
+
+                achModel.SetData(data);
+            }
         }
 
-        public List<IAchievement> GetAchievmentsModels()
+        public void SetCellView(AchievmentsCellsView achievmentsCellsView)
         {
-            return _achievments;
+            _achievmentsCellsView = achievmentsCellsView;
+        }
+
+        public void AddAchievmentView(AchievementView achView, int modelIndex)
+        {
+            if (modelIndex >= _modelsAchievments.Count)
+            {
+                return;
+            }
+
+            if( modelIndex < _countAchievmentsMode )
+            {
+                var model = _modelsAchievments[modelIndex];
+                _achievementViews.Add(achView);
+                achView.transform.SetParent(_cells[modelIndex], false);
+
+                model.OnUnlock += () => OnModelUnlocked(model, achView); // а как отписаться ??...
+                model.OnChanged += () => OnModelChanged(model, achView);
+            }
+            else
+            {
+                throw new System.Exception("_countAchievmentsMode < modelIndex");
+            }
+        }
+
+        public void AddCell(Transform cell)
+        {
+            _cells.Add(cell);
+        }
+
+        private void OnModelUnlocked(IAchievement model, AchievementView view)
+        {
+            UpdateView(model, view);
+            //_eventBus.Publish(new AchievementUnlockedEvent(model.Data.Id));
+        }
+
+        private void OnModelChanged(IAchievement model, AchievementView view)
+        {
+            // Для прогрессирующих достижений
+            UpdateView(model, view);
+        }
+
+        private void UpdateView(IAchievement model, AchievementView view)
+        {
+            var data = model.Data;
+            view.SetName(data.Name);
+            view.SetDescription(data.Description);
+
+            if (data.IsUnlock)
+            {
+                view.ShowUnlocked(!data.IsClaimed);
+                if (!data.IsClaimed)
+                    view.PlayUnlockAnimation();
+            }
+            else
+            {
+                view.ShowLocked();
+            }
+        }
+
+        public void UpdateAllCells()
+        {
+            //_modelsAchievments
+            //_achievementViews;
+
+            for (int i = 0; i < _modelsAchievments.Count; i++) 
+            {
+                var model = _modelsAchievments[i];
+                var view = _achievementViews[i];
+
+                UpdateView(model, view);
+            }
         }
     }
 }

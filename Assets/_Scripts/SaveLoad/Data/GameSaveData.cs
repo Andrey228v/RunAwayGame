@@ -8,13 +8,13 @@ namespace Assets.Scripts.SaveLoad.Data
     public class GameSaveData
     {
         public Dictionary<string, LevelData> LevelsData = new Dictionary<string, LevelData>(); // LevelController
-        public AchievmentsData AchievmentsData; // AchievmentsController
+        public List<AchievmentData> AchievmentsData; // AchievmentsController
         public ShopData ShopData; // ShopController
         public WalletData WalletData;
         public DateTime LastSaveTime;
 
-        public GameSaveData(Dictionary<string, LevelData> levelsData, 
-            AchievmentsData achievmentsData, 
+        public GameSaveData(Dictionary<string, LevelData> levelsData,
+            List<AchievmentData> achievmentsData, 
             ShopData shopData, 
             WalletData walletData, 
             DateTime lastSaveTime)
@@ -33,7 +33,13 @@ namespace Assets.Scripts.SaveLoad.Data
                 LevelsData[key].ResetData(levelConfig);
             }
 
-            AchievmentsData.ResetData(levelConfig);
+            //AchievmentsData.ResetData(levelConfig);
+
+            foreach(var ach in AchievmentsData)
+            {
+                ach.ResetData(levelConfig);
+            }
+
             ShopData.ResetData(levelConfig);
             WalletData.ResetData(levelConfig);
 

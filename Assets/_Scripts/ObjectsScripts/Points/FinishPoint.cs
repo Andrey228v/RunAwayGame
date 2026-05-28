@@ -10,7 +10,7 @@ namespace Assets.Scripts.Points
     {
         //При достижении финиша мы получаем кубок, буст и нас кидает в начало...
         [SerializeField] private bool _isActivated = false;
-        [SerializeField] private int _lvlName; // Переделать.... тут надо передавать это значение, а не передвать
+        [SerializeField] private string _lvlId; // Переделать.... тут надо передавать это значение, а не передвать
 
         private bool _isInitialized;
 
@@ -20,6 +20,16 @@ namespace Assets.Scripts.Points
         
         public event Action OnFinishActivated;
         public event Action OnRestartActivated;
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_lvlId == null)
+            {
+                Debug.LogError($"{_lvlId}: _lvlId is not set!", this);
+            }
+        }
+#endif
 
         private void Awake()
         {
@@ -53,7 +63,7 @@ namespace Assets.Scripts.Points
         {
             if (_isActivated) return;
 
-            _eventBus.Publish(new LevelCompletedEvent { });
+            _eventBus.Publish(new LevelCompletedEvent { LvlId = _lvlId });
         }
     }
 }

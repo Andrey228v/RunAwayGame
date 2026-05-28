@@ -1,4 +1,6 @@
 ﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.GameControllers.Achievments;
+using Assets._Scripts.Loger;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using System;
@@ -11,39 +13,40 @@ namespace Assets._Scripts.EnteryPoints
     {
         private Func<MenuTabs> _menuFactory;
         private Func<AchievmentsCellsView> _achievmentsCellsFactory;
-        private Func<AchievementView> _achievmentsViewFactory;
+        private AchievmentsController _achievmentsController;
+        private IGameLogger _gameLogger;
 
-        private MenuTabs _menuTabs;
-        private AchievmentsCellsView _achievments;
-
-        public MenuEnteryPoint(Func<MenuTabs> menuFactory,
-            Func<AchievmentsCellsView> achievmentsCellsFactory,
-            Func<AchievementView> achievmentsViewFactory) 
+        public MenuEnteryPoint(
+            Func<MenuTabs> menuFactory,
+            AchievmentsController achievmentsController,
+            IGameLogger gameLogger,
+            Func<AchievmentsCellsView> achievmentsCellsFactory
+            ) 
         {
             _menuFactory = menuFactory;
             _achievmentsCellsFactory = achievmentsCellsFactory;
-            _achievmentsViewFactory = achievmentsViewFactory;
+            _achievmentsController = achievmentsController;
+            _gameLogger = gameLogger;
         }
 
         public void Start()
         {
             InitMenu();
-            InitAchievments();
+            _achievmentsController.UpdateAllCells();
         }
 
         public void Dispose()
         {
+            _gameLogger.Log("MenuEnteryPoint OnDestroy", "Warning");
+            _achievmentsController.Dispose();
         }
 
         public void InitMenu()
         {
-            _menuTabs = _menuFactory();
-            _achievments = _achievmentsCellsFactory();
-            _achievments.transform.SetParent(_menuTabs.AchievmentsParent, false);
-        }
-
-        public void InitAchievments()
-        {
+            MenuTabs menuTabs = _menuFactory();
+            AchievmentsCellsView achievments = _achievmentsCellsFactory();
+            achievments.transform.SetParent(menuTabs.AchievmentsParent, false);
+            _achievmentsController.SetCellView(achievments);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Assets._Scripts.SaveLoad.Service
         private AchievmentsController _achievmentsController;
         private ShopController _shopController;
         private WalletController _walletController;
-        private IEventSubscriber _eventBus;
+        private EventBus _eventBus;
         private IGameLogger _gameLogger;
         //private LoadManager _loadManager;
         //private List<SceneGroupHandle> _scensGroups;
@@ -38,7 +38,7 @@ namespace Assets._Scripts.SaveLoad.Service
             WalletController walletController,
             //LoadManager loadManager,
             //List<SceneGroupHandle> scensGroups,
-            IEventSubscriber eventBus,
+            EventBus eventBus,
             IGameLogger gameLogger) 
         {
             _saveSystem = saveSystem;
@@ -63,6 +63,8 @@ namespace Assets._Scripts.SaveLoad.Service
             _eventBus.Unsubscribe<LoadGameEvent>(OnLoad);
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
             _eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            _eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
+            _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
 
             _levelsController.Dispose();
             _achievmentsController.Dispose();
@@ -83,6 +85,8 @@ namespace Assets._Scripts.SaveLoad.Service
             _eventBus.Subscribe<LoadGameEvent>(OnLoad);
             _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
             _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            _eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
+            _eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
 
             InitializeAllServices();
             LoadAllServices();
@@ -97,17 +101,11 @@ namespace Assets._Scripts.SaveLoad.Service
             LoadOrCreateSave();
 
             _levelsController.Initialize(_gameSaveData, _levelConfig);
-            _achievmentsController.Initialize();
+            _achievmentsController.Initialize(_gameSaveData, _levelConfig);
             _shopController.Initialize();
             _walletController.Initialize();
 
             _gameLogger.Log("GameSaveLoadService have inited all services", "Service");
-        }
-
-        public void InitializeLevel()
-        {
-            //_levelsController.Initialize(_gameSaveData, _levelConfig);
-            //_levelsController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 
         public void SaveAllServices()
@@ -136,6 +134,12 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService load all services complite", "Load");
         }
 
+        public void UpdateAllUI(UpdateUIEvent args)
+        {
+            _gameLogger.Log("GameSaveLoadService UpdateAllUI", "Service");
+            //_achievmentsController.UpdateUI(_gameSaveData, _levelConfig);
+        }
+
         public async void OnSetLevelConfig(ChooseLevelEvent args)
         {
             _levelConfig = args.levelConfig;
@@ -147,16 +151,19 @@ namespace Assets._Scripts.SaveLoad.Service
             //InitializeLevel();
         }
 
-        public void ResetAllProgress()
+        public void ResetAllProgress(DeletSaveEvent args)
         {
             _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
             _saveSystem.ResetAllProgress();
             _gameSaveData = new GameSaveData(new Dictionary<string,
                 LevelData>(),
-                new AchievmentsData(),
+                new List<AchievmentData>(),
                 new ShopData(),
                 new WalletData(),
                 DateTime.Now){ };
+
+            //обновить UI
+
         }
 
         public void CloseLevel(TransitToWindowEvent args)
@@ -178,7 +185,7 @@ namespace Assets._Scripts.SaveLoad.Service
 
             RestartLevel();
 
-            _levelsController.FinishLevel(_gameSaveData, _levelConfig);
+            _levelsController.FinishLevel(_gameSaveData, _levelConfig, args);
 
             SaveGame();
         }
@@ -220,7 +227,7 @@ namespace Assets._Scripts.SaveLoad.Service
             {
                 _gameSaveData = new GameSaveData(new Dictionary<string,
                     LevelData>(),
-                    new AchievmentsData(),
+                    new List<AchievmentData>(),
                     new ShopData(),
                     new WalletData(),
                     DateTime.Now){ };

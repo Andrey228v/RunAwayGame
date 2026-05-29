@@ -213,6 +213,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void DeletSave()
         {
             _eventBus.Publish(new DeletSaveEvent { });
+            _eventBus.Publish(new UpdateUIEvent { });
         }
 
         private void SetCoinsCountText(UpdateUIEvent args)

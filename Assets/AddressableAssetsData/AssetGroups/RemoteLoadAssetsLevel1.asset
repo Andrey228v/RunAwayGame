@@ -65,6 +65,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 43586f51312cc4d4787ed65862f0679b
+    m_Address: Assets/Scenes/Levels/LEVEL_2.unity
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 450ca86e4cbe88d4b86700c323dfcf39
     m_Address: Coin
     m_ReadOnly: 0

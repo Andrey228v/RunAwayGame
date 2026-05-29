@@ -137,7 +137,7 @@ namespace Assets._Scripts.SaveLoad.Service
         public void UpdateAllUI(UpdateUIEvent args)
         {
             _gameLogger.Log("GameSaveLoadService UpdateAllUI", "Service");
-            //_achievmentsController.UpdateUI(_gameSaveData, _levelConfig);
+            _achievmentsController.UpdateAllCells();
         }
 
         public async void OnSetLevelConfig(ChooseLevelEvent args)
@@ -155,12 +155,17 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
             _saveSystem.ResetAllProgress();
-            _gameSaveData = new GameSaveData(new Dictionary<string,
-                LevelData>(),
+            _gameSaveData = new GameSaveData(
+                new Dictionary<string, LevelData>(),
                 new List<AchievmentData>(),
                 new ShopData(),
                 new WalletData(),
                 DateTime.Now){ };
+
+            _levelsController.Dispose();
+            _achievmentsController.Dispose();
+            _shopController.Dispose();
+            _walletController.Dispose();
 
             //обновить UI
 

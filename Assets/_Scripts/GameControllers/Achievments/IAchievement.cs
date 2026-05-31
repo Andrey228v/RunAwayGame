@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets._Scripts.SaveLoad.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,12 +10,12 @@ namespace Assets._Scripts.GameControllers.Achievments
         public event Action OnUnlock;
         public event Action OnChanged;
 
-        string Id { get; }
-        string Name { get; }
-        string Description { get; }
-        float Progress { get; }
-        bool IsUnlocked { get; }
-        bool IsClaimed { get; }
+        public AchievmentData Data { get; }
+
         public void ClaimReward();
+
+        public AchievmentData GetData();
+
+        public void SetData(AchievmentData data);
     }
 }

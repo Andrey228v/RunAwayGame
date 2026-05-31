@@ -33,7 +33,8 @@ namespace Assets._Scripts.Loger
                 ["Save"] = "lime",
                 ["Load"] = "blue",
                 ["Event"] = "magenta",
-                ["Level"] = "orange"
+                ["Level"] = "orange",
+                ["Achievment"] = "black"
             };
         }
 

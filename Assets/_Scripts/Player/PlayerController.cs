@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.SaveLoad;
+﻿using Assets._Scripts.SaveLoad.Data;
+using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
@@ -8,7 +9,7 @@ using VContainer.Unity;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerController : IFixedTickable
+    public class PlayerController : IFixedTickable, IInitialzation, ISave, ILoad, IRestart, IFinish
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
@@ -16,6 +17,23 @@ namespace Assets.Scripts.Player
         private bool _isDisposed = false;
 
         public PlayerMB PlayerMB => _playerMB;
+
+        public void Initialzation(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
+
+            if (levelData.PlayerData == null)
+            {
+                var playerData = new PlayerData
+                {
+                    PlayerPosition = levelConfig.StartPosition,
+                    PlayerRotation = Quaternion.Euler(levelConfig.StartRotationEuler),
+                };
+
+                levelData.PlayerData = playerData;
+                levelData.LastCheckPointPosition = levelConfig.StartPosition; // под вопросом.
+            }
+        }
 
         public void Dispose()
         {
@@ -43,7 +61,7 @@ namespace Assets.Scripts.Player
             _character = character;
         }
 
-        public void FinishGame(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Finish(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             Reset();
             _character.transform.SetLocalPositionAndRotation(levelConfig.StartPosition, Quaternion.Euler(levelConfig.StartRotationEuler));
@@ -71,39 +89,24 @@ namespace Assets.Scripts.Player
             _playerMB = playerMB;
         }
 
-        public void DieRestart(LevelData levelData)
+        public void Restart(LevelData levelData)
         {
             Reset();
 
             _playerMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
         }
 
-        public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-
-
             var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
 
             levelData.PlayerData.PlayerPosition = _character.transform.position;
             levelData.PlayerData.PlayerRotation = _character.transform.rotation;
         }
 
-        public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
-
-            if (levelData.PlayerData == null)
-            {
-                var playerData = new PlayerData
-                {
-                    PlayerPosition = levelConfig.StartPosition,
-                    PlayerRotation = Quaternion.Euler(levelConfig.StartRotationEuler),
-                };
-
-                levelData.PlayerData = playerData;
-                levelData.LastCheckPointPosition = levelConfig.StartPosition; // под вопросом.
-            }
-
             _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
         }
     }

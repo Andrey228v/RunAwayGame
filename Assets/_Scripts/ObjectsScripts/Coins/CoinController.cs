@@ -10,26 +10,13 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class CoinController
+    public class CoinController: IInitialzation, ISave, ILoad, IRestart, IFinish
     {
         private Transform _objectParent;
         private List<Coin> _objectList;
+        private List<CoinData> _objectData;
 
         public event Action OnTake;
-
-        public void Dispose()
-        {
-            foreach (Coin obj in _objectList)
-            {
-                obj.Dispose();
-                obj.OnActivated -= CoinActivated;
-            }
-        }
-
-        public void Initialize()
-        {
-
-        }
 
         public CoinController(GamePoints points)
         {
@@ -41,6 +28,25 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             _objectList = TransformToList(_objectParent);
 
+        }
+
+        public void Initialzation(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            _objectData = new List<CoinData>();
+
+            for (int i = 0; i < _objectList.Count; i++)
+            {
+                _objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
+            }
+        }
+
+        public void Dispose()
+        {
+            foreach (Coin obj in _objectList)
+            {
+                obj.Dispose();
+                obj.OnActivated -= CoinActivated;
+            }
         }
 
         public List<Coin> TransformToList(Transform objectsParent)
@@ -60,9 +66,10 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             return Coins;
         }
 
-        public void FinishGame()
+        public void Finish(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            Restart();
+            LevelData levelData = gameSaveData.LevelsData[levelConfig.LevelName]; // заглушка.
+            Restart(levelData);
         }
 
         public void CoinActivated(Coin coin)
@@ -70,7 +77,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             OnTake?.Invoke();
         }
 
-        private void Restart()
+        public void Restart(LevelData levelData)
         {
             foreach (var obj in _objectList)
             {
@@ -78,7 +85,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
         }
 
-        public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
 
@@ -88,21 +95,22 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
         }
 
-        public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
             var objectCount = _objectList.Count;
 
-            if (levelData.Coins == null)
+            if (levelData.Coins == null || levelData.Coins.Count == 0)
             {
-                List<CoinData> objectData = new List<CoinData>();
+                //List<CoinData> objectData = new List<CoinData>();
 
-                for (int i = 0; i < _objectList.Count; i++)
-                {
-                    objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
-                }
+                //for (int i = 0; i < _objectList.Count; i++)
+                //{
+                //    objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
+                //}
 
-                levelData.Coins = objectData;
+                //levelData.Coins = objectData;
+                levelData.Coins = _objectData;
             }
             else
             {

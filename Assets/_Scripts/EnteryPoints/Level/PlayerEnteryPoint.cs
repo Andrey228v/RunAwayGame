@@ -29,7 +29,8 @@ namespace Assets._Scripts.EnteryPoints
             Func<Character> characterFactory, CameraController cameraController,
             BillboardManager billboardManager, Func<UnitInfoUI> unitInfoUIFactory,
             GameSaveLoadService gameSaveLoadService,
-            LevelsController levelsController) 
+            LevelsController levelsController
+            ) 
         {
             _playerController = playerController;
             _playerStateMachineFactory = playerStateMachineFactory;
@@ -43,12 +44,20 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            _levelsController.SetPlayerController(_playerController);
+            //_levelsController.SetPlayerController(_playerController);
+            _levelsController.AddInitialization(_playerController);
+            _levelsController.AddSave(_playerController);
+            _levelsController.AddLoad(_playerController);
+            _levelsController.AddRestart(_playerController);
+            _levelsController.AddFinish(_playerController);
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
                         _unitInfoUIFactory, _billboardManager);
             InitEvents();
+
+            _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
+            _playerController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
         }
 
         public void Dispose()

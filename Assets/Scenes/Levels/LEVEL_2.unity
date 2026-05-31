@@ -442,6 +442,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FinishPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 3553221644308978304, guid: cb956844eccc4834ab7d20dd7380beba, type: 3}
+      propertyPath: _lvlId
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3874470719536951728, guid: cb956844eccc4834ab7d20dd7380beba, type: 3}
       propertyPath: m_LocalScale.y
       value: 82.4

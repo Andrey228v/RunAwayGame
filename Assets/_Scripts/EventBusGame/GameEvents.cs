@@ -1,7 +1,4 @@
 ﻿using Assets.Scripts.Points;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace Assets._Scripts.EventBusGame
@@ -11,7 +8,10 @@ namespace Assets._Scripts.EventBusGame
 
     }
 
-    public struct LevelCompletedEvent { }
+    public struct LevelCompletedEvent 
+    {
+        public string LvlId;
+    }
 
     public struct CheckPoinActivatedEvent 
     {
@@ -21,6 +21,8 @@ namespace Assets._Scripts.EventBusGame
     public struct SaveGameEvent { }
 
     public struct LoadGameEvent { }
+
+    public struct DeletSaveEvent { }
 
     public struct ButtonSoundChangeStateEvent { }
 
@@ -85,5 +87,9 @@ namespace Assets._Scripts.EventBusGame
     public struct FinishLevel2 { }
     public struct FinishLevel3 { }
 
-    public struct UpdateUI { }
+    public struct UpdateUIEvent { }
+
+    public struct CollectGoldEvent { }
+
+    public struct DieEvent { }
 }

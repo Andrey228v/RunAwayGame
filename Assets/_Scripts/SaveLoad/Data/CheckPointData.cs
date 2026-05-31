@@ -8,7 +8,7 @@ namespace Assets.Scripts.SaveLoad.Data
         public string Id;
         public bool IsActivated;
 
-        public void ResetData(LevelConfig levelConfig)
+        public void ResetData()
         {
             IsActivated = false;
         }

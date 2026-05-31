@@ -5,7 +5,7 @@ using System.Text;
 namespace Assets._Scripts.SaveLoad.Data
 {
     [Serializable]
-    public class AchievmentsData
+    public class AchievmentData
     {
         public string Id;
         public string Name;
@@ -15,5 +15,13 @@ namespace Assets._Scripts.SaveLoad.Data
         public int CurrentValue;
         public bool IsClaimed;
 
+        public float Progress => (float)CurrentValue / TargetValue;
+
+        public bool CanClaim => IsUnlock && !IsClaimed;
+
+        public void ResetData()
+        {
+
+        }
     }
 }

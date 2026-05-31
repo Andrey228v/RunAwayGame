@@ -4,13 +4,17 @@ using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.Loger;
+using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SceneLoading;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
+using System.Collections.Generic;
+using VContainer.Unity;
 
 namespace Assets._Scripts.SaveLoad.Service
 {
-    public class GameSaveLoadService : IDisposable
+    public class GameSaveLoadService : IDisposable, IStartable
     {
         private EasySaveSystem _saveSystem;
         private GameSaveData _gameSaveData;
@@ -19,17 +23,22 @@ namespace Assets._Scripts.SaveLoad.Service
         private AchievmentsController _achievmentsController;
         private ShopController _shopController;
         private WalletController _walletController;
-        private IEventSubscriber _eventBus;
+        private EventBus _eventBus;
         private IGameLogger _gameLogger;
+        //private LoadManager _loadManager;
+        //private List<SceneGroupHandle> _scensGroups;
 
         public GameSaveData GameSaveData => _gameSaveData;
+        public LevelConfig levelConfig => _levelConfig;
 
         public GameSaveLoadService(EasySaveSystem saveSystem,
             LevelsController levelsController,
             AchievmentsController achievmentsController,
             ShopController shopController,
             WalletController walletController,
-            IEventSubscriber eventBus,
+            //LoadManager loadManager,
+            //List<SceneGroupHandle> scensGroups,
+            EventBus eventBus,
             IGameLogger gameLogger) 
         {
             _saveSystem = saveSystem;
@@ -39,20 +48,10 @@ namespace Assets._Scripts.SaveLoad.Service
             _walletController = walletController;
             _eventBus = eventBus;
             _gameLogger = gameLogger;
+            //_loadManager = loadManager;
+            //_scensGroups = scensGroups;
 
-            _gameLogger.Log("Инициализация GameSaveLoadService", "Service");
 
-            _eventBus.Subscribe<LevelCompletedEvent>(OnFinishLevel);
-            _eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
-            _eventBus.Subscribe<LoadGameEvent>(OnLoad);
-            _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
-            _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
-
-            LoadOrCreateSave();
-            InitializeAllServices();
-            LoadAllServices();
-
-            _gameLogger.Log("GameSaveLoadService инициализирован успешно", "Service");
         }
 
         public void Dispose()
@@ -64,6 +63,8 @@ namespace Assets._Scripts.SaveLoad.Service
             _eventBus.Unsubscribe<LoadGameEvent>(OnLoad);
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
             _eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            _eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
+            _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
 
             _levelsController.Dispose();
             _achievmentsController.Dispose();
@@ -75,12 +76,32 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService Dispose complite", "Service");
         }
 
+        public void Start()
+        {
+            _gameLogger.Log("Инициализация GameSaveLoadService", "Service");
+
+            _eventBus.Subscribe<LevelCompletedEvent>(OnFinishLevel);
+            _eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
+            _eventBus.Subscribe<LoadGameEvent>(OnLoad);
+            _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
+            _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            _eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
+            _eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
+
+            InitializeAllServices();
+            LoadAllServices();
+
+            _gameLogger.Log("GameSaveLoadService инициализирован успешно", "Service");
+        }
+
         public void InitializeAllServices()
         {
             _gameLogger.Log("GameSaveLoadService initing all services", "Service");
 
-            _levelsController.Initialize();
-            _achievmentsController.Initialize();
+            LoadOrCreateSave();
+
+            _levelsController.Initialize(_gameSaveData, _levelConfig);
+            _achievmentsController.Initialize(_gameSaveData, _levelConfig);
             _shopController.Initialize();
             _walletController.Initialize();
 
@@ -113,17 +134,37 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService load all services complite", "Load");
         }
 
-        public void OnSetLevelConfig(ChooseLevelEvent args)
+        public void UpdateAllUI(UpdateUIEvent args)
+        {
+            _gameLogger.Log("GameSaveLoadService UpdateAllUI", "Service");
+            _achievmentsController.UpdateAllCells();
+        }
+
+        public async void OnSetLevelConfig(ChooseLevelEvent args)
         {
             _levelConfig = args.levelConfig;
             _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
+            _levelsController.Initialize(_gameSaveData, _levelConfig);
+
+            //await _loadManager.LoadScene(_scensGroups[_levelConfig.LevelId]);
+
+            //InitializeLevel();
         }
 
-        public void ResetAllProgress()
+        public void ResetAllProgress(DeletSaveEvent args)
         {
             _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
             _saveSystem.ResetAllProgress();
-            _gameSaveData = new GameSaveData();
+
+            _gameSaveData = new GameSaveData(
+                new Dictionary<string, LevelData>(),
+                new List<AchievmentData>(),
+                new ShopData(),
+                new WalletData(),
+                DateTime.Now){ };
+
+            _achievmentsController.Reset(_gameSaveData, _levelConfig);
+            _achievmentsController.UpdateAllCells();
         }
 
         public void CloseLevel(TransitToWindowEvent args)
@@ -136,7 +177,7 @@ namespace Assets._Scripts.SaveLoad.Service
         public void RestartLevel()
         {
             _gameLogger.Log("GameSaveLoadService reset level", "Service");
-            _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData(_levelConfig);
+            _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData();
         }
 
         public void OnFinishLevel(LevelCompletedEvent args) // переделать...
@@ -145,7 +186,7 @@ namespace Assets._Scripts.SaveLoad.Service
 
             RestartLevel();
 
-            _levelsController.FinishLevel(_gameSaveData, _levelConfig);
+            _levelsController.FinishLevel(_gameSaveData, _levelConfig, args);
 
             SaveGame();
         }
@@ -185,7 +226,13 @@ namespace Assets._Scripts.SaveLoad.Service
             }
             else
             {
-                _gameSaveData = new GameSaveData();
+                _gameSaveData = new GameSaveData(new Dictionary<string,
+                    LevelData>(),
+                    new List<AchievmentData>(),
+                    new ShopData(),
+                    new WalletData(),
+                    DateTime.Now){ };
+
                 _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
             }
         }

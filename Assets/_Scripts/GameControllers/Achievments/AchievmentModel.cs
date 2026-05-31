@@ -1,77 +1,66 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.Loger;
+using Assets._Scripts.SaveLoad.Data;
 using Assets.Scripts.SaveLoad.Data;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
     public class AchievmentModel<T>: IAchievement where T : struct
     {
-        private string _id;
-        private string _name;
-        private string _description;
-        private bool _isUnlock;
         private Sprite _icon;
-        private int _targetValue;
-        private int _currentValue;
-        private bool _isClaimed;
         private AchievmentsReward _achievmentsReward;
         private EventBus _eventBus;
+        private AchievmentData _data;
+        private IGameLogger _gameLogger;
 
         public event Action OnUnlock;
         public event Action OnChanged;
 
-        public string Id => _id;
-        public string Name => _name;
-        public bool IsUnlocked => _isUnlock;
-        public bool IsClaimed => _isClaimed;
-        public float Progress => (float)_currentValue / _targetValue;
-        public string Description => _description;
-        public bool IsUnlock => _isUnlock;
-        public bool CanClaim => _isUnlock && !_isClaimed;
+        public AchievmentData Data => _data;
 
-        public AchievmentModel(EventBus eventBus, 
-            string name, 
-            string description, 
-            bool isUnlock, 
-            bool isClaimed, 
-            AchievmentsReward achievmentsReward)
+        public AchievmentModel(EventBus eventBus,
+            AchievmentData data,
+            AchievmentsReward achievmentsReward,
+            IGameLogger gameLogger)
         {
             _eventBus = eventBus;
-            _name = name;
-            _description = description;
-            _isUnlock = isUnlock;
-            _isClaimed = isClaimed;
+            _data = data;
             _achievmentsReward = achievmentsReward;
             _eventBus.Subscribe<T>(Unlock);
-        }
-
-        public void SetUnlock(bool isUnlock) 
-        {
-            _isUnlock = isUnlock;
+            _gameLogger = gameLogger;
         }
 
         public void Unlock(T args)
         {
-            _isUnlock = true;
-            _achievmentsReward.GetRewards();
+            if(_data.IsUnlock == false)
+            {
+                _gameLogger.Log($"Achievment Unlock {_data.Name}", "Achievment");
 
-            OnUnlock?.Invoke();
+                _data.IsUnlock = true;
+                _achievmentsReward.GetRewards();
+
+                OnUnlock?.Invoke();
+
+                _eventBus.Publish(new SaveGameEvent());
+            }
         }
 
-        public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public AchievmentData GetData()
         {
-
+            return _data;
         }
 
-        public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void SetData(AchievmentData data)
         {
-
+            _data = data;
         }
 
         public void ClaimReward()
         {
-            
+            _gameLogger.Log($"Achievment Reward {_data.Name}", "Success");
         }
 
         //картинку сделать..

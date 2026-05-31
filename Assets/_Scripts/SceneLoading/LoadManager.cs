@@ -55,6 +55,8 @@ namespace Assets._Scripts.SceneLoading
 
             _gameLogger.WithTag(sceneGroup.FindSceneNameByType(SceneType.Active));
 
+            //_gameSaveLoadService.InitializeLevel();
+
             await LoadNewContent(sceneGroup);
             PrepareToTransition(sceneGroup);
 
@@ -78,7 +80,7 @@ namespace Assets._Scripts.SceneLoading
             {
                 var handle = _loadsScenes[key];
 
-                await Addressables.UnloadSceneAsync(handle).ToUniTask(_progress);
+                await Addressables.UnloadSceneAsync(handle).ToUniTask();
 
                 _loadsScenes.Remove(key);
             }

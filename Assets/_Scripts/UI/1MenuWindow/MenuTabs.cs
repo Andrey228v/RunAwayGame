@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.EventBusGame;
 using Assets._Scripts.GameControllers;
+using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SceneLoading;
 using System;
@@ -48,9 +49,6 @@ namespace Assets._Scripts.UI._1MenuWindow
         [Header("Parents")]
         [SerializeField] private Transform _achievmentsParent;
 
-        public event Action<LevelConfig> OnChooseLevel;
-        public event Action OnSaveDelet;
-
         private GameObject _currentPanel;
         private GameObject _previousPanel;
         private List<LevelConfig> _levelConfigs;
@@ -58,6 +56,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         private List<SceneGroupHandle> _scensGroups;
         private EventBus _eventBus;
         private WalletController _walletController;
+        private AchievmentsController _achievmentsController;
 
         public Transform AchievmentsParent => _achievmentsParent;
 
@@ -66,13 +65,15 @@ namespace Assets._Scripts.UI._1MenuWindow
             LoadManager loadManager, 
             List<SceneGroupHandle> scensGroups,
             EventBus eventBus,
-            WalletController walletController)
+            WalletController walletController,
+            AchievmentsController achievmentsController)
         {
             _levelConfigs = levelConfigs;
             _loadManager = loadManager;
             _scensGroups = scensGroups;
             _eventBus = eventBus;
             _walletController = walletController;
+            _achievmentsController = achievmentsController;
         }
 
         private void OnEnable()
@@ -80,7 +81,7 @@ namespace Assets._Scripts.UI._1MenuWindow
             _currentPanel = _panels[0];
             _previousPanel = null;
 
-            _eventBus.Publish(new UpdateUI { });
+            //_eventBus.Publish(new UpdateUIEvent { });
         }
 
         private void Start()
@@ -95,7 +96,7 @@ namespace Assets._Scripts.UI._1MenuWindow
 
             ShowPage(PageName.Menu);
 
-            _eventBus.Publish(new UpdateUI { });
+            _eventBus.Publish(new UpdateUIEvent { });
         }
 
         private void OnDestroy()
@@ -178,8 +179,8 @@ namespace Assets._Scripts.UI._1MenuWindow
             _deletSaveButton.onClick.AddListener(DeletSave);
             _exitButton.onClick.AddListener(ClickExit);
 
-            _eventBus.Subscribe<UpdateUI>(SetCoinsCountText);
-            _eventBus.Subscribe<UpdateUI>(SetGobeletsCountText);
+            //_eventBus.Subscribe<UpdateUIEvent>(SetCoinsCountText);
+            //_eventBus.Subscribe<UpdateUIEvent>(SetGobeletsCountText);
 
         }
 
@@ -200,8 +201,8 @@ namespace Assets._Scripts.UI._1MenuWindow
             _startGameButtonL1.onClick.RemoveAllListeners();
             _startGameButtonL2.onClick.RemoveAllListeners();
 
-            _eventBus.Unsubscribe<UpdateUI>(SetCoinsCountText);
-            _eventBus.Unsubscribe<UpdateUI>(SetGobeletsCountText);
+            //_eventBus.Unsubscribe<UpdateUIEvent>(SetCoinsCountText);
+            //_eventBus.Unsubscribe<UpdateUIEvent>(SetGobeletsCountText);
         }
 
         private void ClickExit()
@@ -211,17 +212,23 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void DeletSave()
         {
-            OnSaveDelet?.Invoke();
+            _eventBus.Publish(new DeletSaveEvent { });
+            _eventBus.Publish(new UpdateUIEvent { });
         }
 
-        private void SetCoinsCountText(UpdateUI args)
+        private void SetCoinsCountText(UpdateUIEvent args)
         {
             _goldsText.text  = _walletController.Coins.ToString();
         }
 
-        private void SetGobeletsCountText(UpdateUI args)
+        private void SetGobeletsCountText(UpdateUIEvent args)
         {
             _gobeletsText.text = _walletController.Gobelets.ToString();
+        }
+
+        private void SetAchievmentsUI(UpdateUIEvent args)
+        {
+
         }
     }
 }

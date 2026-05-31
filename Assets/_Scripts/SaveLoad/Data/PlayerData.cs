@@ -15,10 +15,10 @@ namespace Assets.Scripts.SaveLoad
             PlayerRotation = Quaternion.identity;
         }
 
-        public void ResetData(LevelConfig levelConfig)
+        public void ResetData()
         {
-            PlayerPosition = levelConfig.StartPosition;
-            PlayerRotation = Quaternion.Euler(levelConfig.StartRotationEuler);
+            PlayerPosition = new Vector3();
+            PlayerRotation = new Quaternion();
         }
     }
 }

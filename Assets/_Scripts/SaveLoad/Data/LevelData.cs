@@ -28,19 +28,19 @@ namespace Assets.Scripts.SaveLoad.Data
             Coins = coins;
         }
 
-        public void ResetData(LevelConfig levelConfig)
+        public void ResetData()
         {
-            LastCheckPointPosition = levelConfig.StartPosition;
-            PlayerData.ResetData(levelConfig);
+            LastCheckPointPosition = new Vector3();
+            PlayerData.ResetData();
 
             foreach (var checkPoint in CheckPoints) 
             {
-                checkPoint.ResetData(levelConfig);
+                checkPoint.ResetData();
             }
 
             foreach(var coin in Coins)
             {
-                coin.ResetData(levelConfig);
+                coin.ResetData();
             }
         }
     }

@@ -155,6 +155,7 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
             _saveSystem.ResetAllProgress();
+
             _gameSaveData = new GameSaveData(
                 new Dictionary<string, LevelData>(),
                 new List<AchievmentData>(),
@@ -162,13 +163,8 @@ namespace Assets._Scripts.SaveLoad.Service
                 new WalletData(),
                 DateTime.Now){ };
 
-            _levelsController.Dispose();
-            _achievmentsController.Dispose();
-            _shopController.Dispose();
-            _walletController.Dispose();
-
-            //обновить UI
-
+            _achievmentsController.Reset(_gameSaveData, _levelConfig);
+            _achievmentsController.UpdateAllCells();
         }
 
         public void CloseLevel(TransitToWindowEvent args)
@@ -181,7 +177,7 @@ namespace Assets._Scripts.SaveLoad.Service
         public void RestartLevel()
         {
             _gameLogger.Log("GameSaveLoadService reset level", "Service");
-            _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData(_levelConfig);
+            _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData();
         }
 
         public void OnFinishLevel(LevelCompletedEvent args) // переделать...

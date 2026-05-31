@@ -8,7 +8,7 @@ namespace Assets._Scripts.SaveLoad.Data
     public class ShopData
     {
 
-        public void ResetData(LevelConfig levelConfig)
+        public void ResetData()
         {
 
         }

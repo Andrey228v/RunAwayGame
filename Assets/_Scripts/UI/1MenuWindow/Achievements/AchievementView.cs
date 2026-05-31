@@ -74,6 +74,11 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         }
 
+        private void OnDestroy()
+        {
+            transform.DOKill();
+        }
+
         public void ShowLocked()
         {
             _lockOverlay.SetActive(true);
@@ -84,6 +89,8 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public void ShowUnlocked(bool canClaim)
         {
+
+
             _lockOverlay.SetActive(false);
             _claimButton.gameObject.SetActive(canClaim);
             _blockImage.gameObject.SetActive(false);
@@ -115,7 +122,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public void PlayUnlockAnimation()
         {
-            transform.DOScale(1.2f, 0.3f).SetLoops(2, LoopType.Yoyo);
+            transform.DOScale(1.2f, 0.3f).SetLoops(2, LoopType.Yoyo).SetAutoKill(true);
         }
 
         //public void UpdateUI(AchievmentData data, LevelConfig levelConfig)

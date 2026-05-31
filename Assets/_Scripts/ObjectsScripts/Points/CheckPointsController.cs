@@ -43,7 +43,6 @@ namespace Assets.Scripts.Points
                 }
 
                 levelData.CheckPoints = loadCheckPointsData;
-                Debug.Log(checkpointsCount);
             }
 
         }

@@ -19,7 +19,7 @@ namespace Assets._Scripts.SaveLoad.Data
 
         public bool CanClaim => IsUnlock && !IsClaimed;
 
-        public void ResetData(LevelConfig levelConfig)
+        public void ResetData()
         {
 
         }

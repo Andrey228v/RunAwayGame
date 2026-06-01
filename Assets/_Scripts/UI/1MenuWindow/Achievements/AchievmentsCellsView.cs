@@ -16,6 +16,13 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private Func<AchievementView> _achievmentsViewFactory;
         private IGameLogger _gameLogger;
 
+        public event Action OnDestroyCellsView;
+
+        public void OnDestroy()
+        {
+            OnDestroyCellsView?.Invoke();
+        }
+
         [Inject]
         public void Construct(
             AchievmentsController achievmentsController, 

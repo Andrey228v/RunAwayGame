@@ -41,6 +41,8 @@ namespace Assets._Scripts.GameControllers.Achievments
         {
             _achievementViews.Clear();
             _cells.Clear();
+
+            _achievmentsCellsView.OnDestroyCellsView -= DestroyUI;
         }
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -70,6 +72,7 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void SetCellView(AchievmentsCellsView achievmentsCellsView)
         {
             _achievmentsCellsView = achievmentsCellsView;
+            _achievmentsCellsView.OnDestroyCellsView += DestroyUI;
         }
 
         public void AddAchievmentView(AchievementView achView, int modelIndex)
@@ -85,8 +88,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 _achievementViews.Add(achView);
                 achView.transform.SetParent(_cells[modelIndex], false);
 
-                model.OnUnlock += () => OnModelUnlocked(model, achView); // а как отписаться ??...
-                model.OnChanged += () => OnModelChanged(model, achView);
+                model.OnUnlock += UpdateView;
             }
             else
             {
@@ -106,14 +108,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 for (int i = 0; i < _modelsAchievments.Count; i++)
                 {
                     var model = _modelsAchievments[i];
-                    var view = _achievementViews[i];
-
-                    if (view == null || model == null)
-                    {
-                        throw new System.Exception("view == null || model == null");
-                    }
-
-                    UpdateView(model, view);
+                    UpdateView(model.Data.Id);
                 }
             }
         }
@@ -125,31 +120,23 @@ namespace Assets._Scripts.GameControllers.Achievments
             _countAchievmentsMode = _modelsAchievments.Count;
         }
 
-        private void OnModelUnlocked(IAchievement model, AchievementView view)
+        private void DestroyUI()
         {
-            _gameLogger.Log("Achievments UNLOCK", "Event");
+            _gameLogger.Log("DestroyUI AchievmentsCellsView", "Success");
 
-            if (model == null || view == null)
+            foreach (var model in _modelsAchievments)
             {
-                throw new System.Exception("model == null || view == null");
-            }
-
-            if (_achievmentsCellsView != null)
-            {
-                UpdateView(model, view);
+                model.OnUnlock -= UpdateView;
             }
         }
 
-        private void OnModelChanged(IAchievement model, AchievementView view)
-        {
-            // Для прогрессирующих достижений
-            UpdateView(model, view);
-        }
-
-        private void UpdateView(IAchievement model, AchievementView view)
+        private void UpdateView(int id)
         {
             if (_achievmentsCellsView != null)
             {
+                var model = _modelsAchievments[id];
+                var view = _achievementViews[id];
+
                 var data = model.Data;
                 view.SetName(data.Name);
                 view.SetDescription(data.Description);
@@ -157,7 +144,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 if (data.IsUnlock)
                 {
                     view.ShowUnlocked(data.IsClaimed == false);
-                    if (!data.IsClaimed)
+                    if (data.IsClaimed == false)
                         view.PlayUnlockAnimation();
                 }
                 else

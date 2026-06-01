@@ -5,7 +5,6 @@ using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
-using Assets._Scripts.SceneLoading;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -25,8 +24,6 @@ namespace Assets._Scripts.SaveLoad.Service
         private WalletController _walletController;
         private EventBus _eventBus;
         private IGameLogger _gameLogger;
-        //private LoadManager _loadManager;
-        //private List<SceneGroupHandle> _scensGroups;
 
         public GameSaveData GameSaveData => _gameSaveData;
         public LevelConfig levelConfig => _levelConfig;
@@ -36,8 +33,6 @@ namespace Assets._Scripts.SaveLoad.Service
             AchievmentsController achievmentsController,
             ShopController shopController,
             WalletController walletController,
-            //LoadManager loadManager,
-            //List<SceneGroupHandle> scensGroups,
             EventBus eventBus,
             IGameLogger gameLogger) 
         {
@@ -48,10 +43,6 @@ namespace Assets._Scripts.SaveLoad.Service
             _walletController = walletController;
             _eventBus = eventBus;
             _gameLogger = gameLogger;
-            //_loadManager = loadManager;
-            //_scensGroups = scensGroups;
-
-
         }
 
         public void Dispose()
@@ -145,10 +136,6 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelConfig = args.levelConfig;
             _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
             _levelsController.Initialize(_gameSaveData, _levelConfig);
-
-            //await _loadManager.LoadScene(_scensGroups[_levelConfig.LevelId]);
-
-            //InitializeLevel();
         }
 
         public void ResetAllProgress(DeletSaveEvent args)
@@ -165,6 +152,8 @@ namespace Assets._Scripts.SaveLoad.Service
 
             _achievmentsController.Reset(_gameSaveData, _levelConfig);
             _achievmentsController.UpdateAllCells();
+
+
         }
 
         public void CloseLevel(TransitToWindowEvent args)

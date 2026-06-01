@@ -27,7 +27,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData1 = new AchievmentData()
             {
-                Id = "1",
+                Id = 0,
                 Name = "sLvl 1",
                 Description = "Start lvl 1",
                 IsUnlock = false,
@@ -36,7 +36,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData2 = new AchievmentData()
             {
-                Id = "2",
+                Id = 1,
                 Name = "sLvl 2",
                 Description = "Start lvl 2",
                 IsUnlock = false,
@@ -45,7 +45,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData3 = new AchievmentData()
             {
-                Id = "3",
+                Id = 2,
                 Name = "sLvl 3",
                 Description = "Start lvl 3",
                 IsUnlock = false,
@@ -54,7 +54,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData4 = new AchievmentData()
             {
-                Id = "4",
+                Id = 3,
                 Name = "fLvl 1",
                 Description = "Finish lvl 1",
                 IsUnlock = false,
@@ -63,7 +63,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData5 = new AchievmentData()
             {
-                Id = "5",
+                Id = 4,
                 Name = "fLvl 2",
                 Description = "Finish lvl 2",
                 IsUnlock = false,
@@ -72,7 +72,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData6 = new AchievmentData()
             {
-                Id = "6",
+                Id = 5,
                 Name = "fLvl 3",
                 Description = "Finish lvl 3",
                 IsUnlock = false,
@@ -81,7 +81,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData7 = new AchievmentData()
             {
-                Id = "7",
+                Id = 6,
                 Name = "CollectGols",
                 Description = "Collect 10 gold",
                 IsUnlock = false,
@@ -90,7 +90,7 @@ namespace Assets.Scripts.SaveLoad.Data
 
             AchievmentData achData8 = new AchievmentData()
             {
-                Id = "8",
+                Id = 7,
                 Name = "Die",
                 Description = "Die",
                 IsUnlock = false,

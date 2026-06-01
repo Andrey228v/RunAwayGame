@@ -55,8 +55,8 @@ namespace Assets._Scripts.UI._1MenuWindow
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
         private EventBus _eventBus;
-        private WalletController _walletController;
-        private AchievmentsController _achievmentsController;
+        //private WalletController _walletController;
+        //private AchievmentsController _achievmentsController;
 
         public Transform AchievmentsParent => _achievmentsParent;
 
@@ -64,16 +64,17 @@ namespace Assets._Scripts.UI._1MenuWindow
         public void Constructor(List<LevelConfig> levelConfigs, 
             LoadManager loadManager, 
             List<SceneGroupHandle> scensGroups,
-            EventBus eventBus,
-            WalletController walletController,
-            AchievmentsController achievmentsController)
+            //WalletController walletController,
+            //AchievmentsController achievmentsController,
+            EventBus eventBus
+            )
         {
             _levelConfigs = levelConfigs;
             _loadManager = loadManager;
             _scensGroups = scensGroups;
             _eventBus = eventBus;
-            _walletController = walletController;
-            _achievmentsController = achievmentsController;
+            //_walletController = walletController;
+            //_achievmentsController = achievmentsController;
         }
 
         private void OnEnable()
@@ -218,12 +219,12 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void SetCoinsCountText(UpdateUIEvent args)
         {
-            _goldsText.text  = _walletController.Coins.ToString();
+            //_goldsText.text  = _walletController.Coins.ToString();
         }
 
         private void SetGobeletsCountText(UpdateUIEvent args)
         {
-            _gobeletsText.text = _walletController.Gobelets.ToString();
+            //_gobeletsText.text = _walletController.Gobelets.ToString();
         }
 
         private void SetAchievmentsUI(UpdateUIEvent args)

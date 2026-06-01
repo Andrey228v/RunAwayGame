@@ -7,8 +7,8 @@ namespace Assets._Scripts.GameControllers.Achievments
 {
     public interface IAchievement
     {
-        public event Action OnUnlock;
-        public event Action OnChanged;
+        public event Action<int> OnUnlock;
+        public event Action<int> OnChanged;
 
         public AchievmentData Data { get; }
 

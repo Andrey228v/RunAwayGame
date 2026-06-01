@@ -1,6 +1,10 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.UI;
+using Assets._Scripts.UI._1MenuWindow;
 using Assets.Scripts.SaveLoad.Data;
+using Assets.Scripts.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,17 +13,26 @@ namespace Assets._Scripts.GameControllers.Wallets
 {
     public class WalletController
     {
-        private int _coins;
-        private int _gobelets;
+        //private int _coins;
+        //private int _gobelets;
+        private WalletModel _model;
+        
         private EventBus _eventBus;
+        private IGameLogger _gameLogger;
 
-        public int Coins => _coins;
+        private MenuTabs _menuView;
+        private GamePanelController _gamePanelView;
+        private UnitInfoUI _unitInfoUIView;
 
-        public int Gobelets => _gobelets;
 
-        public WalletController(EventBus eventBus)
+        //public int Coins => _coins;
+
+        //public int Gobelets => _gobelets;
+
+        public WalletController(EventBus eventBus, IGameLogger gameLogger)
         {
             _eventBus = eventBus;
+            _gameLogger = gameLogger;
         }
 
         public void Dispose()
@@ -30,8 +43,8 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void Initialize()
         {
-            _coins = 0;
-            _gobelets = 0;
+            //_coins = 0;
+            //_gobelets = 0;
 
             _eventBus.Subscribe<AddCoinsEvent>(OnCoinsChanged);
             _eventBus.Subscribe<AddGobeletsEvent>(OnGobeletsChanged);
@@ -39,8 +52,8 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void SaveAllServices(GameSaveData gameSaveData)
         {
-            gameSaveData.WalletData.Coins = _coins;
-            gameSaveData.WalletData.Gobelets = _gobelets;
+            //gameSaveData.WalletData.Coins = _coins;
+            //gameSaveData.WalletData.Gobelets = _gobelets;
         }
 
         public void LoadAllServices(GameSaveData gameSaveData)
@@ -50,13 +63,22 @@ namespace Assets._Scripts.GameControllers.Wallets
                 gameSaveData.WalletData = new WalletData();
             }
 
-            _coins = gameSaveData.WalletData.Coins;
-            _gobelets = gameSaveData.WalletData.Gobelets;
+            //_coins = gameSaveData.WalletData.Coins;
+            //_gobelets = gameSaveData.WalletData.Gobelets;
+        }
+
+        public void AddMenuView(MenuTabs menuView)
+        {
+            _menuView = menuView;
         }
 
         private void OnCoinsChanged(AddCoinsEvent args)
         {
-            _coins += args.CoinCount;
+            _gameLogger.Log("OnCoinsChanged", "Event");
+
+            //_coins += args.CoinCount;
+
+
             _eventBus.Publish(new SaveGameEvent { });
             _eventBus.Publish(new UpdateUIEvent { });
 
@@ -65,7 +87,11 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         private void OnGobeletsChanged(AddGobeletsEvent args)
         {
-            _gobelets += args.GobeletCount;
+            _gameLogger.Log("OnGobeletsChanged", "Event");
+
+            //_gobelets += args.GobeletCount;
+
+
             _eventBus.Publish(new SaveGameEvent { });
             _eventBus.Publish(new UpdateUIEvent { });
         }

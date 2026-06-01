@@ -16,8 +16,8 @@ namespace Assets._Scripts.GameControllers.Achievments
         private AchievmentData _data;
         private IGameLogger _gameLogger;
 
-        public event Action OnUnlock;
-        public event Action OnChanged;
+        public event Action<int> OnUnlock;
+        public event Action<int> OnChanged;
 
         public AchievmentData Data => _data;
 
@@ -42,7 +42,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 _data.IsUnlock = true;
                 _achievmentsReward.GetRewards();
 
-                OnUnlock?.Invoke();
+                OnUnlock?.Invoke(_data.Id);
 
                 _eventBus.Publish(new SaveGameEvent());
             }

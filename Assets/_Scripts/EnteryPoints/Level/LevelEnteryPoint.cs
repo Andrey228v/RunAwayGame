@@ -29,9 +29,6 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            //_levelsController.SetCoinController(_coinController);
-            //_levelsController.SetCheckPointsController(_checkPointsController);
-
             _levelsController.AddInitialization(_coinController);
             _levelsController.AddSave(_coinController);
             _levelsController.AddLoad(_coinController);

@@ -102,14 +102,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             if (levelData.Coins == null || levelData.Coins.Count == 0)
             {
-                //List<CoinData> objectData = new List<CoinData>();
-
-                //for (int i = 0; i < _objectList.Count; i++)
-                //{
-                //    objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
-                //}
-
-                //levelData.Coins = objectData;
                 levelData.Coins = _objectData;
             }
             else

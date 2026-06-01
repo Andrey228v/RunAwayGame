@@ -7,7 +7,7 @@ namespace Assets._Scripts.SaveLoad.Data
     [Serializable]
     public class AchievmentData
     {
-        public string Id;
+        public int Id;
         public string Name;
         public string Description;
         public bool IsUnlock;

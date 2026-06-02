@@ -55,17 +55,15 @@ namespace Assets._Scripts.UI._1MenuWindow
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
         private EventBus _eventBus;
-        //private WalletController _walletController;
-        //private AchievmentsController _achievmentsController;
 
         public Transform AchievmentsParent => _achievmentsParent;
+
+        public event Action OnDestroyView;
 
         [Inject]
         public void Constructor(List<LevelConfig> levelConfigs, 
             LoadManager loadManager, 
             List<SceneGroupHandle> scensGroups,
-            //WalletController walletController,
-            //AchievmentsController achievmentsController,
             EventBus eventBus
             )
         {
@@ -73,8 +71,6 @@ namespace Assets._Scripts.UI._1MenuWindow
             _loadManager = loadManager;
             _scensGroups = scensGroups;
             _eventBus = eventBus;
-            //_walletController = walletController;
-            //_achievmentsController = achievmentsController;
         }
 
         private void OnEnable()
@@ -103,6 +99,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         private void OnDestroy()
         {
             UnSetupButtons();
+            OnDestroyView?.Invoke();
         }
 
         public void ShowPage(PageName pageName)
@@ -217,12 +214,12 @@ namespace Assets._Scripts.UI._1MenuWindow
             _eventBus.Publish(new UpdateUIEvent { });
         }
 
-        private void SetCoinsCountText(UpdateUIEvent args)
+        public void SetCoinsCountText(int actualCoin, int addCoin)
         {
-            //_goldsText.text  = _walletController.Coins.ToString();
+            _goldsText.text  = actualCoin.ToString();
         }
 
-        private void SetGobeletsCountText(UpdateUIEvent args)
+        public void SetGobeletsCountText(UpdateUIEvent args)
         {
             //_gobeletsText.text = _walletController.Gobelets.ToString();
         }

@@ -89,12 +89,12 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService initing all services", "Service");
 
-            LoadOrCreateSave();
+            //LoadOrCreateSave();
 
             _levelsController.Initialize(_gameSaveData, _levelConfig);
             _achievmentsController.Initialize(_gameSaveData, _levelConfig);
             _shopController.Initialize();
-            _walletController.Initialize();
+            //_walletController.Initialize();
 
             _gameLogger.Log("GameSaveLoadService have inited all services", "Service");
         }
@@ -205,7 +205,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 
-        private void LoadOrCreateSave()
+        public void LoadOrCreateSave()
         {
             _gameLogger.Log("GameSaveLoadService LoadOrCreateSave", "Service");
 

@@ -1,18 +1,12 @@
 ﻿using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Wallets
 {
     public class WalletModel
     {
-        //private int _coins;
-        //private int _gobelets;
-
         private WalletData _data;
         private readonly int _maxCoins = 999999;
         private readonly int _minCoins = 0;
@@ -22,7 +16,7 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         // События для Presenter'а
         public event Action<int, int> OnCoinsChanged; // newCoins, delta
-        public event Action<int, int> OnGemsChanged;
+        public event Action<int, int> OnGobeletsChanged;
         public event Action<string> OnTransactionCompleted;
         public event Action<string, int> OnInsufficientFunds;
 
@@ -81,25 +75,25 @@ namespace Assets._Scripts.GameControllers.Wallets
             }
         }
 
-        public void AddGems(int amount)
+        public void AddGobelets(int amount)
         {
             if (amount <= 0) return;
 
             int oldGems = _data.Gobelets;
             _data.Gobelets += amount;
 
-            OnGemsChanged?.Invoke(_data.Gobelets, amount);
+            OnGobeletsChanged?.Invoke(_data.Gobelets, amount);
             OnTransactionCompleted?.Invoke($"Added {amount} gems");
         }
 
-        public bool SpendGems(int amount)
+        public bool SpendGobelets(int amount)
         {
             if (amount <= 0) return false;
 
             if (_data.Gobelets >= amount)
             {
                 _data.Gobelets -= amount;
-                OnGemsChanged?.Invoke(_data.Gobelets, -amount);
+                OnGobeletsChanged?.Invoke(_data.Gobelets, -amount);
                 OnTransactionCompleted?.Invoke($"Spent {amount} gems");
                 return true;
             }
@@ -112,12 +106,11 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void LoadData(WalletData data)
         {
-            //if (data != null)
-            //{
-            //    _data = data.Clone();
-            //    OnCoinsChanged?.Invoke(_data.Coins, 0);
-            //    OnGemsChanged?.Invoke(_data.Gems, 0);
-            //}
+            _data.Coins = data.Coins;
+            _data.Gobelets = data.Gobelets;
+
+            OnCoinsChanged?.Invoke(_data.Coins, 0);
+            OnGobeletsChanged?.Invoke(_data.Gobelets, 0);
         }
     }
 }

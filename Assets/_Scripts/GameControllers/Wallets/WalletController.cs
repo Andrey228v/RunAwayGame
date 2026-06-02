@@ -5,16 +5,11 @@ using Assets._Scripts.UI;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.GameControllers.Wallets
 {
     public class WalletController
     {
-        //private int _coins;
-        //private int _gobelets;
         private WalletModel _model;
         
         private EventBus _eventBus;
@@ -24,15 +19,17 @@ namespace Assets._Scripts.GameControllers.Wallets
         private GamePanelController _gamePanelView;
         private UnitInfoUI _unitInfoUIView;
 
-
-        //public int Coins => _coins;
-
-        //public int Gobelets => _gobelets;
-
         public WalletController(EventBus eventBus, IGameLogger gameLogger)
         {
             _eventBus = eventBus;
             _gameLogger = gameLogger;
+        }
+
+        public void Initialize(WalletModel model)
+        {
+            _model = model;
+            _eventBus.Subscribe<AddCoinsEvent>(OnCoinsChanged);
+            _eventBus.Subscribe<AddGobeletsEvent>(OnGobeletsChanged);
         }
 
         public void Dispose()
@@ -41,35 +38,61 @@ namespace Assets._Scripts.GameControllers.Wallets
             _eventBus.Unsubscribe<AddGobeletsEvent>(OnGobeletsChanged);
         }
 
-        public void Initialize()
-        {
-            //_coins = 0;
-            //_gobelets = 0;
-
-            _eventBus.Subscribe<AddCoinsEvent>(OnCoinsChanged);
-            _eventBus.Subscribe<AddGobeletsEvent>(OnGobeletsChanged);
-        }
-
         public void SaveAllServices(GameSaveData gameSaveData)
         {
-            //gameSaveData.WalletData.Coins = _coins;
-            //gameSaveData.WalletData.Gobelets = _gobelets;
+            gameSaveData.WalletData.Coins = _model.Data.Coins;
+            gameSaveData.WalletData.Gobelets = _model.Data.Gobelets;
         }
 
         public void LoadAllServices(GameSaveData gameSaveData)
         {
-            if(gameSaveData.WalletData == null)
+            if (gameSaveData.WalletData == null)
             {
                 gameSaveData.WalletData = new WalletData();
             }
 
-            //_coins = gameSaveData.WalletData.Coins;
-            //_gobelets = gameSaveData.WalletData.Gobelets;
+            _model.LoadData(gameSaveData.WalletData);
         }
 
         public void AddMenuView(MenuTabs menuView)
         {
             _menuView = menuView;
+            _menuView.OnDestroyView += RemoveMenuView;
+            _model.OnCoinsChanged += _menuView.SetCoinsCountText;
+        }
+
+        public void RemoveMenuView()
+        {
+            _menuView.OnDestroyView -= RemoveMenuView;
+            _model.OnCoinsChanged -= _menuView.SetCoinsCountText;
+        }
+
+        public void AddGamePanelView(GamePanelController gamePanelView)
+        {
+            _gamePanelView = gamePanelView;
+            _gamePanelView.OnDestroyView += RemoveGamePanelView;
+            _model.OnCoinsChanged += _gamePanelView.SetCoinsCountText;
+        }
+
+        public void RemoveGamePanelView()
+        {
+            _gamePanelView.OnDestroyView -= RemoveGamePanelView;
+            _model.OnCoinsChanged -= _gamePanelView.SetCoinsCountText;
+
+        }
+
+        public void AddUnitInfoUIView(UnitInfoUI unitInfoUI)
+        {
+            _unitInfoUIView = unitInfoUI;
+            _unitInfoUIView.OnDestroyView += RemoveUnitInfoUIView;
+            _model.OnGobeletsChanged += _unitInfoUIView.SetGobeletsCountText;
+
+        }
+
+        public void RemoveUnitInfoUIView()
+        {
+            _unitInfoUIView.OnDestroyView -= RemoveUnitInfoUIView;
+            _model.OnGobeletsChanged -= _unitInfoUIView.SetGobeletsCountText;
         }
 
         private void OnCoinsChanged(AddCoinsEvent args)

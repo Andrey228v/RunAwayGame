@@ -2,6 +2,7 @@
 using Assets._Scripts.SceneLoading;
 using Assets._Scripts.UI;
 using Assets._Scripts.UI._2GameHUD;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -19,6 +20,8 @@ namespace Assets.Scripts.UI
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
         private List<IPanel> _panelsList = new List<IPanel>();
+
+        public event Action OnDestroyView;
 
         [Inject]
         public void Constructor(LoadManager loadManager, 
@@ -60,10 +63,20 @@ namespace Assets.Scripts.UI
             _eventBus.Unsubscribe<TransitToWindowEvent>(OnBackToMenu);
         }
 
+        private void OnDestroy()
+        {
+            OnDestroyView?.Invoke();
+        }
+
         // под вопросом...
         public void FinishGame(LevelCompletedEvent args)
         {
             ShowPanel("GameWinPanel");
+        }
+
+        public void SetCoinsCountText(int actualCoin, int addCoin)
+        {
+            _gameInterfacePanel.SetCoinsCountText(actualCoin, addCoin);
         }
 
         //Переделать...

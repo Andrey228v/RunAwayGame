@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI;
 using Assets.Input;
@@ -23,12 +24,14 @@ namespace Assets._Scripts.EnteryPoints
         private Func<UnitInfoUI> _unitInfoUIFactory;
         private GameSaveLoadService _gameSaveLoadService;
         private LevelsController _levelsController;
+        private WalletController _walletController;
 
-        public PlayerEnteryPoint(PlayerController playerController, 
-            PlayerStateMachineFactory playerStateMachineFactory, 
+        public PlayerEnteryPoint(PlayerController playerController,
+            PlayerStateMachineFactory playerStateMachineFactory,
             Func<Character> characterFactory, CameraController cameraController,
             BillboardManager billboardManager, Func<UnitInfoUI> unitInfoUIFactory,
             GameSaveLoadService gameSaveLoadService,
+            WalletController walletController,
             LevelsController levelsController
             ) 
         {
@@ -39,6 +42,7 @@ namespace Assets._Scripts.EnteryPoints
             _billboardManager = billboardManager;
             _unitInfoUIFactory = unitInfoUIFactory;
             _gameSaveLoadService = gameSaveLoadService;
+            _walletController = walletController;
             _levelsController = levelsController;
         }
 
@@ -53,7 +57,7 @@ namespace Assets._Scripts.EnteryPoints
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
-                        _unitInfoUIFactory, _billboardManager);
+                        _unitInfoUIFactory, _billboardManager, _walletController);
             InitEvents();
 
             _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
@@ -74,7 +78,7 @@ namespace Assets._Scripts.EnteryPoints
 
         private void InitPlayer(CameraController cameraController, 
             Func<Character> characterFactory, PlayerStateMachineFactory playerStateMachineFactory, PlayerController playerController,
-            Func<UnitInfoUI> unitInfoUIFactory, BillboardManager billboardManager)
+            Func<UnitInfoUI> unitInfoUIFactory, BillboardManager billboardManager, WalletController walletController)
         {
             Character character = characterFactory();
             character.AddComponent<PlayerMB>(); // Тут подумать так ли делать ...
@@ -96,6 +100,8 @@ namespace Assets._Scripts.EnteryPoints
 
             PlayerMB playerMB =  character.gameObject.GetComponent<PlayerMB>();
             playerController.SetPlayerMB(playerMB);
+
+            walletController.AddUnitInfoUIView(unitInfoUI);
         }
 
         //Не правильно. Подумать потом как исправить. Надо переместить создание в контролле как в Бот контроллере.

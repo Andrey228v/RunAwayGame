@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Camera;
-using Assets.Scripts.Player;
+﻿using Assets.Scripts.UI;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -10,10 +10,17 @@ namespace Assets._Scripts.UI
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _gobeletsCount;
 
+        public event Action OnDestroyView;
+
         public UnitInfoUI(string name, int count)
         {
             _name.text = name;
             _gobeletsCount.text = count.ToString();
+        }
+
+        private void OnDestroy()
+        {
+            OnDestroyView?.Invoke();
         }
 
         public void RotateToCamera(Vector3 direction)
@@ -23,6 +30,11 @@ namespace Assets._Scripts.UI
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = targetRotation;
             }
+        }
+
+        public void SetGobeletsCountText(int actualGobelets, int addGobelets)
+        {
+            _gobeletsCount.text = actualGobelets.ToString();
         }
 
     }

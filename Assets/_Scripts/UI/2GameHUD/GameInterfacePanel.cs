@@ -117,6 +117,11 @@ namespace Assets.Scripts.UI
             _gameLogger.Log("ClickSaveButton", "Event");
             _eventBus.Publish(new SaveGameEvent { });
         }
+
+        public void SetCoinsCountText(int actualCoin, int addCoin)
+        {
+            _coinsCounter.text = actualCoin.ToString();
+        }
     }
 }
 

@@ -35,6 +35,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<AchievmentsController>().AsSelf();
             builder.RegisterEntryPoint<ShopController>().AsSelf();
             builder.Register<WalletController>(Lifetime.Singleton).AsSelf();
+            //builder.Register<WalletModel>(Lifetime.Singleton).AsSelf();
             builder.Register<EventBus>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<IGameLogger>(container => new UnityLogger("Game"), Lifetime.Singleton);
         }

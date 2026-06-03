@@ -59,12 +59,14 @@ namespace Assets._Scripts.GameControllers.Wallets
             _menuView = menuView;
             _menuView.OnDestroyView += RemoveMenuView;
             _model.OnCoinsChanged += _menuView.SetCoinsCountText;
+            _model.OnGobeletsChanged += _menuView.SetGobeletsCountText;
         }
 
         public void RemoveMenuView()
         {
             _menuView.OnDestroyView -= RemoveMenuView;
             _model.OnCoinsChanged -= _menuView.SetCoinsCountText;
+            _model.OnGobeletsChanged -= _menuView.SetGobeletsCountText;
         }
 
         public void AddGamePanelView(GamePanelController gamePanelView)
@@ -93,6 +95,12 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             _unitInfoUIView.OnDestroyView -= RemoveUnitInfoUIView;
             _model.OnGobeletsChanged -= _unitInfoUIView.SetGobeletsCountText;
+        }
+
+        public void UpdateAllView()
+        {
+            _menuView.SetCoinsCountText(_model.Data.Coins, 0);
+            _menuView.SetGobeletsCountText(_model.Data.Gobelets, 0);
         }
 
         private void OnCoinsChanged(AddCoinsEvent args)

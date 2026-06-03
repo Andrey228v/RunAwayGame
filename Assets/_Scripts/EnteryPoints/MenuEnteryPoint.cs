@@ -37,6 +37,8 @@ namespace Assets._Scripts.EnteryPoints
         {
             InitMenu();
             _achievmentsController.UpdateAllCells();
+            _walletController.UpdateAllView();
+
         }
 
         public void Dispose()

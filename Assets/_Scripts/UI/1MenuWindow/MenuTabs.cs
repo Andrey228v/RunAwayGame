@@ -219,9 +219,9 @@ namespace Assets._Scripts.UI._1MenuWindow
             _goldsText.text  = actualCoin.ToString();
         }
 
-        public void SetGobeletsCountText(UpdateUIEvent args)
+        public void SetGobeletsCountText(int actualGobelets, int addGobelets)
         {
-            //_gobeletsText.text = _walletController.Gobelets.ToString();
+            _gobeletsText.text = actualGobelets.ToString();
         }
 
         private void SetAchievmentsUI(UpdateUIEvent args)

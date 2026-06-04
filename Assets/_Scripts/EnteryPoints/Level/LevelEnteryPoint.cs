@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Player;
@@ -14,17 +15,20 @@ namespace Assets._Scripts.EnteryPoints
         private CoinController _coinController;
         private LevelsController _levelsController;
         private GameSaveLoadService _gameSaveLoadService;
+        private WalletController _walletController;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController, 
             CoinController coinController,
             GameSaveLoadService gameSaveLoadService,
+            WalletController walletController,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
             _coinController = coinController;
             _levelsController = levelsController;
             _gameSaveLoadService = gameSaveLoadService;
+            _walletController = walletController;
         }
 
         public void Start()
@@ -46,12 +50,17 @@ namespace Assets._Scripts.EnteryPoints
 
             _coinController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
             _checkPointsController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
+
+            _coinController.OnTake += _walletController.AddConis;
+
         }
 
         public void Dispose()
         {
             _checkPointsController.Dispose();
             _coinController.Dispose();
+
+            _coinController.OnTake -= _walletController.AddConis;
         }
     }
 }

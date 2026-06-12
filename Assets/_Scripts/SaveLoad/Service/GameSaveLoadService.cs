@@ -166,7 +166,7 @@ namespace Assets._Scripts.SaveLoad.Service
         public void RestartLevel()
         {
             _gameLogger.Log("GameSaveLoadService reset level", "Service");
-            _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData();
+            _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData(_levelConfig);
         }
 
         public void OnFinishLevel(LevelCompletedEvent args) // переделать...

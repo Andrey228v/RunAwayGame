@@ -28,9 +28,9 @@ namespace Assets.Scripts.SaveLoad.Data
             Coins = coins;
         }
 
-        public void ResetData()
+        public void ResetData(LevelConfig levelConfig)
         {
-            LastCheckPointPosition = new Vector3();
+            LastCheckPointPosition = levelConfig.StartPosition;
             PlayerData.ResetData();
 
             foreach (var checkPoint in CheckPoints) 

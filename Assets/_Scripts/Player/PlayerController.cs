@@ -107,7 +107,7 @@ namespace Assets.Scripts.Player
         public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
-            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation); // при финише надо ставить точку старта
         }
     }
 }

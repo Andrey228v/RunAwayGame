@@ -50,6 +50,7 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
+            //Тут работает так, что _initList пустой при инициализации...
             foreach(IInitialzation init in _initList)
             {
                 init.Initialzation(gameSaveData, levelConfig);

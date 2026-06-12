@@ -107,21 +107,21 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentsData.Add(achData8);
         }
 
-        public void ResetData()
-        {
-            foreach (var key in LevelsData.Keys) 
-            {
-                LevelsData[key].ResetData();
-            }
+        //public void ResetData()
+        //{
+        //    foreach (var key in LevelsData.Keys) 
+        //    {
+        //        //LevelsData[key].ResetData();
+        //    }
 
-            foreach(var ach in AchievmentsData)
-            {
-                ach.ResetData();
-            }
+        //    foreach(var ach in AchievmentsData)
+        //    {
+        //        ach.ResetData();
+        //    }
 
-            ShopData.ResetData();
-            WalletData.ResetData();
+        //    ShopData.ResetData();
+        //    WalletData.ResetData();
 
-        }
+        //}
     }
 }

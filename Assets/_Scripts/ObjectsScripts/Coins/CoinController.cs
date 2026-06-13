@@ -16,7 +16,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         private List<Coin> _objectList;
         private List<CoinData> _objectData;
 
-        public event Action OnTake;
+        public event Action<int> OnTake;
 
         public CoinController(GamePoints points)
         {
@@ -74,7 +74,8 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
         public void CoinActivated(Coin coin)
         {
-            OnTake?.Invoke();
+            //Переделать ... ...
+            OnTake?.Invoke(1);
         }
 
         public void Restart(LevelData levelData)

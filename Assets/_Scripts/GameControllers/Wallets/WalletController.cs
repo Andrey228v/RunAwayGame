@@ -105,26 +105,23 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         private void OnCoinsChanged(AddCoinsEvent args)
         {
-            _gameLogger.Log("OnCoinsChanged", "Event");
+            //_gameLogger.Log("OnCoinsChanged", "Event");
 
-            //_coins += args.CoinCount;
-
-
-            _eventBus.Publish(new SaveGameEvent { });
-            _eventBus.Publish(new UpdateUIEvent { });
-
-
+            //_eventBus.Publish(new SaveGameEvent { });
+            //_eventBus.Publish(new UpdateUIEvent { });
         }
 
         private void OnGobeletsChanged(AddGobeletsEvent args)
         {
-            _gameLogger.Log("OnGobeletsChanged", "Event");
+            //_gameLogger.Log("OnGobeletsChanged", "Event");
 
-            //_gobelets += args.GobeletCount;
+            //_eventBus.Publish(new SaveGameEvent { });
+            //_eventBus.Publish(new UpdateUIEvent { });
+        }
 
-
-            _eventBus.Publish(new SaveGameEvent { });
-            _eventBus.Publish(new UpdateUIEvent { });
+        public void AddConis(int count)
+        {
+            _model.AddCoins(count);
         }
     }
 }

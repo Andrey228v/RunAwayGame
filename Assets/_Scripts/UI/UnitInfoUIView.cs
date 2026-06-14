@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace Assets._Scripts.UI
 {
-    public class UnitInfoUI : MonoBehaviour
+    public class UnitInfoUIView : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _gobeletsCount;
 
         public event Action OnDestroyView;
 
-        public UnitInfoUI(string name, int count)
+        public UnitInfoUIView(string name, int count)
         {
             _name.text = name;
             _gobeletsCount.text = count.ToString();
@@ -35,6 +35,11 @@ namespace Assets._Scripts.UI
         public void SetGobeletsCountText(int actualGobelets, int addGobelets)
         {
             _gobeletsCount.text = actualGobelets.ToString();
+        }
+
+        public void UpdateView()
+        {
+
         }
 
     }

@@ -36,8 +36,9 @@ namespace Assets._Scripts.EnteryPoints
         public void Start()
         {
             InitMenu();
-            _achievmentsController.UpdateAllCells();
-            _walletController.UpdateAllView();
+
+            _achievmentsController.UpdateView();
+            _walletController.UpdateView();
 
         }
 

@@ -1,7 +1,4 @@
 ﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.GameControllers;
-using Assets._Scripts.GameControllers.Achievments;
-using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SceneLoading;
 using System;
 using System.Collections.Generic;

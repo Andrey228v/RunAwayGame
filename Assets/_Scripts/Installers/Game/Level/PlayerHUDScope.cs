@@ -8,7 +8,7 @@ namespace Assets._Scripts.Installers
 {
     public class PlayerHUDScope : LifetimeScope
     {
-        [SerializeField] private GamePanelController _gamePanelControllerPrefab;
+        [SerializeField] private GamePanelView _gamePanelControllerPrefab;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -24,7 +24,7 @@ namespace Assets._Scripts.Installers
         {
             builder.RegisterEntryPoint<PlayerHUDEnteryPoint>();
 
-            builder.RegisterFactory<GamePanelController>(container => () =>
+            builder.RegisterFactory<GamePanelView>(container => () =>
             {
                 return container.Instantiate(_gamePanelControllerPrefab);
             }, Lifetime.Transient);

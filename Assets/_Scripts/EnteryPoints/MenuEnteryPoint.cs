@@ -12,14 +12,14 @@ namespace Assets._Scripts.EnteryPoints
 {
     public class MenuEnteryPoint : IStartable, IDisposable
     {
-        private Func<MenuTabs> _menuFactory;
+        private Func<MenuTabsView> _menuFactory;
         private Func<AchievmentsCellsView> _achievmentsCellsFactory;
         private AchievmentsController _achievmentsController;
         private WalletController _walletController;
         private IGameLogger _gameLogger;
 
         public MenuEnteryPoint(
-            Func<MenuTabs> menuFactory,
+            Func<MenuTabsView> menuFactory,
             AchievmentsController achievmentsController,
             IGameLogger gameLogger,
             WalletController walletController,
@@ -49,7 +49,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public void InitMenu()
         {
-            MenuTabs menuTabs = _menuFactory();
+            MenuTabsView menuTabs = _menuFactory();
             AchievmentsCellsView achievments = _achievmentsCellsFactory();
             achievments.transform.SetParent(menuTabs.AchievmentsParent, false);
             _achievmentsController.SetCellView(achievments);

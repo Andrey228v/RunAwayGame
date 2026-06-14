@@ -20,7 +20,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         Achievements
     }
 
-    public class MenuTabs : MonoBehaviour
+    public class MenuTabsView : MonoBehaviour
     {
         [Header("Tabs")]
         [SerializeField] private List<GameObject> _panels;

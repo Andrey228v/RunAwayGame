@@ -11,7 +11,7 @@ namespace Assets._Scripts.Installers
 {
     public class MenuScope : LifetimeScope
     {
-        [SerializeField] private MenuTabs _menuTabs;
+        [SerializeField] private MenuTabsView _menuTabs;
         [SerializeField] private UnitButtonSkinView _unitButtonSkinViewPrefab;
         [SerializeField] private ConditionSkinView _conditionSkinViewPrefab;
         [SerializeField] private AchievementView _achievementPrefab;
@@ -24,7 +24,7 @@ namespace Assets._Scripts.Installers
             builder.Register<FactorySkinsCells>(Lifetime.Singleton);
             builder.Register<SkinController>(Lifetime.Singleton);
 
-            builder.RegisterFactory<MenuTabs>(container => () =>
+            builder.RegisterFactory<MenuTabsView>(container => () =>
             {
                 return container.Instantiate(_menuTabs);
             }, Lifetime.Singleton);

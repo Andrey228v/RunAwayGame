@@ -8,7 +8,7 @@ using VContainer;
 
 namespace Assets.Scripts.UI
 {
-    public class GameInterfacePanel : MonoBehaviour, IPanel
+    public class GameInterfacePanelView : MonoBehaviour, IPanel
     {
         [Header("Buttons")]
         [SerializeField] private Button _menuButton;

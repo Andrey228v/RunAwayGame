@@ -1,37 +1,37 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-namespace Assets._Scripts.UI._2GameHUD
+namespace Assets.Scripts.UI
 {
-    public class GameWinPanel : MonoBehaviour, IPanel
+    public class GameMenuPanelView : MonoBehaviour, IPanel
     {
         [Header("Buttons")]
+        [SerializeField] private Button _backToGameButton;
         [SerializeField] private Button _backToMenuButton;
-        [SerializeField] private Button _reloudButton;
 
         private IEventPublisher _eventBus;
 
         public bool IsVisible { get; private set; }
 
-        public string Name {  get;  set; } 
+        public string Name { get; set; }
 
 #if UNITY_EDITOR
         public void OnValidate()
         {
+            if (_backToGameButton == null)
+            {
+                Debug.LogError($"{gameObject.name}: _backToGameButton is not set!", this);
+            }
+
             if (_backToMenuButton == null)
             {
                 Debug.LogError($"{gameObject.name}: _backToMenuButton is not set!", this);
             }
-
-            if (_reloudButton == null)
-            {
-                Debug.LogError($"{gameObject.name}: _reloudButton is not set!", this);
-            }
         }
 #endif
-
         [Inject]
         public void Construct(IEventPublisher eventBus)
         {
@@ -40,14 +40,14 @@ namespace Assets._Scripts.UI._2GameHUD
 
         private void OnEnable()
         {
+            _backToGameButton.onClick.AddListener(ClickBackToGame);
             _backToMenuButton.onClick.AddListener(ClickBackToMenu);
-            _reloudButton.onClick.AddListener(ReloudLevel);
         }
 
         private void OnDisable()
         {
+            _backToGameButton.onClick.RemoveListener(ClickBackToGame);
             _backToMenuButton.onClick.RemoveListener(ClickBackToMenu);
-            _reloudButton.onClick.RemoveListener(ReloudLevel);
         }
 
         public void Show()
@@ -62,15 +62,14 @@ namespace Assets._Scripts.UI._2GameHUD
             IsVisible = false;
         }
 
+        private void ClickBackToGame()
+        {
+            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameInterfacePanel" });
+        }
+
         private void ClickBackToMenu()
         {
             _eventBus.Publish(new TransitToWindowEvent { });
-
-        }
-
-        private void ReloudLevel()
-        {
-            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameInterfacePanel" });
         }
     }
 }

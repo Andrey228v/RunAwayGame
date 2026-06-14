@@ -172,11 +172,9 @@ namespace Assets._Scripts.SaveLoad.Service
         public void OnFinishLevel(LevelCompletedEvent args) // переделать...
         {
             _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
-
-            RestartLevel();
-
             _levelsController.FinishLevel(_gameSaveData, _levelConfig, args);
 
+            RestartLevel();
             SaveGame();
         }
 

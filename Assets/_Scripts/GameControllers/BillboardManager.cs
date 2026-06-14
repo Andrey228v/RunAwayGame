@@ -9,7 +9,7 @@ namespace Assets._Scripts.GameControllers
 {
     public class BillboardManager : ILateTickable, IDisposable
     {
-        private List<UnitInfoUI> _unitsUI = new List<UnitInfoUI>();
+        private List<UnitInfoUIView> _unitsUI = new List<UnitInfoUIView>();
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
         private CameraController _cameraController;
 
@@ -24,7 +24,7 @@ namespace Assets._Scripts.GameControllers
             {
                 if(_playerMoveDirectionCalculator  != null)
                 {
-                    foreach (UnitInfoUI ui in _unitsUI)
+                    foreach (UnitInfoUIView ui in _unitsUI)
                     {
                         if (ui != null)
                         {
@@ -46,12 +46,12 @@ namespace Assets._Scripts.GameControllers
             _cameraController = cameraController;
         }
 
-        public void AddUnitUI(UnitInfoUI ui)
+        public void AddUnitUI(UnitInfoUIView ui)
         {
             _unitsUI.Add(ui);
         }
 
-        public void RemoveUI(UnitInfoUI ui) 
+        public void RemoveUI(UnitInfoUIView ui) 
         {
             _unitsUI.Remove(ui);
         }

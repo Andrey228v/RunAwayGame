@@ -88,7 +88,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 _achievementViews.Add(achView);
                 achView.transform.SetParent(_cells[modelIndex], false);
 
-                model.OnUnlock += UpdateView;
+                model.OnUnlock += UpdateCellView;
             }
             else
             {
@@ -101,14 +101,14 @@ namespace Assets._Scripts.GameControllers.Achievments
             _cells.Add(cell);
         }
 
-        public void UpdateAllCells()
+        public void UpdateView()
         {
             if(_achievmentsCellsView != null)
             {
                 for (int i = 0; i < _modelsAchievments.Count; i++)
                 {
                     var model = _modelsAchievments[i];
-                    UpdateView(model.Data.Id);
+                    UpdateCellView(model.Data.Id);
                 }
             }
         }
@@ -126,11 +126,11 @@ namespace Assets._Scripts.GameControllers.Achievments
 
             foreach (var model in _modelsAchievments)
             {
-                model.OnUnlock -= UpdateView;
+                model.OnUnlock -= UpdateCellView;
             }
         }
 
-        private void UpdateView(int id)
+        private void UpdateCellView(int id)
         {
             if (_achievmentsCellsView != null)
             {

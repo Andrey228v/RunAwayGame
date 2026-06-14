@@ -11,7 +11,7 @@ namespace Assets.Scripts.Installers
 {
     public class GameScope : LifetimeScope
     {
-        [SerializeField] private UnitInfoUI _unitInfoUIPrefab;
+        [SerializeField] private UnitInfoUIView _unitInfoUIPrefab;
         [SerializeField] private Character _characterPrefab; // префаб Unit, тут надо префаб делать пустой без Player и Bot. Потом переделать.
         [SerializeField] private NavMeshCharacter _navMeshCharacterPrefab;
 
@@ -43,7 +43,7 @@ namespace Assets.Scripts.Installers
 
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 
-            builder.RegisterFactory<UnitInfoUI>(container => () =>
+            builder.RegisterFactory<UnitInfoUIView>(container => () =>
             {
                 return container.Instantiate(_unitInfoUIPrefab);
             }, Lifetime.Transient);

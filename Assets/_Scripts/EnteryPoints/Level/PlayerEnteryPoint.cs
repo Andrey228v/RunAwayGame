@@ -21,7 +21,7 @@ namespace Assets._Scripts.EnteryPoints
         private CameraController _cameraController;
         private Func<Character> _characterFactory;
         private BillboardManager _billboardManager;
-        private Func<UnitInfoUI> _unitInfoUIFactory;
+        private Func<UnitInfoUIView> _unitInfoUIFactory;
         private GameSaveLoadService _gameSaveLoadService;
         private LevelsController _levelsController;
         private WalletController _walletController;
@@ -29,7 +29,7 @@ namespace Assets._Scripts.EnteryPoints
         public PlayerEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory,
             Func<Character> characterFactory, CameraController cameraController,
-            BillboardManager billboardManager, Func<UnitInfoUI> unitInfoUIFactory,
+            BillboardManager billboardManager, Func<UnitInfoUIView> unitInfoUIFactory,
             GameSaveLoadService gameSaveLoadService,
             WalletController walletController,
             LevelsController levelsController
@@ -48,7 +48,6 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            //_levelsController.SetPlayerController(_playerController);
             _levelsController.AddInitialization(_playerController);
             _levelsController.AddSave(_playerController);
             _levelsController.AddLoad(_playerController);
@@ -78,7 +77,7 @@ namespace Assets._Scripts.EnteryPoints
 
         private void InitPlayer(CameraController cameraController, 
             Func<Character> characterFactory, PlayerStateMachineFactory playerStateMachineFactory, PlayerController playerController,
-            Func<UnitInfoUI> unitInfoUIFactory, BillboardManager billboardManager, WalletController walletController)
+            Func<UnitInfoUIView> unitInfoUIFactory, BillboardManager billboardManager, WalletController walletController)
         {
             Character character = characterFactory();
             character.AddComponent<PlayerMB>(); // Тут подумать так ли делать ...
@@ -91,7 +90,7 @@ namespace Assets._Scripts.EnteryPoints
             playerController.SetCharacter(character);
             playerController.SetPlayerStateMachine(playerStateMachine);
 
-            UnitInfoUI unitInfoUI = unitInfoUIFactory();
+            UnitInfoUIView unitInfoUI = unitInfoUIFactory();
             unitInfoUI.transform.SetParent(character.transform);
 
             billboardManager.AddUnitUI(unitInfoUI);

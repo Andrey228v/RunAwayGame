@@ -89,8 +89,6 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public void ShowUnlocked(bool canClaim)
         {
-
-
             _lockOverlay.SetActive(false);
             _claimButton.gameObject.SetActive(canClaim);
             _blockImage.gameObject.SetActive(false);

@@ -62,11 +62,5 @@ namespace Assets._Scripts.GameControllers.Achievments
         {
             _gameLogger.Log($"Achievment Reward {_data.Name}", "Success");
         }
-
-        //картинку сделать..
-
-        //private Func<bool> _
-
-
     }
 }

@@ -17,7 +17,7 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         private MenuTabsView _menuView;
         private GamePanelView _gamePanelView;
-        private UnitInfoUI _unitInfoUIView;
+        private UnitInfoUIView _unitInfoUIView;
 
         public WalletController(EventBus eventBus, IGameLogger gameLogger)
         {
@@ -83,7 +83,7 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         }
 
-        public void AddUnitInfoUIView(UnitInfoUI unitInfoUI)
+        public void AddUnitInfoUIView(UnitInfoUIView unitInfoUI)
         {
             _unitInfoUIView = unitInfoUI;
             _unitInfoUIView.OnDestroyView += RemoveUnitInfoUIView;
@@ -97,7 +97,7 @@ namespace Assets._Scripts.GameControllers.Wallets
             _model.OnGobeletsChanged -= _unitInfoUIView.SetGobeletsCountText;
         }
 
-        public void UpdateAllView()
+        public void UpdateView()
         {
             _menuView.SetCoinsCountText(_model.Data.Coins, 0);
             _menuView.SetGobeletsCountText(_model.Data.Gobelets, 0);
@@ -122,6 +122,32 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void AddConis(int count)
         {
             _model.AddCoins(count);
+        }
+
+        public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            if(_menuView != null)
+            {
+                int coins = gameSaveData.WalletData.Coins;
+                int gobelets = gameSaveData.WalletData.Gobelets;
+
+                _menuView.SetCoinsCountText(coins, 0);
+                _menuView.SetGobeletsCountText(gobelets, 0);
+                _menuView.UpdateView();
+            }
+
+            if(_gamePanelView != null)
+            {
+
+                _gamePanelView.UpdateView();
+            }
+
+            if(_unitInfoUIView != null)
+            {
+                _unitInfoUIView.UpdateView();
+            }
+
+
         }
     }
 }

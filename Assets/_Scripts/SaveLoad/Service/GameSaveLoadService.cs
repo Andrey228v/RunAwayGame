@@ -89,12 +89,9 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService initing all services", "Service");
 
-            //LoadOrCreateSave();
-
             _levelsController.Initialize(_gameSaveData, _levelConfig);
             _achievmentsController.Initialize(_gameSaveData, _levelConfig);
             _shopController.Initialize();
-            //_walletController.Initialize();
 
             _gameLogger.Log("GameSaveLoadService have inited all services", "Service");
         }
@@ -128,7 +125,7 @@ namespace Assets._Scripts.SaveLoad.Service
         public void UpdateAllUI(UpdateUIEvent args)
         {
             _gameLogger.Log("GameSaveLoadService UpdateAllUI", "Service");
-            _achievmentsController.UpdateAllCells();
+            _achievmentsController.UpdateView();
         }
 
         public async void OnSetLevelConfig(ChooseLevelEvent args)
@@ -151,7 +148,10 @@ namespace Assets._Scripts.SaveLoad.Service
                 DateTime.Now){ };
 
             _achievmentsController.Reset(_gameSaveData, _levelConfig);
-            _achievmentsController.UpdateAllCells();
+            _achievmentsController.UpdateView();
+
+            _walletController.Reset(_gameSaveData, _levelConfig);
+            _walletController.UpdateView();
 
 
         }
@@ -172,6 +172,7 @@ namespace Assets._Scripts.SaveLoad.Service
         public void OnFinishLevel(LevelCompletedEvent args) // переделать...
         {
             _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
+
             _levelsController.FinishLevel(_gameSaveData, _levelConfig, args);
 
             RestartLevel();

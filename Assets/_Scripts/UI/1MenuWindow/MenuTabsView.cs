@@ -221,9 +221,16 @@ namespace Assets._Scripts.UI._1MenuWindow
             _gobeletsText.text = actualGobelets.ToString();
         }
 
+        public void UpdateView()
+        {
+
+        }
+
         private void SetAchievmentsUI(UpdateUIEvent args)
         {
 
         }
+
+
     }
 }

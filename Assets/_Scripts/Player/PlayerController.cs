@@ -98,10 +98,8 @@ namespace Assets.Scripts.Player
 
         public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
-
-            levelData.PlayerData.PlayerPosition = _character.transform.position;
-            levelData.PlayerData.PlayerRotation = _character.transform.rotation;
+            gameSaveData.LevelsData[levelConfig.LevelName].PlayerData.PlayerPosition = _character.transform.position;
+            gameSaveData.LevelsData[levelConfig.LevelName].PlayerData.PlayerRotation = _character.transform.rotation;
         }
 
         public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)

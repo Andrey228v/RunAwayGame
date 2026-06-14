@@ -74,8 +74,6 @@ namespace Assets._Scripts.UI._1MenuWindow
         {
             _currentPanel = _panels[0];
             _previousPanel = null;
-
-            //_eventBus.Publish(new UpdateUIEvent { });
         }
 
         private void Start()
@@ -90,7 +88,7 @@ namespace Assets._Scripts.UI._1MenuWindow
 
             ShowPage(PageName.Menu);
 
-            _eventBus.Publish(new UpdateUIEvent { });
+            //_eventBus.Publish(new UpdateUIEvent { });
         }
 
         private void OnDestroy()

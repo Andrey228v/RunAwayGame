@@ -60,6 +60,8 @@ namespace Assets._Scripts.GameControllers.Wallets
             _menuView.OnDestroyView += RemoveMenuView;
             _model.OnCoinsChanged += _menuView.SetCoinsCountText;
             _model.OnGobeletsChanged += _menuView.SetGobeletsCountText;
+
+            //UpdateView();
         }
 
         public void RemoveMenuView()
@@ -105,18 +107,12 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         private void OnCoinsChanged(AddCoinsEvent args)
         {
-            //_gameLogger.Log("OnCoinsChanged", "Event");
-
-            //_eventBus.Publish(new SaveGameEvent { });
-            //_eventBus.Publish(new UpdateUIEvent { });
+            UpdateView();
         }
 
         private void OnGobeletsChanged(AddGobeletsEvent args)
         {
-            //_gameLogger.Log("OnGobeletsChanged", "Event");
-
-            //_eventBus.Publish(new SaveGameEvent { });
-            //_eventBus.Publish(new UpdateUIEvent { });
+            UpdateView();
         }
 
         public void AddConis(int count)
@@ -126,19 +122,19 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            if(_menuView != null)
+            _model.Reset();
+
+            if (_menuView != null)
             {
                 int coins = gameSaveData.WalletData.Coins;
                 int gobelets = gameSaveData.WalletData.Gobelets;
 
                 _menuView.SetCoinsCountText(coins, 0);
                 _menuView.SetGobeletsCountText(gobelets, 0);
-                _menuView.UpdateView();
             }
 
             if(_gamePanelView != null)
             {
-
                 _gamePanelView.UpdateView();
             }
 

@@ -7,10 +7,10 @@ namespace Assets._Scripts.EnteryPoints
 {
     public class PlayerHUDEnteryPoint : IStartable
     {
-        private Func<GamePanelController> _gamePanelFactory;
+        private Func<GamePanelView> _gamePanelFactory;
         private WalletController _walletController;
 
-        public PlayerHUDEnteryPoint(Func<GamePanelController> gamePanelFactory, WalletController walletController) 
+        public PlayerHUDEnteryPoint(Func<GamePanelView> gamePanelFactory, WalletController walletController) 
         {
             _walletController = walletController;
             _gamePanelFactory = gamePanelFactory;
@@ -18,7 +18,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            GamePanelController panel = _gamePanelFactory();
+            GamePanelView panel = _gamePanelFactory();
             _walletController.AddGamePanelView(panel);
 
         }

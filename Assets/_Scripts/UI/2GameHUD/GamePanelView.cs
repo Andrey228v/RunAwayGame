@@ -9,11 +9,11 @@ using VContainer;
 
 namespace Assets.Scripts.UI
 {
-    public class GamePanelController : MonoBehaviour //Игровой HUD
+    public class GamePanelView : MonoBehaviour //Игровой HUD
     {
-        [SerializeField] private GameInterfacePanel _gameInterfacePanel;
-        [SerializeField] private GameMenuPanel _gameMenuPanel;
-        [SerializeField] private GameWinPanel _gameWinPanel;
+        [SerializeField] private GameInterfacePanelView _gameInterfacePanel;
+        [SerializeField] private GameMenuPanelView _gameMenuPanel;
+        [SerializeField] private GameWinPanelView _gameWinPanel;
 
         private EventBus _eventBus;
 

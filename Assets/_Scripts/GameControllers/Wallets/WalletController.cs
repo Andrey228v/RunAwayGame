@@ -15,8 +15,8 @@ namespace Assets._Scripts.GameControllers.Wallets
         private EventBus _eventBus;
         private IGameLogger _gameLogger;
 
-        private MenuTabs _menuView;
-        private GamePanelController _gamePanelView;
+        private MenuTabsView _menuView;
+        private GamePanelView _gamePanelView;
         private UnitInfoUI _unitInfoUIView;
 
         public WalletController(EventBus eventBus, IGameLogger gameLogger)
@@ -54,7 +54,7 @@ namespace Assets._Scripts.GameControllers.Wallets
             _model.LoadData(gameSaveData.WalletData);
         }
 
-        public void AddMenuView(MenuTabs menuView)
+        public void AddMenuView(MenuTabsView menuView)
         {
             _menuView = menuView;
             _menuView.OnDestroyView += RemoveMenuView;
@@ -69,7 +69,7 @@ namespace Assets._Scripts.GameControllers.Wallets
             _model.OnGobeletsChanged -= _menuView.SetGobeletsCountText;
         }
 
-        public void AddGamePanelView(GamePanelController gamePanelView)
+        public void AddGamePanelView(GamePanelView gamePanelView)
         {
             _gamePanelView = gamePanelView;
             _gamePanelView.OnDestroyView += RemoveGamePanelView;

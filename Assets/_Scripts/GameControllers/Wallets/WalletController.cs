@@ -76,6 +76,9 @@ namespace Assets._Scripts.GameControllers.Wallets
             _gamePanelView = gamePanelView;
             _gamePanelView.OnDestroyView += RemoveGamePanelView;
             _model.OnCoinsChanged += _gamePanelView.SetCoinsCountText;
+
+            _gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
+            _unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
         }
 
         public void RemoveGamePanelView()

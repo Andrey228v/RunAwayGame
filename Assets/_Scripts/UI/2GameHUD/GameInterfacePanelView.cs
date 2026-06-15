@@ -72,6 +72,7 @@ namespace Assets.Scripts.UI
             _soundButton.onClick.AddListener(ClickSoundButton);
             _saveButton.onClick.AddListener(ClickSaveButton);
 
+
         }
 
         private void OnDisable()

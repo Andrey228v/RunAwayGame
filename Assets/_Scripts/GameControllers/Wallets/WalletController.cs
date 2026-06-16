@@ -110,17 +110,24 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         private void OnCoinsChanged(AddCoinsEvent args)
         {
+            AddConis(args.CoinCount);
             UpdateView();
         }
 
         private void OnGobeletsChanged(AddGobeletsEvent args)
         {
+            AddGobelets(args.GobeletCount);
             UpdateView();
         }
 
         public void AddConis(int count)
         {
             _model.AddCoins(count);
+        }
+
+        public void AddGobelets(int count)
+        {
+            _model.AddGobelets(count);
         }
 
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)

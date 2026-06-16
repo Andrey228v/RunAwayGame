@@ -15,6 +15,6 @@ MonoBehaviour:
   _levelId: 1
   _levelName: Lvl1
   _sceneName: LEVEL_1
-  _startPoint: {x: 105, y: 30, z: 17}
+  _startPoint: {x: 64, y: 15, z: 0}
   _finishPoint: {x: 8, y: 28, z: 32}
   _playerStartRotation: {x: 0, y: 0, z: 0}

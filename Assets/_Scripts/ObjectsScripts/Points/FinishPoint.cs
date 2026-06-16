@@ -17,14 +17,11 @@ namespace Assets.Scripts.Points
         private IEventPublisher _eventBus;
 
         public bool IsActivated => _isActivated;
-        
-        public event Action OnFinishActivated;
-        public event Action OnRestartActivated;
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (_lvlId == null)
+            if (_lvlId == null || _lvlId == "")
             {
                 Debug.LogError($"{_lvlId}: _lvlId is not set!", this);
             }

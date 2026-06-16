@@ -175,6 +175,7 @@ namespace Assets._Scripts.SaveLoad.Service
 
             _levelsController.FinishLevel(_gameSaveData, _levelConfig, args);
 
+
             RestartLevel();
             SaveGame();
         }

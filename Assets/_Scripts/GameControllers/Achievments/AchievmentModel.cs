@@ -1,13 +1,27 @@
 ﻿using Assets._Scripts.EventBusGame;
 using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
-using Assets.Scripts.SaveLoad.Data;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
+    public interface IAchievement
+    {
+        public event Action<int> OnUnlock;
+        public event Action<int> OnChanged;
+        public event Action<int> OnUpdateView;
+
+        public AchievmentData Data { get; }
+
+        public AchievmentData GetData();
+
+        public void SetData(AchievmentData data);
+
+        public void TakeReward();
+    }
+
+
     public class AchievmentModel<T>: IAchievement where T : struct
     {
         private Sprite _icon;
@@ -18,6 +32,7 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public event Action<int> OnUnlock;
         public event Action<int> OnChanged;
+        public event Action<int> OnUpdateView;
 
         public AchievmentData Data => _data;
 
@@ -40,8 +55,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 _gameLogger.Log($"Achievment Unlock {_data.Name}", "Achievment");
 
                 _data.IsUnlock = true;
-                _achievmentsReward.GetRewards();
-
+                _data.IsRevardEnable = true;
                 OnUnlock?.Invoke(_data.Id);
 
                 _eventBus.Publish(new SaveGameEvent());
@@ -58,9 +72,11 @@ namespace Assets._Scripts.GameControllers.Achievments
             _data = data;
         }
 
-        public void ClaimReward()
+        public void TakeReward()
         {
-            _gameLogger.Log($"Achievment Reward {_data.Name}", "Success");
+            _achievmentsReward.GetRewards();
+            _data.IsRevardEnable = false;
+            OnUpdateView?.Invoke(_data.Id);
         }
     }
 }

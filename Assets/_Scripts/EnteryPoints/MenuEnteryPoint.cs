@@ -46,6 +46,7 @@ namespace Assets._Scripts.EnteryPoints
         {
             _gameLogger.Log("MenuEnteryPoint OnDestroy", "Warning");
             _achievmentsController.Dispose();
+            //_walletController.Dispose();
         }
 
         public void InitMenu()

@@ -13,11 +13,11 @@ namespace Assets._Scripts.SaveLoad.Data
         public bool IsUnlock;
         public int TargetValue;
         public int CurrentValue;
-        public bool IsClaimed;
+        public bool IsRevardEnable;
 
         public float Progress => (float)CurrentValue / TargetValue;
 
-        public bool CanClaim => IsUnlock && !IsClaimed;
+        public bool IsUnlockAndTaken => IsUnlock && !IsRevardEnable;
 
         public void ResetData()
         {

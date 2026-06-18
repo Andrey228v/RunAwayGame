@@ -39,6 +39,18 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void Dispose()
         {
+            foreach(var view in _achievementViews)
+            {
+                view.TakeRewardButton.onClick.RemoveAllListeners(); // под вопросом. Если потом удаляются объект то нужны ли отписки...
+            }
+
+            //foreach(var model in _modelsAchievments)
+            //{
+            //    model.OnUnlock -= UpdateCellView;
+            //    model.OnUpdateView -= UpdateCellView;
+            //}
+
+            //_modelsAchievments.Clear();
             _achievementViews.Clear();
             _cells.Clear();
 
@@ -89,6 +101,9 @@ namespace Assets._Scripts.GameControllers.Achievments
                 achView.transform.SetParent(_cells[modelIndex], false);
 
                 model.OnUnlock += UpdateCellView;
+                model.OnUpdateView += UpdateCellView;
+
+                achView.TakeRewardButton.onClick.AddListener(model.TakeReward);
             }
             else
             {
@@ -141,15 +156,17 @@ namespace Assets._Scripts.GameControllers.Achievments
                 view.SetName(data.Name);
                 view.SetDescription(data.Description);
 
-                if (data.IsUnlock)
+                if (data.IsUnlock && data.IsRevardEnable)
                 {
-                    view.ShowUnlocked(data.IsClaimed == false);
-                    if (data.IsClaimed == false)
-                        view.PlayUnlockAnimation();
+                    view.ShowUnlockedWithButtonReward();
                 }
-                else
+                else if(data.IsUnlock == false)
                 {
                     view.ShowLocked();
+                }
+                else if(data.IsUnlock && data.IsUnlockAndTaken)
+                {
+                    view.ShowUnlokedAfterReward();
                 }
             }
         }

@@ -21,7 +21,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         [SerializeField] private Slider _progressBar;
         [SerializeField] private TextMeshProUGUI _currentCountText;
         [SerializeField] private TextMeshProUGUI _goalCountText;
-        [SerializeField] private Button _claimButton;
+        [SerializeField] private Button _takeRewardButton;
         [SerializeField] private GameObject _lockOverlay;
         [SerializeField] private GameObject _progressBlock;
 
@@ -37,6 +37,9 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private Vector3 _originalScale;
         private IGameLogger _gameLogger;
 
+        public Button TakeRewardButton => _takeRewardButton;
+
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
@@ -50,9 +53,9 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
                 Debug.LogError($"{_description.name}: _descroption is not set!", this);
             }
 
-            if (_claimButton == null)
+            if (_takeRewardButton == null)
             {
-                Debug.LogError($"{_claimButton.name}: _claimButton is not set!", this);
+                Debug.LogError($"{_takeRewardButton.name}: _claimButton is not set!", this);
             }
 
             if(_progressBlock == null)
@@ -71,7 +74,6 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private void Start()
         {
             _originalScale = transform.localScale;
-
         }
 
         private void OnDestroy()
@@ -82,22 +84,27 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         public void ShowLocked()
         {
             _lockOverlay.SetActive(true);
-            _claimButton.gameObject.SetActive(false);
+            _takeRewardButton.gameObject.SetActive(false);
             _blockImage.gameObject.SetActive(true);
             _progressBlock.SetActive(true);
         }
 
-        public void ShowUnlocked(bool canClaim)
+        public void ShowUnlockedWithButtonReward()
         {
             _lockOverlay.SetActive(false);
-            _claimButton.gameObject.SetActive(canClaim);
+            _takeRewardButton.gameObject.SetActive(true);
             _blockImage.gameObject.SetActive(false);
             _progressBlock.SetActive(false);
+            _progressBar.gameObject.SetActive(false);
         }
 
-        public void ShowClaimed()
+        public void ShowUnlokedAfterReward()
         {
-            _claimButton.gameObject.SetActive(false);
+            _lockOverlay.SetActive(false);
+            _takeRewardButton.gameObject.SetActive(false);
+            _blockImage.gameObject.SetActive(false);
+            _progressBlock.SetActive(false);
+            _progressBar.gameObject.SetActive(false);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -117,10 +124,5 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public void SetName(string name) => _name.text = name;
         public void SetDescription(string desc) => _description.text = desc;
-
-        public void PlayUnlockAnimation()
-        {
-            transform.DOScale(1.2f, 0.3f).SetLoops(2, LoopType.Yoyo).SetAutoKill(true);
-        }
     }
 }

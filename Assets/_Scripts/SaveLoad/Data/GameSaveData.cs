@@ -31,7 +31,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "sLvl 1",
                 Description = "Start lvl 1",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentData achData2 = new AchievmentData()
@@ -40,7 +40,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "sLvl 2",
                 Description = "Start lvl 2",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentData achData3 = new AchievmentData()
@@ -49,7 +49,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "sLvl 3",
                 Description = "Start lvl 3",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentData achData4 = new AchievmentData()
@@ -58,7 +58,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "fLvl 1",
                 Description = "Finish lvl 1",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentData achData5 = new AchievmentData()
@@ -67,7 +67,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "fLvl 2",
                 Description = "Finish lvl 2",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentData achData6 = new AchievmentData()
@@ -76,7 +76,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "fLvl 3",
                 Description = "Finish lvl 3",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentData achData7 = new AchievmentData()
@@ -85,7 +85,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "CollectGols",
                 Description = "Collect 10 gold",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentData achData8 = new AchievmentData()
@@ -94,7 +94,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "Die",
                 Description = "Die",
                 IsUnlock = false,
-                IsClaimed = false
+                IsRevardEnable = false
             };
 
             AchievmentsData.Add(achData1);

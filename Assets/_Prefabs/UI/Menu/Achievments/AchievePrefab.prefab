@@ -1291,7 +1291,7 @@ MonoBehaviour:
   _progressBar: {fileID: 4832925299020245486}
   _currentCountText: {fileID: 543329206106406533}
   _goalCountText: {fileID: 310464567685705283}
-  _claimButton: {fileID: 3962592276260742931}
+  _takeRewardButton: {fileID: 3962592276260742931}
   _lockOverlay: {fileID: 827024063180919821}
   _progressBlock: {fileID: 4896172267501239124}
   _selectionHighlight: {fileID: 0}
@@ -1332,7 +1332,7 @@ GameObject:
   - component: {fileID: 3051782856094275398}
   - component: {fileID: 3962592276260742931}
   m_Layer: 5
-  m_Name: GetRevordButton
+  m_Name: TakeRevordButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

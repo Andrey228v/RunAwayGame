@@ -25,21 +25,21 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         [Inject]
         public void Construct(
-            AchievmentsController achievmentsController, 
-            Func<AchievementView> achievmentsViewFactory,
+            //AchievmentsController achievmentsController, 
+            //Func<AchievementView> achievmentsViewFactory,
             IGameLogger gameLogger)
         {
-            _achievmentsViewFactory = achievmentsViewFactory;
-            _gameLogger = gameLogger;
-            _gameLogger.Log("AchievmentsCellsView Construct", "Info");
+            //_achievmentsViewFactory = achievmentsViewFactory;
+            //_gameLogger = gameLogger;
+            //_gameLogger.Log("AchievmentsCellsView Construct", "Info");
 
-            for (int i = 0; i < _cellsParent.transform.childCount; i++)
-            {
-                achievmentsController.AddCell(_cellsParent.transform.GetChild(i));
+            //for (int i = 0; i < _cellsParent.transform.childCount; i++)
+            //{
+            //    achievmentsController.AddCell(_cellsParent.transform.GetChild(i));
 
-                var achView = _achievmentsViewFactory();
-                achievmentsController.AddAchievmentView(achView, i);
-            }
+            //    var achView = _achievmentsViewFactory();
+            //    achievmentsController.AddAchievmentView(achView, i);
+            //}
         }
     }
 }

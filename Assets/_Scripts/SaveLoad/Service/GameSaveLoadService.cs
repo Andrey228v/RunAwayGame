@@ -20,6 +20,7 @@ namespace Assets._Scripts.SaveLoad.Service
         private LevelConfig _levelConfig;
         private LevelsController _levelsController;
         private AchievmentsController _achievmentsController;
+        private AchievmentModelList _achievmentModelList;
         private ShopController _shopController;
         private WalletController _walletController;
         private EventBus _eventBus;
@@ -90,7 +91,8 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService initing all services", "Service");
 
             _levelsController.Initialize(_gameSaveData, _levelConfig);
-            _achievmentsController.Initialize(_gameSaveData, _levelConfig);
+            //_achievmentModelList.Initialize(_gameSaveData, _levelConfig);
+            //_achievmentsController.Initialize(_gameSaveData, _levelConfig);
             _shopController.Initialize();
 
             _gameLogger.Log("GameSaveLoadService have inited all services", "Service");
@@ -100,10 +102,19 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService save all services", "Save");
 
-            _levelsController.SaveAllServices(_gameSaveData, _levelConfig);
-            _achievmentsController.SaveAllServices(_gameSaveData, _levelConfig);
-            _shopController.SaveAllServices(_gameSaveData, _levelConfig);
-            _walletController.SaveAllServices(_gameSaveData);
+            if(_levelConfig == null) // если конфиг null значит мы не в уровне
+            {
+                _achievmentsController.SaveAllServices(_gameSaveData);
+                _shopController.SaveAllServices(_gameSaveData);
+                _walletController.SaveAllServices(_gameSaveData);
+            }
+            else // мы в уровне. Сохраняем всё. 
+            {
+                _achievmentsController.SaveAllServices(_gameSaveData);
+                _shopController.SaveAllServices(_gameSaveData);
+                _walletController.SaveAllServices(_gameSaveData);
+                _levelsController.SaveAllServices(_gameSaveData, _levelConfig);
+            }
 
             SaveGame();
 

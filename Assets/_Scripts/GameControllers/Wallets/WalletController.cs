@@ -123,11 +123,13 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void AddConis(int count)
         {
             _model.AddCoins(count);
+            _eventBus.Publish(new SaveGameEvent { });
         }
 
         public void AddGobelets(int count)
         {
             _model.AddGobelets(count);
+            _eventBus.Publish(new SaveGameEvent { });
         }
 
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)

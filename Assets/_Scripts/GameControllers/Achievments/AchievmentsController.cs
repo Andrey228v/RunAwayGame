@@ -22,18 +22,14 @@ namespace Assets._Scripts.GameControllers.Achievments
         {
             _eventBus = eventBus;
             _gameLogger = gameLogger;
-            _modelsAchievments = new List<IAchievement>();
             _cells = new List<Transform>();
             _achievementViews = new List<AchievementView>();
+            _cells = new List<Transform>();
         }
 
-        public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Initialize(AchievmentModelList model)
         {
-            _achievementViews = new List<AchievementView>();
-            _cells = new List<Transform>();
-
-            _gameLogger.Log("AchievmentsController Initialize", "Success");
-            _modelsAchievments = CreateAchievementModels(gameSaveData.AchievmentsData);
+            _modelsAchievments = model.GetModel();
             _countAchievmentsMode = _modelsAchievments.Count;
         }
 
@@ -44,20 +40,19 @@ namespace Assets._Scripts.GameControllers.Achievments
                 view.TakeRewardButton.onClick.RemoveAllListeners(); // под вопросом. Если потом удаляются объект то нужны ли отписки...
             }
 
-            //foreach(var model in _modelsAchievments)
-            //{
-            //    model.OnUnlock -= UpdateCellView;
-            //    model.OnUpdateView -= UpdateCellView;
-            //}
-
-            //_modelsAchievments.Clear();
             _achievementViews.Clear();
             _cells.Clear();
 
             _achievmentsCellsView.OnDestroyCellsView -= DestroyUI;
         }
 
-        public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void SetCellView(AchievmentsCellsView achievmentsCellsView)
+        {
+            _achievmentsCellsView = achievmentsCellsView;
+            _achievmentsCellsView.OnDestroyCellsView += DestroyUI;
+        }
+
+        public void SaveAllServices(GameSaveData gameSaveData)
         {
             List<AchievmentData> achievmentsData = gameSaveData.AchievmentsData;
 
@@ -67,7 +62,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 achievmentsData[i] = achModel.GetData();
             }
         }
-
+        
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             List<AchievmentData> achievmentsData = gameSaveData.AchievmentsData;
@@ -79,12 +74,6 @@ namespace Assets._Scripts.GameControllers.Achievments
 
                 achModel.SetData(data);
             }
-        }
-
-        public void SetCellView(AchievmentsCellsView achievmentsCellsView)
-        {
-            _achievmentsCellsView = achievmentsCellsView;
-            _achievmentsCellsView.OnDestroyCellsView += DestroyUI;
         }
 
         public void AddAchievmentView(AchievementView achView, int modelIndex)
@@ -131,7 +120,7 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             _gameLogger.Log("AchievmentsController RESET", "Success");
-            _modelsAchievments = CreateAchievementModels(gameSaveData.AchievmentsData);
+            //_modelsAchievments = CreateAchievementModels(gameSaveData.AchievmentsData);
             _countAchievmentsMode = _modelsAchievments.Count;
         }
 
@@ -169,38 +158,6 @@ namespace Assets._Scripts.GameControllers.Achievments
                     view.ShowUnlokedAfterReward();
                 }
             }
-        }
-
-        private List<IAchievement> CreateAchievementModels(List<AchievmentData> achievmentData)
-        {
-            if (_modelsAchievments == null || _eventBus == null || _gameLogger == null)
-            {
-                throw new System.Exception("_modelsAchievments == null || _eventBus == null || _gameLogger == null");
-            }
-
-            var rewardType1 = new AchievmentsReward(_eventBus);
-            rewardType1.AddRevard(new CoinReward(_eventBus, 10));
-
-            var rewardType2 = new AchievmentsReward(_eventBus);
-            rewardType2.AddRevard(new GobeletReward(_eventBus, 1));
-
-            var rewardType3 = new AchievmentsReward(_eventBus);
-            rewardType3.AddRevard(new CoinReward(_eventBus, 5));
-            rewardType3.AddRevard(new GobeletReward(_eventBus, 2));
-
-            _modelsAchievments = new List<IAchievement>
-                    {
-                        new AchievmentModel<StartLevel1>(_eventBus, achievmentData[0], rewardType1, _gameLogger),
-                        new AchievmentModel<StartLevel2>(_eventBus, achievmentData[1], rewardType2, _gameLogger),
-                        new AchievmentModel<StartLevel3>(_eventBus, achievmentData[2], rewardType3, _gameLogger),
-                        new AchievmentModel<FinishLevel1>(_eventBus, achievmentData[3], rewardType2, _gameLogger),
-                        new AchievmentModel<FinishLevel2>(_eventBus, achievmentData[4], rewardType2, _gameLogger),
-                        new AchievmentModel<FinishLevel3>(_eventBus, achievmentData[5], rewardType3, _gameLogger),
-                        new AchievmentModel<CollectGoldEvent>(_eventBus, achievmentData[6], rewardType1, _gameLogger),
-                        new AchievmentModel<DieEvent>(_eventBus, achievmentData[7], rewardType2, _gameLogger),
-                    };
-
-            return _modelsAchievments;
         }
     }
 }

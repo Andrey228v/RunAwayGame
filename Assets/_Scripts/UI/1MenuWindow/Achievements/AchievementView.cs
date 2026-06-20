@@ -123,6 +123,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         }
 
         public void SetName(string name) => _name.text = name;
+
         public void SetDescription(string desc) => _description.text = desc;
     }
 }

@@ -29,7 +29,7 @@ namespace Assets._Scripts.GameControllers.GameShop
             
         }
 
-        public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void SaveAllServices(GameSaveData gameSaveData)
         {
 
 

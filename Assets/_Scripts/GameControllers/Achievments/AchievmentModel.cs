@@ -78,5 +78,10 @@ namespace Assets._Scripts.GameControllers.Achievments
             _data.IsRevardEnable = false;
             OnUpdateView?.Invoke(_data.Id);
         }
+
+        public void ChangeCurrentProgress(int amount)
+        {
+            _data.CurrentValue += amount;
+        }
     }
 }

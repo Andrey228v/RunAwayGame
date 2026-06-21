@@ -88,12 +88,10 @@ namespace Assets._Scripts.GameControllers.Levels
                 return;
             }
 
-            var levelsData = gameSaveData.LevelsData;
-
             if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData) == false)
             {
                 LevelData newLevelData = new LevelData(false, levelConfig.StartPosition, new PlayerData(), new List<CheckPointData>(), new List<CoinData>()) { };
-                gameSaveData.LevelsData.Add(levelConfig.LevelName, levelData);
+                gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
             }
 
             foreach (ILoad load in _loadList) 
@@ -124,17 +122,17 @@ namespace Assets._Scripts.GameControllers.Levels
                 finish.Finish(gameSaveData, levelConfig);
             }
 
-            if (args.LvlId == "0") // переделать. Это не тут должно быть
+            if (args.lvlId == "0") // переделать. Это не тут должно быть
             {
-                _eventBus.Publish(new FinishLevel1());
+                _eventBus.Publish(new FinishLevel1() { Progress = 1 });
             }
-            else if (args.LvlId == "1")
+            else if (args.lvlId == "1")
             {
-                _eventBus.Publish(new FinishLevel2());
+                _eventBus.Publish(new FinishLevel2() { Progress = 1 });
             }
-            else if (args.LvlId == "2")
+            else if (args.lvlId == "2")
             {
-                _eventBus.Publish(new FinishLevel3());
+                _eventBus.Publish(new FinishLevel3() { Progress = 1 });
             }
         }
 

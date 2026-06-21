@@ -120,8 +120,16 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             _gameLogger.Log("AchievmentsController RESET", "Success");
-            //_modelsAchievments = CreateAchievementModels(gameSaveData.AchievmentsData);
-            _countAchievmentsMode = _modelsAchievments.Count;
+
+            foreach(var model in _modelsAchievments) 
+            {
+                //model.
+            }
+
+            //LoadAllServices(gameSaveData, levelConfig);
+            //_countAchievmentsMode = _modelsAchievments.Count;
+
+            UpdateView();
         }
 
         private void DestroyUI()

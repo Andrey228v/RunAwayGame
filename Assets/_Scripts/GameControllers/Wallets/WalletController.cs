@@ -110,13 +110,13 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         private void OnCoinsChanged(AddCoinsEvent args)
         {
-            AddConis(args.CoinCount);
+            AddConis(args.coinCount);
             UpdateView();
         }
 
         private void OnGobeletsChanged(AddGobeletsEvent args)
         {
-            AddGobelets(args.GobeletCount);
+            AddGobelets(args.gobeletCount);
             UpdateView();
         }
 
@@ -124,6 +124,7 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             _model.AddCoins(count);
             _eventBus.Publish(new SaveGameEvent { });
+            _eventBus.Publish(new CollectGoldEvent { Progress = count });
         }
 
         public void AddGobelets(int count)
@@ -154,8 +155,6 @@ namespace Assets._Scripts.GameControllers.Wallets
             {
                 _unitInfoUIView.UpdateView();
             }
-
-
         }
     }
 }

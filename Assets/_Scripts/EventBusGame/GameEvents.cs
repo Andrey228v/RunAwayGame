@@ -8,9 +8,14 @@ namespace Assets._Scripts.EventBusGame
 
     }
 
+    public interface IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
+
     public struct LevelCompletedEvent 
     {
-        public string LvlId;
+        public string lvlId;
     }
 
     public struct CheckPoinActivatedEvent 
@@ -42,34 +47,34 @@ namespace Assets._Scripts.EventBusGame
 
     public struct AchievementProgressUpdatedEvent
     {
-        public string AchievementId;
-        public float Progress;
-        public int CurrentValue;
-        public int TargetValue;
+        public string achievementId;
+        public float progress;
+        public int currentValue;
+        public int targetValue;
     }
 
     public struct AchievementUnlockedEvent
     {
-        public string AchievementId;
-        public string Title;
-        public string Description;
-        public Sprite Icon;
+        public string achievementId;
+        public string title;
+        public string description;
+        public Sprite icon;
     }
 
     public struct RewardClaimedEvent
     {
-        public string AchievementId;
-        public int RewardCoins;
+        public string achievementId;
+        public int rewardCoins;
     }
 
     public struct AddCoinsEvent
     {
-        public int CoinCount;
+        public int coinCount;
     }
 
     public struct AddGobeletsEvent
     {
-        public int GobeletCount;
+        public int gobeletCount;
     }
 
     public struct FinishLevelEvent
@@ -77,19 +82,45 @@ namespace Assets._Scripts.EventBusGame
         public LevelConfig levelConfig;
     }
 
-    public struct StartLevel1 { }
+    public struct StartLevel1 : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
 
-    public struct StartLevel2 { }
+    public struct StartLevel2 : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
 
-    public struct StartLevel3 { }
+    public struct StartLevel3 : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
 
-    public struct FinishLevel1 { }
-    public struct FinishLevel2 { }
-    public struct FinishLevel3 { }
+    public struct FinishLevel1 : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
 
-    public struct UpdateUIEvent { }
+    public struct FinishLevel2 : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
 
-    public struct CollectGoldEvent { }
+    public struct FinishLevel3 : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
 
-    public struct DieEvent { }
+    public struct UpdateUIEvent {}
+
+    public struct CollectGoldEvent : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
+
+    public struct DieEvent : IAchivmentEvent
+    {
+        public int Progress { get; set; }
+    }
 }

@@ -144,6 +144,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _levelConfig = args.levelConfig;
             _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
             _levelsController.Initialize(_gameSaveData, _levelConfig);
+            _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
         }
 
         public void ResetAllProgress(DeletSaveEvent args)

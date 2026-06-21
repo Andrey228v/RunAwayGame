@@ -33,6 +33,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
+            //тут переделать. Мы в Лвл контроллер в список добавляем, но потом снова вызывает _сoinConroller.Init...
             _levelsController.AddInitialization(_coinController);
             _levelsController.AddSave(_coinController);
             _levelsController.AddLoad(_coinController);

@@ -87,6 +87,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             _takeRewardButton.gameObject.SetActive(false);
             _blockImage.gameObject.SetActive(true);
             _progressBlock.SetActive(true);
+            _progressBar.gameObject.SetActive(true);
         }
 
         public void ShowUnlockedWithButtonReward()

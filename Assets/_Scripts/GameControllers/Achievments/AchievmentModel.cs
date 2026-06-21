@@ -19,10 +19,11 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void SetData(AchievmentData data);
 
         public void TakeReward();
+
+        public void Reset(AchievmentData data);
     }
 
-
-    public class AchievmentModel<T>: IAchievement where T : struct
+    public class AchievmentModel<T>: IAchievement where T : struct, IAchivmentEvent
     {
         private Sprite _icon;
         private AchievmentsReward _achievmentsReward;
@@ -44,21 +45,11 @@ namespace Assets._Scripts.GameControllers.Achievments
             _eventBus = eventBus;
             _data = data;
             _achievmentsReward = achievmentsReward;
-            _eventBus.Subscribe<T>(Unlock);
             _gameLogger = gameLogger;
-        }
 
-        public void Unlock(T args)
-        {
             if(_data.IsUnlock == false)
             {
-                _gameLogger.Log($"Achievment Unlock {_data.Name}", "Achievment");
-
-                _data.IsUnlock = true;
-                _data.IsRevardEnable = true;
-                OnUnlock?.Invoke(_data.Id);
-
-                _eventBus.Publish(new SaveGameEvent());
+                _eventBus.Subscribe<T>(ChangeCurrentProgress);
             }
         }
 
@@ -79,9 +70,35 @@ namespace Assets._Scripts.GameControllers.Achievments
             OnUpdateView?.Invoke(_data.Id);
         }
 
-        public void ChangeCurrentProgress(int amount)
+        public void Reset(AchievmentData data)
         {
-            _data.CurrentValue += amount;
+            _data = data;
+            _eventBus.Subscribe<T>(ChangeCurrentProgress);
+        }
+
+        private void ChangeCurrentProgress(T args)
+        {
+            _data.CurrentValue += args.Progress;
+
+            if (_data.CurrentValue >= _data.TargetValue)
+            {
+                Unlock();
+                _eventBus.Unsubscribe<T>(ChangeCurrentProgress);
+            }
+        }
+
+        private void Unlock()
+        {
+            if (_data.IsUnlock == false)
+            {
+                _gameLogger.Log($"Achievment Unlock {_data.Name}", "Achievment");
+
+                _data.IsUnlock = true;
+                _data.IsRevardEnable = true;
+                OnUnlock?.Invoke(_data.Id);
+
+                _eventBus.Publish(new SaveGameEvent());
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "sLvl 1",
                 Description = "Start lvl 1",
                 IsUnlock = false,
+                TargetValue = 1,
                 IsRevardEnable = false
             };
 
@@ -40,6 +41,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "sLvl 2",
                 Description = "Start lvl 2",
                 IsUnlock = false,
+                TargetValue = 1,
                 IsRevardEnable = false
             };
 
@@ -49,6 +51,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "sLvl 3",
                 Description = "Start lvl 3",
                 IsUnlock = false,
+                TargetValue = 1,
                 IsRevardEnable = false
             };
 
@@ -58,6 +61,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "fLvl 1",
                 Description = "Finish lvl 1",
                 IsUnlock = false,
+                TargetValue = 1,
                 IsRevardEnable = false
             };
 
@@ -67,6 +71,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "fLvl 2",
                 Description = "Finish lvl 2",
                 IsUnlock = false,
+                TargetValue = 1,
                 IsRevardEnable = false
             };
 
@@ -76,6 +81,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "fLvl 3",
                 Description = "Finish lvl 3",
                 IsUnlock = false,
+                TargetValue = 1,
                 IsRevardEnable = false
             };
 
@@ -85,6 +91,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "CollectGols",
                 Description = "Collect 10 gold",
                 IsUnlock = false,
+                TargetValue = 10,
                 IsRevardEnable = false
             };
 
@@ -94,6 +101,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Name = "Die",
                 Description = "Die",
                 IsUnlock = false,
+                TargetValue = 1,
                 IsRevardEnable = false
             };
 

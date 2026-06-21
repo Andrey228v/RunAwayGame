@@ -46,7 +46,7 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void GetReward()
         {
-            _eventBus.Publish(new AddCoinsEvent { CoinCount = _coinCount });
+            _eventBus.Publish(new AddCoinsEvent { coinCount = _coinCount });
         }
     }
 
@@ -63,7 +63,7 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void GetReward()
         {
-            _eventBus.Publish(new AddGobeletsEvent { GobeletCount = _gobeletCount });
+            _eventBus.Publish(new AddGobeletsEvent { gobeletCount = _gobeletCount });
         }
     }
 }

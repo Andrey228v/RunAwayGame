@@ -1,11 +1,13 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI;
 using Assets.Input;
 using Assets.Scripts.Camera;
 using Assets.Scripts.Player;
+using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.StateMachines.Player;
 using ECM2;
 using System;
@@ -59,20 +61,20 @@ namespace Assets._Scripts.EnteryPoints
                         _unitInfoUIFactory, _billboardManager, _walletController);
             InitEvents();
 
-            _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
-            _playerController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
+            _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
+            _playerController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
         }
 
         public void Dispose()
         {
             _billboardManager = null;
             _unitInfoUIFactory = null;
-            _playerController.PlayerMB.OnDie -= DieRestartEntery;
+            //_playerController.PlayerMB.OnDie -= DieRestartEntery;
         }
 
         private void InitEvents()
         {
-            _playerController.PlayerMB.OnDie += DieRestartEntery;
+            //_playerController.PlayerMB.OnDie += DieRestartEntery;
         }
 
         private void InitPlayer(CameraController cameraController, 
@@ -104,9 +106,15 @@ namespace Assets._Scripts.EnteryPoints
         }
 
         //Не правильно. Подумать потом как исправить. Надо переместить создание в контролле как в Бот контроллере.
-        private void DieRestartEntery() 
-        {
-            _gameSaveLoadService.DieRestart();
-        }
+        //private void DieRestartEntery() 
+        //{
+        //    _gameSaveLoadService.DieRestart();
+        //}
+
+        //public void DieRestart()
+        //{
+        //    _gameLogger.Log("GameSaveLoadService Die restart", "Service");
+        //    _levelsController.DieRestart(_gameSaveData, _levelConfig);
+        //}
     }
 }

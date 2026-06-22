@@ -90,7 +90,8 @@ namespace Assets._Scripts.GameControllers.Achievments
                 achView.transform.SetParent(_cells[modelIndex], false);
 
                 model.OnUnlock += UpdateCellView;
-                model.OnUpdateView += UpdateCellView;
+                model.OnAchievementDataChanged += UpdateCellView;
+                //model.OnAchievementDataChanged += achView.SetProgress;
 
                 achView.TakeRewardButton.onClick.AddListener(model.TakeReward);
             }
@@ -112,7 +113,7 @@ namespace Assets._Scripts.GameControllers.Achievments
                 for (int i = 0; i < _modelsAchievments.Count; i++)
                 {
                     var model = _modelsAchievments[i];
-                    UpdateCellView(model.Data.Id);
+                    UpdateCellView(model.Data);
                 }
             }
         }
@@ -121,13 +122,13 @@ namespace Assets._Scripts.GameControllers.Achievments
         {
             _gameLogger.Log("AchievmentsController RESET", "Success");
 
-            foreach(var model in _modelsAchievments) 
+            for (int i = 0; i < _modelsAchievments.Count; i++)
             {
-                //model.
-            }
+                var model = _modelsAchievments[i];
+                var data = gameSaveData.AchievmentsData[i];
 
-            //LoadAllServices(gameSaveData, levelConfig);
-            //_countAchievmentsMode = _modelsAchievments.Count;
+                model.Reset(data);
+            }
 
             UpdateView();
         }
@@ -136,18 +137,22 @@ namespace Assets._Scripts.GameControllers.Achievments
         {
             _gameLogger.Log("DestroyUI AchievmentsCellsView", "Success");
 
-            foreach (var model in _modelsAchievments)
+            for (int i = 0; i < _modelsAchievments.Count; i++)
             {
+                var model = _modelsAchievments[i];
+                var achView = _achievementViews[i];
+
                 model.OnUnlock -= UpdateCellView;
+                //model.OnAchievementDataChanged -= achView.SetProgress;
             }
         }
 
-        private void UpdateCellView(int id)
+        private void UpdateCellView(AchievmentData achData)
         {
             if (_achievmentsCellsView != null)
             {
-                var model = _modelsAchievments[id];
-                var view = _achievementViews[id];
+                var model = _modelsAchievments[achData.Id];
+                var view = _achievementViews[achData.Id];
 
                 var data = model.Data;
                 view.SetName(data.Name);
@@ -165,6 +170,8 @@ namespace Assets._Scripts.GameControllers.Achievments
                 {
                     view.ShowUnlokedAfterReward();
                 }
+
+                view.SetProgress(achData);
             }
         }
     }

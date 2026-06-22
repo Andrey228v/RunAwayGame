@@ -6,7 +6,7 @@ namespace Assets._Scripts.ObjectsScripts.Points
 {
     public class FinishController
     {
-
+        
 
 
     }

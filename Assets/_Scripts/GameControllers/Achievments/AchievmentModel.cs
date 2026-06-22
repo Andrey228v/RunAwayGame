@@ -8,9 +8,9 @@ namespace Assets._Scripts.GameControllers.Achievments
 {
     public interface IAchievement
     {
-        public event Action<int> OnUnlock;
-        public event Action<int> OnChanged;
-        public event Action<int> OnUpdateView;
+        public event Action<AchievmentData> OnUnlock;
+        //public event Action<int> OnUpdateView;
+        public event Action<AchievmentData> OnAchievementDataChanged;
 
         public AchievmentData Data { get; }
 
@@ -31,9 +31,9 @@ namespace Assets._Scripts.GameControllers.Achievments
         private AchievmentData _data;
         private IGameLogger _gameLogger;
 
-        public event Action<int> OnUnlock;
-        public event Action<int> OnChanged;
-        public event Action<int> OnUpdateView;
+        public event Action<AchievmentData> OnUnlock; // открылась ачивка
+        //public event Action<int> OnUpdateView;
+        public event Action<AchievmentData> OnAchievementDataChanged;
 
         public AchievmentData Data => _data;
 
@@ -61,13 +61,15 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void SetData(AchievmentData data)
         {
             _data = data;
+            OnAchievementDataChanged?.Invoke(_data);
         }
 
         public void TakeReward()
         {
             _achievmentsReward.GetRewards();
             _data.IsRevardEnable = false;
-            OnUpdateView?.Invoke(_data.Id);
+            OnAchievementDataChanged?.Invoke(_data);
+            //OnUpdateView?.Invoke(_data.Id);
         }
 
         public void Reset(AchievmentData data)
@@ -85,6 +87,8 @@ namespace Assets._Scripts.GameControllers.Achievments
                 Unlock();
                 _eventBus.Unsubscribe<T>(ChangeCurrentProgress);
             }
+
+            OnAchievementDataChanged?.Invoke(_data);
         }
 
         private void Unlock()
@@ -95,7 +99,7 @@ namespace Assets._Scripts.GameControllers.Achievments
 
                 _data.IsUnlock = true;
                 _data.IsRevardEnable = true;
-                OnUnlock?.Invoke(_data.Id);
+                OnUnlock?.Invoke(_data);
 
                 _eventBus.Publish(new SaveGameEvent());
             }

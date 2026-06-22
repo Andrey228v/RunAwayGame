@@ -13,7 +13,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class BootEntryPoint : IInitializable
+    public class RootEntryPoint : IInitializable
     {
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
@@ -25,7 +25,7 @@ namespace Assets._Scripts.EnteryPoints
         private IGameLogger _gameLogger;
 
         [Inject]
-        public BootEntryPoint(LoadManager loadManager,
+        public RootEntryPoint(LoadManager loadManager,
             List<SceneGroupHandle> scensGroups,
             WalletController walletController,
             IGameLogger gameLogger,

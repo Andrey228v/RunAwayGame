@@ -1,7 +1,5 @@
-﻿using Assets._Scripts.GameControllers.Achievments;
-using Assets._Scripts.Loger;
+﻿using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
-using Assets.Scripts.SaveLoad.Data;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -118,9 +116,11 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             transform.DOScale(_originalScale, _duration).SetEase(Ease.OutQuad);
         }
 
-        public void SetProgress(int current, int target)
+        public void SetProgress(AchievmentData data)
         {
-
+            _progressBar.value = Mathf.Clamp01(data.Progress);
+            _currentCountText.text = data.CurrentValue.ToString();
+            _goalCountText.text = data.TargetValue.ToString();
         }
 
         public void SetName(string name) => _name.text = name;

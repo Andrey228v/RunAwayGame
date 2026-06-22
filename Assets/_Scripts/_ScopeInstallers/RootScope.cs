@@ -27,7 +27,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterInstance(_levelConfigs);
             builder.RegisterInstance(_sceneGroupHandle);
             builder.RegisterInstance(_loadScreenView);
-            builder.RegisterEntryPoint<BootEntryPoint>().AsSelf();
+            builder.RegisterEntryPoint<RootEntryPoint>().AsSelf();
             builder.Register<EasySaveSystem>(Lifetime.Singleton);
             builder.Register<LoadManager>(Lifetime.Singleton);
             builder.RegisterEntryPoint<GameSaveLoadService>(Lifetime.Singleton).AsSelf();
@@ -37,6 +37,7 @@ namespace Assets._Scripts.Installers
             builder.Register<WalletController>(Lifetime.Singleton).AsSelf();
             builder.Register<EventBus>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<IGameLogger>(container => new UnityLogger("Game"), Lifetime.Singleton);
+            builder.RegisterEntryPoint<GameLoopController>(Lifetime.Singleton).AsSelf();
         }
     }
 }

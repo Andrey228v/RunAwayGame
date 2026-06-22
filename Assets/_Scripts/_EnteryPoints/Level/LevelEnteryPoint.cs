@@ -46,14 +46,13 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController.AddRestart(_checkPointsController);
             _levelsController.AddFinish(_checkPointsController);
 
-            _coinController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
-            _checkPointsController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
+            _coinController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
+            _checkPointsController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
 
-            _coinController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
-            _checkPointsController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.levelConfig);
+            _coinController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
+            _checkPointsController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
 
             _coinController.OnTake += _walletController.AddConis;
-
         }
 
         public void Dispose()

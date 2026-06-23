@@ -20,6 +20,7 @@ namespace Assets._Scripts.GameControllers.Levels
         private List<IRestart> _restartList;
         private List<IFinish> _finishList;
 
+        private LevelConfig _levelConfig;
 
         public LevelsController(IGameLogger gameLogger, EventBus eventBus)
         {
@@ -159,6 +160,11 @@ namespace Assets._Scripts.GameControllers.Levels
         public void AddFinish(IFinish finish)
         {
             _finishList.Add(finish);
+        }
+
+        public void SetLevelConfig(LevelConfig levelConfig)
+        {
+            _levelConfig = levelConfig;
         }
     }
 }

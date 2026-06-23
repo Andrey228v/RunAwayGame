@@ -1,0 +1,30 @@
+﻿using Assets.Input;
+using ECM2;
+using System;
+
+namespace Assets._Scripts.ObjectsScripts.Player
+{
+    public class PlayerJumper
+    {
+        private Character _character;
+
+        public PlayerJumper(Character character)
+        {
+            _character = character;
+        }
+
+        public void Dispose()
+        {
+        }
+
+        public void Jump()
+        {
+            _character.Jump();
+        }
+
+        public void StopJump()
+        {
+            _character.StopJumping();
+        }
+    }
+}

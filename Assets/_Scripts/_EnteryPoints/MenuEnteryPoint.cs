@@ -1,9 +1,9 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Wallets;
-using Assets._Scripts.Loger;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
+using Assets._Scripts.Utilites.Loger;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,10 +55,11 @@ namespace Assets._Scripts.EnteryPoints
 
         public void InitMenu()
         {
-            MenuTabsView menuTabs = _menuFactory();
-            InitAchievments(menuTabs.AchievmentsParent);
+            MenuTabsView menuTabsView = _menuFactory();
+            InitAchievments(menuTabsView.AchievmentsParent);
 
-            _walletController.AddMenuView(menuTabs);
+            _walletController.AddMenuView(menuTabsView);
+
         }
 
         private void InitAchievments(Transform parent) 

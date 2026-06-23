@@ -1,6 +1,6 @@
 ﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.Loger;
 using Assets._Scripts.UI;
+using Assets._Scripts.Utilites.Loger;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

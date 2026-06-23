@@ -1,5 +1,5 @@
-﻿using Assets._Scripts.Loger;
-using Assets._Scripts.SaveLoad.Service;
+﻿using Assets._Scripts.SaveLoad.Service;
+using Assets._Scripts.Utilites.Loger;
 using Cysharp.Threading.Tasks;
 using Eflatun.SceneReference;
 using System;

@@ -1,0 +1,25 @@
+﻿using ECM2;
+using System;
+
+namespace Assets._Scripts.ObjectsScripts.Player
+{
+    public class FallController
+    {
+        private Character _character;
+
+        public FallController(Character character)
+        {
+            _character = character;
+        }
+
+        public void Dispose()
+        {
+            _character = null;
+        }
+
+        public bool GetIsFall()
+        {
+            return _character.IsFalling() && _character.velocity.y < 0;
+        }
+    }
+}

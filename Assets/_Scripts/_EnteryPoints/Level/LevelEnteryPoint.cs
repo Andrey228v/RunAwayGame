@@ -2,7 +2,6 @@
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.SaveLoad.Service;
-using Assets.Scripts.Player;
 using Assets.Scripts.Points;
 using System;
 using VContainer.Unity;

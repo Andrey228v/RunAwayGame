@@ -3,8 +3,8 @@ using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
-using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Service;
+using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -53,7 +53,7 @@ namespace Assets._Scripts.GameControllers
             //_eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
             //_eventBus.Subscribe<LoadGameEvent>(OnLoad);
             _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
-            _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            //_eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
             //_eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
             _eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
         }
@@ -64,7 +64,7 @@ namespace Assets._Scripts.GameControllers
             //_eventBus.Unsubscribe<SaveGameEvent>(OnSaveGame);
             //_eventBus.Unsubscribe<LoadGameEvent>(OnLoad);
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
-            _eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            //_eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
             //_eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
             _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
 
@@ -103,16 +103,16 @@ namespace Assets._Scripts.GameControllers
             _achievmentsController.UpdateView();
         }
 
-        public async void OnSetLevelConfig(ChooseLevelEvent args)
-        {
-            //_levelConfig = args.levelConfig;
-            //_gameSaveLoadService.SetLevelConfig(args.levelConfig);
-            _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
-            //_levelsController.Initialize(_gameSaveData, _levelConfig);
+        //public async void OnSetLevelConfig(ChooseLevelEvent args)
+        //{
+        //    //_levelConfig = args.levelConfig;
+        //    //_gameSaveLoadService.SetLevelConfig(args.levelConfig);
+        //    _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
+        //    //_levelsController.Initialize(_gameSaveData, _levelConfig);
 
-            _levelsController.SetLevelConfig(args.levelConfig);
-            _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
-        }
+        //    _levelsController.SetLevelConfig(args.levelConfig);
+        //    _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
+        //}
 
         public void CloseLevel(TransitToWindowEvent args)
         {

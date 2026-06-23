@@ -1,6 +1,6 @@
 ﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System.Collections.Generic;
@@ -38,6 +38,8 @@ namespace Assets._Scripts.GameControllers.Levels
         public void Start()
         {
             _isLevelWasStart = true;
+
+            _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
         }
 
         public void Dispose()
@@ -47,6 +49,8 @@ namespace Assets._Scripts.GameControllers.Levels
             _loadList.Clear();
             _restartList.Clear();
             _finishList.Clear();
+
+            _eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
         }
 
         public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -165,6 +169,12 @@ namespace Assets._Scripts.GameControllers.Levels
         public void SetLevelConfig(LevelConfig levelConfig)
         {
             _levelConfig = levelConfig;
+        }
+
+        public void OnSetLevelConfig(ChooseLevelEvent args)
+        {
+            _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
+            _levelConfig = args.levelConfig;
         }
     }
 }

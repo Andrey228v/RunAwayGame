@@ -1,5 +1,5 @@
 ﻿using Assets._Scripts.EventBusGame;
-using Assets.Scripts.Player;
+using Assets._Scripts.ObjectsScripts.Player;
 using System;
 using UnityEngine;
 using VContainer;

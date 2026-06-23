@@ -1,6 +1,7 @@
 ﻿using Assets._Scripts.EnteryPoints;
-using Assets.Scripts.Camera;
-using Assets.Scripts.Player;
+using Assets._Scripts.ObjectsScripts.Camera;
+using Assets._Scripts.ObjectsScripts.Player;
+using Assets._Scripts.ObjectsScripts.Player.Factorys;
 using ECM2;
 using UnityEngine;
 using VContainer;

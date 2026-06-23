@@ -1,6 +1,6 @@
-﻿using Assets._Scripts.Bots;
-using Assets._Scripts.Bots.Factorys;
-using Assets._Scripts.EnteryPoints.Level;
+﻿using Assets._Scripts.EnteryPoints.Level;
+using Assets._Scripts.ObjectsScripts.Bots;
+using Assets._Scripts.ObjectsScripts.Bots.Factorys;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

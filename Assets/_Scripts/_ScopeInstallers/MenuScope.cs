@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.EnteryPoints;
 using Assets._Scripts.GameControllers.GameShop;
+using Assets._Scripts.GameControllers.Menu;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.UI._1MenuWindow.ShopWindow;
@@ -23,6 +24,7 @@ namespace Assets._Scripts.Installers
             
             builder.Register<FactorySkinsCells>(Lifetime.Singleton);
             builder.Register<SkinController>(Lifetime.Singleton);
+            builder.Register<MenuController>(Lifetime.Singleton);
 
             builder.RegisterFactory<MenuTabsView>(container => () =>
             {

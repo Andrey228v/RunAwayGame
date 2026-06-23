@@ -1,9 +1,9 @@
 ﻿using Assets._Scripts.EventBusGame;
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Wallets;
-using Assets._Scripts.Loger;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
+using Assets._Scripts.Utilites.Loger;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;

@@ -1,6 +1,6 @@
-﻿using Assets._Scripts.UI;
-using Assets.Scripts.Camera;
-using Assets.Scripts.Player;
+﻿using Assets._Scripts.ObjectsScripts.Camera;
+using Assets._Scripts.ObjectsScripts.Player;
+using Assets._Scripts.UI;
 using System;
 using System.Collections.Generic;
 using VContainer.Unity;

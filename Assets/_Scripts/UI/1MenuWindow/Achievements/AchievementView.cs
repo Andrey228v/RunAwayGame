@@ -1,5 +1,5 @@
-﻿using Assets._Scripts.Loger;
-using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.Utilites.Loger;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;

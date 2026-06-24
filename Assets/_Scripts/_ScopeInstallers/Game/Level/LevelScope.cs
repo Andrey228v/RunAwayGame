@@ -10,13 +10,14 @@ namespace Assets._Scripts.Installers
 {
     public class LevelScope : LifetimeScope
     {
-        [SerializeField] private LevelConfig _levelConfigs;
+        [SerializeField] private LevelConfig _levelConfig;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<CoinController>().AsSelf();
             builder.RegisterEntryPoint<CheckPointsController>().AsSelf();
             builder.RegisterEntryPoint<LevelEnteryPoint>();
+            builder.RegisterInstance(_levelConfig);
         }
     }
 }

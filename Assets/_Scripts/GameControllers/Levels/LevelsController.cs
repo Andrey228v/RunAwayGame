@@ -11,14 +11,14 @@ namespace Assets._Scripts.GameControllers.Levels
     public class LevelsController : IStartable
     {
         private bool _isLevelWasStart;
-        private IGameLogger _gameLogger;
-        private EventBus _eventBus;
+        private readonly IGameLogger _gameLogger;
+        private readonly EventBus _eventBus;
 
-        private List<IInitialzation> _initList;
-        private List<ISave> _saveList;
-        private List<ILoad> _loadList;
-        private List<IRestart> _restartList;
-        private List<IFinish> _finishList;
+        //private List<IInitialzation> _initList;
+        //private List<ISave> _saveList;
+        //private List<ILoad> _loadList;
+        //private List<IRestart> _restartList;
+        //private List<IFinish> _finishList;
 
         private LevelConfig _levelConfig;
 
@@ -29,30 +29,30 @@ namespace Assets._Scripts.GameControllers.Levels
             _isLevelWasStart = false;
             _gameLogger = gameLogger;
 
-            _initList = new List<IInitialzation>();
-            _saveList = new List<ISave>();
-            _loadList = new List<ILoad>();
-            _restartList = new List<IRestart>();
-            _finishList = new List<IFinish>();
-            _eventBus = eventBus;
+            //_initList = new List<IInitialzation>();
+            //_saveList = new List<ISave>();
+            //_loadList = new List<ILoad>();
+            //_restartList = new List<IRestart>();
+            //_finishList = new List<IFinish>();
+            //_eventBus = eventBus;
         }
 
         public void Start()
         {
             _isLevelWasStart = true;
 
-            _eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            //_eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
         }
 
         public void Dispose()
         {
-            _initList.Clear();
-            _saveList.Clear();
-            _loadList.Clear();
-            _restartList.Clear();
-            _finishList.Clear();
+            //_initList.Clear();
+            //_saveList.Clear();
+            //_loadList.Clear();
+            //_restartList.Clear();
+            //_finishList.Clear();
 
-            _eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
+            //_eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
         }
 
         public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -82,10 +82,10 @@ namespace Assets._Scripts.GameControllers.Levels
                 gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
             }
 
-            foreach(ISave save in _saveList)
-            {
-                save.Save(gameSaveData, levelConfig);
-            }
+            //foreach(ISave save in _saveList)
+            //{
+            //    save.Save(gameSaveData, levelConfig);
+            //}
         }
 
         public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -101,33 +101,35 @@ namespace Assets._Scripts.GameControllers.Levels
                 gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
             }
 
-            foreach (ILoad load in _loadList) 
-            {
-                load.Load(gameSaveData, levelConfig);
-            }
+            //foreach (ILoad load in _loadList) 
+            //{
+            //    load.Load(gameSaveData, levelConfig);
+            //}
         }
 
         public void DieRestart(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             var LevelData = gameSaveData.LevelsData[levelConfig.LevelName];
 
-            foreach(IRestart restart in _restartList)
-            {
-                restart.Restart(LevelData);
-            }
+            //foreach(IRestart restart in _restartList)
+            //{
+            //    restart.Restart(LevelData);
+            //}
         }
 
-        public void LoadLevel()
-        {
 
-        }
+
+        //public void LoadLevel()
+        //{
+
+        //}
 
         public void FinishLevel(GameSaveData gameSaveData, LevelConfig levelConfig, LevelCompletedEvent args)
         {
-            foreach (IFinish finish in _finishList) 
-            {
-                finish.Finish(gameSaveData, levelConfig);
-            }
+            //foreach (IFinish finish in _finishList) 
+            //{
+            //    finish.Finish(gameSaveData, levelConfig);
+            //}
 
             if (args.lvlId == "0") // переделать. Это не тут должно быть
             {
@@ -143,40 +145,40 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
-        public void AddInitialization(IInitialzation init)
-        {
-            _initList.Add(init);
-        }
+        //public void AddInitialization(IInitialzation init)
+        //{
+        //    _initList.Add(init);
+        //}
 
-        public void AddSave(ISave save)
-        {
-            _saveList.Add(save);
-        }
+        //public void AddSave(ISave save)
+        //{
+        //    _saveList.Add(save);
+        //}
 
-        public void AddLoad(ILoad load)
-        {
-            _loadList.Add(load);
-        }
+        //public void AddLoad(ILoad load)
+        //{
+        //    _loadList.Add(load);
+        //}
 
-        public void AddRestart(IRestart restart)
-        {
-            _restartList.Add(restart);
-        }
+        //public void AddRestart(IRestart restart)
+        //{
+        //    _restartList.Add(restart);
+        //}
 
-        public void AddFinish(IFinish finish)
-        {
-            _finishList.Add(finish);
-        }
+        //public void AddFinish(IFinish finish)
+        //{
+        //    _finishList.Add(finish);
+        //}
 
         public void SetLevelConfig(LevelConfig levelConfig)
         {
             _levelConfig = levelConfig;
         }
 
-        public void OnSetLevelConfig(ChooseLevelEvent args)
-        {
-            //_gameLogger.Log("GameSaveLoadService set Level Config", "Service");
-            //_levelConfig = args.levelConfig;
-        }
+        //public void OnSetLevelConfig(ChooseLevelEvent args)
+        //{
+        //    //_gameLogger.Log("GameSaveLoadService set Level Config", "Service");
+        //    //_levelConfig = args.levelConfig;
+        //}
     }
 }

@@ -15,49 +15,55 @@ namespace Assets._Scripts.EnteryPoints
         private LevelsController _levelsController;
         private GameSaveLoadService _gameSaveLoadService;
         private WalletController _walletController;
+        private LevelConfig _levelConfig;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController, 
             CoinController coinController,
             GameSaveLoadService gameSaveLoadService,
             WalletController walletController,
+            LevelConfig levelConfig,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
             _coinController = coinController;
             _levelsController = levelsController;
             _gameSaveLoadService = gameSaveLoadService;
+            _levelConfig = levelConfig;
             _walletController = walletController;
         }
 
         public void Start()
         {
             //тут переделать. Мы в Лвл контроллер в список добавляем, но потом снова вызывает _сoinConroller.Init...
-            _levelsController.AddInitialization(_coinController);
-            _levelsController.AddSave(_coinController);
-            _levelsController.AddLoad(_coinController);
-            _levelsController.AddRestart(_coinController);
-            _levelsController.AddFinish(_coinController);
+            //_levelsController.AddInitialization(_coinController);
+            //_levelsController.AddSave(_coinController);
+            //_levelsController.AddLoad(_coinController);
+            //_levelsController.AddRestart(_coinController);
+            //_levelsController.AddFinish(_coinController);
 
-            _levelsController.AddInitialization(_checkPointsController);
-            _levelsController.AddSave(_checkPointsController);
-            _levelsController.AddLoad(_checkPointsController);
-            _levelsController.AddRestart(_checkPointsController);
-            _levelsController.AddFinish(_checkPointsController);
+            //_levelsController.AddInitialization(_checkPointsController);
+            //_levelsController.AddSave(_checkPointsController);
+            //_levelsController.AddLoad(_checkPointsController);
+            //_levelsController.AddRestart(_checkPointsController);
+            //_levelsController.AddFinish(_checkPointsController);
 
+            _levelsController.SetLevelConfig(_levelConfig);
+
+            _levelsController.Initialize(_gameSaveLoadService.GameSaveData, _levelConfig);
+            _coinController.Initialzation(_gameSaveLoadService.GameSaveData, _levelConfig);
+            _checkPointsController.Initialzation(_gameSaveLoadService.GameSaveData, _levelConfig);
             
-
-            _coinController.Initialzation(_gameSaveLoadService.GameSaveData, _levelsController.Config);
-            _checkPointsController.Initialzation(_gameSaveLoadService.GameSaveData, _levelsController.Config);
-
-            _coinController.Load(_gameSaveLoadService.GameSaveData, _levelsController.Config);
-            _checkPointsController.Load(_gameSaveLoadService.GameSaveData, _levelsController.Config);
+            _levelsController.LoadAllServices(_gameSaveLoadService.GameSaveData, _levelConfig);
+            _coinController.Load(_gameSaveLoadService.GameSaveData, _levelConfig);
+            _checkPointsController.Load(_gameSaveLoadService.GameSaveData, _levelConfig);
 
             _coinController.OnTake += _walletController.AddConis;
         }
 
         public void Dispose()
         {
+            _levelsController.Dispose();
             _checkPointsController.Dispose();
             _coinController.Dispose();
 

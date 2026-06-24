@@ -49,11 +49,11 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            _levelsController.AddInitialization(_playerController);
-            _levelsController.AddSave(_playerController);
-            _levelsController.AddLoad(_playerController);
-            _levelsController.AddRestart(_playerController);
-            _levelsController.AddFinish(_playerController);
+            //_levelsController.AddInitialization(_playerController);
+            //_levelsController.AddSave(_playerController);
+            //_levelsController.AddLoad(_playerController);
+            //_levelsController.AddRestart(_playerController);
+            //_levelsController.AddFinish(_playerController);
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,

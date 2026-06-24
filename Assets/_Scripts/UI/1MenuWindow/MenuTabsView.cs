@@ -48,7 +48,7 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
-        private List<LevelConfig> _levelConfigs;
+        //private List<LevelConfig> _levelConfigs;
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
         private EventBus _eventBus;
@@ -58,13 +58,14 @@ namespace Assets._Scripts.UI._1MenuWindow
         public event Action OnDestroyView;
 
         [Inject]
-        public void Constructor(List<LevelConfig> levelConfigs, 
-            LoadManager loadManager, 
+        public void Constructor( 
+            LoadManager loadManager,
+            //List<LevelConfig> levelConfigs,
             List<SceneGroupHandle> scensGroups,
             EventBus eventBus
             )
         {
-            _levelConfigs = levelConfigs;
+            //_levelConfigs = levelConfigs;
             _loadManager = loadManager;
             _scensGroups = scensGroups;
             _eventBus = eventBus;
@@ -128,18 +129,18 @@ namespace Assets._Scripts.UI._1MenuWindow
         {
             if (level == 1) // переделать...
             {
-                _eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[0] });
+                //_eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[0] });
                 _eventBus.Publish(new StartLevel1 { Progress = 1});
 
             }
             else if (level == 2) // переделать...
             {
-                _eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[1] });
+                //_eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[1] });
                 _eventBus.Publish(new StartLevel2 { Progress = 1 });
             }
             else if (level == 3) // переделать...
             {
-                _eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[2] });
+                //_eventBus.Publish(new ChooseLevelEvent { levelConfig = _levelConfigs[2] });
                 _eventBus.Publish(new StartLevel3 { Progress = 1 });
             }
 

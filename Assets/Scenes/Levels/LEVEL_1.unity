@@ -1188,6 +1188,7 @@ MonoBehaviour:
     TypeName: Assets.Scripts.Installers.GameScope
   autoRun: 1
   autoInjectGameObjects: []
+  _levelConfig: {fileID: 11400000, guid: c353f04d9a5dec14c97f13f12949e822, type: 2}
 --- !u!114 &1483049751
 MonoBehaviour:
   m_ObjectHideFlags: 0

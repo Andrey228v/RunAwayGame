@@ -17,7 +17,7 @@ namespace Assets._Scripts.SaveLoad.Service
     {
         private EasySaveSystem _saveSystem;
         private GameSaveData _gameSaveData;
-        private LevelConfig _levelConfig;
+        //private LevelConfig _levelConfig;
         private LevelsController _levelsController;
         private AchievmentsController _achievmentsController;
         private ShopController _shopController;
@@ -26,7 +26,7 @@ namespace Assets._Scripts.SaveLoad.Service
         private IGameLogger _gameLogger;
 
         public GameSaveData GameSaveData => _gameSaveData;
-        public LevelConfig Config => _levelConfig;
+        //public LevelConfig Config => _levelConfig;
 
         public GameSaveLoadService(EasySaveSystem saveSystem,
             LevelsController levelsController,
@@ -110,7 +110,9 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService save all services", "Save");
 
-            if(_levelConfig == null) // если конфиг null значит мы не в уровне
+            var levelConfig = _levelsController.Config;
+
+            if(levelConfig == null) // если конфиг null значит мы не в уровне
             {
                 _achievmentsController.SaveAllServices(_gameSaveData);
                 _shopController.SaveAllServices(_gameSaveData);
@@ -121,7 +123,7 @@ namespace Assets._Scripts.SaveLoad.Service
                 _achievmentsController.SaveAllServices(_gameSaveData);
                 _shopController.SaveAllServices(_gameSaveData);
                 _walletController.SaveAllServices(_gameSaveData);
-                _levelsController.SaveAllServices(_gameSaveData, _levelConfig);
+                _levelsController.SaveAllServices(_gameSaveData, levelConfig);
             }
 
             SaveGame();
@@ -133,9 +135,11 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService load all services", "Load");
 
-            _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
-            _achievmentsController.LoadAllServices(_gameSaveData, _levelConfig);
-            _shopController.LoadAllServices(_gameSaveData, _levelConfig);
+            var levelConfig = _levelsController.Config;
+
+            _levelsController.LoadAllServices(_gameSaveData, levelConfig);
+            _achievmentsController.LoadAllServices(_gameSaveData, levelConfig);
+            _shopController.LoadAllServices(_gameSaveData, levelConfig);
             _walletController.LoadAllServices(_gameSaveData);
 
             _gameLogger.Log("GameSaveLoadService load all services complite", "Load");
@@ -160,6 +164,8 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
             _saveSystem.ResetAllProgress();
 
+            var levelConfig = _levelsController.Config;
+
             _gameSaveData = new GameSaveData(
                 new Dictionary<string, LevelData>(),
                 new List<AchievmentData>(),
@@ -167,10 +173,10 @@ namespace Assets._Scripts.SaveLoad.Service
                 new WalletData(),
                 DateTime.Now){ };
 
-            _achievmentsController.Reset(_gameSaveData, _levelConfig);
+            _achievmentsController.Reset(_gameSaveData, levelConfig);
             _achievmentsController.UpdateView();
 
-            _walletController.Reset(_gameSaveData, _levelConfig);
+            _walletController.Reset(_gameSaveData, levelConfig);
             _walletController.UpdateView();
 
 
@@ -228,7 +234,9 @@ namespace Assets._Scripts.SaveLoad.Service
         private void OnLoad(LoadGameEvent args)
         {
             _gameLogger.Log("GameSaveLoadService LoadGameEvent", "Load");
-            _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
+
+            var levelConfig = _levelsController.Config;
+            _levelsController.LoadAllServices(_gameSaveData, levelConfig);
         }
 
         public void LoadOrCreateSave()

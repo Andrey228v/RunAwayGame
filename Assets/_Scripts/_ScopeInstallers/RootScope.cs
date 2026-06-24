@@ -18,13 +18,13 @@ namespace Assets._Scripts.Installers
 {
     public class RootScope : LifetimeScope
     {
-        [SerializeField] private List<LevelConfig> _levelConfigs;
+        //[SerializeField] private List<LevelConfig> _levelConfigs;
         [SerializeField] private List<SceneGroupHandle> _sceneGroupHandle;
         [SerializeField] private LoadScreenView _loadScreenView;
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterInstance(_levelConfigs);
+            //builder.RegisterInstance(_levelConfigs);
             builder.RegisterInstance(_sceneGroupHandle);
             builder.RegisterInstance(_loadScreenView);
             builder.RegisterEntryPoint<RootEntryPoint>().AsSelf();

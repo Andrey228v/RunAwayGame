@@ -43,7 +43,7 @@ namespace Assets._Scripts.GameControllers
             _gameLogger = gameLogger;
             _gameSaveLoadService = gameSaveLoadService;
 
-            _levelConfig = gameSaveLoadService.Config;
+            _levelConfig = levelsController.Config;
             _gameSaveData = gameSaveLoadService.GameSaveData;
         }
 
@@ -77,9 +77,9 @@ namespace Assets._Scripts.GameControllers
         public void InitializeAllServices()
         {
             var gameSaveData = _gameSaveLoadService.GameSaveData;
-            var levelConfig = _gameSaveLoadService.Config;
+            var levelConfig = _levelsController.Config;
 
-            _levelsController.Initialize(gameSaveData, levelConfig);
+            //_levelsController.Initialize(gameSaveData, levelConfig);
             _shopController.Initialize();
 
         }
@@ -87,8 +87,9 @@ namespace Assets._Scripts.GameControllers
         public void OnFinishLevel(LevelCompletedEvent args) // переделать...
         {
             _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
+            var levelConfig = _levelsController.Config;
 
-            _levelsController.FinishLevel(_gameSaveData, _levelConfig, args);
+            _levelsController.FinishLevel(_gameSaveData, levelConfig, args);
 
 
             RestartLevel();
@@ -124,7 +125,8 @@ namespace Assets._Scripts.GameControllers
         public void RestartLevel()
         {
             _gameLogger.Log("GameSaveLoadService reset level", "Service");
-            _gameSaveData.LevelsData[_levelConfig.LevelName].ResetData(_levelConfig);
+            var levelConfig = _levelsController.Config;
+            _gameSaveData.LevelsData[levelConfig.LevelName].ResetData(levelConfig);
         }
     }
 }

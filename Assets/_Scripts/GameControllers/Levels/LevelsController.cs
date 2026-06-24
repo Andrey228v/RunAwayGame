@@ -22,6 +22,8 @@ namespace Assets._Scripts.GameControllers.Levels
 
         private LevelConfig _levelConfig;
 
+        public LevelConfig Config => _levelConfig;
+
         public LevelsController(IGameLogger gameLogger, EventBus eventBus)
         {
             _isLevelWasStart = false;
@@ -56,10 +58,10 @@ namespace Assets._Scripts.GameControllers.Levels
         public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             //Тут работает так, что _initList пустой при инициализации...
-            foreach(IInitialzation init in _initList)
-            {
-                init.Initialzation(gameSaveData, levelConfig);
-            }
+            //foreach(IInitialzation init in _initList)
+            //{
+            //    init.Initialzation(gameSaveData, levelConfig);
+            //}
         }
 
         public void SaveAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
@@ -173,8 +175,8 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public void OnSetLevelConfig(ChooseLevelEvent args)
         {
-            _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
-            _levelConfig = args.levelConfig;
+            //_gameLogger.Log("GameSaveLoadService set Level Config", "Service");
+            //_levelConfig = args.levelConfig;
         }
     }
 }

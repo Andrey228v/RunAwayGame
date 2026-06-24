@@ -60,8 +60,8 @@ namespace Assets._Scripts.EnteryPoints
                         _unitInfoUIFactory, _billboardManager, _walletController);
             InitEvents();
 
-            _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
-            _playerController.Load(_gameSaveLoadService.GameSaveData, _gameSaveLoadService.Config);
+            _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _levelsController.Config);
+            _playerController.Load(_gameSaveLoadService.GameSaveData, _levelsController.Config);
         }
 
         public void Dispose()

@@ -28,13 +28,13 @@ namespace Assets._Scripts.GameControllers.Levels
         {
             _isLevelWasStart = false;
             _gameLogger = gameLogger;
+            _eventBus = eventBus;
 
             //_initList = new List<IInitialzation>();
             //_saveList = new List<ISave>();
             //_loadList = new List<ILoad>();
             //_restartList = new List<IRestart>();
             //_finishList = new List<IFinish>();
-            //_eventBus = eventBus;
         }
 
         public void Start()
@@ -124,7 +124,7 @@ namespace Assets._Scripts.GameControllers.Levels
 
         //}
 
-        public void FinishLevel(GameSaveData gameSaveData, LevelConfig levelConfig, LevelCompletedEvent args)
+        public void FinishLevel(GameSaveData gameSaveData, LevelConfig levelConfig, FinishLevelEvent args)
         {
             //foreach (IFinish finish in _finishList) 
             //{

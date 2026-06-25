@@ -26,6 +26,7 @@ namespace Assets._Scripts.EnteryPoints
         private GameSaveLoadService _gameSaveLoadService;
         private LevelsController _levelsController;
         private WalletController _walletController;
+        private GameLoopController _gameLoopController;
 
         public PlayerEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory,
@@ -33,6 +34,7 @@ namespace Assets._Scripts.EnteryPoints
             BillboardManager billboardManager, Func<UnitInfoUIView> unitInfoUIFactory,
             GameSaveLoadService gameSaveLoadService,
             WalletController walletController,
+            GameLoopController gameLoopController,
             LevelsController levelsController
             ) 
         {
@@ -45,20 +47,22 @@ namespace Assets._Scripts.EnteryPoints
             _gameSaveLoadService = gameSaveLoadService;
             _walletController = walletController;
             _levelsController = levelsController;
+            _gameLoopController = gameLoopController;
         }
 
         public void Start()
         {
-            //_levelsController.AddInitialization(_playerController);
-            //_levelsController.AddSave(_playerController);
-            //_levelsController.AddLoad(_playerController);
-            //_levelsController.AddRestart(_playerController);
-            //_levelsController.AddFinish(_playerController);
+            _levelsController.AddInitialization(_playerController);
+            _levelsController.AddSave(_playerController);
+            _levelsController.AddLoad(_playerController);
+            _levelsController.AddRestart(_playerController);
+            _levelsController.AddFinish(_playerController);
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
                         _unitInfoUIFactory, _billboardManager, _walletController);
-            InitEvents();
+
+            _playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;
 
             _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _levelsController.Config);
             _playerController.Load(_gameSaveLoadService.GameSaveData, _levelsController.Config);
@@ -68,12 +72,7 @@ namespace Assets._Scripts.EnteryPoints
         {
             _billboardManager = null;
             _unitInfoUIFactory = null;
-            //_playerController.PlayerMB.OnDie -= DieRestartEntery;
-        }
-
-        private void InitEvents()
-        {
-            //_playerController.PlayerMB.OnDie += DieRestartEntery;
+            _playerController.PlayerMB.OnDie -= _gameLoopController.DieRestart;
         }
 
         private void InitPlayer(CameraController cameraController, 
@@ -103,17 +102,5 @@ namespace Assets._Scripts.EnteryPoints
 
             walletController.AddUnitInfoUIView(unitInfoUI);
         }
-
-        //Не правильно. Подумать потом как исправить. Надо переместить создание в контролле как в Бот контроллере.
-        //private void DieRestartEntery() 
-        //{
-        //    _gameSaveLoadService.DieRestart();
-        //}
-
-        //public void DieRestart()
-        //{
-        //    _gameLogger.Log("GameSaveLoadService Die restart", "Service");
-        //    _levelsController.DieRestart(_gameSaveData, _levelConfig);
-        //}
     }
 }

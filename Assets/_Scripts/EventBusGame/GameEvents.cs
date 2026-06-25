@@ -13,7 +13,7 @@ namespace Assets._Scripts.EventBusGame
         public int Progress { get; set; }
     }
 
-    public struct LevelCompletedEvent 
+    public struct FinishLevelEvent 
     {
         public string lvlId;
     }
@@ -75,11 +75,6 @@ namespace Assets._Scripts.EventBusGame
     public struct AddGobeletsEvent
     {
         public int gobeletCount;
-    }
-
-    public struct FinishLevelEvent
-    {
-        public LevelConfig levelConfig;
     }
 
     public struct StartLevel1 : IAchivmentEvent

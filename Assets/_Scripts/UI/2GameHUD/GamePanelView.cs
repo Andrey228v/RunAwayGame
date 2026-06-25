@@ -51,14 +51,14 @@ namespace Assets.Scripts.UI
 
         private void OnEnable()
         {
-            _eventBus.Subscribe<LevelCompletedEvent>(FinishGame);
+            _eventBus.Subscribe<FinishLevelEvent>(FinishGame);
             _eventBus.Subscribe<TransitToPanelEvent>(OnShowPanel);
             _eventBus.Subscribe<TransitToWindowEvent>(OnBackToMenu);
         }
 
         private void OnDisable()
         {
-            _eventBus.Unsubscribe<LevelCompletedEvent>(FinishGame);
+            _eventBus.Unsubscribe<FinishLevelEvent>(FinishGame);
             _eventBus.Unsubscribe<TransitToPanelEvent>(OnShowPanel);
             _eventBus.Unsubscribe<TransitToWindowEvent>(OnBackToMenu);
         }
@@ -69,7 +69,7 @@ namespace Assets.Scripts.UI
         }
 
         // под вопросом...
-        public void FinishGame(LevelCompletedEvent args)
+        public void FinishGame(FinishLevelEvent args)
         {
             ShowPanel("GameWinPanel");
         }

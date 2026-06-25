@@ -60,7 +60,7 @@ namespace Assets.Scripts.Points
         {
             if (_isActivated) return;
 
-            _eventBus.Publish(new LevelCompletedEvent { lvlId = _lvlId });
+            _eventBus.Publish(new FinishLevelEvent { lvlId = _lvlId });
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Assets._Scripts.GameControllers
 
         public void Start()
         {
-            _eventBus.Subscribe<LevelCompletedEvent>(OnFinishLevel);
+            _eventBus.Subscribe<FinishLevelEvent>(OnFinishLevel);
             //_eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
             //_eventBus.Subscribe<LoadGameEvent>(OnLoad);
             _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
@@ -60,7 +60,7 @@ namespace Assets._Scripts.GameControllers
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<LevelCompletedEvent>(OnFinishLevel);
+            _eventBus.Unsubscribe<FinishLevelEvent>(OnFinishLevel);
             //_eventBus.Unsubscribe<SaveGameEvent>(OnSaveGame);
             //_eventBus.Unsubscribe<LoadGameEvent>(OnLoad);
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
@@ -84,7 +84,7 @@ namespace Assets._Scripts.GameControllers
 
         }
 
-        public void OnFinishLevel(LevelCompletedEvent args) // переделать...
+        public void OnFinishLevel(FinishLevelEvent args) // переделать...
         {
             _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
             var levelConfig = _levelsController.Config;

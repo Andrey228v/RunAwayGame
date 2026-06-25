@@ -49,12 +49,12 @@ namespace Assets._Scripts.EnteryPoints
             //_levelsController.AddFinish(_checkPointsController);
 
             _levelsController.SetLevelConfig(_levelConfig);
+            _levelsController.LoadAllServices(_gameSaveLoadService.GameSaveData, _levelConfig);
 
             _levelsController.Initialize(_gameSaveLoadService.GameSaveData, _levelConfig);
             _coinController.Initialzation(_gameSaveLoadService.GameSaveData, _levelConfig);
             _checkPointsController.Initialzation(_gameSaveLoadService.GameSaveData, _levelConfig);
             
-            _levelsController.LoadAllServices(_gameSaveLoadService.GameSaveData, _levelConfig);
             _coinController.Load(_gameSaveLoadService.GameSaveData, _levelConfig);
             _checkPointsController.Load(_gameSaveLoadService.GameSaveData, _levelConfig);
 

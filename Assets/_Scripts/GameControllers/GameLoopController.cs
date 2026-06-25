@@ -50,23 +50,26 @@ namespace Assets._Scripts.GameControllers
         public void Start()
         {
             _eventBus.Subscribe<FinishLevelEvent>(OnFinishLevel);
+            _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
+            _eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
+            //_eventBus.Subscribe<DieEvent>(DieRestart);
+
             //_eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
             //_eventBus.Subscribe<LoadGameEvent>(OnLoad);
-            _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
             //_eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
             //_eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
-            _eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
         }
 
         public void Dispose()
         {
             _eventBus.Unsubscribe<FinishLevelEvent>(OnFinishLevel);
+            _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
+            _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
+            //_eventBus.Unsubscribe<DieEvent>(DieRestart);
             //_eventBus.Unsubscribe<SaveGameEvent>(OnSaveGame);
             //_eventBus.Unsubscribe<LoadGameEvent>(OnLoad);
-            _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
             //_eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
             //_eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
-            _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
 
             _levelsController.Dispose();
             _achievmentsController.Dispose();
@@ -74,15 +77,14 @@ namespace Assets._Scripts.GameControllers
             _walletController.Dispose();
         }
 
-        public void InitializeAllServices()
-        {
-            var gameSaveData = _gameSaveLoadService.GameSaveData;
-            var levelConfig = _levelsController.Config;
+        //public void InitializeAllServices()
+        //{
+        //    var gameSaveData = _gameSaveLoadService.GameSaveData;
+        //    var levelConfig = _levelsController.Config;
 
-            //_levelsController.Initialize(gameSaveData, levelConfig);
-            _shopController.Initialize();
+        //    _shopController.Initialize();
 
-        }
+        //}
 
         public void OnFinishLevel(FinishLevelEvent args) // переделать...
         {
@@ -91,9 +93,7 @@ namespace Assets._Scripts.GameControllers
 
             _levelsController.FinishLevel(_gameSaveData, levelConfig, args);
 
-
             RestartLevel();
-            //SaveGame();
             _gameSaveLoadService.SaveGame();
         }
 
@@ -104,29 +104,30 @@ namespace Assets._Scripts.GameControllers
             _achievmentsController.UpdateView();
         }
 
-        //public async void OnSetLevelConfig(ChooseLevelEvent args)
-        //{
-        //    //_levelConfig = args.levelConfig;
-        //    //_gameSaveLoadService.SetLevelConfig(args.levelConfig);
-        //    _gameLogger.Log("GameSaveLoadService set Level Config", "Service");
-        //    //_levelsController.Initialize(_gameSaveData, _levelConfig);
-
-        //    _levelsController.SetLevelConfig(args.levelConfig);
-        //    _levelsController.LoadAllServices(_gameSaveData, _levelConfig);
-        //}
-
         public void CloseLevel(TransitToWindowEvent args)
         {
             _gameLogger.Log("GameSaveLoadService close level", "Service");
-            _levelConfig = null;
+            _levelsController.SetLevelConfig(null);
             _levelsController.Dispose();
         }
 
-        public void RestartLevel()
+        private void RestartLevel()
         {
             _gameLogger.Log("GameSaveLoadService reset level", "Service");
             var levelConfig = _levelsController.Config;
             _gameSaveData.LevelsData[levelConfig.LevelName].ResetData(levelConfig);
+        }
+
+        public void DieRestart() 
+        {
+            _gameLogger.Log("DieRestart", "Service");
+
+            var levelConfig = _levelsController.Config;
+
+            _levelsController.DieRestart(_gameSaveData);
+
+            RestartLevel();
+            _gameSaveLoadService.SaveGame();
         }
     }
 }

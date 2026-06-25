@@ -40,32 +40,6 @@ namespace Assets._Scripts.EventBusGame
 
     public struct ReloudButtonClickEvent { }
 
-    public struct ChooseLevelEvent 
-    {
-        public LevelConfig levelConfig;
-    }
-
-    public struct AchievementProgressUpdatedEvent
-    {
-        public string achievementId;
-        public float progress;
-        public int currentValue;
-        public int targetValue;
-    }
-
-    public struct AchievementUnlockedEvent
-    {
-        public string achievementId;
-        public string title;
-        public string description;
-        public Sprite icon;
-    }
-
-    public struct RewardClaimedEvent
-    {
-        public string achievementId;
-        public int rewardCoins;
-    }
 
     public struct AddCoinsEvent
     {
@@ -76,7 +50,6 @@ namespace Assets._Scripts.EventBusGame
     {
         public int gobeletCount;
     }
-
     public struct StartLevel1 : IAchivmentEvent
     {
         public int Progress { get; set; }

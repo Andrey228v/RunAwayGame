@@ -85,7 +85,7 @@ namespace Assets._Scripts.SaveLoad.Service
                 _achievmentsController.SaveAllServices(_gameSaveData);
                 _shopController.SaveAllServices(_gameSaveData);
                 _walletController.SaveAllServices(_gameSaveData);
-                _levelsController.SaveAllServices(_gameSaveData, levelConfig);
+                _levelsController.SaveAllServices(_gameSaveData);
             }
 
             SaveGame();

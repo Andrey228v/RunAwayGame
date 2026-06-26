@@ -1,8 +1,5 @@
-﻿using Assets._Scripts.GameControllers;
-using Assets._Scripts.SaveLoad.Data;
-using Assets._Scripts.SaveLoad.Service;
+﻿using Assets._Scripts.SaveLoad.Data;
 using Assets.Scripts.Points;
-using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
@@ -10,7 +7,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class CoinController: IInitialzation, ISave, ILoad, IRestart, IFinish
+    public class CoinController:  ISave, ILoad, IRestart, IFinish
     {
         private Transform _objectParent;
         private List<Coin> _objectList;
@@ -25,19 +22,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             else
                 throw new ArgumentNullException(nameof(points), "CoinController parent cannot be null");
 
-
             _objectList = TransformToList(_objectParent);
-
-        }
-
-        public void Initialzation(GameSaveData gameSaveData, LevelConfig levelConfig)
-        {
-            _objectData = new List<CoinData>();
-
-            for (int i = 0; i < _objectList.Count; i++)
-            {
-                _objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
-            }
         }
 
         public void Dispose()
@@ -103,6 +88,13 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             if (levelData.Coins == null || levelData.Coins.Count == 0)
             {
+                _objectData = new List<CoinData>();
+
+                for (int i = 0; i < _objectList.Count; i++)
+                {
+                    _objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
+                }
+
                 levelData.Coins = _objectData;
             }
             else

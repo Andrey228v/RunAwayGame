@@ -23,7 +23,6 @@ namespace Assets._Scripts.EnteryPoints
         private Func<Character> _characterFactory;
         private BillboardManager _billboardManager;
         private Func<UnitInfoUIView> _unitInfoUIFactory;
-        private GameSaveLoadService _gameSaveLoadService;
         private LevelsController _levelsController;
         private WalletController _walletController;
         private GameLoopController _gameLoopController;
@@ -32,7 +31,6 @@ namespace Assets._Scripts.EnteryPoints
             PlayerStateMachineFactory playerStateMachineFactory,
             Func<Character> characterFactory, CameraController cameraController,
             BillboardManager billboardManager, Func<UnitInfoUIView> unitInfoUIFactory,
-            GameSaveLoadService gameSaveLoadService,
             WalletController walletController,
             GameLoopController gameLoopController,
             LevelsController levelsController
@@ -44,7 +42,6 @@ namespace Assets._Scripts.EnteryPoints
             _characterFactory = characterFactory;
             _billboardManager = billboardManager;
             _unitInfoUIFactory = unitInfoUIFactory;
-            _gameSaveLoadService = gameSaveLoadService;
             _walletController = walletController;
             _levelsController = levelsController;
             _gameLoopController = gameLoopController;
@@ -52,7 +49,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            _levelsController.AddInitialization(_playerController);
+            //_levelsController.AddInitialization(_playerController);
             _levelsController.AddSave(_playerController);
             _levelsController.AddLoad(_playerController);
             _levelsController.AddRestart(_playerController);
@@ -64,8 +61,8 @@ namespace Assets._Scripts.EnteryPoints
 
             _playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;
 
-            _playerController.Initialzation(_gameSaveLoadService.GameSaveData, _levelsController.Config);
-            _playerController.Load(_gameSaveLoadService.GameSaveData, _levelsController.Config);
+            //_playerController.Initialzation(_gameSaveLoadService.GameSaveData, _levelsController.Config);
+            //_playerController.Load(_gameSaveLoadService.GameSaveData, _levelsController.Config);
         }
 
         public void Dispose()

@@ -38,22 +38,17 @@ namespace Assets._Scripts.EnteryPoints
             //тут переделать. Мы в Лвл контроллер в список добавляем, но потом снова вызывает _сoinConroller.Init...
             _levelsController.SetLevelConfig(_levelConfig);
 
-
-            _levelsController.Initialize(_gameSaveLoadService.GameSaveData, _levelConfig);
-
-            _levelsController.AddInitialization(_coinController);
             _levelsController.AddSave(_coinController);
             _levelsController.AddLoad(_coinController);
             _levelsController.AddRestart(_coinController);
             _levelsController.AddFinish(_coinController);
 
-            _levelsController.AddInitialization(_checkPointsController);
             _levelsController.AddSave(_checkPointsController);
             _levelsController.AddLoad(_checkPointsController);
             _levelsController.AddRestart(_checkPointsController);
             _levelsController.AddFinish(_checkPointsController);
 
-            _levelsController.LoadAllServices(_gameSaveLoadService.GameSaveData, _levelConfig);
+            _levelsController.LoadAllServices(_gameSaveLoadService.GameSaveData);
            
 
             _coinController.OnTake += _walletController.AddConis;

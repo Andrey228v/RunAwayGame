@@ -7,6 +7,8 @@ using VContainer;
 
 namespace Assets.Scripts.Points
 {
+
+
     public class CheckPoint : MonoBehaviour
     {
         [SerializeField] private string _id;
@@ -26,12 +28,7 @@ namespace Assets.Scripts.Points
 
         private void Awake()
         {
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            if (_isInitialized) 
+            if (_isInitialized)
                 return;
 
             _isActivated = false;

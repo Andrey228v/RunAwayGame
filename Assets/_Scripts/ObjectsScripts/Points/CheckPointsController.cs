@@ -7,10 +7,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Points
 {
-    public class CheckPointsController : IInitialzation, ISave, ILoad, IRestart, IFinish
+    public class CheckPointsController : ISave, ILoad, IRestart, IFinish
     {
         private Transform _checkPointsParent;
         private List<CheckPoint> _gameCheckPointList;
+        private List<CheckPointData> _mapCheckPointsData;
         private CheckPoint _lastCheckPointActiveted;
 
         private EventBus _eventBus;
@@ -26,24 +27,7 @@ namespace Assets.Scripts.Points
 
             _eventBus = eventBus;
             _eventBus.Subscribe<CheckPoinActivatedEvent>(CheckPointActivated);
-        }
 
-        public void Initialzation(GameSaveData gameSaveData, LevelConfig levelConfig)
-        {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
-            var checkpointsCount = _gameCheckPointList.Count;
-
-            if (levelData.CheckPoints == null || levelData.CheckPoints.Count == 0)
-            {
-                List<CheckPointData> loadCheckPointsData = new List<CheckPointData>();
-
-                for (int i = 0; i < _gameCheckPointList.Count; i++)
-                {
-                    loadCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
-                }
-
-                levelData.CheckPoints = loadCheckPointsData;
-            }
 
         }
 
@@ -109,36 +93,27 @@ namespace Assets.Scripts.Points
 
             var checkpointsCount = _gameCheckPointList.Count;
 
-            for (int i = 0; i < checkpointsCount; i++)
+            if (levelData.CheckPoints == null || levelData.CheckPoints.Count == 0)
             {
-                CheckPoint checkPoint = _gameCheckPointList[i];
-                CheckPointData checkPointData = levelData.CheckPoints[i];
-                checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
-                checkPoint.SetState(checkPointData.IsActivated);
+                _mapCheckPointsData = new List<CheckPointData>();
+
+                for (int i = 0; i < _gameCheckPointList.Count; i++)
+                {
+                    _mapCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
+                }
+
+                levelData.CheckPoints = _mapCheckPointsData;
             }
-
-            //if (levelData.CheckPoints == null)
-            //{
-            //    List<CheckPointData> loadCheckPointsData = new List<CheckPointData>();
-
-            //    for (int i = 0; i < _gameCheckPointList.Count; i++)
-            //    {
-            //        loadCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
-            //    }
-
-            //    levelData.CheckPoints = loadCheckPointsData;
-            //    Debug.Log(checkpointsCount);
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < checkpointsCount; i++)
-            //    {
-            //        CheckPoint checkPoint = _gameCheckPointList[i];
-            //        CheckPointData checkPointData = levelData.CheckPoints[i];
-            //        checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
-            //        checkPoint.SetState(checkPointData.IsActivated);
-            //    }
-            //}
+            else
+            {
+                for (int i = 0; i < checkpointsCount; i++)
+                {
+                    CheckPoint checkPoint = _gameCheckPointList[i];
+                    CheckPointData checkPointData = levelData.CheckPoints[i];
+                    checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
+                    checkPoint.SetState(checkPointData.IsActivated);
+                }
+            }
         }
     }
 }

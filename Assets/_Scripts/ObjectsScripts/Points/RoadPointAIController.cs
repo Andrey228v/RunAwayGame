@@ -7,7 +7,6 @@ namespace Assets._Scripts.ObjectsScripts.Points
 {
 	public class RoadPointAIController : IDisposable
 	{
-        //private Transform _parent;
         private List<Transform> _gamePointList;
         private int _indexPoint = 0;
         private int _count;

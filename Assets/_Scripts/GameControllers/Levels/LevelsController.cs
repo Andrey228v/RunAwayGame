@@ -3,22 +3,21 @@ using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
+using System;
 using System.Collections.Generic;
 using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Levels
 {
-    public class LevelsController : IStartable
+    public class LevelsController
     {
-        private bool _isLevelWasStart;
         private readonly IGameLogger _gameLogger;
         private readonly EventBus _eventBus;
 
-        private List<IInitialzation> _initList;
-        private List<ISave> _saveList;
-        private List<ILoad> _loadList;
-        private List<IRestart> _restartList;
-        private List<IFinish> _finishList;
+        private readonly List<ISave> _saveList;
+        private readonly List<ILoad> _loadList;
+        private readonly List<IRestart> _restartList;
+        private readonly List<IFinish> _finishList;
 
         private LevelConfig _levelConfig;
 
@@ -26,53 +25,32 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public LevelsController(IGameLogger gameLogger, EventBus eventBus)
         {
-            _isLevelWasStart = false;
             _gameLogger = gameLogger;
             _eventBus = eventBus;
 
-            _initList = new List<IInitialzation>();
             _saveList = new List<ISave>();
             _loadList = new List<ILoad>();
             _restartList = new List<IRestart>();
             _finishList = new List<IFinish>();
         }
 
-        public void Start()
-        {
-            _isLevelWasStart = true;
-        }
-
         public void Dispose()
         {
-            _initList.Clear();
             _saveList.Clear();
             _loadList.Clear();
             _restartList.Clear();
             _finishList.Clear();
         }
 
-        public void Initialize(GameSaveData gameSaveData, LevelConfig levelConfig)
-        {
-            //Тут работает так, что _initList пустой при инициализации...
-            foreach (IInitialzation init in _initList)
-            {
-                init.Initialzation(gameSaveData, levelConfig);
-            }
-        }
-
         public void SaveAllServices(GameSaveData gameSaveData)
         {
 
-            if (gameSaveData.LevelsData.TryGetValue(_levelConfig.LevelName, out LevelData levelData))
+            if (gameSaveData.LevelsData.TryGetValue(_levelConfig.LevelName, out LevelData levelData) == false)
             {
-                levelData.IsLevelWasStarted = _isLevelWasStart;
-            }
-            else
-            {
-                LevelData newLevelData = new LevelData(false,
-                    _levelConfig.StartPosition, 
-                    new PlayerData(), 
-                    new List<CheckPointData>(), 
+                LevelData newLevelData = new LevelData(false, 
+                    _levelConfig.StartPosition,
+                    new PlayerData(),
+                    new List<CheckPointData>(),
                     new List<CoinData>()){ };
 
                 gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
@@ -84,22 +62,22 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
-        public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void LoadAllServices(GameSaveData gameSaveData)
         {
-            if(levelConfig == null)
+            if(_levelConfig == null)
             {
                 return;
             }
 
-            if (gameSaveData.LevelsData.TryGetValue(levelConfig.LevelName, out LevelData levelData) == false)
+            if (gameSaveData.LevelsData.TryGetValue(_levelConfig.LevelName, out LevelData levelData) == false)
             {
-                LevelData newLevelData = new LevelData(false, levelConfig.StartPosition, new PlayerData(), new List<CheckPointData>(), new List<CoinData>()) { };
-                gameSaveData.LevelsData.Add(levelConfig.LevelName, newLevelData);
+                LevelData newLevelData = new LevelData(false, _levelConfig.StartPosition, new PlayerData(), new List<CheckPointData>(), new List<CoinData>()) { };
+                gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
             }
 
             foreach (ILoad load in _loadList)
             {
-                load.Load(gameSaveData, levelConfig);
+                load.Load(gameSaveData, _levelConfig);
             }
         }
 
@@ -113,11 +91,11 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
-        public void FinishLevel(GameSaveData gameSaveData, LevelConfig levelConfig, FinishLevelEvent args)
+        public void FinishLevel(GameSaveData gameSaveData, FinishLevelEvent args)
         {
             foreach (IFinish finish in _finishList)
             {
-                finish.Finish(gameSaveData, levelConfig);
+                finish.Finish(gameSaveData, _levelConfig);
             }
 
             if (args.lvlId == "0") // переделать. Это не тут должно быть
@@ -132,11 +110,6 @@ namespace Assets._Scripts.GameControllers.Levels
             {
                 _eventBus.Publish(new FinishLevel3() { Progress = 1 });
             }
-        }
-
-        public void AddInitialization(IInitialzation init)
-        {
-            _initList.Add(init);
         }
 
         public void AddSave(ISave save)

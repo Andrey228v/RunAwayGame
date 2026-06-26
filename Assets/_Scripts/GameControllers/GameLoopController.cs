@@ -5,12 +5,8 @@ using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.Utilites.Loger;
-using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers
@@ -24,7 +20,6 @@ namespace Assets._Scripts.GameControllers
         private EventBus _eventBus;
         private IGameLogger _gameLogger;
         private GameSaveLoadService _gameSaveLoadService;
-        private LevelConfig _levelConfig;
         private GameSaveData _gameSaveData;
 
         public GameLoopController(LevelsController levelsController,
@@ -42,8 +37,6 @@ namespace Assets._Scripts.GameControllers
             _eventBus = eventBus;
             _gameLogger = gameLogger;
             _gameSaveLoadService = gameSaveLoadService;
-
-            _levelConfig = levelsController.Config;
             _gameSaveData = gameSaveLoadService.GameSaveData;
         }
 
@@ -52,12 +45,6 @@ namespace Assets._Scripts.GameControllers
             _eventBus.Subscribe<FinishLevelEvent>(OnFinishLevel);
             _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
             _eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
-            //_eventBus.Subscribe<DieEvent>(DieRestart);
-
-            //_eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
-            //_eventBus.Subscribe<LoadGameEvent>(OnLoad);
-            //_eventBus.Subscribe<ChooseLevelEvent>(OnSetLevelConfig);
-            //_eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
         }
 
         public void Dispose()
@@ -65,33 +52,18 @@ namespace Assets._Scripts.GameControllers
             _eventBus.Unsubscribe<FinishLevelEvent>(OnFinishLevel);
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
             _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
-            //_eventBus.Unsubscribe<DieEvent>(DieRestart);
-            //_eventBus.Unsubscribe<SaveGameEvent>(OnSaveGame);
-            //_eventBus.Unsubscribe<LoadGameEvent>(OnLoad);
-            //_eventBus.Unsubscribe<ChooseLevelEvent>(OnSetLevelConfig);
-            //_eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
 
-            _levelsController.Dispose();
+            //_levelsController.Dispose();
             _achievmentsController.Dispose();
             _shopController.Dispose();
             _walletController.Dispose();
         }
 
-        //public void InitializeAllServices()
-        //{
-        //    var gameSaveData = _gameSaveLoadService.GameSaveData;
-        //    var levelConfig = _levelsController.Config;
-
-        //    _shopController.Initialize();
-
-        //}
-
         public void OnFinishLevel(FinishLevelEvent args) // переделать...
         {
             _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
-            var levelConfig = _levelsController.Config;
 
-            _levelsController.FinishLevel(_gameSaveData, levelConfig, args);
+            _levelsController.FinishLevel(_gameSaveData, args);
 
             RestartLevel();
             _gameSaveLoadService.SaveGame();
@@ -108,7 +80,7 @@ namespace Assets._Scripts.GameControllers
         {
             _gameLogger.Log("GameSaveLoadService close level", "Service");
             _levelsController.SetLevelConfig(null);
-            _levelsController.Dispose();
+            //_levelsController.Dispose();
         }
 
         private void RestartLevel()
@@ -125,8 +97,6 @@ namespace Assets._Scripts.GameControllers
             var levelConfig = _levelsController.Config;
 
             _levelsController.DieRestart(_gameSaveData);
-
-            RestartLevel();
             _gameSaveLoadService.SaveGame();
         }
     }

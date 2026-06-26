@@ -41,6 +41,8 @@ namespace Assets._Scripts.SaveLoad.Service
             _walletController = walletController;
             _eventBus = eventBus;
             _gameLogger = gameLogger;
+
+            LoadOrCreateSave();
         }
 
         public void Start()
@@ -126,6 +128,7 @@ namespace Assets._Scripts.SaveLoad.Service
             _walletController.Reset(_gameSaveData, levelConfig);
             _walletController.UpdateView();
         }
+
         public void SaveGame()
         {
             _gameLogger.Log("GameSaveLoadService Save game", "Save");
@@ -139,7 +142,7 @@ namespace Assets._Scripts.SaveLoad.Service
             SaveAllServices();
         }
 
-        public void LoadOrCreateSave()
+        private void LoadOrCreateSave()
         {
             _gameLogger.Log("GameSaveLoadService LoadOrCreateSave", "Service");
 

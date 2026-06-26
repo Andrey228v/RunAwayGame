@@ -9,7 +9,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.ObjectsScripts.Player
 {
-    public class PlayerController : IFixedTickable, IInitialzation, ISave, ILoad, IRestart, IFinish
+    public class PlayerController : IFixedTickable, ISave, ILoad, IRestart, IFinish
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
@@ -17,23 +17,6 @@ namespace Assets._Scripts.ObjectsScripts.Player
         private bool _isDisposed = false;
 
         public PlayerMB PlayerMB => _playerMB;
-
-        public void Initialzation(GameSaveData gameSaveData, LevelConfig levelConfig)
-        {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
-
-            if (levelData.PlayerData == null)
-            {
-                var playerData = new PlayerData
-                {
-                    PlayerPosition = levelConfig.StartPosition,
-                    PlayerRotation = Quaternion.Euler(levelConfig.StartRotationEuler),
-                };
-
-                levelData.PlayerData = playerData;
-                levelData.LastCheckPointPosition = levelConfig.StartPosition; // под вопросом.
-            }
-        }
 
         public void Dispose()
         {
@@ -105,6 +88,19 @@ namespace Assets._Scripts.ObjectsScripts.Player
         public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
             var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
+
+            if (levelData.PlayerData == null)
+            {
+                var playerData = new PlayerData
+                {
+                    PlayerPosition = levelConfig.StartPosition,
+                    PlayerRotation = Quaternion.Euler(levelConfig.StartRotationEuler),
+                };
+
+                levelData.PlayerData = playerData;
+                levelData.LastCheckPointPosition = levelConfig.StartPosition; // под вопросом.
+            }
+
             _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation); // при финише надо ставить точку старта
         }
     }

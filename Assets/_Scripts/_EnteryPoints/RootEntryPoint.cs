@@ -48,7 +48,7 @@ namespace Assets._Scripts.EnteryPoints
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             DOTween.SetTweensCapacity(5000, 100);
             
-            _gameSaveLoadService.LoadOrCreateSave();
+            //_gameSaveLoadService.LoadOrCreateSave();
 
             var data = _gameSaveLoadService.GameSaveData.WalletData;
             var achData = _gameSaveLoadService.GameSaveData.AchievmentsData;

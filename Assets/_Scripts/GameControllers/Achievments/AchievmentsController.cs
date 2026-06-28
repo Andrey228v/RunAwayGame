@@ -10,7 +10,6 @@ namespace Assets._Scripts.GameControllers.Achievments
 {
     public class AchievmentsController
     {
-        private EventBus _eventBus;
         private IGameLogger _gameLogger;
         private AchievmentsCellsView _achievmentsCellsView;
         private List<IAchievement> _modelsAchievments;
@@ -18,9 +17,8 @@ namespace Assets._Scripts.GameControllers.Achievments
         private List<AchievementView> _achievementViews;
         private int _countAchievmentsMode;
 
-        public AchievmentsController(EventBus eventBus, IGameLogger gameLogger) 
+        public AchievmentsController(IGameLogger gameLogger) 
         {
-            _eventBus = eventBus;
             _gameLogger = gameLogger;
             _cells = new List<Transform>();
             _achievementViews = new List<AchievementView>();
@@ -91,7 +89,6 @@ namespace Assets._Scripts.GameControllers.Achievments
 
                 model.OnUnlock += UpdateCellView;
                 model.OnAchievementDataChanged += UpdateCellView;
-                //model.OnAchievementDataChanged += achView.SetProgress;
 
                 achView.TakeRewardButton.onClick.AddListener(model.TakeReward);
             }
@@ -143,7 +140,6 @@ namespace Assets._Scripts.GameControllers.Achievments
                 var achView = _achievementViews[i];
 
                 model.OnUnlock -= UpdateCellView;
-                //model.OnAchievementDataChanged -= achView.SetProgress;
             }
         }
 

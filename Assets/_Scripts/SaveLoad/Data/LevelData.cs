@@ -30,6 +30,7 @@ namespace Assets.Scripts.SaveLoad.Data
         public void ResetData(LevelConfig levelConfig)
         {
             LastCheckPointPosition = levelConfig.StartPosition;
+
             PlayerData.ResetData();
 
             foreach (var checkPoint in CheckPoints) 

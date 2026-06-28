@@ -36,11 +36,5 @@ namespace Assets._Scripts.UI
         {
             _gobeletsCount.text = actualGobelets.ToString();
         }
-
-        public void UpdateView()
-        {
-
-        }
-
     }
 }

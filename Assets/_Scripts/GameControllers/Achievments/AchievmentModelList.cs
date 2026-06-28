@@ -1,10 +1,8 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.Utilites.Loger;
-using Assets.Scripts.SaveLoad.Data;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
@@ -13,14 +11,19 @@ namespace Assets._Scripts.GameControllers.Achievments
         private List<IAchievement> _modelsAchievments;
         private EventBus _eventBus;
         private IGameLogger _gameLoger;
+        private WalletController _walletController;
 
 
-        public AchievmentModelList(EventBus eventBus, IGameLogger gameLogger, List<AchievmentData> achievmentData)
+        public AchievmentModelList(EventBus eventBus, 
+            IGameLogger gameLogger, 
+            List<AchievmentData> achievmentData,
+            WalletController walletController)
         {
             _modelsAchievments = new List<IAchievement>();
             _eventBus = eventBus;
             _gameLoger = gameLogger;
-            _modelsAchievments = CreateAchievementModels(_eventBus, _gameLoger, achievmentData);
+            _walletController = walletController;
+            _modelsAchievments = CreateAchievementModels(_eventBus, _gameLoger, achievmentData, _walletController);
         }
 
         public List<IAchievement> GetModel()
@@ -28,17 +31,19 @@ namespace Assets._Scripts.GameControllers.Achievments
             return _modelsAchievments;
         }
 
-        private List<IAchievement> CreateAchievementModels(EventBus eventBus, IGameLogger gameLogger, List<AchievmentData> achievmentData)
+        private List<IAchievement> CreateAchievementModels(EventBus eventBus, 
+            IGameLogger gameLogger, 
+            List<AchievmentData> achievmentData, WalletController walletController)
         {
-            var rewardType1 = new AchievmentsReward(eventBus);
-            rewardType1.AddRevard(new CoinReward(eventBus, 10));
+            var rewardType1 = new AchievmentsReward();
+            rewardType1.AddRevard(new CoinReward(10, walletController));
 
-            var rewardType2 = new AchievmentsReward(eventBus);
-            rewardType2.AddRevard(new GobeletReward(eventBus, 1));
+            var rewardType2 = new AchievmentsReward();
+            rewardType2.AddRevard(new GobeletReward(1, walletController));
 
-            var rewardType3 = new AchievmentsReward(eventBus);
-            rewardType3.AddRevard(new CoinReward(eventBus, 5));
-            rewardType3.AddRevard(new GobeletReward(eventBus, 2));
+            var rewardType3 = new AchievmentsReward();
+            rewardType3.AddRevard(new CoinReward(5, walletController));
+            rewardType3.AddRevard(new GobeletReward(2, walletController));
 
             var modelsAchievments = new List<IAchievement>
                     {

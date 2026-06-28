@@ -51,9 +51,8 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             return Coins;
         }
 
-        public void Finish(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Finish(LevelData levelData)
         {
-            LevelData levelData = gameSaveData.LevelsData[levelConfig.LevelName]; // заглушка.
             Restart(levelData);
         }
 
@@ -71,19 +70,16 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
         }
 
-        public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Save(LevelData levelData)
         {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
-
             for (int i = 0; i < _objectList.Count; i++)
             {
                 levelData.Coins[i] = new CoinData { IsActivated = _objectList[i].IsActivated };
             }
         }
 
-        public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Load(LevelData levelData)
         {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
             var objectCount = _objectList.Count;
 
             if (levelData.Coins == null || levelData.Coins.Count == 0)

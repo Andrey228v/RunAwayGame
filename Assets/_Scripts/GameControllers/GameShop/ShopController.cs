@@ -1,7 +1,4 @@
-﻿using Assets._Scripts.SaveLoad.Service;
-using Assets.Scripts.SaveLoad.Data;
-using System;
-using System.Collections.Generic;
+﻿using Assets.Scripts.SaveLoad.Data;
 
 namespace Assets._Scripts.GameControllers.GameShop
 {

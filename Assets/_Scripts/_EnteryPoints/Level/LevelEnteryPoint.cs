@@ -37,19 +37,22 @@ namespace Assets._Scripts.EnteryPoints
         {
             //тут переделать. Мы в Лвл контроллер в список добавляем, но потом снова вызывает _сoinConroller.Init...
             _levelsController.SetLevelConfig(_levelConfig);
+            _levelsController.Initialization(_gameSaveLoadService.GameSaveData);
+            _levelsController.SetLevelData(_gameSaveLoadService.GameSaveData, _levelConfig);
 
-            _levelsController.AddSave(_coinController);
-            _levelsController.AddLoad(_coinController);
-            _levelsController.AddRestart(_coinController);
-            _levelsController.AddFinish(_coinController);
+            _levelsController.SaveList.Add(_coinController);
+            _levelsController.LoadList.Add(_coinController);
+            _levelsController.RestartList.Add(_coinController);
+            _levelsController.FinishList.Add(_coinController);
 
-            _levelsController.AddSave(_checkPointsController);
-            _levelsController.AddLoad(_checkPointsController);
-            _levelsController.AddRestart(_checkPointsController);
-            _levelsController.AddFinish(_checkPointsController);
+            _levelsController.SaveList.Add(_checkPointsController);
+            _levelsController.LoadList.Add(_checkPointsController);
+            _levelsController.RestartList.Add(_checkPointsController);
+            _levelsController.FinishList.Add(_checkPointsController);
 
-            _levelsController.LoadAllServices(_gameSaveLoadService.GameSaveData);
-           
+            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
+            _coinController.Load(levelData);
+            _checkPointsController.Load(levelData);
 
             _coinController.OnTake += _walletController.AddConis;
         }

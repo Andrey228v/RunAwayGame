@@ -3,7 +3,6 @@ using Assets._Scripts.SaveLoad.Data;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using ECM2;
-using System;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -44,11 +43,44 @@ namespace Assets._Scripts.ObjectsScripts.Player
             _character = character;
         }
 
-        public void Finish(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void SetPlayerMB(PlayerMB playerMB)
+        {
+            _playerMB = playerMB;
+        }
+
+        public void Finish(LevelData levelData)
         {
             Reset();
-            _character.transform.SetLocalPositionAndRotation(levelConfig.StartPosition, Quaternion.Euler(levelConfig.StartRotationEuler));
+            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+        }
 
+        public void Restart(LevelData levelData)
+        {
+            Reset();
+            _playerMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+        }
+
+        public void Save(LevelData levelData)
+        {
+            levelData.PlayerData.PlayerPosition = _character.transform.position;
+            levelData.PlayerData.PlayerRotation = _character.transform.rotation;
+        }
+
+        public void Load(LevelData levelData)
+        {
+
+            if (levelData.PlayerData == null)
+            {
+                var playerData = new PlayerData
+                {
+                    PlayerPosition = levelData.PlayerData.PlayerPosition,
+                    PlayerRotation = levelData.PlayerData.PlayerRotation
+                };
+
+                levelData.PlayerData = playerData;
+            }
+
+            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation); // при финише надо ставить точку старта
         }
 
         private void Reset()
@@ -65,43 +97,6 @@ namespace Assets._Scripts.ObjectsScripts.Player
 
                 _character.SetMovementMode(Character.MovementMode.Falling);
             }
-        }
-
-        public void SetPlayerMB(PlayerMB playerMB)
-        {
-            _playerMB = playerMB;
-        }
-
-        public void Restart(LevelData levelData)
-        {
-            Reset();
-
-            _playerMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
-        }
-
-        public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
-        {
-            gameSaveData.LevelsData[levelConfig.LevelName].PlayerData.PlayerPosition = _character.transform.position;
-            gameSaveData.LevelsData[levelConfig.LevelName].PlayerData.PlayerRotation = _character.transform.rotation;
-        }
-
-        public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
-        {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
-
-            if (levelData.PlayerData == null)
-            {
-                var playerData = new PlayerData
-                {
-                    PlayerPosition = levelConfig.StartPosition,
-                    PlayerRotation = Quaternion.Euler(levelConfig.StartRotationEuler),
-                };
-
-                levelData.PlayerData = playerData;
-                levelData.LastCheckPointPosition = levelConfig.StartPosition; // под вопросом.
-            }
-
-            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation); // при финише надо ставить точку старта
         }
     }
 }

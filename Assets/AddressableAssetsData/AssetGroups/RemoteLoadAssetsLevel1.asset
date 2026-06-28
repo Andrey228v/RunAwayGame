@@ -135,6 +135,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c9199760bc891b8429a05dc66cf26105
+    m_Address: Assets/_Prefabs/Units/Unit.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb956844eccc4834ab7d20dd7380beba
     m_Address: FinishPoint
     m_ReadOnly: 0

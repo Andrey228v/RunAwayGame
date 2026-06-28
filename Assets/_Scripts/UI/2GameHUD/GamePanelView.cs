@@ -104,10 +104,5 @@ namespace Assets.Scripts.UI
         {
             await _loadManager.LoadScene(_scensGroups[0]);
         }
-
-        public void UpdateView()
-        {
-
-        }
     }
 }

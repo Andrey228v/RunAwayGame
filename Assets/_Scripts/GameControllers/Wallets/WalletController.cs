@@ -28,18 +28,17 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void Initialize(WalletModel model)
         {
             _model = model;
-            _eventBus.Subscribe<AddCoinsEvent>(OnCoinsChanged);
-            _eventBus.Subscribe<AddGobeletsEvent>(OnGobeletsChanged);
+            _model.OnCoinsChanged += CoinUpdateView;
         }
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<AddCoinsEvent>(OnCoinsChanged);
-            _eventBus.Unsubscribe<AddGobeletsEvent>(OnGobeletsChanged);
+            _model.OnCoinsChanged -= CoinUpdateView;
         }
 
         public void SaveAllServices(GameSaveData gameSaveData)
         {
+            //Переделать...
             gameSaveData.WalletData.Coins = _model.Data.Coins;
             gameSaveData.WalletData.Gobelets = _model.Data.Gobelets;
         }
@@ -54,70 +53,60 @@ namespace Assets._Scripts.GameControllers.Wallets
             _model.LoadData(gameSaveData.WalletData);
         }
 
+        public void CoinUpdateView(int current, int value) 
+        {
+            if (_menuView != null)
+            {
+                _menuView.SetCoinsCountText(current, value);
+            }
+
+            if (_gamePanelView != null)
+            {
+                _gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
+            }
+        }
+
+        public void GobeletsUpdateVied(int current, int value)
+        {
+            if (_unitInfoUIView != null)
+            {
+                _unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
+            }
+        }
+
         public void AddMenuView(MenuTabsView menuView)
         {
             _menuView = menuView;
             _menuView.OnDestroyView += RemoveMenuView;
-            _model.OnCoinsChanged += _menuView.SetCoinsCountText;
-            _model.OnGobeletsChanged += _menuView.SetGobeletsCountText;
 
-            //UpdateView();
+            //Тут надо придумать как обновлять View....
         }
 
         public void RemoveMenuView()
         {
             _menuView.OnDestroyView -= RemoveMenuView;
-            _model.OnCoinsChanged -= _menuView.SetCoinsCountText;
-            _model.OnGobeletsChanged -= _menuView.SetGobeletsCountText;
         }
 
         public void AddGamePanelView(GamePanelView gamePanelView)
         {
             _gamePanelView = gamePanelView;
             _gamePanelView.OnDestroyView += RemoveGamePanelView;
-            _model.OnCoinsChanged += _gamePanelView.SetCoinsCountText;
-
-            _gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
-            _unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
         }
 
         public void RemoveGamePanelView()
         {
             _gamePanelView.OnDestroyView -= RemoveGamePanelView;
-            _model.OnCoinsChanged -= _gamePanelView.SetCoinsCountText;
-
         }
 
         public void AddUnitInfoUIView(UnitInfoUIView unitInfoUI)
         {
             _unitInfoUIView = unitInfoUI;
             _unitInfoUIView.OnDestroyView += RemoveUnitInfoUIView;
-            _model.OnGobeletsChanged += _unitInfoUIView.SetGobeletsCountText;
-
         }
 
         public void RemoveUnitInfoUIView()
         {
             _unitInfoUIView.OnDestroyView -= RemoveUnitInfoUIView;
-            _model.OnGobeletsChanged -= _unitInfoUIView.SetGobeletsCountText;
-        }
-
-        public void UpdateView()
-        {
-            _menuView.SetCoinsCountText(_model.Data.Coins, 0);
-            _menuView.SetGobeletsCountText(_model.Data.Gobelets, 0);
-        }
-
-        private void OnCoinsChanged(AddCoinsEvent args)
-        {
-            AddConis(args.coinCount);
-            UpdateView();
-        }
-
-        private void OnGobeletsChanged(AddGobeletsEvent args)
-        {
-            AddGobelets(args.gobeletCount);
-            UpdateView();
         }
 
         public void AddConis(int count)
@@ -133,28 +122,9 @@ namespace Assets._Scripts.GameControllers.Wallets
             _eventBus.Publish(new SaveGameEvent { });
         }
 
-        public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Reset(GameSaveData gameSaveData)
         {
             _model.Reset();
-
-            if (_menuView != null)
-            {
-                int coins = gameSaveData.WalletData.Coins;
-                int gobelets = gameSaveData.WalletData.Gobelets;
-
-                _menuView.SetCoinsCountText(coins, 0);
-                _menuView.SetGobeletsCountText(gobelets, 0);
-            }
-
-            if(_gamePanelView != null)
-            {
-                _gamePanelView.UpdateView();
-            }
-
-            if(_unitInfoUIView != null)
-            {
-                _unitInfoUIView.UpdateView();
-            }
         }
     }
 }

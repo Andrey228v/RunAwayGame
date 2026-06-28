@@ -32,12 +32,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Screen
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c9199760bc891b8429a05dc66cf26105
-    m_Address: Unit
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Prefab
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc38d1f82b0280643ad77969afefb0d3
     m_Address: Menu
     m_ReadOnly: 0

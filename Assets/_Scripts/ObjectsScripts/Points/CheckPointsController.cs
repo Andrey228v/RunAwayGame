@@ -58,23 +58,35 @@ namespace Assets.Scripts.Points
             _lastCheckPointActiveted = args.checkPoint;
         }
 
-        public void Finish(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Finish(LevelData levelData)
         {
-            LevelData levelData = gameSaveData.LevelsData[levelConfig.LevelName]; // заглушка.
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
+            }
+
             Restart(levelData);
         }
 
         public void Restart(LevelData levelData)
         {
-            foreach(var checkPoint in _gameCheckPointList)
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
+            }
+
+            foreach (var checkPoint in _gameCheckPointList)
             {
                 checkPoint.Deactivate();
             }
         }
 
-        public void Save(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Save(LevelData levelData)
         {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
+            }
 
             if (_lastCheckPointActiveted != null)
             {
@@ -87,9 +99,12 @@ namespace Assets.Scripts.Points
             }
         }
 
-        public void Load(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void Load(LevelData levelData)
         {
-            var levelData = gameSaveData.LevelsData[levelConfig.LevelName];
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
+            }
 
             var checkpointsCount = _gameCheckPointList.Count;
 

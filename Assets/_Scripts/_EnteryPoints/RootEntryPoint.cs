@@ -6,7 +6,6 @@ using Assets._Scripts.SceneLoading;
 using Assets._Scripts.Utilites.Loger;
 using DG.Tweening;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -48,16 +47,17 @@ namespace Assets._Scripts.EnteryPoints
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             DOTween.SetTweensCapacity(5000, 100);
             
-            //_gameSaveLoadService.LoadOrCreateSave();
-
             var data = _gameSaveLoadService.GameSaveData.WalletData;
             var achData = _gameSaveLoadService.GameSaveData.AchievmentsData;
 
             _walletModel = new WalletModel(data, _gameLogger);
             _walletController.Initialize(_walletModel);
 
-            var achModel = new AchievmentModelList(_eventBus, _gameLogger, achData);
+            var achModel = new AchievmentModelList(_eventBus, _gameLogger, achData, _walletController);
             _achievmentsController.Initialize(achModel);
+
+
+
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

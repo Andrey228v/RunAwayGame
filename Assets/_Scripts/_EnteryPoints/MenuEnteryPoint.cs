@@ -41,8 +41,8 @@ namespace Assets._Scripts.EnteryPoints
         {
             InitMenu();
 
-            _achievmentsController.UpdateView();
-            _walletController.UpdateView();
+            //_achievmentsController.UpdateView();
+            //_walletController.UpdateView();
 
         }
 

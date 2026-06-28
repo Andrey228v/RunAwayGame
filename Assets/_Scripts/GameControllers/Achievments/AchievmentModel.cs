@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.Utilites.Loger;
 using System;
@@ -9,7 +10,6 @@ namespace Assets._Scripts.GameControllers.Achievments
     public interface IAchievement
     {
         public event Action<AchievmentData> OnUnlock;
-        //public event Action<int> OnUpdateView;
         public event Action<AchievmentData> OnAchievementDataChanged;
 
         public AchievmentData Data { get; }
@@ -32,7 +32,6 @@ namespace Assets._Scripts.GameControllers.Achievments
         private IGameLogger _gameLogger;
 
         public event Action<AchievmentData> OnUnlock; // открылась ачивка
-        //public event Action<int> OnUpdateView;
         public event Action<AchievmentData> OnAchievementDataChanged;
 
         public AchievmentData Data => _data;
@@ -47,7 +46,7 @@ namespace Assets._Scripts.GameControllers.Achievments
             _achievmentsReward = achievmentsReward;
             _gameLogger = gameLogger;
 
-            if(_data.IsUnlock == false)
+            if (_data.IsUnlock == false)
             {
                 _eventBus.Subscribe<T>(ChangeCurrentProgress);
             }
@@ -69,7 +68,6 @@ namespace Assets._Scripts.GameControllers.Achievments
             _achievmentsReward.GetRewards();
             _data.IsRevardEnable = false;
             OnAchievementDataChanged?.Invoke(_data);
-            //OnUpdateView?.Invoke(_data.Id);
         }
 
         public void Reset(AchievmentData data)

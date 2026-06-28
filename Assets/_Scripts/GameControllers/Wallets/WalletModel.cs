@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.Utilites.Loger;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 using UnityEngine;
 
@@ -106,16 +107,16 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void LoadData(WalletData data)
         {
-            _data.Coins = data.Coins;
-            _data.Gobelets = data.Gobelets;
-
-            OnCoinsChanged?.Invoke(_data.Coins, 0);
-            OnGobeletsChanged?.Invoke(_data.Gobelets, 0);
+            _data = data; // под вопросом...
+            AddCoins(data.Coins);
+            AddGobelets(data.Gobelets);
         }
 
         public void Reset()
         {
-            _data.ResetData();
+            _data.ResetData(); // под вопросом...
+            AddCoins(_data.Coins);
+            AddGobelets(_data.Gobelets);
         }
     }
 }

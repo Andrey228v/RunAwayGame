@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.EventBusGame;
-using System;
+﻿using Assets._Scripts.GameControllers.Wallets;
 using System.Collections.Generic;
 
 namespace Assets._Scripts.GameControllers.Achievments
@@ -9,15 +8,9 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void GetReward();
     }
 
-    public class AchievmentsReward
+    public class AchievmentsReward // данный класс нужен для совестной награды, если несколько ревардов выдаётся.
     {
-        private EventBus _eventBus;
         private List<IRevard> _rewardList = new List<IRevard>();
-
-        public AchievmentsReward(EventBus eventBus)
-        {
-            _eventBus = eventBus;
-        }
 
         public void AddRevard(IRevard revard)
         {
@@ -35,35 +28,35 @@ namespace Assets._Scripts.GameControllers.Achievments
 
     public class CoinReward : IRevard
     {
-        private EventBus _eventBus;
         private int _coinCount;
+        private WalletController _walletController;
 
-        public CoinReward(EventBus eventBus, int coinCount)
+        public CoinReward(int coinCount, WalletController walletController)
         {
-            _eventBus= eventBus;
             _coinCount = coinCount;
+            _walletController = walletController;
         }
 
         public void GetReward()
         {
-            _eventBus.Publish(new AddCoinsEvent { coinCount = _coinCount });
+            _walletController.AddConis(_coinCount);
         }
     }
 
     public class GobeletReward : IRevard
     {
-        private EventBus _eventBus;
         private int _gobeletCount;
+        private WalletController _walletController;
 
-        public GobeletReward(EventBus eventBus, int gobeletCount)
+        public GobeletReward(int gobeletCount, WalletController walletController)
         {
-            _eventBus = eventBus;
             _gobeletCount = gobeletCount;
+            _walletController = walletController;
         }
 
         public void GetReward()
         {
-            _eventBus.Publish(new AddGobeletsEvent { gobeletCount = _gobeletCount });
+            _walletController.AddGobelets(_gobeletCount);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace Assets._Scripts.EnteryPoints
         private LevelsController _levelsController;
         private WalletController _walletController;
         private GameLoopController _gameLoopController;
+        private GameSaveLoadService _gameSaveLoadService;
 
         public PlayerEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory,
@@ -33,6 +34,7 @@ namespace Assets._Scripts.EnteryPoints
             BillboardManager billboardManager, Func<UnitInfoUIView> unitInfoUIFactory,
             WalletController walletController,
             GameLoopController gameLoopController,
+            GameSaveLoadService gameSaveLoadService,
             LevelsController levelsController
             ) 
         {
@@ -45,24 +47,25 @@ namespace Assets._Scripts.EnteryPoints
             _walletController = walletController;
             _levelsController = levelsController;
             _gameLoopController = gameLoopController;
+            _gameSaveLoadService = gameSaveLoadService;
         }
 
         public void Start()
         {
-            //_levelsController.AddInitialization(_playerController);
-            _levelsController.AddSave(_playerController);
-            _levelsController.AddLoad(_playerController);
-            _levelsController.AddRestart(_playerController);
-            _levelsController.AddFinish(_playerController);
+            _levelsController.SaveList.Add(_playerController);
+            _levelsController.LoadList.Add(_playerController);
+            _levelsController.RestartList.Add(_playerController);
+            _levelsController.FinishList.Add(_playerController);
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
                         _unitInfoUIFactory, _billboardManager, _walletController);
 
-            _playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;
+            var levelConfig = _levelsController.Config;
+            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[levelConfig.LevelName];
+            _playerController.Load(levelData);
 
-            //_playerController.Initialzation(_gameSaveLoadService.GameSaveData, _levelsController.Config);
-            //_playerController.Load(_gameSaveLoadService.GameSaveData, _levelsController.Config);
+            _playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;
         }
 
         public void Dispose()

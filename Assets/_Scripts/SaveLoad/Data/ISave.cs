@@ -4,6 +4,6 @@ namespace Assets._Scripts.SaveLoad.Data
 {
     public interface ISave
     {
-        public void Save(GameSaveData gameSaveData, LevelConfig levelConfig);
+        public void Save(LevelData levelData);
     }
 }

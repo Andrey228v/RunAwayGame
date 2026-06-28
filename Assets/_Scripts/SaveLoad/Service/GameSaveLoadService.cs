@@ -123,10 +123,10 @@ namespace Assets._Scripts.SaveLoad.Service
                 DateTime.Now){ };
 
             _achievmentsController.Reset(_gameSaveData, levelConfig);
-            _achievmentsController.UpdateView();
+            _walletController.Reset(_gameSaveData);
 
-            _walletController.Reset(_gameSaveData, levelConfig);
-            _walletController.UpdateView();
+            //_achievmentsController.UpdateView();
+            //_walletController.UpdateView();
         }
 
         public void SaveGame()

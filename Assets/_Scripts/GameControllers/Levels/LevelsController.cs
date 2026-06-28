@@ -5,7 +5,6 @@ using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using VContainer.Unity;
 
 namespace Assets._Scripts.GameControllers.Levels
 {
@@ -20,8 +19,13 @@ namespace Assets._Scripts.GameControllers.Levels
         private readonly List<IFinish> _finishList;
 
         private LevelConfig _levelConfig;
+        private LevelData _levelData;
 
         public LevelConfig Config => _levelConfig;
+        public List<ISave> SaveList => _saveList;
+        public List<ILoad> LoadList => _loadList;
+        public List<IRestart> RestartList => _restartList;
+        public List<IFinish> FinishList => _finishList;
 
         public LevelsController(IGameLogger gameLogger, EventBus eventBus)
         {
@@ -42,60 +46,78 @@ namespace Assets._Scripts.GameControllers.Levels
             _finishList.Clear();
         }
 
-        public void SaveAllServices(GameSaveData gameSaveData)
+        public void Initialization(GameSaveData gameSaveData)
         {
+            if (gameSaveData == null)
+            {
+                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
+            }
 
             if (gameSaveData.LevelsData.TryGetValue(_levelConfig.LevelName, out LevelData levelData) == false)
             {
-                LevelData newLevelData = new LevelData(false, 
+                LevelData newLevelData = new LevelData(false,
                     _levelConfig.StartPosition,
-                    new PlayerData(),
+                    new PlayerData()
+                    {
+                        PlayerPosition = _levelConfig.StartPosition,
+                        PlayerRotation = _levelConfig.PlayerStartRotation
+                    },
                     new List<CheckPointData>(),
-                    new List<CoinData>()){ };
+                    new List<CoinData>()); { };
 
                 gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
+            }
+        }
+
+        public void SaveAllServices(GameSaveData gameSaveData)
+        {
+            if (gameSaveData == null)
+            {
+                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
             }
 
             foreach (ISave save in _saveList)
             {
-                save.Save(gameSaveData, _levelConfig);
+                save.Save(_levelData);
             }
         }
 
         public void LoadAllServices(GameSaveData gameSaveData)
         {
-            if(_levelConfig == null)
+            if (gameSaveData == null)
+            {
+                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
+            }
+
+            if (_levelConfig == null)
             {
                 return;
             }
 
-            if (gameSaveData.LevelsData.TryGetValue(_levelConfig.LevelName, out LevelData levelData) == false)
-            {
-                LevelData newLevelData = new LevelData(false, _levelConfig.StartPosition, new PlayerData(), new List<CheckPointData>(), new List<CoinData>()) { };
-                gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
-            }
-
             foreach (ILoad load in _loadList)
             {
-                load.Load(gameSaveData, _levelConfig);
+                load.Load(_levelData);
             }
         }
 
         public void DieRestart(GameSaveData gameSaveData)
         {
-            var LevelData = gameSaveData.LevelsData[_levelConfig.LevelName];
-
             foreach (IRestart restart in _restartList)
             {
-                restart.Restart(LevelData);
+                restart.Restart(_levelData);
             }
         }
 
         public void FinishLevel(GameSaveData gameSaveData, FinishLevelEvent args)
         {
+            if (gameSaveData == null)
+            {
+                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
+            }
+
             foreach (IFinish finish in _finishList)
             {
-                finish.Finish(gameSaveData, _levelConfig);
+                finish.Finish(_levelData);
             }
 
             if (args.lvlId == "0") // переделать. Это не тут должно быть
@@ -112,29 +134,26 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
-        public void AddSave(ISave save)
-        {
-            _saveList.Add(save);
-        }
-
-        public void AddLoad(ILoad load)
-        {
-            _loadList.Add(load);
-        }
-
-        public void AddRestart(IRestart restart)
-        {
-            _restartList.Add(restart);
-        }
-
-        public void AddFinish(IFinish finish)
-        {
-            _finishList.Add(finish);
-        }
-
         public void SetLevelConfig(LevelConfig levelConfig)
         {
             _levelConfig = levelConfig;
+        }
+
+        public void SetLevelData(GameSaveData gameSaveData, LevelConfig levelConfig)
+        {
+            if (gameSaveData == null)
+            {
+                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
+            }
+
+            if (levelConfig != null)
+            {
+                _levelData = gameSaveData.LevelsData[_levelConfig.LevelName];
+            }
+            else
+            {
+                _levelData = null;
+            }
         }
     }
 }

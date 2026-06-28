@@ -38,18 +38,7 @@ namespace Assets._Scripts.EventBusGame
 
     public struct TransitToWindowEvent { }
 
-    public struct ReloudButtonClickEvent { }
 
-
-    public struct AddCoinsEvent
-    {
-        public int coinCount;
-    }
-
-    public struct AddGobeletsEvent
-    {
-        public int gobeletCount;
-    }
     public struct StartLevel1 : IAchivmentEvent
     {
         public int Progress { get; set; }

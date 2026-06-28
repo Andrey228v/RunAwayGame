@@ -53,7 +53,6 @@ namespace Assets._Scripts.GameControllers
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
             _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
 
-            //_levelsController.Dispose();
             _achievmentsController.Dispose();
             _shopController.Dispose();
             _walletController.Dispose();
@@ -63,9 +62,8 @@ namespace Assets._Scripts.GameControllers
         {
             _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
 
-            _levelsController.FinishLevel(_gameSaveData, args);
-
             RestartLevel();
+            _levelsController.FinishLevel(_gameSaveData, args);
             _gameSaveLoadService.SaveGame();
         }
 
@@ -80,7 +78,7 @@ namespace Assets._Scripts.GameControllers
         {
             _gameLogger.Log("GameSaveLoadService close level", "Service");
             _levelsController.SetLevelConfig(null);
-            //_levelsController.Dispose();
+            _levelsController.SetLevelData(_gameSaveLoadService.GameSaveData, null);
         }
 
         private void RestartLevel()

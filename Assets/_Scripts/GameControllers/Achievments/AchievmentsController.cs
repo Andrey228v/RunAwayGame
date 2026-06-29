@@ -4,6 +4,7 @@ using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
@@ -61,10 +62,8 @@ namespace Assets._Scripts.GameControllers.Achievments
             }
         }
         
-        public void LoadAllServices(GameSaveData gameSaveData, LevelConfig levelConfig)
+        public void LoadAllServices(List<AchievmentData> achievmentsData)
         {
-            List<AchievmentData> achievmentsData = gameSaveData.AchievmentsData;
-
             for (int i = 0; i < _modelsAchievments.Count; i++)
             {
                 var achModel = _modelsAchievments[i];
@@ -91,6 +90,8 @@ namespace Assets._Scripts.GameControllers.Achievments
                 model.OnAchievementDataChanged += UpdateCellView;
 
                 achView.TakeRewardButton.onClick.AddListener(model.TakeReward);
+
+                UpdateCellView(model.Data);
             }
             else
             {
@@ -125,9 +126,9 @@ namespace Assets._Scripts.GameControllers.Achievments
                 var data = gameSaveData.AchievmentsData[i];
 
                 model.Reset(data);
-            }
 
-            UpdateView();
+                UpdateCellView(data);
+            }
         }
 
         private void DestroyUI()

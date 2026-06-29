@@ -108,15 +108,19 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void LoadData(WalletData data)
         {
             _data = data; // под вопросом...
-            AddCoins(data.Coins);
-            AddGobelets(data.Gobelets);
+            OnCoinsChanged?.Invoke(_data.Coins, 0);
+            OnGobeletsChanged?.Invoke(_data.Gobelets, 0);
         }
 
         public void Reset()
         {
             _data.ResetData(); // под вопросом...
-            AddCoins(_data.Coins);
-            AddGobelets(_data.Gobelets);
+
+            OnCoinsChanged?.Invoke(_data.Coins, 0);
+            OnGobeletsChanged?.Invoke(_data.Gobelets, 0);
+
+            //AddCoins(_data.Coins);
+            //AddGobelets(_data.Gobelets);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.ObjectsScripts.Coins;
+using Assets._Scripts.ObjectsScripts.Points;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;
 using System;
@@ -16,6 +17,7 @@ namespace Assets._Scripts.EnteryPoints
         private GameSaveLoadService _gameSaveLoadService;
         private WalletController _walletController;
         private LevelConfig _levelConfig;
+        private FinishController _finishController;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController, 
@@ -23,6 +25,7 @@ namespace Assets._Scripts.EnteryPoints
             GameSaveLoadService gameSaveLoadService,
             WalletController walletController,
             LevelConfig levelConfig,
+            FinishController finishController,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
@@ -31,6 +34,7 @@ namespace Assets._Scripts.EnteryPoints
             _gameSaveLoadService = gameSaveLoadService;
             _levelConfig = levelConfig;
             _walletController = walletController;
+            _finishController = finishController;
         }
 
         public void Start()
@@ -50,11 +54,18 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController.RestartList.Add(_checkPointsController);
             _levelsController.FinishList.Add(_checkPointsController);
 
+            _levelsController.SaveList.Add(_finishController);
+            _levelsController.LoadList.Add(_finishController);
+            _levelsController.RestartList.Add(_finishController);
+            _levelsController.FinishList.Add(_finishController);
+
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
             _coinController.Load(levelData);
             _checkPointsController.Load(levelData);
+            _finishController.Load(levelData);
 
             _coinController.OnTake += _walletController.AddConis;
+
         }
 
         public void Dispose()
@@ -62,6 +73,7 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController.Dispose();
             _checkPointsController.Dispose();
             _coinController.Dispose();
+            _finishController.Dispose();
 
             _coinController.OnTake -= _walletController.AddConis;
         }

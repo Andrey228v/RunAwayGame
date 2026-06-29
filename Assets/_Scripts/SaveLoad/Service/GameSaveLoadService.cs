@@ -101,7 +101,7 @@ namespace Assets._Scripts.SaveLoad.Service
 
             var levelConfig = _levelsController.Config;
 
-            _achievmentsController.LoadAllServices(_gameSaveData, levelConfig);
+            _achievmentsController.LoadAllServices(_gameSaveData.AchievmentsData);
             _shopController.LoadAllServices(_gameSaveData, levelConfig);
             _walletController.LoadAllServices(_gameSaveData);
 

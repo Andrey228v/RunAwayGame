@@ -69,7 +69,7 @@ namespace Assets._Scripts.EventBusGame
         public int Progress { get; set; }
     }
 
-    public struct UpdateUIEvent {}
+    //public struct UpdateUIEvent {}
 
     public struct CollectGoldEvent : IAchivmentEvent
     {

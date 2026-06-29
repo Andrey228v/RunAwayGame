@@ -44,14 +44,14 @@ namespace Assets._Scripts.GameControllers
         {
             _eventBus.Subscribe<FinishLevelEvent>(OnFinishLevel);
             _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
-            _eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
+            //_eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
         }
 
         public void Dispose()
         {
             _eventBus.Unsubscribe<FinishLevelEvent>(OnFinishLevel);
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
-            _eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
+            //_eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
 
             _achievmentsController.Dispose();
             _shopController.Dispose();
@@ -68,11 +68,11 @@ namespace Assets._Scripts.GameControllers
         }
 
 
-        public void UpdateAllUI(UpdateUIEvent args)
-        {
-            _gameLogger.Log("GameLoopController UpdateAllUI", "Service");
-            _achievmentsController.UpdateView();
-        }
+        //public void UpdateAllUI(UpdateUIEvent args)
+        //{
+        //    _gameLogger.Log("GameLoopController UpdateAllUI", "Service");
+        //    //_achievmentsController.UpdateView();
+        //}
 
         public void CloseLevel(TransitToWindowEvent args)
         {

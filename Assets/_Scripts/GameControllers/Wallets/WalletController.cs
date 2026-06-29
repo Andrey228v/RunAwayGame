@@ -29,11 +29,13 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             _model = model;
             _model.OnCoinsChanged += CoinUpdateView;
+            _model.OnGobeletsChanged += GobeletsUpdateView;
         }
 
         public void Dispose()
         {
             _model.OnCoinsChanged -= CoinUpdateView;
+            _model.OnGobeletsChanged -= GobeletsUpdateView;
         }
 
         public void SaveAllServices(GameSaveData gameSaveData)
@@ -45,10 +47,7 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void LoadAllServices(GameSaveData gameSaveData)
         {
-            if (gameSaveData.WalletData == null)
-            {
-                gameSaveData.WalletData = new WalletData();
-            }
+            gameSaveData.WalletData ??= new WalletData();
 
             _model.LoadData(gameSaveData.WalletData);
         }
@@ -59,10 +58,21 @@ namespace Assets._Scripts.GameControllers.Wallets
             {
                 _menuView.SetCoinsCountText(current, value);
             }
-
-            if (_gamePanelView != null)
+            else if (_gamePanelView != null)
             {
-                _gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
+                _gamePanelView.SetCoinsCountText(current, value);
+            }
+        }
+
+        public void GobeletsUpdateView(int current, int value)
+        {
+            if (_menuView != null)
+            {
+                _menuView.SetGobeletsCountText(current, value);
+            }
+            else if(_unitInfoUIView != null)
+            {
+                _unitInfoUIView.SetGobeletsCountText(current, value);
             }
         }
 
@@ -70,7 +80,7 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             if (_unitInfoUIView != null)
             {
-                _unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
+                _unitInfoUIView.SetGobeletsCountText(current, value);
             }
         }
 
@@ -79,7 +89,8 @@ namespace Assets._Scripts.GameControllers.Wallets
             _menuView = menuView;
             _menuView.OnDestroyView += RemoveMenuView;
 
-            //Тут надо придумать как обновлять View....
+            _menuView.SetCoinsCountText(_model.Data.Coins, 0);
+            _menuView.SetGobeletsCountText(_model.Data.Gobelets, 0);
         }
 
         public void RemoveMenuView()
@@ -91,6 +102,8 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             _gamePanelView = gamePanelView;
             _gamePanelView.OnDestroyView += RemoveGamePanelView;
+
+            _gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
         }
 
         public void RemoveGamePanelView()
@@ -102,6 +115,8 @@ namespace Assets._Scripts.GameControllers.Wallets
         {
             _unitInfoUIView = unitInfoUI;
             _unitInfoUIView.OnDestroyView += RemoveUnitInfoUIView;
+
+            _unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
         }
 
         public void RemoveUnitInfoUIView()
@@ -114,13 +129,13 @@ namespace Assets._Scripts.GameControllers.Wallets
             _model.AddCoins(count);
             _eventBus.Publish(new SaveGameEvent { });
             _eventBus.Publish(new CollectGoldEvent { Progress = count });
-        }
+        } // achievments
 
         public void AddGobelets(int count)
         {
             _model.AddGobelets(count);
             _eventBus.Publish(new SaveGameEvent { });
-        }
+        } // achievments
 
         public void Reset(GameSaveData gameSaveData)
         {

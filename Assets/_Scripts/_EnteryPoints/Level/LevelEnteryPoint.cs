@@ -1,7 +1,8 @@
-﻿using Assets._Scripts.GameControllers.Levels;
+﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.ObjectsScripts.Coins;
-using Assets._Scripts.ObjectsScripts.Points;
+using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;
 using System;
@@ -18,6 +19,9 @@ namespace Assets._Scripts.EnteryPoints
         private WalletController _walletController;
         private LevelConfig _levelConfig;
         private FinishController _finishController;
+        private GameLoopService _gameLoopController;
+        private FinishModel _finishModel;
+
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController, 
@@ -26,6 +30,8 @@ namespace Assets._Scripts.EnteryPoints
             WalletController walletController,
             LevelConfig levelConfig,
             FinishController finishController,
+            GameLoopService gameLoopController,
+            FinishModel finishModel, 
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
@@ -35,6 +41,8 @@ namespace Assets._Scripts.EnteryPoints
             _levelConfig = levelConfig;
             _walletController = walletController;
             _finishController = finishController;
+            _gameLoopController = gameLoopController;
+            _finishModel = finishModel;
         }
 
         public void Start()
@@ -54,18 +62,14 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController.RestartList.Add(_checkPointsController);
             _levelsController.FinishList.Add(_checkPointsController);
 
-            _levelsController.SaveList.Add(_finishController);
-            _levelsController.LoadList.Add(_finishController);
-            _levelsController.RestartList.Add(_finishController);
             _levelsController.FinishList.Add(_finishController);
 
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
             _coinController.Load(levelData);
             _checkPointsController.Load(levelData);
-            _finishController.Load(levelData);
 
-            _coinController.OnTake += _walletController.AddConis;
-
+            _coinController.OnTake += _walletController.AddConis; // переделать ??
+            _finishModel.OnFinishActivate += _gameLoopController.FinishLevel;
         }
 
         public void Dispose()
@@ -76,6 +80,7 @@ namespace Assets._Scripts.EnteryPoints
             _finishController.Dispose();
 
             _coinController.OnTake -= _walletController.AddConis;
+            _finishModel.OnFinishActivate -= _gameLoopController.FinishLevel;
         }
     }
 }

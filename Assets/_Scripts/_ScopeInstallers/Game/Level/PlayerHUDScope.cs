@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.EnteryPoints;
+using Assets._Scripts.ObjectsScripts.UI.GamePanel;
 using Assets.Scripts.UI;
 using UnityEngine;
 using VContainer;
@@ -23,6 +24,8 @@ namespace Assets._Scripts.Installers
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<PlayerHUDEnteryPoint>();
+            builder.Register<GamePanelController>(Lifetime.Singleton);
+            builder.Register<GamePanelModel>(Lifetime.Singleton);
 
             builder.RegisterFactory<GamePanelView>(container => () =>
             {

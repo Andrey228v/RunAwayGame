@@ -1,6 +1,6 @@
 ﻿using Assets._Scripts.EnteryPoints;
 using Assets._Scripts.ObjectsScripts.Coins;
-using Assets._Scripts.ObjectsScripts.Points;
+using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets.Scripts.Points;
 using UnityEngine;
 using VContainer;
@@ -17,6 +17,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<CoinController>().AsSelf();
             builder.RegisterEntryPoint<CheckPointsController>().AsSelf();
             builder.RegisterEntryPoint<FinishController>().AsSelf();
+            builder.RegisterEntryPoint<FinishModel>().AsSelf();
             builder.RegisterEntryPoint<LevelEnteryPoint>();
             builder.RegisterInstance(_levelConfig);
         }

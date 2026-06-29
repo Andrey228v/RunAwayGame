@@ -25,7 +25,7 @@ namespace Assets._Scripts.EnteryPoints
         private Func<UnitInfoUIView> _unitInfoUIFactory;
         private LevelsController _levelsController;
         private WalletController _walletController;
-        private GameLoopController _gameLoopController;
+        private GameLoopService _gameLoopController;
         private GameSaveLoadService _gameSaveLoadService;
 
         public PlayerEnteryPoint(PlayerController playerController,
@@ -33,7 +33,7 @@ namespace Assets._Scripts.EnteryPoints
             Func<Character> characterFactory, CameraController cameraController,
             BillboardManager billboardManager, Func<UnitInfoUIView> unitInfoUIFactory,
             WalletController walletController,
-            GameLoopController gameLoopController,
+            GameLoopService gameLoopController,
             GameSaveLoadService gameSaveLoadService,
             LevelsController levelsController
             ) 

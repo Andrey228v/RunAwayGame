@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.UI;
 using Assets.Scripts.EnteryPoints;
 using Assets.Scripts.Points;
@@ -15,7 +16,7 @@ namespace Assets.Scripts.Installers
         [SerializeField] private Character _characterPrefab; // префаб Unit, тут надо префаб делать пустой без Player и Bot. Потом переделать.
         [SerializeField] private NavMeshCharacter _navMeshCharacterPrefab;
 
-        [SerializeField] private FinishPoint _finishPoint; // Переделать
+        [SerializeField] private FinishPointView _finishPoint; // Переделать
         [SerializeField] private Transform _checkPoints; // Переделать
         [SerializeField] private Transform _coins; // Переделать
         [SerializeField] private Transform _botsRoad; // Переделать

@@ -4,7 +4,6 @@ using UnityEngine;
 public class LevelConfig : ScriptableObject
 {
     [Header("Level Identification")]
-    [SerializeField] private int _levelId; // убрать...
     [SerializeField] private string _levelName;
     [SerializeField] private string _sceneName;
 
@@ -13,7 +12,6 @@ public class LevelConfig : ScriptableObject
     [SerializeField] private Vector3 _finishPoint;
     [SerializeField] private Vector3 _playerStartRotation;
 
-    public int LevelId => _levelId; // убрать...
     public string LevelName => _levelName;
     public string SceneName => _sceneName;
     public Vector3 StartPosition => _startPoint;

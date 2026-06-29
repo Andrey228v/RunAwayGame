@@ -1,6 +1,8 @@
 ﻿using Assets._Scripts.EventBusGame;
+using Assets._Scripts.ObjectsScripts.UI.GamePanel;
 using Assets._Scripts.UI;
 using Assets._Scripts.Utilites.Loger;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +28,11 @@ namespace Assets.Scripts.UI
         public bool IsVisible { get; private set; }
 
         public string Name { get; set; }
+
+        public event Action<WindowType> OnTransitFromGameToMenu;
+        public event Action OnSaveButtonClick;
+        public event Action OnLoadButtonClick;
+        public event Action OnChangeStatusSoundButtonClick;
 
 #if UNITY_EDITOR
         public void OnValidate()
@@ -96,25 +103,30 @@ namespace Assets.Scripts.UI
         private void ClickMenuButton()
         {
             _gameLogger.Log("ClickMenuButton", "Event");
-            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameMenuPanel"});
+            OnTransitFromGameToMenu?.Invoke(WindowType.MenuPanel);
+
+            //_eventBus.Publish(new TransitToPanelEvent { windowName = "GameMenuPanel"});
         }
 
         private void ClickLoadButton()
         {
             _gameLogger.Log("ClickLoadButton", "Event");
-            _eventBus.Publish(new LoadGameEvent { });
+            OnLoadButtonClick?.Invoke();
+            //_eventBus.Publish(new LoadGameEvent { });
         }
 
         private void ClickSoundButton()
         {
             _gameLogger.Log("ClickSoundButton", "Event");
-            _eventBus.Publish(new ButtonSoundChangeStateEvent { });
+            OnSaveButtonClick?.Invoke();
+            //_eventBus.Publish(new ButtonSoundChangeStateEvent { });
         }
 
         private void ClickSaveButton()
         {
             _gameLogger.Log("ClickSaveButton", "Event");
-            _eventBus.Publish(new SaveGameEvent { });
+            OnChangeStatusSoundButtonClick?.Invoke();
+            //_eventBus.Publish(new SaveGameEvent { });
         }
 
         public void SetCoinsCountText(int actualCoin, int addCoin)

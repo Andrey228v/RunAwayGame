@@ -108,11 +108,11 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
-        public void FinishLevel(GameSaveData gameSaveData, FinishLevelEvent args)
+        public void FinishLevel(LevelData levelData)
         {
-            if (gameSaveData == null)
+            if (levelData == null)
             {
-                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
+                throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
             }
 
             foreach (IFinish finish in _finishList)
@@ -120,18 +120,18 @@ namespace Assets._Scripts.GameControllers.Levels
                 finish.Finish(_levelData);
             }
 
-            if (args.lvlId == "0") // переделать. Это не тут должно быть
-            {
-                _eventBus.Publish(new FinishLevel1() { Progress = 1 });
-            }
-            else if (args.lvlId == "1")
-            {
-                _eventBus.Publish(new FinishLevel2() { Progress = 1 });
-            }
-            else if (args.lvlId == "2")
-            {
-                _eventBus.Publish(new FinishLevel3() { Progress = 1 });
-            }
+            //if (args.lvlId == "0") // переделать. Это не тут должно быть
+            //{
+            //    _eventBus.Publish(new FinishLevel1() { Progress = 1 });
+            //}
+            //else if (args.lvlId == "1")
+            //{
+            //    _eventBus.Publish(new FinishLevel2() { Progress = 1 });
+            //}
+            //else if (args.lvlId == "2")
+            //{
+            //    _eventBus.Publish(new FinishLevel3() { Progress = 1 });
+            //}
         }
 
         public void SetLevelConfig(LevelConfig levelConfig)

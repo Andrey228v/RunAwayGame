@@ -3,15 +3,17 @@ using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using VContainer.Unity;
+using static UnityEngine.Rendering.GPUSort;
 
 namespace Assets._Scripts.GameControllers
 {
-    public class GameLoopController : IDisposable, IStartable
+    public class GameLoopService : IDisposable, IStartable
     {
         private LevelsController _levelsController;
         private AchievmentsController _achievmentsController;
@@ -22,7 +24,7 @@ namespace Assets._Scripts.GameControllers
         private GameSaveLoadService _gameSaveLoadService;
         private GameSaveData _gameSaveData;
 
-        public GameLoopController(LevelsController levelsController,
+        public GameLoopService(LevelsController levelsController,
             AchievmentsController achievmentsController,
             ShopController shopController,
             WalletController walletController,
@@ -42,30 +44,43 @@ namespace Assets._Scripts.GameControllers
 
         public void Start()
         {
-            _eventBus.Subscribe<FinishLevelEvent>(OnFinishLevel);
+            //_eventBus.Subscribe<FinishLevelEvent>(OnFinishLevel);
             _eventBus.Subscribe<TransitToWindowEvent>(CloseLevel);
-            //_eventBus.Subscribe<UpdateUIEvent>(UpdateAllUI);
         }
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<FinishLevelEvent>(OnFinishLevel);
+            //_eventBus.Unsubscribe<FinishLevelEvent>(OnFinishLevel);
             _eventBus.Unsubscribe<TransitToWindowEvent>(CloseLevel);
-            //_eventBus.Unsubscribe<UpdateUIEvent>(UpdateAllUI);
 
             _achievmentsController.Dispose();
             _shopController.Dispose();
             _walletController.Dispose();
         }
 
-        public void OnFinishLevel(FinishLevelEvent args) // переделать...
+        public void FinishLevel()
         {
+
             _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
 
             RestartLevel();
-            _levelsController.FinishLevel(_gameSaveData, args);
+
+            var levelData = _gameSaveData.LevelsData[_levelsController.Config.LevelName];
+
+            _levelsController.FinishLevel(levelData);
             _gameSaveLoadService.SaveGame();
+
         }
+
+
+        //public void OnFinishLevel(FinishLevelEvent args) // переделать...
+        //{
+        //    _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
+
+        //    RestartLevel();
+        //    _levelsController.FinishLevel(_gameSaveData, args);
+        //    _gameSaveLoadService.SaveGame();
+        //}
 
 
         //public void UpdateAllUI(UpdateUIEvent args)

@@ -1,11 +1,12 @@
-﻿using Assets.Scripts.UI;
+﻿using Assets._Scripts.SaveLoad.Data;
+using Assets.Scripts.SaveLoad.Data;
+using Assets.Scripts.UI;
 using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
 {
-    public class GamePanelController : IDisposable
+    public class GamePanelController : IDisposable, ISave, ILoad, IRestart, IFinish
     {
         private GamePanelView _gamePanelView;
         private GamePanelModel _gamePanelModel;
@@ -13,11 +14,15 @@ namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
         public GamePanelController(GamePanelModel gamePanelModel)
         {
             _gamePanelModel = gamePanelModel;
+
+            _gamePanelModel.OnWindowChange += WindowViewTrensit;
         }
 
         public void Dispose()
         {
             _gamePanelView.GameInterfacePanelView.OnTransitFromGameToMenu -= WindowTransit;
+            _gamePanelView.GameWinPanelView.OnButtonBackToGameClick -= WindowTransit;
+            _gamePanelView.GameMenuPanelView.OnButtonBackToGameClick -= WindowTransit;
         }
 
         public void AddGamePaneView(GamePanelView gamePanelView)
@@ -25,11 +30,8 @@ namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
             _gamePanelView = gamePanelView;
 
             _gamePanelView.GameInterfacePanelView.OnTransitFromGameToMenu += WindowTransit;
-        }
-
-        public void FinishActivated()
-        {
-            _gamePanelModel.SetWindow(WindowType.WinPanel);
+            _gamePanelView.GameWinPanelView.OnButtonBackToGameClick += WindowTransit;
+            _gamePanelView.GameMenuPanelView.OnButtonBackToGameClick += WindowTransit;
         }
 
         public void WindowTransit(WindowType type)
@@ -37,5 +39,29 @@ namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
             _gamePanelModel.SetWindow(type);
         }
 
+        public void WindowViewTrensit(WindowType type)
+        {
+            _gamePanelView.ShowPanel(type);
+        }
+
+        public void Save(LevelData levelData)
+        {
+
+        }
+
+        public void Load(LevelData levelData)
+        {
+
+        }
+
+        public void Restart(LevelData levelData)
+        {
+
+        }
+
+        public void Finish(LevelData levelData)
+        {
+            _gamePanelModel.SetWindow(WindowType.WinPanel);
+        }
     }
 }

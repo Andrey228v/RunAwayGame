@@ -16,13 +16,7 @@ namespace Assets.Scripts.UI
         [SerializeField] private GameMenuPanelView _gameMenuPanel;
         [SerializeField] private GameWinPanelView _gameWinPanel;
 
-        private EventBus _eventBus;
-
-        private LoadManager _loadManager;
-        private List<SceneGroupHandle> _scensGroups;
-
         private IPanel _currentPanel;
-        private List<IPanel> _panelsList = new List<IPanel>();
 
         public event Action OnDestroyView;
 
@@ -30,47 +24,10 @@ namespace Assets.Scripts.UI
         public GameMenuPanelView GameMenuPanelView => _gameMenuPanel;
         public GameWinPanelView GameWinPanelView => _gameWinPanel;
 
-        [Inject]
-        public void Constructor(LoadManager loadManager, 
-            List<SceneGroupHandle> scensGroups, 
-            EventBus eventBus)
+        private void Start()
         {
-            _eventBus = eventBus;
-            _loadManager = loadManager;
-            _scensGroups = scensGroups;
-
             _currentPanel = _gameInterfacePanel;
         }
-
-        //private void Start()
-        //{
-        //    //Переделать...
-        //    _gameInterfacePanel.Name = "GameInterfacePanel";
-        //    _gameMenuPanel.Name = "GameMenuPanel";
-        //    _gameWinPanel.Name = "GameWinPanel";
-
-        //    _panelsList.Add(_gameInterfacePanel);
-        //    _panelsList.Add(_gameMenuPanel);
-        //    _panelsList.Add(_gameWinPanel);
-        //    //
-
-
-        //    ShowPanel(_gameInterfacePanel.Name);
-        //}
-
-        //private void OnEnable()
-        //{
-        //    _eventBus.Subscribe<FinishLevelEvent>(FinishGame);
-        //    _eventBus.Subscribe<TransitToPanelEvent>(OnShowPanel);
-        //    _eventBus.Subscribe<TransitToWindowEvent>(OnBackToMenu);
-        //}
-
-        //private void OnDisable()
-        //{
-        //    _eventBus.Unsubscribe<FinishLevelEvent>(FinishGame);
-        //    _eventBus.Unsubscribe<TransitToPanelEvent>(OnShowPanel);
-        //    _eventBus.Unsubscribe<TransitToWindowEvent>(OnBackToMenu);
-        //}
 
         private void OnDestroy()
         {
@@ -88,55 +45,19 @@ namespace Assets.Scripts.UI
 
             if (windowType == WindowType.InterfacePanel)
             {
+                _currentPanel = _gameInterfacePanel;
                 _gameInterfacePanel.Show();
             }
             else if(windowType == WindowType.MenuPanel)
             {
+                _currentPanel = _gameMenuPanel;
                 _gameMenuPanel.Show();
             }
             else if(windowType == WindowType.WinPanel)
             {
+                _currentPanel = _gameWinPanel;
                 _gameWinPanel.Show();
             }
         }
-
-        private async void OnBackToMenu(TransitToWindowEvent args)
-        {
-            await _loadManager.LoadScene(_scensGroups[0]);
-        }
-
-        // под вопросом...
-        //public void FinishGame(FinishLevelEvent args)
-        //{
-        //    ShowPanel("GameWinPanel");
-        //}
-
-
-
-        //Переделать...
-        //private void ShowPanel(string panelName)
-        //{
-
-
-
-        //    //foreach (var panel in _panelsList) 
-        //    //{
-        //    //    if(panelName == panel.Name)
-        //    //    {
-        //    //        panel.Show();
-        //    //    }
-        //    //    else
-        //    //    {
-        //    //        panel.Hide();
-        //    //    }
-        //    //}
-        //}
-
-        //private void OnShowPanel(TransitToPanelEvent args)
-        //{
-        //    ShowPanel(args.windowName);
-        //}
-
-
     }
 }

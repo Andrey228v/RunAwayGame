@@ -589,6 +589,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3874470719536951728, guid: cb956844eccc4834ab7d20dd7380beba, type: 3}
   m_PrefabInstance: {fileID: 365314200}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &365314202 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3553221644308978304, guid: cb956844eccc4834ab7d20dd7380beba, type: 3}
+  m_PrefabInstance: {fileID: 365314200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c521be10c4e264f9782f9980304565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Points.FinishPoint
 --- !u!1001 &414319670
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1209,7 +1220,7 @@ MonoBehaviour:
   _unitInfoUIPrefab: {fileID: 5975286176384170700, guid: 4bac61530990eaf48ae34bd692cbca54, type: 3}
   _characterPrefab: {fileID: 1688571644223161820, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
   _navMeshCharacterPrefab: {fileID: 8602651108574901809, guid: 188fc72e82fa0654eb54f5b91c3ce86f, type: 3}
-  _finishPoint: {fileID: 0}
+  _finishPoint: {fileID: 365314202}
   _checkPoints: {fileID: 1833616083}
   _coins: {fileID: 235748054}
   _botsRoad: {fileID: 1866619376}

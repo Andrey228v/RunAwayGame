@@ -1,8 +1,8 @@
-﻿using Assets._Scripts.EventBusGame;
+﻿using Assets._Scripts.ObjectsScripts.UI.GamePanel;
 using Assets._Scripts.UI;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 namespace Assets.Scripts.UI
 {
@@ -12,11 +12,11 @@ namespace Assets.Scripts.UI
         [SerializeField] private Button _backToGameButton;
         [SerializeField] private Button _backToMenuButton;
 
-        private IEventPublisher _eventBus;
+        public event Action OnButtonBackToMenuClick;
+        public event Action<WindowType> OnButtonBackToGameClick;
 
         public bool IsVisible { get; private set; }
 
-        public string Name { get; set; }
 
 #if UNITY_EDITOR
         public void OnValidate()
@@ -32,11 +32,6 @@ namespace Assets.Scripts.UI
             }
         }
 #endif
-        [Inject]
-        public void Construct(IEventPublisher eventBus)
-        {
-            _eventBus = eventBus;
-        }
 
         private void OnEnable()
         {
@@ -62,14 +57,14 @@ namespace Assets.Scripts.UI
             IsVisible = false;
         }
 
-        private void ClickBackToGame()
-        {
-            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameInterfacePanel" });
-        }
-
         private void ClickBackToMenu()
         {
-            _eventBus.Publish(new TransitToWindowEvent { });
+            OnButtonBackToMenuClick?.Invoke();
+        }
+
+        private void ClickBackToGame()
+        {
+            OnButtonBackToGameClick?.Invoke(WindowType.InterfacePanel);
         }
     }
 }

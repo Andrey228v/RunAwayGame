@@ -21,6 +21,7 @@ namespace Assets._Scripts.SceneLoading
         private IProgress<float> _progress;
         private GameSaveLoadService _gameSaveLoadService;
         private IGameLogger _gameLogger;
+        
 
         public LoadManager(LoadScreenView loadScreenView, 
             GameSaveLoadService gameSaveLoadService,
@@ -60,6 +61,11 @@ namespace Assets._Scripts.SceneLoading
 
             HideLoadScreen();
         }
+
+        //private async void OnBackToMenu()
+        //{
+        //    await LoadScene();
+        //}
 
         private void ShowLoadScreen()
         {

@@ -1,7 +1,7 @@
-﻿using Assets._Scripts.EventBusGame;
+﻿using Assets._Scripts.ObjectsScripts.UI.GamePanel;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 namespace Assets._Scripts.UI._2GameHUD
 {
@@ -11,7 +11,8 @@ namespace Assets._Scripts.UI._2GameHUD
         [SerializeField] private Button _backToMenuButton;
         [SerializeField] private Button _reloudButton;
 
-        private IEventPublisher _eventBus;
+        public event Action OnButtonBackToMenuClick;
+        public event Action<WindowType> OnButtonBackToGameClick;
 
         public bool IsVisible { get; private set; }
 
@@ -32,22 +33,16 @@ namespace Assets._Scripts.UI._2GameHUD
         }
 #endif
 
-        [Inject]
-        public void Construct(IEventPublisher eventBus)
-        {
-            _eventBus = eventBus;
-        }
-
         private void OnEnable()
         {
             _backToMenuButton.onClick.AddListener(ClickBackToMenu);
-            _reloudButton.onClick.AddListener(ReloudLevel);
+            _reloudButton.onClick.AddListener(ClickBackToGame);
         }
 
         private void OnDisable()
         {
             _backToMenuButton.onClick.RemoveListener(ClickBackToMenu);
-            _reloudButton.onClick.RemoveListener(ReloudLevel);
+            _reloudButton.onClick.RemoveListener(ClickBackToGame);
         }
 
         public void Show()
@@ -64,13 +59,12 @@ namespace Assets._Scripts.UI._2GameHUD
 
         private void ClickBackToMenu()
         {
-            _eventBus.Publish(new TransitToWindowEvent { });
-
+            OnButtonBackToMenuClick?.Invoke();
         }
 
-        private void ReloudLevel()
+        private void ClickBackToGame()
         {
-            _eventBus.Publish(new TransitToPanelEvent { windowName = "GameInterfacePanel" });
+            OnButtonBackToGameClick?.Invoke(WindowType.InterfacePanel);
         }
     }
 }

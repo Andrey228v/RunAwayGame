@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
 {
@@ -11,23 +9,17 @@ namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
         WinPanel = 2,
     }
 
-
     public class GamePanelModel
     {
         private WindowType _currentWindowType;
         private int _indexWindow = 0;
 
-        public event Action OnWindowChange;
-
-
-        public GamePanelModel()
-        {
-
-        }
+        public event Action<WindowType> OnWindowChange;
 
         public void SetWindow(WindowType windowType) 
         {
-            OnWindowChange?.Invoke();
+            _currentWindowType = windowType;
+            OnWindowChange?.Invoke(windowType);
         }
     }
 }

@@ -122,11 +122,8 @@ namespace Assets._Scripts.SaveLoad.Service
                 new WalletData(),
                 DateTime.Now){ };
 
-            _achievmentsController.Reset(_gameSaveData, levelConfig);
-            _walletController.Reset(_gameSaveData);
-
-            //_achievmentsController.UpdateView();
-            //_walletController.UpdateView();
+            //_achievmentsController.Reset(_gameSaveData, levelConfig);
+            //_walletController.Reset(_gameSaveData);
         }
 
         public void SaveGame()

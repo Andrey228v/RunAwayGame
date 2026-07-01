@@ -6,19 +6,19 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
 {
     public class FinishPointView : MonoBehaviour
     {
-        public event Action<bool> OnActivatePointView;
+        public event Action<bool> OnActivateObject;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<PlayerMB>(out _) == false) 
                 return;
 
-            OnActivatePointView?.Invoke(true);
+            OnActivateObject?.Invoke(true);
         }
 
         public void UpdateView(bool isActivated)
         {
-            if (isActivated)
+            if (isActivated == true)
             {
                 transform.gameObject.SetActive(false);
             }

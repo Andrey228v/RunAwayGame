@@ -69,7 +69,9 @@ namespace Assets._Scripts.EnteryPoints
             _checkPointsController.Load(levelData);
 
             _coinController.OnTake += _walletController.AddConis; // переделать ??
-            _finishModel.OnFinishActivate += _gameLoopController.FinishLevel;
+
+
+            _finishModel.OnObjectStatusChange += _gameLoopController.FinishLevel;
         }
 
         public void Dispose()
@@ -80,7 +82,7 @@ namespace Assets._Scripts.EnteryPoints
             _finishController.Dispose();
 
             _coinController.OnTake -= _walletController.AddConis;
-            _finishModel.OnFinishActivate -= _gameLoopController.FinishLevel;
+            _finishModel.OnObjectStatusChange -= _gameLoopController.FinishLevel;
         }
     }
 }

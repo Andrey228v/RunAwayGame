@@ -42,17 +42,20 @@ namespace Assets._Scripts.GameControllers
             _walletController.Dispose();
         }
 
-        public void FinishLevel()
+        public void FinishLevel(bool isActivate)
         {
-            _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
+            if(isActivate == true)
+            {
+                _gameLogger.Log("GameSaveLoadService FINISH level", "Service");
 
-            RestartLevel();
+                RestartLevel();
 
-            var levelData = _gameSaveData.LevelsData[_levelsController.Config.LevelName];
+                var levelData = _gameSaveData.LevelsData[_levelsController.Config.LevelName];
 
-            _levelsController.FinishLevel(levelData);
+                _levelsController.FinishLevel(levelData);
 
-            _gameSaveLoadService.SaveGame();
+                _gameSaveLoadService.SaveGame();
+            }
         }
 
         private void RestartLevel()

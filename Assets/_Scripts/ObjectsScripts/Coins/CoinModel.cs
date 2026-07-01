@@ -1,16 +1,21 @@
 ﻿using System;
 
-namespace Assets._Scripts.ObjectsScripts.Points.Finish
+namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class FinishModel
+    public class CoinModel
     {
         private bool _isActivate;
+        private bool _isInitialize;
 
         public event Action<bool> OnObjectStatusChange;
 
-        public FinishModel()
+        public CoinModel()
         {
+            if (_isInitialize == true)
+                return;
+
             _isActivate = false;
+            _isInitialize = true;
         }
 
         public void SetActivateStatus(bool isActivate)

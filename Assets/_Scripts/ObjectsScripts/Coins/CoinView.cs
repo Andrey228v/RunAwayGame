@@ -6,57 +6,31 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 {
     public class CoinView : MonoBehaviour
     {
-        public event Action<bool> OnActivateObject;
+        private string _id;
+
+        public event Action<string, bool> OnActivateObject;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<PlayerMB>(out _) == false)
                 return;
 
-            OnActivateObject?.Invoke(true);
+            OnActivateObject?.Invoke(_id, true);
+        }
+
+        private void OnDestroy()
+        {
+            OnActivateObject = null;
         }
 
         public void UpdateView(bool isActivated)
         {
-            if (isActivated == true)
-            {
-                transform.gameObject.SetActive(false);
-            }
-            else
-            {
-                transform.gameObject.SetActive(true);
-            }
+            transform.gameObject.SetActive(isActivated == false);
         }
 
-
-        //public void Activate()
-        //{
-        //    if (_isActivated)
-        //        return;
-
-        //    SetState(true);
-        //    OnActivated?.Invoke(this);
-        //}
-
-        //public void Deactivate()
-        //{
-        //    if (_isActivated == false)
-        //        return;
-
-        //    SetState(false);
-        //}
-
-        //public void SetState(bool activated)
-        //{
-        //    _isActivated = activated;
-        //    gameObject.SetActive(!activated);
-        //}
-
-
-
-        //public void ResetState()
-        //{
-        //    SetState(false);
-        //}
+        public void SetId(string id)
+        {
+            _id = id;
+        }
     }
 }

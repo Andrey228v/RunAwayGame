@@ -13,16 +13,14 @@ namespace Assets._Scripts.GameControllers.Wallets
         private WalletModel _model;
         
         private EventBus _eventBus;
-        private IGameLogger _gameLogger;
 
         private MenuTabsView _menuView;
         private GamePanelView _gamePanelView;
         private UnitInfoUIView _unitInfoUIView;
 
-        public WalletController(EventBus eventBus, IGameLogger gameLogger)
+        public WalletController(EventBus eventBus)
         {
             _eventBus = eventBus;
-            _gameLogger = gameLogger;
         }
 
         public void Initialize(WalletModel model)

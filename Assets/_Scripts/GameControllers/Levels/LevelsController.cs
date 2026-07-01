@@ -10,9 +10,6 @@ namespace Assets._Scripts.GameControllers.Levels
 {
     public class LevelsController
     {
-        private readonly IGameLogger _gameLogger;
-        private readonly EventBus _eventBus;
-
         private readonly List<ISave> _saveList;
         private readonly List<ILoad> _loadList;
         private readonly List<IRestart> _restartList;
@@ -27,11 +24,8 @@ namespace Assets._Scripts.GameControllers.Levels
         public List<IRestart> RestartList => _restartList;
         public List<IFinish> FinishList => _finishList;
 
-        public LevelsController(IGameLogger gameLogger, EventBus eventBus)
+        public LevelsController()
         {
-            _gameLogger = gameLogger;
-            _eventBus = eventBus;
-
             _saveList = new List<ISave>();
             _loadList = new List<ILoad>();
             _restartList = new List<IRestart>();

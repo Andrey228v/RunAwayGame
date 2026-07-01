@@ -10,8 +10,9 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     public class CoinController:  ISave, ILoad, IRestart, IFinish
     {
         private Transform _objectParent;
-        private List<Coin> _objectList;
+        private List<CoinView> _objectList;
         private List<CoinData> _objectData;
+        private List<CoinModel> _objectModels;
 
         public event Action<int> OnTake;
 
@@ -20,91 +21,96 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             if (points != null)
                 _objectParent = points.Coins;
             else
-                throw new ArgumentNullException(nameof(points), "CoinController parent cannot be null");
+                throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
 
             _objectList = TransformToList(_objectParent);
         }
 
         public void Dispose()
         {
-            foreach (Coin obj in _objectList)
+            foreach (CoinView coinView in _objectList)
             {
-                obj.Dispose();
-                obj.OnActivated -= CoinActivated;
+                coinView.OnActivateObject -= CoinActivated;
             }
         }
 
-        public List<Coin> TransformToList(Transform objectsParent)
+        public List<CoinView> TransformToList(Transform objectsParent)
         {
             if (objectsParent == null)
-                throw new ArgumentNullException(nameof(objectsParent), "checkPointsParent cannot be null");
+                throw new ArgumentNullException(nameof(objectsParent), "coinParent cannot be null");
 
-            List<Coin> Coins = new List<Coin>();
+            List<CoinView> Coins = new List<CoinView>();
 
             for (int i = 0; i < objectsParent.childCount; i++)
             {
-                Coin coin = objectsParent.GetChild(i).GetComponent<Coin>();
-                Coins.Add(coin);
-                coin.OnActivated += CoinActivated;
+                CoinView coinView = objectsParent.GetChild(i).GetComponent<CoinView>();
+                Coins.Add(coinView);
+                coinView.OnActivateObject += CoinActivated;
+
+                CoinModel coinModel = new CoinModel(); // Переделать. Вывести в отдельную функцию...
+                _objectModels.Add(coinModel);
+
             }
 
             return Coins;
         }
 
-        public void Finish(LevelData levelData)
-        {
-            Restart(levelData);
-        }
-
-        public void CoinActivated(Coin coin)
+        public void CoinActivated(bool status)
         {
             //Переделать ... ...
-            OnTake?.Invoke(1);
+            //OnTake?.Invoke(1);
+
+
+        }
+
+        public void Finish(LevelData levelData)
+        {
+            //Restart(levelData);
         }
 
         public void Restart(LevelData levelData)
         {
             foreach (var obj in _objectList)
             {
-                obj.Deactivate();
+                //obj.Deactivate();
             }
         }
 
         public void Save(LevelData levelData)
         {
-            for (int i = 0; i < _objectList.Count; i++)
-            {
-                levelData.Coins[i] = new CoinData { IsActivated = _objectList[i].IsActivated };
-            }
+            //for (int i = 0; i < _objectList.Count; i++)
+            //{
+            //    levelData.Coins[i] = new CoinData { IsActivated = _objectList[i].IsActivated };
+            //}
         }
 
         public void Load(LevelData levelData)
         {
-            var objectCount = _objectList.Count;
+            //var objectCount = _objectList.Count;
 
-            if (levelData.Coins == null || levelData.Coins.Count == 0)
-            {
-                _objectData = new List<CoinData>();
+            //if (levelData.Coins == null || levelData.Coins.Count == 0)
+            //{
+            //    _objectData = new List<CoinData>();
 
-                for (int i = 0; i < _objectList.Count; i++)
-                {
-                    _objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
-                }
+            //    for (int i = 0; i < _objectList.Count; i++)
+            //    {
+            //        _objectData.Add(new CoinData { IsActivated = _objectList[i].IsActivated });
+            //    }
 
-                levelData.Coins = _objectData;
-            }
-            else
-            {
-                for (int i = 0; i < objectCount; i++)
-                {
-                    if (_objectList[i].IsActivated == false)
-                    {
-                        Coin obj = _objectList[i];
-                        CoinData objData = levelData.Coins[i];
-                        obj.SetState(objData.IsActivated);
-                    }
-                }
-            }
+            //    levelData.Coins = _objectData;
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < objectCount; i++)
+            //    {
+            //        if (_objectList[i].IsActivated == false)
+            //        {
+            //            CoinView obj = _objectList[i];
+            //            CoinData objData = levelData.Coins[i];
+            //            obj.SetState(objData.IsActivated);
+            //        }
+            //    }
+            //}
         }
     }
 }

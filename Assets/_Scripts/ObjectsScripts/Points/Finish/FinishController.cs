@@ -20,14 +20,14 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
             else
                 throw new ArgumentNullException(nameof(points), "CoinController parent cannot be null");
 
-            _finishPointView.OnActivatePointView += SetActivateStatus;
-            _finishModel.OnFinishActivate += UpdatePointView;
+            _finishPointView.OnActivateObject += SetActivateStatus;
+            _finishModel.OnObjectStatusChange += UpdatePointView;
         }
 
         public void Dispose()
         {
-            _finishPointView.OnActivatePointView -= SetActivateStatus;
-            _finishModel.OnFinishActivate -= UpdatePointView;
+            _finishPointView.OnActivateObject -= SetActivateStatus;
+            _finishModel.OnObjectStatusChange -= UpdatePointView;
 
             _finishPointView = null;
             _finishModel = null;
@@ -43,9 +43,9 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
             _finishModel.SetActivateStatus(status);
         }
 
-        public void UpdatePointView()
+        public void UpdatePointView(bool isActivated)
         {
-            _finishPointView.UpdateView(true);
+            _finishPointView.UpdateView(isActivated);
         }
     }
 }

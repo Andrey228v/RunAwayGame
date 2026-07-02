@@ -21,6 +21,7 @@ namespace Assets._Scripts.EnteryPoints
         private FinishController _finishController;
         private GameLoopService _gameLoopController;
         private FinishModel _finishModel;
+        private CoinDictinaryModel _coinDictinaryModel;
 
 
         public LevelEnteryPoint(GamePoints gamePoints,
@@ -32,6 +33,7 @@ namespace Assets._Scripts.EnteryPoints
             FinishController finishController,
             GameLoopService gameLoopController,
             FinishModel finishModel, 
+            CoinDictinaryModel coinDictinaryModel,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
@@ -42,6 +44,7 @@ namespace Assets._Scripts.EnteryPoints
             _walletController = walletController;
             _finishController = finishController;
             _gameLoopController = gameLoopController;
+            _coinDictinaryModel = coinDictinaryModel;
             _finishModel = finishModel;
         }
 
@@ -68,9 +71,9 @@ namespace Assets._Scripts.EnteryPoints
             _coinController.Load(levelData);
             _checkPointsController.Load(levelData);
 
-            _coinController.OnTake += _walletController.AddConis; // переделать ??
-
-
+            //_coinController.OnTake += _walletController.AddConis; // переделать ??
+            _coinDictinaryModel.OnCoinAdd += CoinAdd;
+            _coinController.InitializeCoins();
             _finishModel.OnObjectStatusChange += _gameLoopController.FinishLevel;
         }
 
@@ -81,8 +84,19 @@ namespace Assets._Scripts.EnteryPoints
             _coinController.Dispose();
             _finishController.Dispose();
 
-            _coinController.OnTake -= _walletController.AddConis;
+            //_coinController.OnTake -= _walletController.AddConis;
             _finishModel.OnObjectStatusChange -= _gameLoopController.FinishLevel;
+            _coinDictinaryModel.OnCoinAdd -= CoinAdd;
+
+            foreach (var model in _coinDictinaryModel.ObjectModelds.Values)
+            {
+                model.OnTake -= _walletController.AddConis;
+            }
+        }
+
+        public void CoinAdd(CoinModel model)
+        {
+            model.OnTake += _walletController.AddConis;
         }
     }
 }

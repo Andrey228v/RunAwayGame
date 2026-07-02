@@ -50,9 +50,15 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            //тут переделать. Мы в Лвл контроллер в список добавляем, но потом снова вызывает _сoinConroller.Init...
             _levelsController.SetLevelConfig(_levelConfig);
-            _levelsController.Initialization(_gameSaveLoadService.GameSaveData);
+            _levelsController.Initialization(_gameSaveLoadService.GameSaveData); // Тут последовательности важна. Подумать как переделать.
+            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
+
+
+            _coinDictinaryModel.OnCoinAdd += CoinAdd;
+            _coinController.Initialization(levelData);
+  
+
             _levelsController.SetLevelData(_gameSaveLoadService.GameSaveData, _levelConfig);
 
             _levelsController.SaveList.Add(_coinController);
@@ -67,13 +73,14 @@ namespace Assets._Scripts.EnteryPoints
 
             _levelsController.FinishList.Add(_finishController);
 
-            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
+           
+
             _coinController.Load(levelData);
             _checkPointsController.Load(levelData);
 
-            //_coinController.OnTake += _walletController.AddConis; // переделать ??
-            _coinDictinaryModel.OnCoinAdd += CoinAdd;
-            _coinController.InitializeCoins();
+
+            
+            
             _finishModel.OnObjectStatusChange += _gameLoopController.FinishLevel;
         }
 
@@ -90,13 +97,15 @@ namespace Assets._Scripts.EnteryPoints
 
             foreach (var model in _coinDictinaryModel.ObjectModelds.Values)
             {
-                model.OnTake -= _walletController.AddConis;
+                model.OnTakeValue -= _walletController.AddConis;
+                model.OnTake -= _gameSaveLoadService.SaveAllServices;
             }
         }
 
         public void CoinAdd(CoinModel model)
         {
-            model.OnTake += _walletController.AddConis;
+            model.OnTakeValue += _walletController.AddConis;
+            model.OnTake += _gameSaveLoadService.SaveAllServices;
         }
     }
 }

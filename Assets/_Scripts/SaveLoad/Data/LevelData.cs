@@ -13,11 +13,12 @@ namespace Assets.Scripts.SaveLoad.Data
         public PlayerData PlayerData;
         public List<CheckPointData> CheckPoints;
         public List<CoinData> Coins;
+        //public Dictionary<string, CoinData> CoinsDictionary;
 
         public LevelData(bool isLevelWasStarted, 
             Vector3 lastCheckPointPosition, 
             PlayerData playerData, 
-            List<CheckPointData> checkPoints, 
+            List<CheckPointData> checkPoints,
             List<CoinData> coins)
         {
             IsLevelWasStarted = isLevelWasStarted;
@@ -25,6 +26,7 @@ namespace Assets.Scripts.SaveLoad.Data
             PlayerData = playerData;
             CheckPoints = checkPoints;
             Coins = coins;
+            //CoinsDictionary = coinsDictionary;
         }
 
         public void ResetData(LevelConfig levelConfig)
@@ -38,7 +40,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 checkPoint.ResetData();
             }
 
-            foreach(var coin in Coins)
+            foreach (var coin in Coins)
             {
                 coin.ResetData();
             }

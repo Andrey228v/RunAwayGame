@@ -15,8 +15,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         private readonly CoinDictinaryModel _coinDictinaryModel;
         private readonly Dictionary<string, CoinView> _objectViewMap;
 
-        //public event Action<int> OnTake; // под вопросом...
-
         public CoinController(GamePoints points, IGameLogger gameLogger, CoinDictinaryModel coinDictinaryModel)
         {
             if (points == null)
@@ -28,8 +26,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             _coinDictinaryModel = coinDictinaryModel;
 
             _coinDictinaryModel.OnCoinAdd += CoinInit;
-
-            //InitializeCoins();
         }
 
         public void Dispose()
@@ -50,8 +46,13 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             _objectViewMap.Clear();
         }
 
-        public void InitializeCoins()
+        public void Initialization(LevelData levelData)
         {
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
+            }
+
             for (int i = 0; i < _objectParent.childCount; i++)
             {
                 var coinView = _objectParent.GetChild(i).GetComponent<CoinView>();
@@ -71,13 +72,12 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         private void CoinInit(CoinModel model)
         {
             model.OnObjectStatusChange += OnModelStatusChanged;
-
         }
 
         private string GenerateCoinId(int index)
         {
             //return Guid.NewGuid().ToString();
-            return $"{_objectParent.name}_{index}";
+            return $"coin_{index}";
         }
 
         public void CoinActivateView(string id, bool status)
@@ -85,8 +85,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             if (_coinDictinaryModel.ObjectModelds.TryGetValue(id, out var model))
             {
                 model.SetActivateStatus(status);
-
-                //OnTake?.Invoke(1);
             }
             else
             {
@@ -124,6 +122,8 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         {
             if (levelData == null) return;
 
+            //levelData.CoinsDictionary = _coinDictinaryModel.ObjectModelds;
+
             levelData.Coins = new List<CoinData>();
 
             foreach (var model in _coinDictinaryModel.ObjectModelds)
@@ -140,7 +140,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
         public void Load(LevelData levelData)
         {
-
             if (levelData?.Coins == null || levelData.Coins.Count == 0)
             {
                 Debug.Log("No coin data to load, using defaults");

@@ -8,7 +8,8 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         private readonly string _id;
 
         public event Action<string, bool> OnObjectStatusChange;
-        public event Action<int> OnTake;
+        public event Action<int> OnTakeValue;
+        public event Action OnTake;
 
         public bool IsActivate => _isActivate;
 
@@ -24,7 +25,8 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             _isActivate = isActivate;
 
-            OnTake?.Invoke(1);
+            OnTake?.Invoke();
+            OnTakeValue?.Invoke(1);
             OnObjectStatusChange?.Invoke(_id, _isActivate);
         }
 

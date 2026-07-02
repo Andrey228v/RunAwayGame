@@ -15,6 +15,7 @@ namespace Assets._Scripts.Installers
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<CoinController>().AsSelf();
+            builder.RegisterEntryPoint<CoinDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<CheckPointsController>().AsSelf();
             builder.RegisterEntryPoint<FinishController>().AsSelf();
             builder.RegisterEntryPoint<FinishModel>().AsSelf();

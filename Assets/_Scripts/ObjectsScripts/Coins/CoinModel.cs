@@ -5,29 +5,29 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     public class CoinModel
     {
         private bool _isActivate;
-        private bool _isInitialize;
+        private readonly string _id;
 
-        public event Action<bool> OnObjectStatusChange;
+        public event Action<string, bool> OnObjectStatusChange;
 
-        public CoinModel()
+        public bool IsActivate => _isActivate;
+
+        public CoinModel(string id)
         {
-            if (_isInitialize == true)
-                return;
-
+            _id = id;
             _isActivate = false;
-            _isInitialize = true;
         }
 
         public void SetActivateStatus(bool isActivate)
         {
+            if (_isActivate == isActivate) return;
+
             _isActivate = isActivate;
-            OnObjectStatusChange?.Invoke(_isActivate);
+            OnObjectStatusChange?.Invoke(_id, _isActivate);
         }
 
         public void Reset()
         {
-            _isActivate = false;
-            OnObjectStatusChange?.Invoke(_isActivate);
+            SetActivateStatus(false);
         }
     }
 }

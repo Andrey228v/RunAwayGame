@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -9,83 +10,158 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 {
     public class CoinController:  ISave, ILoad, IRestart, IFinish
     {
+        private IGameLogger _gameLogger;
         private Transform _objectParent;
-        private List<CoinView> _objectList;
-        private List<CoinData> _objectData;
-        private List<CoinModel> _objectModels;
+        private readonly Dictionary<string, CoinModel> _objectModels;
+        private readonly Dictionary<string, CoinView> _objectViewMap;
 
-        public event Action<int> OnTake;
+        public event Action<int> OnTake; // под вопросом...
 
-        public CoinController(GamePoints points)
+        public CoinController(GamePoints points, IGameLogger gameLogger)
         {
-            if (points != null)
-                _objectParent = points.Coins;
-            else
+            if (points == null)
                 throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
 
-            _objectList = TransformToList(_objectParent);
+            _objectParent = points.Coins;
+            _objectModels = new Dictionary<string, CoinModel>();
+            _objectViewMap = new Dictionary<string, CoinView>();
+
+            InitializeCoins();
+            _gameLogger = gameLogger;
         }
 
         public void Dispose()
         {
-            foreach (CoinView coinView in _objectList)
+            foreach (var view in _objectViewMap.Values)
             {
-                coinView.OnActivateObject -= CoinActivated;
+                view.OnActivateObject -= CoinActivated;
             }
+
+            foreach (var model in _objectModels.Values)
+            {
+                model.OnObjectStatusChange -= OnModelStatusChanged;
+            }
+
+            _objectModels.Clear();
+            _objectViewMap.Clear();
         }
 
-        public List<CoinView> TransformToList(Transform objectsParent)
+        private void InitializeCoins()
         {
-            if (objectsParent == null)
-                throw new ArgumentNullException(nameof(objectsParent), "coinParent cannot be null");
-
-            List<CoinView> Coins = new List<CoinView>();
-
-            for (int i = 0; i < objectsParent.childCount; i++)
+            for (int i = 0; i < _objectParent.childCount; i++)
             {
-                CoinView coinView = objectsParent.GetChild(i).GetComponent<CoinView>();
-                Coins.Add(coinView);
+                var coinView = _objectParent.GetChild(i).GetComponent<CoinView>();
+                if (coinView == null) continue;
+
+                // Генерируем уникальный ID
+                string id = GenerateCoinId(i);
+
+                // Создаём модель
+                var model = new CoinModel(id);
+
+                // Связываем View и Model
+                coinView.SetId(id);
                 coinView.OnActivateObject += CoinActivated;
 
-                CoinModel coinModel = new CoinModel(); // Переделать. Вывести в отдельную функцию...
-                _objectModels.Add(coinModel);
+                // Подписываем View на изменения Model
+                model.OnObjectStatusChange += OnModelStatusChanged;
 
+                // Сохраняем в словари
+                _objectModels[id] = model;
+                _objectViewMap[id] = coinView;
+
+                // Применяем начальное состояние
+                coinView.UpdateView(model.IsActivate);
             }
-
-            return Coins;
         }
 
-        public void CoinActivated(bool status)
+        private string GenerateCoinId(int index)
         {
-            //Переделать ... ...
-            //OnTake?.Invoke(1);
+            //return Guid.NewGuid().ToString();
+            return $"{_objectParent.name}_{index}";
+        }
 
+        public void CoinActivated(string id, bool status)
+        {
+            if (_objectModels.TryGetValue(id, out var model))
+            {
+                model.SetActivateStatus(status);
 
+                OnTake?.Invoke(1);
+            }
+            else
+            {
+                _gameLogger.LogWarning($"Coin with ID {id} not found in models", "Service");
+            }
+        }
+
+        private void OnModelStatusChanged(string id, bool isActivated)
+        {
+            if (_objectViewMap.TryGetValue(id, out var view))
+            {
+                view.UpdateView(isActivated);
+            }
         }
 
         public void Finish(LevelData levelData)
         {
-            //Restart(levelData);
+            ResetAllCoins();
         }
 
         public void Restart(LevelData levelData)
         {
-            foreach (var obj in _objectList)
+            ResetAllCoins();
+        }
+
+        public void ResetAllCoins()
+        {
+            foreach (var model in _objectModels.Values)
             {
-                //obj.Deactivate();
+                model.Reset();
             }
         }
 
         public void Save(LevelData levelData)
         {
-            //for (int i = 0; i < _objectList.Count; i++)
-            //{
-            //    levelData.Coins[i] = new CoinData { IsActivated = _objectList[i].IsActivated };
-            //}
+            if (levelData == null) return;
+
+            levelData.Coins = new List<CoinData>();
+
+            foreach (var model in _objectModels)
+            {
+                levelData.Coins.Add(new CoinData
+                {
+                    Id = model.Key,
+                    IsActivated = model.Value.IsActivate
+                });
+            }
+
+            _gameLogger.Log($"Saved {levelData.Coins.Count} coins", "Service");
         }
 
         public void Load(LevelData levelData)
         {
+
+            if (levelData?.Coins == null || levelData.Coins.Count == 0)
+            {
+                Debug.Log("No coin data to load, using defaults");
+                return;
+            }
+
+            foreach (var coinData in levelData.Coins)
+            {
+                if (_objectModels.TryGetValue(coinData.Id, out var model))
+                {
+                    model.SetActivateStatus(coinData.IsActivated);
+                }
+                else
+                {
+                    Debug.LogWarning($"Coin with ID {coinData.Id} not found in scene");
+                }
+            }
+
+            Debug.Log($"Loaded {levelData.Coins.Count} coins");
+
             //var objectCount = _objectList.Count;
 
             //if (levelData.Coins == null || levelData.Coins.Count == 0)

@@ -49,15 +49,23 @@ namespace Assets._Scripts.GameControllers.Levels
 
             if (gameSaveData.LevelsData.TryGetValue(_levelConfig.LevelName, out LevelData levelData) == false)
             {
-                LevelData newLevelData = new LevelData(false,
-                    _levelConfig.StartPosition,
-                    new PlayerData()
-                    {
-                        PlayerPosition = _levelConfig.StartPosition,
-                        PlayerRotation = _levelConfig.PlayerStartRotation
-                    },
-                    new List<CheckPointData>(),
-                    new List<CoinData>()); { };
+                LevelData newLevelData = new LevelData
+                    (
+                        false,
+                        _levelConfig.StartPosition,
+                        new PlayerData()
+                        {
+                            PlayerPosition = _levelConfig.StartPosition,
+                            PlayerRotation = _levelConfig.PlayerStartRotation
+                        },
+                        new List<CheckPointData>(),
+                        new List<CoinData>()
+                    ); { };
+
+                //new Dictionary<string, CoinData>() {
+                //            { "coin_1", new CoinData() { Id = "coin_1", IsActivated = true } },
+                //            { "coin_2", new CoinData() { Id = "coin_1", IsActivated = false } },
+                //        }
 
                 gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
             }

@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Points;
+﻿using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using UnityEngine;
 
 namespace Assets._Scripts.EventBusGame
@@ -20,7 +20,7 @@ namespace Assets._Scripts.EventBusGame
 
     public struct CheckPoinActivatedEvent 
     {
-        public CheckPoint checkPoint;
+        public CheckPointView checkPoint;
     }
 
     public struct SaveGameEvent { }

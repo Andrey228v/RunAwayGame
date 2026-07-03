@@ -1,7 +1,7 @@
 ﻿using Assets._Scripts.EnteryPoints;
 using Assets._Scripts.ObjectsScripts.Coins;
+using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using Assets._Scripts.ObjectsScripts.Points.Finish;
-using Assets.Scripts.Points;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;

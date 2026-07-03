@@ -5,11 +5,11 @@ using UnityEngine;
 using VContainer;
 
 
-namespace Assets.Scripts.Points
+namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
 
 
-    public class CheckPoint : MonoBehaviour
+    public class CheckPointView : MonoBehaviour
     {
         [SerializeField] private string _id;
         [SerializeField] private bool _isActivated;

@@ -1,8 +1,8 @@
-﻿using Assets._Scripts.EventBusGame;
+﻿//using Assets._Scripts.EventBusGame;
 using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.UI;
 using Assets._Scripts.UI._1MenuWindow;
-using Assets._Scripts.Utilites.Loger;
+//using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
 
@@ -12,16 +12,16 @@ namespace Assets._Scripts.GameControllers.Wallets
     {
         private WalletModel _model;
         
-        private EventBus _eventBus;
+        //private EventBus _eventBus;
 
         private MenuTabsView _menuView;
         private GamePanelView _gamePanelView;
         private UnitInfoUIView _unitInfoUIView;
 
-        public WalletController(EventBus eventBus)
-        {
-            _eventBus = eventBus;
-        }
+        //public WalletController(EventBus eventBus)
+        //{
+        //    _eventBus = eventBus;
+        //}
 
         public void Initialize(WalletModel model)
         {
@@ -125,14 +125,14 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void AddConis(int count)
         {
             _model.AddCoins(count);
-            _eventBus.Publish(new SaveGameEvent { });
-            _eventBus.Publish(new CollectGoldEvent { Progress = count });
+            //_eventBus.Publish(new SaveGameEvent { });
+            //_eventBus.Publish(new CollectGoldEvent { Progress = count });
         } // achievments
 
         public void AddGobelets(int count)
         {
             _model.AddGobelets(count);
-            _eventBus.Publish(new SaveGameEvent { });
+            //_eventBus.Publish(new SaveGameEvent { });
         } // achievments
 
         public void Reset(GameSaveData gameSaveData)

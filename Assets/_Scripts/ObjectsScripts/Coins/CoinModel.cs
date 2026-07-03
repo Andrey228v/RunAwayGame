@@ -25,9 +25,13 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             _isActivate = isActivate;
 
+            OnObjectStatusChange?.Invoke(_id, _isActivate);
+        }
+
+        public void Take()
+        {
             OnTake?.Invoke();
             OnTakeValue?.Invoke(1);
-            OnObjectStatusChange?.Invoke(_id, _isActivate);
         }
 
         public void Reset()

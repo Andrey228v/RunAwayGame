@@ -1,18 +1,19 @@
 ﻿using Assets._Scripts.EventBusGame;
 using Assets._Scripts.SaveLoad.Data;
+using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Points
+namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
     public class CheckPointsController : ISave, ILoad, IRestart, IFinish
     {
         private Transform _checkPointsParent;
-        private List<CheckPoint> _gameCheckPointList;
+        private List<CheckPointView> _gameCheckPointList;
         private List<CheckPointData> _mapCheckPointsData;
-        private CheckPoint _lastCheckPointActiveted;
+        private CheckPointView _lastCheckPointActiveted;
 
         private EventBus _eventBus;
 
@@ -37,16 +38,16 @@ namespace Assets.Scripts.Points
         }
 
         //Из трансформа собираем CheckPoints
-        public List<CheckPoint> TransformToList(Transform checkPointsParent) 
+        public List<CheckPointView> TransformToList(Transform checkPointsParent) 
         {
             if(checkPointsParent == null)
                 throw new ArgumentNullException(nameof(checkPointsParent), "checkPointsParent cannot be null");
 
-            List<CheckPoint> CheckPoints = new List<CheckPoint>();
+            List<CheckPointView> CheckPoints = new List<CheckPointView>();
 
             for (int i = 0; i < checkPointsParent.childCount; i++)
             {
-                CheckPoint checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPoint>();
+                CheckPointView checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPointView>();
                 CheckPoints.Add(checkpoint);
             }
 
@@ -123,7 +124,7 @@ namespace Assets.Scripts.Points
             {
                 for (int i = 0; i < checkpointsCount; i++)
                 {
-                    CheckPoint checkPoint = _gameCheckPointList[i];
+                    CheckPointView checkPoint = _gameCheckPointList[i];
                     CheckPointData checkPointData = levelData.CheckPoints[i];
                     checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
                     checkPoint.SetState(checkPointData.IsActivated);

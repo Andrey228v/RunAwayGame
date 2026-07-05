@@ -11,14 +11,15 @@ namespace Assets.Scripts.SaveLoad.Data
         public bool IsLevelWasStarted; // Был ли уровень запущен до этого запуска ??
         public Vector3 LastCheckPointPosition;
         public PlayerData PlayerData;
-        public List<CheckPointData> CheckPoints;
+        //public List<CheckPointData> CheckPoints; 
+        public Dictionary<string, CheckPointData> CheckPoints;
         public List<CoinData> Coins;
-        //public Dictionary<string, CoinData> CoinsDictionary;
 
         public LevelData(bool isLevelWasStarted, 
             Vector3 lastCheckPointPosition, 
-            PlayerData playerData, 
-            List<CheckPointData> checkPoints,
+            PlayerData playerData,
+            //List<CheckPointData> checkPoints,
+            Dictionary<string, CheckPointData> checkPoints,
             List<CoinData> coins)
         {
             IsLevelWasStarted = isLevelWasStarted;
@@ -26,7 +27,6 @@ namespace Assets.Scripts.SaveLoad.Data
             PlayerData = playerData;
             CheckPoints = checkPoints;
             Coins = coins;
-            //CoinsDictionary = coinsDictionary;
         }
 
         public void ResetData(LevelConfig levelConfig)
@@ -35,10 +35,11 @@ namespace Assets.Scripts.SaveLoad.Data
 
             PlayerData.ResetData();
 
-            foreach (var checkPoint in CheckPoints) 
-            {
-                checkPoint.ResetData();
-            }
+            // Переделать.
+            //foreach (var checkPoint in CheckPoints) 
+            //{
+            //    checkPoint.ResetData();
+            //}
 
             foreach (var coin in Coins)
             {

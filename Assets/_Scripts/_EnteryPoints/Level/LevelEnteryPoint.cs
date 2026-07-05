@@ -23,7 +23,7 @@ namespace Assets._Scripts.EnteryPoints
         private GameLoopService _gameLoopController;
         private FinishModel _finishModel;
         private CoinDictinaryModel _coinDictinaryModel;
-
+        private CheckPointDictinaryModel _checkPointDictinaryModel;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController, 
@@ -35,6 +35,7 @@ namespace Assets._Scripts.EnteryPoints
             GameLoopService gameLoopController,
             FinishModel finishModel, 
             CoinDictinaryModel coinDictinaryModel,
+            CheckPointDictinaryModel checkPointDictinaryModel,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
@@ -46,6 +47,7 @@ namespace Assets._Scripts.EnteryPoints
             _finishController = finishController;
             _gameLoopController = gameLoopController;
             _coinDictinaryModel = coinDictinaryModel;
+            _checkPointDictinaryModel = checkPointDictinaryModel;
             _finishModel = finishModel;
         }
 
@@ -55,10 +57,11 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController.Initialization(_gameSaveLoadService.GameSaveData); // Тут последовательности важна. Подумать как переделать.
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
 
+            _coinDictinaryModel.OnObjectAdd += CoinAdd;
+            _checkPointDictinaryModel.OnObjectAdd += CheckPointAdd;
 
-            _coinDictinaryModel.OnCoinAdd += CoinAdd;
             _coinController.Initialization(levelData);
-  
+            _checkPointsController.Initialization(levelData);
 
             _levelsController.SetLevelData(_gameSaveLoadService.GameSaveData, _levelConfig);
 
@@ -92,9 +95,8 @@ namespace Assets._Scripts.EnteryPoints
             _coinController.Dispose();
             _finishController.Dispose();
 
-            //_coinController.OnTake -= _walletController.AddConis;
             _finishModel.OnObjectStatusChange -= _gameLoopController.FinishLevel;
-            _coinDictinaryModel.OnCoinAdd -= CoinAdd;
+            _coinDictinaryModel.OnObjectAdd -= CoinAdd;
 
             foreach (var model in _coinDictinaryModel.ObjectModelds.Values)
             {
@@ -103,9 +105,14 @@ namespace Assets._Scripts.EnteryPoints
             }
         }
 
-        public void CoinAdd(CoinModel model)
+        private void CoinAdd(CoinModel model)
         {
             model.OnTakeValue += _walletController.AddConis;
+            model.OnTake += _gameSaveLoadService.SaveAllServices;
+        }
+
+        private void CheckPointAdd(CheckPointModel model)
+        {
             model.OnTake += _gameSaveLoadService.SaveAllServices;
         }
     }

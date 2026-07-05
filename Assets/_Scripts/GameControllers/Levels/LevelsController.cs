@@ -1,6 +1,4 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.SaveLoad.Data;
-using Assets._Scripts.Utilites.Loger;
+﻿using Assets._Scripts.SaveLoad.Data;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -58,14 +56,9 @@ namespace Assets._Scripts.GameControllers.Levels
                             PlayerPosition = _levelConfig.StartPosition,
                             PlayerRotation = _levelConfig.PlayerStartRotation
                         },
-                        new List<CheckPointData>(),
+                        new Dictionary<string, CheckPointData>(),
                         new List<CoinData>()
                     ); { };
-
-                //new Dictionary<string, CoinData>() {
-                //            { "coin_1", new CoinData() { Id = "coin_1", IsActivated = true } },
-                //            { "coin_2", new CoinData() { Id = "coin_1", IsActivated = false } },
-                //        }
 
                 gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
             }

@@ -1,10 +1,30 @@
-﻿using System;
+﻿using Assets.Scripts.SaveLoad.Data;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
     public class CheckPointDictinaryModel
     {
+        private readonly Dictionary<string, CheckPointModel> _objectModels;
+
+        public event Action<CheckPointModel> OnObjectAdd;
+
+        public Dictionary<string, CheckPointModel> ObjectModelds => _objectModels;
+
+        public CheckPointDictinaryModel()
+        {
+            _objectModels = new Dictionary<string, CheckPointModel>();
+        }
+
+        public void AddObject(CheckPointData data)
+        {
+            CheckPointModel model = new CheckPointModel(data);
+
+            if(_objectModels.TryAdd(data.Id, model) == false)
+                throw new ArgumentNullException("ERROR KEY");
+
+            OnObjectAdd?.Invoke(model);
+        }
     }
 }

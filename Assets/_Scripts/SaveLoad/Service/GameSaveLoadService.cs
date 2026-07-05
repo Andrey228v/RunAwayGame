@@ -15,14 +15,14 @@ namespace Assets._Scripts.SaveLoad.Service
 {
     public class GameSaveLoadService : IDisposable, IStartable
     {
-        private EasySaveSystem _saveSystem;
+        private readonly EasySaveSystem _saveSystem;
         private GameSaveData _gameSaveData;
-        private LevelsController _levelsController;
-        private AchievmentsController _achievmentsController;
-        private ShopController _shopController;
-        private WalletController _walletController;
-        private EventBus _eventBus;
-        private IGameLogger _gameLogger;
+        private readonly LevelsController _levelsController;
+        private readonly AchievmentsController _achievmentsController;
+        private readonly ShopController _shopController;
+        private readonly WalletController _walletController;
+        private readonly EventBus _eventBus;
+        private readonly IGameLogger _gameLogger;
 
         public GameSaveData GameSaveData => _gameSaveData;
 

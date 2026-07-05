@@ -1,5 +1,5 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -10,126 +10,192 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
     public class CheckPointsController : ISave, ILoad, IRestart, IFinish
     {
-        private Transform _checkPointsParent;
-        private List<CheckPointView> _gameCheckPointList;
-        private List<CheckPointData> _mapCheckPointsData;
-        private CheckPointView _lastCheckPointActiveted;
+        private readonly IGameLogger _gameLogger;
+        private readonly Transform _objectParent;
+        private readonly CheckPointDictinaryModel _dictinaryModel;
+        private readonly Dictionary<string, CheckPointView> _dictinaryView;
 
-        private EventBus _eventBus;
-
-        public CheckPointsController(GamePoints points, EventBus eventBus)
+        public CheckPointsController(GamePoints points, IGameLogger gameLogger, CheckPointDictinaryModel dictinaryModel)
         {
-            if (points != null)
-                _checkPointsParent = points.CheckPoints;
-            else
-                throw new ArgumentNullException(nameof(points), "CheckPoint parent cannot be null");
+            if (points == null)
+                throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
 
-            _gameCheckPointList = TransformToList(_checkPointsParent);
+            _objectParent = points.CheckPoints;
+            _dictinaryView = new Dictionary<string, CheckPointView>();
+            _gameLogger = gameLogger;
+            _dictinaryModel = dictinaryModel;
 
-            _eventBus = eventBus;
-            _eventBus.Subscribe<CheckPoinActivatedEvent>(CheckPointActivated);
-
-
+            _dictinaryModel.OnObjectAdd += ObjectInit;
         }
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<CheckPoinActivatedEvent>(CheckPointActivated);
-        }
+            _dictinaryModel.OnObjectAdd -= ObjectInit;
 
-        //Из трансформа собираем CheckPoints
-        public List<CheckPointView> TransformToList(Transform checkPointsParent) 
-        {
-            if(checkPointsParent == null)
-                throw new ArgumentNullException(nameof(checkPointsParent), "checkPointsParent cannot be null");
-
-            List<CheckPointView> CheckPoints = new List<CheckPointView>();
-
-            for (int i = 0; i < checkPointsParent.childCount; i++)
+            foreach (var view in _dictinaryView.Values)
             {
-                CheckPointView checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPointView>();
-                CheckPoints.Add(checkpoint);
+                view.OnActivateObject -= ObjectActivateView;
+                view.OnActivateObject -= TakeObject;
+
             }
 
-            return CheckPoints;
+            foreach (var model in _dictinaryModel.ObjectModelds.Values)
+            {
+                model.OnObjectStatusChange -= OnModelStatusChanged;
+            }
+
+            _dictinaryView.Clear();
         }
 
-        public void CheckPointActivated(CheckPoinActivatedEvent args)
+        public void Initialization(LevelData levelData)
         {
-            _lastCheckPointActiveted = args.checkPoint;
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
+            }
+
+            var listData = levelData.CheckPoints;
+
+            for (int i = 0; i < _objectParent.childCount; i++)
+            {
+                //CheckPointView view = null; // под вопросом ... 
+
+                if (_objectParent.GetChild(i).TryGetComponent<CheckPointView>(out var view))
+                {
+
+
+                    // В Этом моменте list data ошибка ArgumentOutOfRangeException
+                    // я хочу сделать так. Но как проверить что аргумента i нету в листе??
+                    //data = new CheckPointData
+                    //{
+                    //    Id = model.Key,
+                    //    IsActivated = model.Value.IsActivate
+                    //}
+
+                    //var data = listData[i];
+
+                    //if (data.Id == null)
+                    //{
+                    //    string id = GenerateCoinId(i);
+                    //    data.Id = id;
+                    //}
+
+                    //view.SetId(data.Id);
+                    //view.OnActivateObject += ObjectActivateView;
+                    //view.OnActivateObject += TakeObject;
+
+                    //_dictinaryModel.AddObject(data);
+                    //_dictinaryView[data.Id] = view;
+                }
+                else
+                {
+                    throw new ArgumentNullException(nameof(levelData), "view cannot be null/any");
+                }
+            }
+        }
+
+        private void ObjectInit(CheckPointModel model)
+        {
+            model.OnObjectStatusChange += OnModelStatusChanged;
+        }
+
+        private string GenerateCoinId(int index)
+        {
+            return $"checkPoint_{index}";
+        }
+
+        public void ObjectActivateView(string id, bool status)
+        {
+            if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
+            {
+                model.SetActivateStatus(status);
+                model.Take();
+            }
+            else
+            {
+                _gameLogger.LogWarning($"Object with ID {id} not found in models", "Service");
+            }
+        }
+
+        public void TakeObject(string id, bool status)
+        {
+            //if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
+            //{
+            //    model.Take();
+            //}
+            //else
+            //{
+            //    _gameLogger.LogWarning($"Object with ID {id} not found in models", "Service");
+            //}
+        }
+
+        private void OnModelStatusChanged(string id, bool isActivated)
+        {
+            if (_dictinaryView.TryGetValue(id, out var view))
+            {
+                view.UpdateView(isActivated);
+            }
         }
 
         public void Finish(LevelData levelData)
         {
-            if (levelData == null)
-            {
-                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
-            }
-
-            Restart(levelData);
+            ResetAllObjects();
         }
 
         public void Restart(LevelData levelData)
         {
-            if (levelData == null)
-            {
-                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
-            }
+            ResetAllObjects();
+        }
 
-            foreach (var checkPoint in _gameCheckPointList)
+        public void ResetAllObjects()
+        {
+            foreach (var model in _dictinaryModel.ObjectModelds.Values)
             {
-                checkPoint.Deactivate();
+                model.Reset();
             }
         }
 
         public void Save(LevelData levelData)
         {
-            if (levelData == null)
-            {
-                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
-            }
+            if (levelData == null) return;
 
-            if (_lastCheckPointActiveted != null)
-            {
-                levelData.LastCheckPointPosition = _lastCheckPointActiveted.transform.position;
-            }
+            //levelData.CheckPoints = new List<CheckPointData>();
 
-            for (int i = 0; i < _gameCheckPointList.Count; i++)
-            {
-                levelData.CheckPoints[i] = new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated };
-            }
+            ////levelData.LastCheckPointPosition = 
+
+            //foreach (var model in _dictinaryModel.ObjectModelds)
+            //{
+            //    levelData.CheckPoints.Add(new CheckPointData
+            //    {
+            //        Id = model.Key,
+            //        IsActivated = model.Value.IsActivate
+            //    });
+            //}
+
+            _gameLogger.Log($"Saved {levelData.CheckPoints.Count} check points", "Service");
         }
 
         public void Load(LevelData levelData)
         {
-            if (levelData == null)
+            if (levelData?.CheckPoints == null || levelData.CheckPoints.Count == 0)
             {
-                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
+                _gameLogger.Log("No check point data to load, using defaults");
+                return;
             }
 
-            var checkpointsCount = _gameCheckPointList.Count;
-
-            if (levelData.CheckPoints == null || levelData.CheckPoints.Count == 0)
+            foreach (var objectData in levelData.CheckPoints)
             {
-                _mapCheckPointsData = new List<CheckPointData>();
-
-                for (int i = 0; i < _gameCheckPointList.Count; i++)
-                {
-                    _mapCheckPointsData.Add(new CheckPointData { Id = _gameCheckPointList[i].Id, IsActivated = _gameCheckPointList[i].IsActivated });
-                }
-
-                levelData.CheckPoints = _mapCheckPointsData;
+                //if (_dictinaryModel.ObjectModelds.TryGetValue(objectData.Id, out var model))
+                //{
+                //    model.SetActivateStatus(objectData.IsActivated);
+                //}
+                //else
+                //{
+                //    _gameLogger.LogWarning($"Check point with ID {objectData.Id} not found in scene");
+                //}
             }
-            else
-            {
-                for (int i = 0; i < checkpointsCount; i++)
-                {
-                    CheckPointView checkPoint = _gameCheckPointList[i];
-                    CheckPointData checkPointData = levelData.CheckPoints[i];
-                    checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
-                    checkPoint.SetState(checkPointData.IsActivated);
-                }
-            }
+
+            _gameLogger.Log($"Loaded {levelData.Coins.Count} coins");
         }
     }
 }

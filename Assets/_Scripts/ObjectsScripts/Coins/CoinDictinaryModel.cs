@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
@@ -8,7 +7,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     {
         private readonly Dictionary<string, CoinModel> _objectModels;
 
-        public event Action<CoinModel> OnCoinAdd;
+        public event Action<CoinModel> OnObjectAdd;
 
         public Dictionary<string, CoinModel> ObjectModelds => _objectModels;
 
@@ -17,21 +16,11 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             _objectModels = new Dictionary<string, CoinModel>();
         }
 
-        public void Dispose()
-        {
-            foreach (var model in _objectModels.Values)
-            {
-                
-            }
-        }
-
-        public void AddCoin(string id)
+        public void AddObject(string id)
         {
             CoinModel model = new CoinModel(id);
             _objectModels.Add(id, model);
-            OnCoinAdd?.Invoke(model);
+            OnObjectAdd?.Invoke(model);
         }
-
-
     }
 }

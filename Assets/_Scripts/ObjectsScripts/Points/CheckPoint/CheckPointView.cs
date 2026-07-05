@@ -1,110 +1,42 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.ObjectsScripts.Player;
+﻿using Assets._Scripts.ObjectsScripts.Player;
 using System;
 using UnityEngine;
-using VContainer;
-
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
-
-
     public class CheckPointView : MonoBehaviour
     {
-        [SerializeField] private string _id;
-        [SerializeField] private bool _isActivated;
+        private string _id;
 
-        private bool _isInitialized;
-        private IEventPublisher _eventBus;
+        public event Action<string, bool> OnActivateObject;
 
-        public string Id => _id;
-        public bool IsActivated => _isActivated;
-
-        [Inject]
-        public void Construct(IEventPublisher eventBus)
+        public void Awake()
         {
-            _eventBus = eventBus;
-        }
+            var t1 = gameObject.GetEntityId();
 
-        private void Awake()
-        {
-            if (_isInitialized)
-                return;
-
-            _isActivated = false;
-            _isInitialized = true;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (IsActivated) 
+            if (other.TryGetComponent<PlayerMB>(out _) == false)
                 return;
 
-            if (other.TryGetComponent<PlayerMB>(out _) == false) 
-                return;
-
-            Activate();
+            OnActivateObject?.Invoke(_id, true);
         }
 
-        public void Activate()
+        private void OnDestroy()
         {
-            if (_isActivated) 
-                return;
-
-            SetState(true);
-
-            _eventBus.Publish(new CheckPoinActivatedEvent{checkPoint = this});
-            _eventBus.Publish(new SaveGameEvent { });
+            OnActivateObject = null;
         }
 
-        public void Deactivate()
+        public void UpdateView(bool isActivated)
         {
-            if (_isActivated == false) 
-                return;
-
-            SetState(false);
+            transform.gameObject.SetActive(isActivated == false);
         }
 
-        public void SetState(bool activated)
-        {
-            _isActivated = activated;
-            gameObject.SetActive(!activated);
-        }
-
-#if UNITY_EDITOR
-        private void OnValidate()
-        {
-            if (string.IsNullOrEmpty(_id))
-            {
-                GenerateId();
-            }
-        }
-#endif
-
-        private void GenerateId()
-        {
-            _id = $"CP_{Guid.NewGuid():N}"[..12]; // Первые 12 символов
-            Debug.Log($"[CheckPoint] Generated ID: {_id}", this);
-        }
-
-        // Публичные методы для управления (опционально)
         public void SetId(string id)
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                Debug.LogError("[CheckPoint] Cannot set empty ID!", this);
-                return;
-            }
-
             _id = id;
-#if UNITY_EDITOR
-            UnityEditor.EditorUtility.SetDirty(this);
-#endif
-        }
-
-        public void ResetState()
-        {
-            SetState(false);
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Assets._Scripts.EnteryPoints
             _checkPointDictinaryModel.OnObjectAdd += CheckPointAdd;
 
             _coinController.Initialization(levelData);
-            _checkPointsController.Initialization(levelData);
+            _checkPointsController.Initialization(levelData, _levelConfig);
 
             _levelsController.SetLevelData(_gameSaveLoadService.GameSaveData, _levelConfig);
 
@@ -113,6 +113,7 @@ namespace Assets._Scripts.EnteryPoints
 
         private void CheckPointAdd(CheckPointModel model)
         {
+            //добавить тут что-то .... ... 
             model.OnTake += _gameSaveLoadService.SaveAllServices;
         }
     }

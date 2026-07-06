@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
@@ -25,6 +26,20 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 throw new ArgumentNullException("ERROR KEY");
 
             OnObjectAdd?.Invoke(model);
+        }
+
+        public bool TryGetModel(string id, out CheckPointModel model)
+        {
+            bool isFind = false;
+            model = null;
+
+            if (_objectModels.TryGetValue(id, out CheckPointModel value))
+            {
+                model = value;
+                isFind = true;
+            }
+
+            return isFind;
         }
     }
 }

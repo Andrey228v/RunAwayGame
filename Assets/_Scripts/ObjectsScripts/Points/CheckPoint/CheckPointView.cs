@@ -1,27 +1,34 @@
 ﻿using Assets._Scripts.ObjectsScripts.Player;
 using System;
+using System.Xml.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
     public class CheckPointView : MonoBehaviour
     {
-        private string _id;
+        [SerializeField] private string _id;
 
-        public event Action<string, bool> OnActivateObject;
+        public event Action<string, bool, Vector3> OnActivateObject;
 
-        public void Awake()
+        public string Id => _id;
+
+#if UNITY_EDITOR
+        private void OnValidate()
         {
-            var t1 = gameObject.GetEntityId();
-
+            if (_id == null)
+            {
+                Debug.LogError($"{_id}: _id is not set!", this);
+            }
         }
+#endif
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<PlayerMB>(out _) == false)
                 return;
 
-            OnActivateObject?.Invoke(_id, true);
+            OnActivateObject?.Invoke(_id, true, gameObject.transform.position);
         }
 
         private void OnDestroy()
@@ -32,11 +39,6 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         public void UpdateView(bool isActivated)
         {
             transform.gameObject.SetActive(isActivated == false);
-        }
-
-        public void SetId(string id)
-        {
-            _id = id;
         }
     }
 }

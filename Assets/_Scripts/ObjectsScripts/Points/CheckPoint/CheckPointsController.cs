@@ -4,6 +4,7 @@ using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
@@ -14,6 +15,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         private readonly Transform _objectParent;
         private readonly CheckPointDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CheckPointView> _dictinaryView;
+        private Vector3 _lastCheckPointPosition;
 
         public CheckPointsController(GamePoints points, IGameLogger gameLogger, CheckPointDictinaryModel dictinaryModel)
         {
@@ -36,7 +38,6 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             {
                 view.OnActivateObject -= ObjectActivateView;
                 view.OnActivateObject -= TakeObject;
-
             }
 
             foreach (var model in _dictinaryModel.ObjectModelds.Values)
@@ -47,45 +48,48 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             _dictinaryView.Clear();
         }
 
-        public void Initialization(LevelData levelData)
+        public void Initialization(LevelData levelData, LevelConfig levelConfig)
         {
             if (levelData == null)
             {
                 throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
             }
 
-            var listData = levelData.CheckPoints;
+            _lastCheckPointPosition = levelConfig.StartPosition; // под вопросом... 
+
+            var listSaveData = levelData.CheckPoints;
 
             for (int i = 0; i < _objectParent.childCount; i++)
             {
-                //CheckPointView view = null; // под вопросом ... 
-
                 if (_objectParent.GetChild(i).TryGetComponent<CheckPointView>(out var view))
                 {
+                    var id = view.Id;
 
+                    CheckPointData data = null;
 
-                    // В Этом моменте list data ошибка ArgumentOutOfRangeException
-                    // я хочу сделать так. Но как проверить что аргумента i нету в листе??
-                    //data = new CheckPointData
-                    //{
-                    //    Id = model.Key,
-                    //    IsActivated = model.Value.IsActivate
-                    //}
+                    if (listSaveData.ContainsKey(id))
+                    {
+                        data = listSaveData[id];
+                    }
+                    else
+                    {
+                        data = new CheckPointData
+                        {
+                            Id = id,
+                            IsActivated = false
+                        };
 
-                    //var data = listData[i];
+                        if (levelData.CheckPoints.TryAdd(id, data) == false)
+                        {
+                            throw new ArgumentNullException(nameof(levelData), "key Error");
+                        }
+                    }
 
-                    //if (data.Id == null)
-                    //{
-                    //    string id = GenerateCoinId(i);
-                    //    data.Id = id;
-                    //}
+                    view.OnActivateObject += ObjectActivateView;
+                    view.OnActivateObject += TakeObject;
 
-                    //view.SetId(data.Id);
-                    //view.OnActivateObject += ObjectActivateView;
-                    //view.OnActivateObject += TakeObject;
-
-                    //_dictinaryModel.AddObject(data);
-                    //_dictinaryView[data.Id] = view;
+                    _dictinaryModel.AddObject(data);
+                    _dictinaryView[data.Id] = view;
                 }
                 else
                 {
@@ -99,15 +103,11 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             model.OnObjectStatusChange += OnModelStatusChanged;
         }
 
-        private string GenerateCoinId(int index)
-        {
-            return $"checkPoint_{index}";
-        }
-
-        public void ObjectActivateView(string id, bool status)
+        public void ObjectActivateView(string id, bool status, Vector3 coords)
         {
             if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
             {
+                _lastCheckPointPosition = coords;
                 model.SetActivateStatus(status);
                 model.Take();
             }
@@ -117,16 +117,17 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             }
         }
 
-        public void TakeObject(string id, bool status)
+        public void TakeObject(string id, bool status, Vector3 coords)
         {
-            //if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
-            //{
-            //    model.Take();
-            //}
-            //else
-            //{
-            //    _gameLogger.LogWarning($"Object with ID {id} not found in models", "Service");
-            //}
+            if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
+            {
+                _lastCheckPointPosition = coords;
+                model.Take();
+            }
+            else
+            {
+                _gameLogger.LogWarning($"Object with ID {id} not found in models", "Service");
+            }
         }
 
         private void OnModelStatusChanged(string id, bool isActivated)
@@ -159,18 +160,20 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         {
             if (levelData == null) return;
 
-            //levelData.CheckPoints = new List<CheckPointData>();
+            foreach(var key in levelData.CheckPoints.Keys.ToList())
+            {
+                if(_dictinaryModel.TryGetModel(key, out var model))
+                {
+                    levelData.CheckPoints[key] = model.Data;
+                }
+                else
+                {
+                    throw new ArgumentNullException("ERROR KEY");
+                }
 
-            ////levelData.LastCheckPointPosition = 
+            }
 
-            //foreach (var model in _dictinaryModel.ObjectModelds)
-            //{
-            //    levelData.CheckPoints.Add(new CheckPointData
-            //    {
-            //        Id = model.Key,
-            //        IsActivated = model.Value.IsActivate
-            //    });
-            //}
+            levelData.LastCheckPointPosition = _lastCheckPointPosition;
 
             _gameLogger.Log($"Saved {levelData.CheckPoints.Count} check points", "Service");
         }
@@ -183,16 +186,17 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 return;
             }
 
+             //под вопосом...
             foreach (var objectData in levelData.CheckPoints)
             {
-                //if (_dictinaryModel.ObjectModelds.TryGetValue(objectData.Id, out var model))
-                //{
-                //    model.SetActivateStatus(objectData.IsActivated);
-                //}
-                //else
-                //{
-                //    _gameLogger.LogWarning($"Check point with ID {objectData.Id} not found in scene");
-                //}
+                if (_dictinaryModel.ObjectModelds.TryGetValue(objectData.Key, out var model))
+                {
+                    model.SetActivateStatus(objectData.Value.IsActivated);
+                }
+                else
+                {
+                    _gameLogger.LogWarning($"Check point with ID {objectData.Key} not found in scene");
+                }
             }
 
             _gameLogger.Log($"Loaded {levelData.Coins.Count} coins");

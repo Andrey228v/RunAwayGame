@@ -1,14 +1,17 @@
-﻿using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
+using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
-    public class CoinController:  ISave, ILoad, IRestart, IFinish
+    public class CoinController:  ISave, ILoad, IDieRestart, IFinish, IReset
     {
         private readonly IGameLogger _gameLogger;
         private readonly Transform _objectParent;
@@ -32,14 +35,12 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         {
             _dictinaryModel.OnObjectAdd -= ObjectInit;
 
-            foreach (var view in _dictinaryView.Values)
+            foreach(var view in _dictinaryView.Values)
             {
                 view.OnActivateObject -= ObjectActivateView;
-                view.OnActivateObject -= TakeObject;
-
             }
 
-            foreach( var model in _dictinaryModel.ObjectModelds.Values)
+            foreach(var model in _dictinaryModel.ObjectModelds.Values)
             {
                 model.OnObjectStatusChange -= OnModelStatusChanged;
             }
@@ -47,27 +48,50 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             _dictinaryView.Clear();
         }
 
-        public void Initialization(LevelData levelData)
+        public void Initialization(LevelData levelData, LevelConfig levelConfig)
         {
             if (levelData == null)
             {
                 throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
             }
 
+            var listSaveData = levelData.Coins;
+
             for (int i = 0; i < _objectParent.childCount; i++)
             {
-                var view = _objectParent.GetChild(i).GetComponent<CoinView>();
+                if (_objectParent.GetChild(i).TryGetComponent<CoinView>(out var view))
+                {
+                    var id = view.Id;
 
-                if (view == null) continue;
+                    CoinData data = null;
 
-                string id = GenerateCoinId(i);
+                    if (listSaveData.ContainsKey(id))
+                    {
+                        data = listSaveData[id];
+                    }
+                    else
+                    {
+                        data = new CoinData
+                        {
+                            Id = id,
+                            IsActivated = false
+                        };
 
-                view.SetId(id);
-                view.OnActivateObject += ObjectActivateView;
-                view.OnActivateObject += TakeObject;
+                        if (listSaveData.TryAdd(id, data) == false)
+                        {
+                            throw new ArgumentNullException(nameof(levelData), "key Error");
+                        }
+                    }
 
-                _dictinaryModel.AddObject(id);
-                _dictinaryView[id] = view;
+                    view.OnActivateObject += ObjectActivateView;
+
+                    _dictinaryModel.AddObject(data);
+                    _dictinaryView[data.Id] = view;
+                }
+                else
+                {
+                    throw new ArgumentNullException(nameof(levelData), "view cannot be null/any");
+                }
             }
         }
 
@@ -76,12 +100,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             model.OnObjectStatusChange += OnModelStatusChanged;
         }
 
-        private string GenerateCoinId(int index)
-        {
-            return $"coin_{index}";
-        }
-
-        public void ObjectActivateView(string id, bool status)
+        public void ObjectActivateView(string id, bool status, Vector3 coords)
         {
             if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
             {
@@ -94,18 +113,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
         }
 
-        public void TakeObject(string id, bool status)
-        {
-            //if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
-            //{
-            //    model.Take();
-            //}
-            //else
-            //{
-            //    _gameLogger.LogWarning($"Coin with ID {id} not found in models", "Service");
-            //}
-        }
-
         private void OnModelStatusChanged(string id, bool isActivated)
         {
             if (_dictinaryView.TryGetValue(id, out var view))
@@ -116,15 +123,18 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
         public void Finish(LevelData levelData)
         {
-            ResetAllObjects();
+            foreach (var model in _dictinaryModel.ObjectModelds.Values)
+            {
+                model.Reset();
+            }
         }
 
-        public void Restart(LevelData levelData)
+        public void DieRestart(LevelData levelData)
         {
-            ResetAllObjects();
+            //Тут пусто... а нужен ли этот метод пока не понятно...
         }
 
-        public void ResetAllObjects()
+        public void ResetAllObjects(LevelConfig levelConfig)
         {
             foreach (var model in _dictinaryModel.ObjectModelds.Values)
             {
@@ -136,15 +146,17 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         {
             if (levelData == null) return;
 
-            levelData.Coins = new List<CoinData>();
-
-            foreach (var model in _dictinaryModel.ObjectModelds)
+            foreach (var key in levelData.Coins.Keys.ToList())// под вопросом Keys...
             {
-                levelData.Coins.Add(new CoinData
+                if (_dictinaryModel.TryGetModel(key, out var model))
                 {
-                    Id = model.Key,
-                    IsActivated = model.Value.IsActivate
-                });
+                    levelData.Coins[key] = model.Data;
+                }
+                else
+                {
+                    throw new ArgumentNullException("ERROR KEY");
+                }
+
             }
 
             _gameLogger.Log($"Saved {levelData.Coins.Count} coins", "Service");
@@ -154,19 +166,20 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         {
             if (levelData?.Coins == null || levelData.Coins.Count == 0)
             {
-                _gameLogger.Log("No coin data to load, using defaults");
+                _gameLogger.Log("No check point data to load, using defaults");
                 return;
             }
 
-            foreach (var coinData in levelData.Coins)
+            //под вопосом...
+            foreach (var objectData in levelData.Coins)
             {
-                if (_dictinaryModel.ObjectModelds.TryGetValue(coinData.Id, out var model))
+                if (_dictinaryModel.ObjectModelds.TryGetValue(objectData.Key, out var model))
                 {
-                    model.SetActivateStatus(coinData.IsActivated);
+                    model.SetActivateStatus(objectData.Value.IsActivated);
                 }
                 else
                 {
-                    _gameLogger.LogWarning($"Coin with ID {coinData.Id} not found in scene");
+                    _gameLogger.LogWarning($"Check point with ID {objectData.Key} not found in scene");
                 }
             }
 

@@ -49,9 +49,6 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("Инициализация GameSaveLoadService", "Service");
 
-            _eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
-            _eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
-
             LoadAllServices();
 
             _gameLogger.Log("GameSaveLoadService инициализирован успешно", "Service");
@@ -61,9 +58,6 @@ namespace Assets._Scripts.SaveLoad.Service
         public void Dispose()
         {
             _gameLogger.Log("GameSaveLoadService Dispose", "Service");
-
-            _eventBus.Unsubscribe<SaveGameEvent>(OnSaveGame);
-            _eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
 
             SaveGame();
 
@@ -108,23 +102,23 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService load all services complite", "Load");
         }
 
-        public void ResetAllProgress(DeletSaveEvent args)
-        {
-            _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
-            _saveSystem.ResetAllProgress();
+        //public void ResetAllProgress(DeletSaveEvent args)
+        //{
+        //    _gameLogger.Log("GameSaveLoadService reset all progress", "Service");
+        //    _saveSystem.ResetAllProgress();
 
-            var levelConfig = _levelsController.Config;
+        //    var levelConfig = _levelsController.Config;
 
-            _gameSaveData = new GameSaveData(
-                new Dictionary<string, LevelData>(),
-                new List<AchievmentData>(),
-                new ShopData(),
-                new WalletData(),
-                DateTime.Now){ };
+        //    _gameSaveData = new GameSaveData(
+        //        new Dictionary<string, LevelData>(),
+        //        new List<AchievmentData>(),
+        //        new ShopData(),
+        //        new WalletData(),
+        //        DateTime.Now){ };
 
-            //_achievmentsController.Reset(_gameSaveData, levelConfig);
-            //_walletController.Reset(_gameSaveData);
-        }
+        //    //_achievmentsController.Reset(_gameSaveData, levelConfig);
+        //    //_walletController.Reset(_gameSaveData);
+        //}
 
         public void SaveGame()
         {
@@ -133,11 +127,11 @@ namespace Assets._Scripts.SaveLoad.Service
             _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
         }
 
-        private void OnSaveGame(SaveGameEvent args)
-        {
-            _gameLogger.Log("GameSaveLoadService OnSaveGame", "Save");
-            SaveAllServices();
-        }
+        //private void OnSaveGame(SaveGameEvent args)
+        //{
+        //    _gameLogger.Log("GameSaveLoadService OnSaveGame", "Save");
+        //    SaveAllServices();
+        //}
 
         private void LoadOrCreateSave()
         {

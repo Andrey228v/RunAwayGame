@@ -98,8 +98,6 @@ namespace Assets._Scripts.GameControllers.Achievments
                 _data.IsUnlock = true;
                 _data.IsRevardEnable = true;
                 OnUnlock?.Invoke(_data);
-
-                _eventBus.Publish(new SaveGameEvent());
             }
         }
     }

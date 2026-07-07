@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets._Scripts.SaveLoad.Data;
+using System;
 using System.Collections.Generic;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
@@ -16,11 +17,28 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             _objectModels = new Dictionary<string, CoinModel>();
         }
 
-        public void AddObject(string id)
+        public void AddObject(CoinData data)
         {
-            CoinModel model = new CoinModel(id);
-            _objectModels.Add(id, model);
+            CoinModel model = new CoinModel(data);
+
+            if(_objectModels.TryAdd(data.Id, model) == false)
+                throw new ArgumentNullException("ERROR KEY");
+
             OnObjectAdd?.Invoke(model);
+        }
+
+        public bool TryGetModel(string id, out CoinModel model)
+        {
+            bool isFind = false;
+            model = null;
+
+            if (_objectModels.TryGetValue(id, out CoinModel value))
+            {
+                model = value;
+                isFind = true;
+            }
+
+            return isFind;
         }
     }
 }

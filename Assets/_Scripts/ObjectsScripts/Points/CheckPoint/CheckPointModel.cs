@@ -10,11 +10,12 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 
         public event Action<string, bool> OnObjectStatusChange;
         public event Action<int> OnTakeValue;
+        public event Action<Vector3> OnTakePosition;
         public event Action OnTake;
 
-        public CheckPointData Data => _data;
-
         public bool IsActivate => _data.IsActivated;
+
+        public CheckPointData Data => _data;
 
         public CheckPointModel(CheckPointData data)
         {
@@ -28,9 +29,10 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             OnObjectStatusChange?.Invoke(_data.Id, _data.IsActivated);
         }
 
-        public void Take()
+        public void Take(Vector3 coords)
         {
             OnTake?.Invoke();
+            OnTakePosition?.Invoke(coords);
             OnTakeValue?.Invoke(1);
         }
 

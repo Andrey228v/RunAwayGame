@@ -13,32 +13,6 @@ namespace Assets._Scripts.EventBusGame
         public int Progress { get; set; }
     }
 
-    public struct FinishLevelEvent 
-    {
-        public string lvlId;
-    }
-
-    public struct CheckPoinActivatedEvent 
-    {
-        public CheckPointView checkPoint;
-    }
-
-    public struct SaveGameEvent { }
-
-    public struct LoadGameEvent { }
-
-    public struct DeletSaveEvent { }
-
-    public struct ButtonSoundChangeStateEvent { }
-
-    public struct TransitToPanelEvent 
-    {
-        public string windowName;
-    }
-
-    public struct TransitToWindowEvent { }
-
-
     public struct StartLevel1 : IAchivmentEvent
     {
         public int Progress { get; set; }

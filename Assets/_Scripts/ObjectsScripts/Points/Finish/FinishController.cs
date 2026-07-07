@@ -1,4 +1,4 @@
-﻿using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;

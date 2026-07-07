@@ -1,7 +1,6 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.UI;
-using Assets.Scripts.EnteryPoints;
 using Assets.Scripts.Points;
 using ECM2;
 using UnityEngine;
@@ -38,8 +37,6 @@ namespace Assets.Scripts.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.RegisterEntryPoint<GameEnteryPoint>();
-
             builder.RegisterInstance(new GamePoints(_finishPoint, _checkPoints, _coins, _botsRoad));
 
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();

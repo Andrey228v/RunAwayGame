@@ -2,9 +2,11 @@
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.ObjectsScripts.Coins;
+using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 using VContainer.Unity;
 
@@ -73,14 +75,9 @@ namespace Assets._Scripts.EnteryPoints
 
             _levelsController.FinishList.Add(_finishController);
 
-           
-
             _coinController.Load(levelData);
             _checkPointsController.Load(levelData);
 
-
-            
-            
             _finishModel.OnObjectStatusChange += _gameLoopController.FinishLevel;
         }
 
@@ -104,7 +101,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public void CoinAdd(CoinModel model)
         {
-            model.OnTakeValue += _walletController.AddConis;
+            model.OnTakeValue += _walletController.AddConis; // под вопросом...
             model.OnTake += _gameSaveLoadService.SaveAllServices;
         }
     }

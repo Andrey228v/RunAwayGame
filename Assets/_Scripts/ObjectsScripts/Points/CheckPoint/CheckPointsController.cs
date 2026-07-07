@@ -1,20 +1,23 @@
 ﻿using Assets._Scripts.EventBusGame;
 using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.Utilites.Loger;
+using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Points
+namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
     public class CheckPointsController : ISave, ILoad, IRestart, IFinish
     {
+        private IGameLogger _gameLogger;
         private Transform _checkPointsParent;
-        private List<CheckPoint> _gameCheckPointList;
+        private List<CheckPointView> _gameCheckPointList;
         private List<CheckPointData> _mapCheckPointsData;
-        private CheckPoint _lastCheckPointActiveted;
+        private CheckPointView _lastCheckPointActiveted;
 
-        private EventBus _eventBus;
+        //private EventBus _eventBus;
 
         public CheckPointsController(GamePoints points, EventBus eventBus)
         {
@@ -25,38 +28,38 @@ namespace Assets.Scripts.Points
 
             _gameCheckPointList = TransformToList(_checkPointsParent);
 
-            _eventBus = eventBus;
-            _eventBus.Subscribe<CheckPoinActivatedEvent>(CheckPointActivated);
+            //_eventBus = eventBus;
+            //_eventBus.Subscribe<CheckPoinActivatedEvent>(CheckPointActivated);
 
 
         }
 
         public void Dispose()
         {
-            _eventBus.Unsubscribe<CheckPoinActivatedEvent>(CheckPointActivated);
+            //_eventBus.Unsubscribe<CheckPoinActivatedEvent>(CheckPointActivated);
         }
 
         //Из трансформа собираем CheckPoints
-        public List<CheckPoint> TransformToList(Transform checkPointsParent) 
+        public List<CheckPointView> TransformToList(Transform checkPointsParent) 
         {
             if(checkPointsParent == null)
                 throw new ArgumentNullException(nameof(checkPointsParent), "checkPointsParent cannot be null");
 
-            List<CheckPoint> CheckPoints = new List<CheckPoint>();
+            List<CheckPointView> CheckPoints = new List<CheckPointView>();
 
             for (int i = 0; i < checkPointsParent.childCount; i++)
             {
-                CheckPoint checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPoint>();
+                CheckPointView checkpoint = checkPointsParent.GetChild(i).GetComponent<CheckPointView>();
                 CheckPoints.Add(checkpoint);
             }
 
             return CheckPoints;
         }
 
-        public void CheckPointActivated(CheckPoinActivatedEvent args)
-        {
-            _lastCheckPointActiveted = args.checkPoint;
-        }
+        //public void CheckPointActivated(CheckPoinActivatedEvent args)
+        //{
+        //    _lastCheckPointActiveted = args.checkPoint;
+        //}
 
         public void Finish(LevelData levelData)
         {
@@ -123,9 +126,9 @@ namespace Assets.Scripts.Points
             {
                 for (int i = 0; i < checkpointsCount; i++)
                 {
-                    CheckPoint checkPoint = _gameCheckPointList[i];
+                    CheckPointView checkPoint = _gameCheckPointList[i];
                     CheckPointData checkPointData = levelData.CheckPoints[i];
-                    checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
+                    //checkPoint.SetId(checkPointData.Id); // ПОД ВОПРОСМ...
                     checkPoint.SetState(checkPointData.IsActivated);
                 }
             }

@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Assets._Scripts.ObjectsScripts.Coins
+namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
-    public class CoinModel
+    public class CheckPointModel
     {
         private bool _isActivate;
         private readonly string _id;
@@ -13,7 +13,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
         public bool IsActivate => _isActivate;
 
-        public CoinModel(string id)
+        public CheckPointModel(string id)
         {
             _id = id;
             _isActivate = false;

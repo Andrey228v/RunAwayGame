@@ -125,14 +125,11 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void AddConis(int count)
         {
             _model.AddCoins(count);
-            _eventBus.Publish(new SaveGameEvent { });
-            _eventBus.Publish(new CollectGoldEvent { Progress = count });
         } // achievments
 
         public void AddGobelets(int count)
         {
             _model.AddGobelets(count);
-            _eventBus.Publish(new SaveGameEvent { });
         } // achievments
 
         public void Reset(GameSaveData gameSaveData)

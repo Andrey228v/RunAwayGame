@@ -49,8 +49,8 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("Инициализация GameSaveLoadService", "Service");
 
-            _eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
-            _eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
+            //_eventBus.Subscribe<SaveGameEvent>(OnSaveGame);
+            //_eventBus.Subscribe<DeletSaveEvent>(ResetAllProgress);
 
             LoadAllServices();
 
@@ -62,8 +62,8 @@ namespace Assets._Scripts.SaveLoad.Service
         {
             _gameLogger.Log("GameSaveLoadService Dispose", "Service");
 
-            _eventBus.Unsubscribe<SaveGameEvent>(OnSaveGame);
-            _eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
+            //_eventBus.Unsubscribe<SaveGameEvent>(OnSaveGame);
+            //_eventBus.Unsubscribe<DeletSaveEvent>(ResetAllProgress);
 
             SaveGame();
 
@@ -133,11 +133,11 @@ namespace Assets._Scripts.SaveLoad.Service
             _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
         }
 
-        private void OnSaveGame(SaveGameEvent args)
-        {
-            _gameLogger.Log("GameSaveLoadService OnSaveGame", "Save");
-            SaveAllServices();
-        }
+        //private void OnSaveGame(SaveGameEvent args)
+        //{
+        //    _gameLogger.Log("GameSaveLoadService OnSaveGame", "Save");
+        //    SaveAllServices();
+        //}
 
         private void LoadOrCreateSave()
         {

@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Points;
+﻿using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using UnityEngine;
 
 namespace Assets._Scripts.EventBusGame
@@ -13,30 +13,26 @@ namespace Assets._Scripts.EventBusGame
         public int Progress { get; set; }
     }
 
-    public struct FinishLevelEvent 
-    {
-        public string lvlId;
-    }
 
     public struct CheckPoinActivatedEvent 
     {
-        public CheckPoint checkPoint;
+        public CheckPointView checkPoint;
     }
 
-    public struct SaveGameEvent { }
+    //public struct SaveGameEvent { }
 
-    public struct LoadGameEvent { }
+    //public struct LoadGameEvent { }
 
     public struct DeletSaveEvent { }
 
-    public struct ButtonSoundChangeStateEvent { }
+    //public struct ButtonSoundChangeStateEvent { }
 
-    public struct TransitToPanelEvent 
-    {
-        public string windowName;
-    }
+    //public struct TransitToPanelEvent 
+    //{
+    //    public string windowName;
+    //}
 
-    public struct TransitToWindowEvent { }
+    //public struct TransitToWindowEvent { }
 
 
     public struct StartLevel1 : IAchivmentEvent

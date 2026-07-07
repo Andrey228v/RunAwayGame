@@ -35,6 +35,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             foreach (var view in _objectViewMap.Values)
             {
                 view.OnActivateObject -= CoinActivateView;
+                view.OnActivateObject -= TakeCoin;
             }
 
             foreach( var model in _coinDictinaryModel.ObjectModelds.Values)
@@ -55,17 +56,18 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             for (int i = 0; i < _objectParent.childCount; i++)
             {
-                var coinView = _objectParent.GetChild(i).GetComponent<CoinView>();
+                var view = _objectParent.GetChild(i).GetComponent<CoinView>();
 
-                if (coinView == null) continue;
+                if (view == null) continue;
 
                 string id = GenerateCoinId(i);
 
-                coinView.SetId(id);
-                coinView.OnActivateObject += CoinActivateView;
+                view.SetId(id);
+                view.OnActivateObject += CoinActivateView;
+                view.OnActivateObject += TakeCoin;
 
                 _coinDictinaryModel.AddCoin(id);
-                _objectViewMap[id] = coinView;
+                _objectViewMap[id] = view;
             }
         }
 
@@ -76,7 +78,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
         private string GenerateCoinId(int index)
         {
-            //return Guid.NewGuid().ToString();
             return $"coin_{index}";
         }
 
@@ -85,6 +86,18 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             if (_coinDictinaryModel.ObjectModelds.TryGetValue(id, out var model))
             {
                 model.SetActivateStatus(status);
+            }
+            else
+            {
+                _gameLogger.LogWarning($"Coin with ID {id} not found in models", "Service");
+            }
+        }
+
+        public void TakeCoin(string id, bool status)
+        {
+            if (_coinDictinaryModel.ObjectModelds.TryGetValue(id, out var model))
+            {
+                model.Take();
             }
             else
             {
@@ -131,7 +144,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
                 levelData.Coins.Add(new CoinData
                 {
                     Id = model.Key,
-                    IsActivated = model.Value.IsActivate
+                    IsActivated = model.Value.IsActivate // под вопросом...
                 });
             }
 

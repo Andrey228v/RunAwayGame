@@ -1,31 +1,30 @@
-﻿using System;
+﻿using Assets._Scripts.SaveLoad.Data;
+using System;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
 {
     public class CoinModel
     {
-        private bool _isActivate;
-        private readonly string _id;
+        private CoinData _data;
 
         public event Action<string, bool> OnObjectStatusChange;
         public event Action<int> OnTakeValue;
         public event Action OnTake;
 
-        public bool IsActivate => _isActivate;
+        public bool IsActivate => _data.IsActivated;
 
-        public CoinModel(string id)
+        public CoinData Data => _data;
+
+        public CoinModel(CoinData data)
         {
-            _id = id;
-            _isActivate = false;
+            _data = data;
         }
 
         public void SetActivateStatus(bool isActivate)
         {
-            if (_isActivate == isActivate) return;
+            _data.IsActivated = isActivate;
 
-            _isActivate = isActivate;
-
-            OnObjectStatusChange?.Invoke(_id, _isActivate);
+            OnObjectStatusChange?.Invoke(_data.Id, _data.IsActivated);
         }
 
         public void Take()

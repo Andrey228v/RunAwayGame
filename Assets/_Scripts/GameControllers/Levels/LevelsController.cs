@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -11,8 +12,9 @@ namespace Assets._Scripts.GameControllers.Levels
     {
         private readonly List<ISave> _saveList;
         private readonly List<ILoad> _loadList;
-        private readonly List<IRestart> _restartList;
+        private readonly List<IDieRestart> _restartList;
         private readonly List<IFinish> _finishList;
+        private readonly List<IReset> _resetList;
 
         private LevelConfig _levelConfig;
         private LevelData _levelData;
@@ -20,15 +22,18 @@ namespace Assets._Scripts.GameControllers.Levels
         public LevelConfig Config => _levelConfig;
         public List<ISave> SaveList => _saveList;
         public List<ILoad> LoadList => _loadList;
-        public List<IRestart> RestartList => _restartList;
+        public List<IDieRestart> RestartList => _restartList;
         public List<IFinish> FinishList => _finishList;
+
+        public List<IReset> ResetList => _resetList;
 
         public LevelsController()
         {
             _saveList = new List<ISave>();
             _loadList = new List<ILoad>();
-            _restartList = new List<IRestart>();
+            _restartList = new List<IDieRestart>();
             _finishList = new List<IFinish>();
+            _resetList = new List<IReset>();
         }
 
         public void Dispose()
@@ -37,6 +42,7 @@ namespace Assets._Scripts.GameControllers.Levels
             _loadList.Clear();
             _restartList.Clear();
             _finishList.Clear();
+            _resetList.Clear();
         }
 
         public void Initialization(GameSaveData gameSaveData)
@@ -58,7 +64,7 @@ namespace Assets._Scripts.GameControllers.Levels
                             PlayerRotation = _levelConfig.PlayerStartRotation
                         },
                         new Dictionary<string, CheckPointData>(),
-                        new List<CoinData>()
+                        new Dictionary<string, CoinData>()
                     ); { };
 
                 gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
@@ -78,11 +84,11 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
-        public void LoadAllServices(GameSaveData gameSaveData)
+        public void LoadAllServices(LevelData levelData)
         {
-            if (gameSaveData == null)
+            if (levelData == null)
             {
-                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
+                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
             }
 
             if (_levelConfig == null)
@@ -92,15 +98,15 @@ namespace Assets._Scripts.GameControllers.Levels
 
             foreach (ILoad load in _loadList)
             {
-                load.Load(_levelData);
+                load.Load(levelData);
             }
         }
 
         public void DieRestart(GameSaveData gameSaveData)
         {
-            foreach (IRestart restart in _restartList)
+            foreach (IDieRestart restart in _restartList)
             {
-                restart.Restart(_levelData);
+                restart.DieRestart(_levelData);
             }
         }
 
@@ -130,6 +136,21 @@ namespace Assets._Scripts.GameControllers.Levels
             //}
         }
 
+        public void ResetLevel(LevelData levelData, LevelConfig levelConfig)
+        {
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
+            }
+
+            foreach (IReset reset in _resetList)
+            {
+                reset.ResetAllObjects(levelConfig);
+            }
+        }
+
+
+
         public void SetLevelConfig(LevelConfig levelConfig)
         {
             _levelConfig = levelConfig;
@@ -144,7 +165,7 @@ namespace Assets._Scripts.GameControllers.Levels
 
             if (levelConfig != null)
             {
-                _levelData = gameSaveData.LevelsData[_levelConfig.LevelName];
+                _levelData = gameSaveData.LevelsData[levelConfig.LevelName];
             }
             else
             {

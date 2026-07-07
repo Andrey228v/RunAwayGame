@@ -6,16 +6,28 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 {
     public class CoinView : MonoBehaviour
     {
-        private string _id;
+        [SerializeField] private string _id;
 
-        public event Action<string, bool> OnActivateObject;
+        public event Action<string, bool, Vector3> OnActivateObject;
+
+        public string Id => _id;
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (_id == null)
+            {
+                Debug.LogError($"{_id}: _id is not set!", this);
+            }
+        }
+#endif
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<PlayerMB>(out _) == false)
                 return;
 
-            OnActivateObject?.Invoke(_id, true);
+            OnActivateObject?.Invoke(_id, true, gameObject.transform.position);
         }
 
         private void OnDestroy()
@@ -26,11 +38,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         public void UpdateView(bool isActivated)
         {
             transform.gameObject.SetActive(isActivated == false);
-        }
-
-        public void SetId(string id)
-        {
-            _id = id;
         }
     }
 }

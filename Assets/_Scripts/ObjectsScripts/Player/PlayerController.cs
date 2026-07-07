@@ -1,5 +1,5 @@
 ﻿using Assets._Scripts.ObjectsScripts.StateMachines.Player;
-using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using ECM2;
@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.ObjectsScripts.Player
 {
-    public class PlayerController : IFixedTickable, ISave, ILoad, IRestart, IFinish
+    public class PlayerController : IFixedTickable, ISave, ILoad, IDieRestart, IFinish
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
@@ -54,7 +54,7 @@ namespace Assets._Scripts.ObjectsScripts.Player
             _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
         }
 
-        public void Restart(LevelData levelData)
+        public void DieRestart(LevelData levelData)
         {
             Reset();
             _playerMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);

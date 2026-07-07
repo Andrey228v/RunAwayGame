@@ -24,6 +24,7 @@ namespace Assets._Scripts.EnteryPoints
         private FinishModel _finishModel;
         private CoinDictinaryModel _coinDictinaryModel;
         private CheckPointDictinaryModel _checkPointDictinaryModel;
+        private LastCheckPointController _lastCheckPointController;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController, 
@@ -36,6 +37,7 @@ namespace Assets._Scripts.EnteryPoints
             FinishModel finishModel, 
             CoinDictinaryModel coinDictinaryModel,
             CheckPointDictinaryModel checkPointDictinaryModel,
+            LastCheckPointController lastCheckPointController,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
@@ -49,6 +51,7 @@ namespace Assets._Scripts.EnteryPoints
             _coinDictinaryModel = coinDictinaryModel;
             _checkPointDictinaryModel = checkPointDictinaryModel;
             _finishModel = finishModel;
+            _lastCheckPointController = lastCheckPointController;
         }
 
         public void Start()
@@ -60,8 +63,9 @@ namespace Assets._Scripts.EnteryPoints
             _coinDictinaryModel.OnObjectAdd += CoinAdd;
             _checkPointDictinaryModel.OnObjectAdd += CheckPointAdd;
 
-            _coinController.Initialization(levelData);
+            _coinController.Initialization(levelData, _levelConfig);
             _checkPointsController.Initialization(levelData, _levelConfig);
+            _lastCheckPointController.Initialization(levelData, _levelConfig);
 
             _levelsController.SetLevelData(_gameSaveLoadService.GameSaveData, _levelConfig);
 
@@ -77,14 +81,13 @@ namespace Assets._Scripts.EnteryPoints
 
             _levelsController.FinishList.Add(_finishController);
 
-           
+            _levelsController.SaveList.Add(_lastCheckPointController);
+            _levelsController.LoadList.Add(_lastCheckPointController);
+            _levelsController.RestartList.Add(_lastCheckPointController);
+            _levelsController.FinishList.Add(_lastCheckPointController);
 
-            _coinController.Load(levelData);
-            _checkPointsController.Load(levelData);
+            _levelsController.LoadAllServices(levelData);
 
-
-            
-            
             _finishModel.OnObjectStatusChange += _gameLoopController.FinishLevel;
         }
 
@@ -94,6 +97,7 @@ namespace Assets._Scripts.EnteryPoints
             _checkPointsController.Dispose();
             _coinController.Dispose();
             _finishController.Dispose();
+            _lastCheckPointController.Dispose();
 
             _finishModel.OnObjectStatusChange -= _gameLoopController.FinishLevel;
             _coinDictinaryModel.OnObjectAdd -= CoinAdd;
@@ -113,8 +117,8 @@ namespace Assets._Scripts.EnteryPoints
 
         private void CheckPointAdd(CheckPointModel model)
         {
-            //добавить тут что-то .... ... 
             model.OnTake += _gameSaveLoadService.SaveAllServices;
+            model.OnTakePosition += _lastCheckPointController.SetData;
         }
     }
 }

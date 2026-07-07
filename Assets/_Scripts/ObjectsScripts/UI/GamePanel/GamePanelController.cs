@@ -1,4 +1,4 @@
-﻿using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
 using System;
@@ -6,7 +6,7 @@ using System;
 
 namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
 {
-    public class GamePanelController : IDisposable, ISave, ILoad, IRestart, IFinish
+    public class GamePanelController : IDisposable, ISave, ILoad, IDieRestart, IFinish
     {
         private GamePanelView _gamePanelView;
         private GamePanelModel _gamePanelModel;
@@ -54,7 +54,7 @@ namespace Assets._Scripts.ObjectsScripts.UI.GamePanel
 
         }
 
-        public void Restart(LevelData levelData)
+        public void DieRestart(LevelData levelData)
         {
 
         }

@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {

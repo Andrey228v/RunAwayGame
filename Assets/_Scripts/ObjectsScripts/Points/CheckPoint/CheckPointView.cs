@@ -1,8 +1,7 @@
 ﻿using Assets._Scripts.ObjectsScripts.Player;
 using System;
-using System.Xml.Linq;
 using UnityEngine;
-
+    
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
     public class CheckPointView : MonoBehaviour

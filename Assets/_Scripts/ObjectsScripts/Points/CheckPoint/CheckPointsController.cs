@@ -1,4 +1,4 @@
-﻿using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
@@ -9,14 +9,14 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
-    public class CheckPointsController : ISave, ILoad, IRestart, IFinish
+    public class CheckPointsController : ISave, ILoad, IDieRestart, IFinish, IReset
     {
         private readonly IGameLogger _gameLogger;
         private readonly Transform _objectParent;
         private readonly CheckPointDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CheckPointView> _dictinaryView;
-        private Vector3 _lastCheckPointPosition;
-
+        //private Vector3 _lastCheckPointPosition;
+         
         public CheckPointsController(GamePoints points, IGameLogger gameLogger, CheckPointDictinaryModel dictinaryModel)
         {
             if (points == null)
@@ -34,13 +34,12 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         {
             _dictinaryModel.OnObjectAdd -= ObjectInit;
 
-            foreach (var view in _dictinaryView.Values)
+            foreach(var view in _dictinaryView.Values)
             {
                 view.OnActivateObject -= ObjectActivateView;
-                view.OnActivateObject -= TakeObject;
             }
 
-            foreach (var model in _dictinaryModel.ObjectModelds.Values)
+            foreach(var model in _dictinaryModel.ObjectModelds.Values)
             {
                 model.OnObjectStatusChange -= OnModelStatusChanged;
             }
@@ -55,7 +54,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
             }
 
-            _lastCheckPointPosition = levelConfig.StartPosition; // под вопросом... 
+            //_lastCheckPointPosition = levelConfig.StartPosition; // под вопросом... 
 
             var listSaveData = levelData.CheckPoints;
 
@@ -79,14 +78,13 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                             IsActivated = false
                         };
 
-                        if (levelData.CheckPoints.TryAdd(id, data) == false)
+                        if (listSaveData.TryAdd(id, data) == false)
                         {
                             throw new ArgumentNullException(nameof(levelData), "key Error");
                         }
                     }
 
                     view.OnActivateObject += ObjectActivateView;
-                    view.OnActivateObject += TakeObject;
 
                     _dictinaryModel.AddObject(data);
                     _dictinaryView[data.Id] = view;
@@ -107,22 +105,8 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         {
             if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
             {
-                _lastCheckPointPosition = coords;
                 model.SetActivateStatus(status);
-                model.Take();
-            }
-            else
-            {
-                _gameLogger.LogWarning($"Object with ID {id} not found in models", "Service");
-            }
-        }
-
-        public void TakeObject(string id, bool status, Vector3 coords)
-        {
-            if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
-            {
-                _lastCheckPointPosition = coords;
-                model.Take();
+                model.Take(coords);
             }
             else
             {
@@ -140,15 +124,18 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 
         public void Finish(LevelData levelData)
         {
-            ResetAllObjects();
+            foreach (var model in _dictinaryModel.ObjectModelds.Values)
+            {
+                model.Reset();
+            }
         }
 
-        public void Restart(LevelData levelData)
+        public void DieRestart(LevelData levelData)
         {
-            ResetAllObjects();
+            //Тут пусто... а нужен ли этот метод пока не понятно...
         }
 
-        public void ResetAllObjects()
+        public void ResetAllObjects(LevelConfig levelConfig)
         {
             foreach (var model in _dictinaryModel.ObjectModelds.Values)
             {
@@ -160,9 +147,9 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         {
             if (levelData == null) return;
 
-            foreach(var key in levelData.CheckPoints.Keys.ToList())
+            foreach (var key in levelData.CheckPoints.Keys.ToList()) // под вопросом Keys...
             {
-                if(_dictinaryModel.TryGetModel(key, out var model))
+                if (_dictinaryModel.TryGetModel(key, out var model))
                 {
                     levelData.CheckPoints[key] = model.Data;
                 }
@@ -172,8 +159,6 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 }
 
             }
-
-            levelData.LastCheckPointPosition = _lastCheckPointPosition;
 
             _gameLogger.Log($"Saved {levelData.CheckPoints.Count} check points", "Service");
         }
@@ -186,7 +171,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 return;
             }
 
-             //под вопосом...
+            //под вопосом...
             foreach (var objectData in levelData.CheckPoints)
             {
                 if (_dictinaryModel.ObjectModelds.TryGetValue(objectData.Key, out var model))

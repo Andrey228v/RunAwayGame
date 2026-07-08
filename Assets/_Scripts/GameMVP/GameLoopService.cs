@@ -52,7 +52,7 @@ namespace Assets._Scripts.GameControllers
 
                 var levelData = _gameSaveData.LevelsData[_levelsController.Config.LevelName];
 
-                _levelsController.FinishLevel(levelData);
+                //_levelsController.FinishLevel(levelData);
 
                 _gameSaveLoadService.SaveGame();
             }
@@ -71,7 +71,7 @@ namespace Assets._Scripts.GameControllers
         {
             _gameLogger.Log("DieRestart", "Service");
 
-            _levelsController.DieRestart(_gameSaveData);
+            //_levelsController.DieRestart(_gameSaveData);
             _gameSaveLoadService.SaveGame();
         }
     }

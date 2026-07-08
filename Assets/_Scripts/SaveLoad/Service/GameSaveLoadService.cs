@@ -64,30 +64,30 @@ namespace Assets._Scripts.SaveLoad.Service
             _gameLogger.Log("GameSaveLoadService Dispose complite", "Service");
         }
 
-        public void SaveAllServices()
-        {
-            _gameLogger.Log("GameSaveLoadService save all services", "Save");
+        //public void SaveAllServices()
+        //{
+        //    _gameLogger.Log("GameSaveLoadService save all services", "Save");
 
-            var levelConfig = _levelsController.Config;
+        //    var levelConfig = _levelsController.Config;
 
-            if(levelConfig == null) // если конфиг null значит мы не в уровне
-            {
-                _achievmentsController.SaveAllServices(_gameSaveData);
-                _shopController.SaveAllServices(_gameSaveData);
-                _walletController.SaveAllServices(_gameSaveData);
-            }
-            else // мы в уровне. Сохраняем всё. 
-            {
-                _achievmentsController.SaveAllServices(_gameSaveData);
-                _shopController.SaveAllServices(_gameSaveData);
-                _walletController.SaveAllServices(_gameSaveData);
-                _levelsController.SaveAllServices(_gameSaveData);
-            }
+        //    if(levelConfig == null) // если конфиг null значит мы не в уровне
+        //    {
+        //        _achievmentsController.SaveAllServices(_gameSaveData);
+        //        _shopController.SaveAllServices(_gameSaveData);
+        //        _walletController.SaveAllServices(_gameSaveData);
+        //    }
+        //    else // мы в уровне. Сохраняем всё. 
+        //    {
+        //        _achievmentsController.SaveAllServices(_gameSaveData);
+        //        _shopController.SaveAllServices(_gameSaveData);
+        //        _walletController.SaveAllServices(_gameSaveData);
+        //        //_levelsController.SaveAllServices(_gameSaveData);
+        //    }
 
-            SaveGame();
+        //    SaveGame();
 
-            _gameLogger.Log("GameSaveLoadService save all services complite", "Save");
-        }
+        //    _gameLogger.Log("GameSaveLoadService save all services complite", "Save");
+        //}
 
         public void LoadAllServices() 
         {

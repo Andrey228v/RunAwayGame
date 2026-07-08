@@ -1,10 +1,8 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using System.Collections.Generic;
-using System.Xml.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
@@ -104,17 +102,17 @@ namespace Assets._Scripts.GameControllers.Achievments
             _cells.Add(cell);
         }
 
-        public void UpdateView()
-        {
-            if(_achievmentsCellsView != null)
-            {
-                for (int i = 0; i < _modelsAchievments.Count; i++)
-                {
-                    var model = _modelsAchievments[i];
-                    UpdateCellView(model.Data);
-                }
-            }
-        }
+        //public void UpdateView()
+        //{
+        //    if(_achievmentsCellsView != null)
+        //    {
+        //        for (int i = 0; i < _modelsAchievments.Count; i++)
+        //        {
+        //            var model = _modelsAchievments[i];
+        //            UpdateCellView(model.Data);
+        //        }
+        //    }
+        //}
 
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
         {

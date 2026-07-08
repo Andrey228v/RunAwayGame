@@ -9,14 +9,13 @@ using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
-    public class CheckPointsController : ISave, ILoad, IDieRestart, IFinish, IReset
+    public class CheckPointsController : IInit, ISave, ILoad, IDieRestart, IFinish, IReset
     {
         private readonly IGameLogger _gameLogger;
         private readonly Transform _objectParent;
         private readonly CheckPointDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CheckPointView> _dictinaryView;
-        //private Vector3 _lastCheckPointPosition;
-         
+
         public CheckPointsController(GamePoints points, IGameLogger gameLogger, CheckPointDictinaryModel dictinaryModel)
         {
             if (points == null)
@@ -53,8 +52,6 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             {
                 throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
             }
-
-            //_lastCheckPointPosition = levelConfig.StartPosition; // под вопросом... 
 
             var listSaveData = levelData.CheckPoints;
 

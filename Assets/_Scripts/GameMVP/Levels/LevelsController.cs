@@ -4,12 +4,15 @@ using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Levels
 {
+    //Основная цель сделать так, чтобы уровень не зависил от частей его наполнения и они могли быть разной конфигурации.
+    // для этого всё делает интерфейсами, выделяя в них только общее и вынося уже для каждого в своё.
+    // Разные типы уровней будут обладать разными LevelEntryPoin. Благодаря этому их можно наполнять по разному.
     public class LevelsController
     {
+        private readonly List<IInit> _initList; // каждый подэлемент должен сам инициализировать то, что будет. 
         private readonly List<ISave> _saveList;
         private readonly List<ILoad> _loadList;
         private readonly List<IDieRestart> _restartList;
@@ -24,7 +27,6 @@ namespace Assets._Scripts.GameControllers.Levels
         public List<ILoad> LoadList => _loadList;
         public List<IDieRestart> RestartList => _restartList;
         public List<IFinish> FinishList => _finishList;
-
         public List<IReset> ResetList => _resetList;
 
         public LevelsController()
@@ -121,19 +123,6 @@ namespace Assets._Scripts.GameControllers.Levels
             {
                 finish.Finish(_levelData);
             }
-
-            //if (args.lvlId == "0") // переделать. Это не тут должно быть
-            //{
-            //    _eventBus.Publish(new FinishLevel1() { Progress = 1 });
-            //}
-            //else if (args.lvlId == "1")
-            //{
-            //    _eventBus.Publish(new FinishLevel2() { Progress = 1 });
-            //}
-            //else if (args.lvlId == "2")
-            //{
-            //    _eventBus.Publish(new FinishLevel3() { Progress = 1 });
-            //}
         }
 
         public void ResetLevel(LevelData levelData, LevelConfig levelConfig)

@@ -36,6 +36,19 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         public void Finish(LevelData levelData)
         {
             _finishModel.Reset();
+
+            //if (args.lvlId == "0")
+            //{
+            //    _eventBus.Publish(new FinishLevel1() { Progress = 1 });
+            //}
+            //else if (args.lvlId == "1")
+            //{
+            //    _eventBus.Publish(new FinishLevel2() { Progress = 1 });
+            //}
+            //else if (args.lvlId == "2")
+            //{
+            //    _eventBus.Publish(new FinishLevel3() { Progress = 1 });
+            //}
         }
 
         public void SetActivateStatus(bool status)

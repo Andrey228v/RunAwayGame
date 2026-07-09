@@ -31,13 +31,6 @@ namespace Assets._Scripts.EnteryPoints
         private GameLoopService _gameLoopController;
         private GameSaveLoadService _gameSaveLoadService;
 
-        private readonly List<IInit> _initList; // каждый подэлемент должен сам инициализировать то, что будет. 
-        private readonly List<ISave> _saveList;
-        private readonly List<ILoad> _loadList;
-        private readonly List<IDieRestart> _restartList;
-        private readonly List<IFinish> _finishList;
-        private readonly List<IReset> _resetList;
-
         public PlayerEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory,
             Func<Character> characterFactory, CameraController cameraController,
@@ -58,20 +51,14 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController = levelsController;
             _gameLoopController = gameLoopController;
             _gameSaveLoadService = gameSaveLoadService;
-
-            _saveList = new List<ISave>();
-            _loadList = new List<ILoad>();
-            _restartList = new List<IDieRestart>();
-            _finishList = new List<IFinish>();
-            _resetList = new List<IReset>();
         }
 
         public void Start()
         {
-            _saveList.Add(_playerController);
-            _loadList.Add(_playerController);
-            _restartList.Add(_playerController);
-            _finishList.Add(_playerController);
+            //_gameLoopController.SaveList.Add(_playerController);
+            //_gameLoopController.LoadList.Add(_playerController);
+            //_gameLoopController.DieRestartList.Add(_playerController);
+            //_gameLoopController.FinishList.Add(_playerController);
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
@@ -81,14 +68,14 @@ namespace Assets._Scripts.EnteryPoints
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[levelConfig.LevelName];
             _playerController.Load(levelData);
 
-            _playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;
+            //_playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;
         }
 
         public void Dispose()
         {
             _billboardManager = null;
             _unitInfoUIFactory = null;
-            _playerController.PlayerMB.OnDie -= _gameLoopController.DieRestart;
+            //_playerController.PlayerMB.OnDie -= _gameLoopController.DieRestart;
         }
 
         private void InitPlayer(CameraController cameraController, 
@@ -117,75 +104,6 @@ namespace Assets._Scripts.EnteryPoints
             playerController.SetPlayerMB(playerMB);
 
             walletController.AddUnitInfoUIView(unitInfoUI);
-        }
-
-        public void SaveAllServices(GameSaveData gameSaveData)
-        {
-            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelsController.Config.LevelName];
-
-            if (gameSaveData == null)
-            {
-                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
-            }
-
-            foreach (ISave save in _saveList)
-            {
-                save.Save(levelData);
-            }
-        }
-
-        public void LoadAllServices(LevelData levelData)
-        {
-            if (levelData == null)
-            {
-                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
-            }
-
-            if (_levelsController.Config == null)
-            {
-                return;
-            }
-
-            foreach (ILoad load in _loadList)
-            {
-                load.Load(levelData);
-            }
-        }
-
-        public void DieRestart(GameSaveData gameSaveData)
-        {
-            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelsController.Config.LevelName];
-
-            foreach (IDieRestart restart in _restartList)
-            {
-                restart.DieRestart(levelData);
-            }
-        }
-
-        public void FinishLevel(LevelData levelData)
-        {
-            if (levelData == null)
-            {
-                throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
-            }
-
-            foreach (IFinish finish in _finishList)
-            {
-                finish.Finish(levelData);
-            }
-        }
-
-        public void ResetLevel(LevelData levelData, LevelConfig levelConfig)
-        {
-            if (levelData == null)
-            {
-                throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
-            }
-
-            foreach (IReset reset in _resetList)
-            {
-                reset.ResetAllObjects(levelConfig);
-            }
         }
     }
 }

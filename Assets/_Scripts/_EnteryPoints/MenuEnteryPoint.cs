@@ -1,9 +1,12 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Achievments;
+using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,12 +14,14 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class MenuEnteryPoint : IStartable, IDisposable
+    public class MenuEnteryPoint : IInitializable, IStartable, IDisposable
     {
+        private GameSaveLoadService _gameSaveLoadService;
         private Func<MenuTabsView> _menuFactory;
         private Func<AchievmentsCellsView> _achievmentsCellsFactory;
         private Func<AchievementView> _achievmentsViewFactory;
         private AchievmentsController _achievmentsController;
+        private LevelsController _levelsController;
         private WalletController _walletController;
         private IGameLogger _gameLogger;
 
@@ -26,7 +31,9 @@ namespace Assets._Scripts.EnteryPoints
             IGameLogger gameLogger,
             WalletController walletController,
             Func<AchievementView> achievmentsViewFactory,
-            Func<AchievmentsCellsView> achievmentsCellsFactory
+            Func<AchievmentsCellsView> achievmentsCellsFactory,
+            GameSaveLoadService gameSaveLoadService,
+            LevelsController levelsController
             ) 
         {
             _menuFactory = menuFactory;
@@ -35,11 +42,30 @@ namespace Assets._Scripts.EnteryPoints
             _achievmentsViewFactory = achievmentsViewFactory;
             _walletController = walletController;
             _gameLogger = gameLogger;
+            _levelsController = levelsController;
+            _gameSaveLoadService = gameSaveLoadService;
+        }
+
+        public void Initialize()
+        {
+            MenuTabsView menuTabsView = _menuFactory();
+
+            _levelsController.Initialization();
+            _walletController.Initialization();
+            _achievmentsController.Initialization();
+
+            _walletController.AddMenuView(menuTabsView);
+
+            InitAchievments(menuTabsView.AchievmentsParent);
         }
 
         public void Start()
         {
-            InitMenu();
+            var gameSaveData = _gameSaveLoadService.GameSaveData;
+
+            _levelsController.Load(gameSaveData);
+            _walletController.Load(gameSaveData);
+            _achievmentsController.Load(gameSaveData);
         }
 
         public void Dispose()
@@ -49,31 +75,24 @@ namespace Assets._Scripts.EnteryPoints
             //_walletController.Dispose();
         }
 
-        public void InitMenu()
-        {
-            MenuTabsView menuTabsView = _menuFactory();
-            InitAchievments(menuTabsView.AchievmentsParent);
-
-            _walletController.AddMenuView(menuTabsView);
-
-        }
-
         private void InitAchievments(Transform parent) 
         {
-            AchievmentsCellsView achievments = _achievmentsCellsFactory();
-            GameObject cellsParent = achievments.CellsParent;
-            achievments.transform.SetParent(parent, false);
-            _achievmentsController.SetCellView(achievments);
+            //AchievmentsCellsView achievments = _achievmentsCellsFactory();
+            //GameObject cellsParent = achievments.CellsParent;
+            //achievments.transform.SetParent(parent, false);
+            //_achievmentsController.SetCellView(achievments);
 
-            _gameLogger.Log("AchievmentsCellsView Construct", "Info");
+            //_gameLogger.Log("AchievmentsCellsView Construct", "Info");
 
-            for (int i = 0; i < cellsParent.transform.childCount; i++)
-            {
-                _achievmentsController.AddCell(cellsParent.transform.GetChild(i));
+            //for (int i = 0; i < cellsParent.transform.childCount; i++)
+            //{
+            //    _achievmentsController.AddCell(cellsParent.transform.GetChild(i));
 
-                var achView = _achievmentsViewFactory();
-                _achievmentsController.AddAchievmentView(achView, i);
-            }
+            //    var achView = _achievmentsViewFactory();
+            //    _achievmentsController.AddAchievmentView(achView, i);
+            //}
         }
+
+
     }
 }

@@ -47,14 +47,14 @@ namespace Assets._Scripts.GameControllers.Achievments
 
             var modelsAchievments = new List<IAchievement>
                     {
-                        new AchievmentModel<StartLevel1>(eventBus, achievmentData[0], rewardType1, gameLogger),
-                        new AchievmentModel<StartLevel2>(eventBus, achievmentData[1], rewardType2, gameLogger),
-                        new AchievmentModel<StartLevel3>(eventBus, achievmentData[2], rewardType3, gameLogger),
-                        new AchievmentModel<FinishLevel1>(eventBus, achievmentData[3], rewardType2, gameLogger),
-                        new AchievmentModel<FinishLevel2>(eventBus, achievmentData[4], rewardType2, gameLogger),
-                        new AchievmentModel<FinishLevel3>(eventBus, achievmentData[5], rewardType3, gameLogger),
-                        new AchievmentModel<CollectGoldEvent>(eventBus, achievmentData[6], rewardType1, gameLogger),
-                        new AchievmentModel<DieEvent>(eventBus, achievmentData[7], rewardType2, gameLogger),
+                        //new AchievmentModel<StartLevel1>(eventBus, achievmentData[0], rewardType1, gameLogger),
+                        //new AchievmentModel<StartLevel2>(eventBus, achievmentData[1], rewardType2, gameLogger),
+                        //new AchievmentModel<StartLevel3>(eventBus, achievmentData[2], rewardType3, gameLogger),
+                        //new AchievmentModel<FinishLevel1>(eventBus, achievmentData[3], rewardType2, gameLogger),
+                        //new AchievmentModel<FinishLevel2>(eventBus, achievmentData[4], rewardType2, gameLogger),
+                        //new AchievmentModel<FinishLevel3>(eventBus, achievmentData[5], rewardType3, gameLogger),
+                        //new AchievmentModel<CollectGoldEvent>(eventBus, achievmentData[6], rewardType1, gameLogger),
+                        //new AchievmentModel<DieEvent>(eventBus, achievmentData[7], rewardType2, gameLogger),
                     };
 
             return modelsAchievments;

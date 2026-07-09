@@ -47,10 +47,10 @@ namespace Assets._Scripts.EnteryPoints
 
             _gamePanelController.AddGamePaneView(_panel);
 
-            _levelsController.SaveList.Add(_gamePanelController);
-            _levelsController.LoadList.Add(_gamePanelController);
-            _levelsController.RestartList.Add(_gamePanelController);
-            _levelsController.FinishList.Add(_gamePanelController);
+            //_levelsController.SaveList.Add(_gamePanelController);
+            //_levelsController.LoadList.Add(_gamePanelController);
+            //_levelsController.RestartList.Add(_gamePanelController);
+            //_levelsController.FinishList.Add(_gamePanelController);
 
             _panel.GameWinPanelView.OnButtonBackToMenuClick += TransitToMenuWindow;
             _panel.GameMenuPanelView.OnButtonBackToMenuClick += TransitToMenuWindow;

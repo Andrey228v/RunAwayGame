@@ -23,11 +23,10 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void Reset(AchievmentData data);
     }
 
-    public class AchievmentModel<T>: IAchievement where T : struct, IAchivmentEvent
+    public class AchievmentModel
     {
         private Sprite _icon;
         private AchievmentsReward _achievmentsReward;
-        private EventBus _eventBus;
         private AchievmentData _data;
         private IGameLogger _gameLogger;
 
@@ -36,26 +35,16 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public AchievmentData Data => _data;
 
-        public AchievmentModel(EventBus eventBus,
+        public AchievmentModel(
             AchievmentData data,
             AchievmentsReward achievmentsReward,
             IGameLogger gameLogger)
         {
-            _eventBus = eventBus;
             _data = data;
             _achievmentsReward = achievmentsReward;
             _gameLogger = gameLogger;
-
-            if (_data.IsUnlock == false)
-            {
-                _eventBus.Subscribe<T>(ChangeCurrentProgress);
-            }
         }
 
-        public AchievmentData GetData()
-        {
-            return _data;
-        }
 
         public void SetData(AchievmentData data)
         {
@@ -73,7 +62,6 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void Reset(AchievmentData data)
         {
             _data = data;
-            _eventBus.Subscribe<T>(ChangeCurrentProgress);
         }
 
         private void ChangeCurrentProgress(T args)

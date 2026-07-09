@@ -91,15 +91,15 @@ namespace Assets._Scripts.SaveLoad.Service
 
         public void LoadAllServices() 
         {
-            _gameLogger.Log("GameSaveLoadService load all services", "Load");
+            //_gameLogger.Log("GameSaveLoadService load all services", "Load");
 
-            var levelConfig = _levelsController.Config;
+            //var levelConfig = _levelsController.Config;
 
-            _achievmentsController.LoadAllServices(_gameSaveData.AchievmentsData);
-            _shopController.LoadAllServices(_gameSaveData, levelConfig);
-            _walletController.LoadAllServices(_gameSaveData);
+            //_achievmentsController.LoadAllServices(_gameSaveData.AchievmentsData);
+            //_shopController.LoadAllServices(_gameSaveData, levelConfig);
+            //_walletController.LoadAllServices(_gameSaveData);
 
-            _gameLogger.Log("GameSaveLoadService load all services complite", "Load");
+            //_gameLogger.Log("GameSaveLoadService load all services complite", "Load");
         }
 
         //public void ResetAllProgress(DeletSaveEvent args)
@@ -147,7 +147,7 @@ namespace Assets._Scripts.SaveLoad.Service
                     LevelData>(),
                     new List<AchievmentData>(),
                     new ShopData(),
-                    new WalletData(),
+                    new WalletData(67, 322),
                     DateTime.Now){ };
 
                 _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);

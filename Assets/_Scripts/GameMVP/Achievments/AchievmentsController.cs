@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentsController
+    public class AchievmentsController : IInitGame, ISaveGame, ILoadGame
     {
         private IGameLogger _gameLogger;
         private AchievmentsCellsView _achievmentsCellsView;
@@ -24,11 +25,16 @@ namespace Assets._Scripts.GameControllers.Achievments
             _cells = new List<Transform>();
         }
 
-        public void Initialize(AchievmentModelList model)
+        public void Initialization()
         {
-            _modelsAchievments = model.GetModel();
-            _countAchievmentsMode = _modelsAchievments.Count;
+
         }
+
+        //public void Initialize(AchievmentModelList model)
+        //{
+        //    _modelsAchievments = model.GetModel();
+        //    _countAchievmentsMode = _modelsAchievments.Count;
+        //}
 
         public void Dispose()
         {
@@ -49,7 +55,7 @@ namespace Assets._Scripts.GameControllers.Achievments
             _achievmentsCellsView.OnDestroyCellsView += DestroyUI;
         }
 
-        public void SaveAllServices(GameSaveData gameSaveData)
+        public void Save(GameSaveData gameSaveData)
         {
             List<AchievmentData> achievmentsData = gameSaveData.AchievmentsData;
 
@@ -59,17 +65,23 @@ namespace Assets._Scripts.GameControllers.Achievments
                 achievmentsData[i] = achModel.GetData();
             }
         }
-        
-        public void LoadAllServices(List<AchievmentData> achievmentsData)
-        {
-            for (int i = 0; i < _modelsAchievments.Count; i++)
-            {
-                var achModel = _modelsAchievments[i];
-                var data = achievmentsData[i];
 
-                achModel.SetData(data);
-            }
+        public void Load(GameSaveData gameSaveData)
+        {
+
         }
+
+
+        //public void LoadAllServices(List<AchievmentData> achievmentsData)
+        //{
+        //    for (int i = 0; i < _modelsAchievments.Count; i++)
+        //    {
+        //        var achModel = _modelsAchievments[i];
+        //        var data = achievmentsData[i];
+
+        //        achModel.SetData(data);
+        //    }
+        //}
 
         public void AddAchievmentView(AchievementView achView, int modelIndex)
         {

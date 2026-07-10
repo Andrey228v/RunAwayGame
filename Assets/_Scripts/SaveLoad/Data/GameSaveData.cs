@@ -8,13 +8,15 @@ namespace Assets.Scripts.SaveLoad.Data
     public class GameSaveData
     {
         public Dictionary<string, LevelData> LevelsData = new Dictionary<string, LevelData>(); // LevelController
-        public List<AchievmentData> AchievmentsData; // AchievmentsController
+        //public Dictionary<string, AchievmentCellData> AchievmentCellData;
+        public Dictionary<string, AchievmentData> AchievmentsData; // AchievmentsController
         public ShopData ShopData; // ShopController
         public WalletData WalletData;
         public DateTime LastSaveTime;
 
         public GameSaveData(Dictionary<string, LevelData> levelsData,
-            List<AchievmentData> achievmentsData, 
+            //Dictionary<string, AchievmentCellData> achievmentCellData,
+            Dictionary<string, AchievmentData> achievmentsData, 
             ShopData shopData, 
             WalletData walletData, 
             DateTime lastSaveTime)
@@ -25,29 +27,29 @@ namespace Assets.Scripts.SaveLoad.Data
             WalletData = walletData;
             LastSaveTime = lastSaveTime;
 
-            AchievmentData achData1 = new AchievmentData()
+            AchievmentData achData0 = new AchievmentData()
             {
-                Id = 0,
+                Id = "ACh_0",
                 Name = "sLvl 1",
                 Description = "Start lvl 1",
-                IsUnlock = false,
+                IsUnlock = true, // test
                 TargetValue = 1,
                 IsRevardEnable = false
+            };
+
+            AchievmentData achData1 = new AchievmentData()
+            {
+                Id = "ACh_1",
+                Name = "sLvl 2",
+                Description = "Start lvl 2",
+                IsUnlock = true, // test
+                TargetValue = 1,
+                IsRevardEnable = true // test
             };
 
             AchievmentData achData2 = new AchievmentData()
             {
-                Id = 1,
-                Name = "sLvl 2",
-                Description = "Start lvl 2",
-                IsUnlock = false,
-                TargetValue = 1,
-                IsRevardEnable = false
-            };
-
-            AchievmentData achData3 = new AchievmentData()
-            {
-                Id = 2,
+                Id = "ACh_2",
                 Name = "sLvl 3",
                 Description = "Start lvl 3",
                 IsUnlock = false,
@@ -55,9 +57,9 @@ namespace Assets.Scripts.SaveLoad.Data
                 IsRevardEnable = false
             };
 
-            AchievmentData achData4 = new AchievmentData()
+            AchievmentData achData3 = new AchievmentData()
             {
-                Id = 3,
+                Id = "ACh_3",
                 Name = "fLvl 1",
                 Description = "Finish lvl 1",
                 IsUnlock = false,
@@ -65,9 +67,9 @@ namespace Assets.Scripts.SaveLoad.Data
                 IsRevardEnable = false
             };
 
-            AchievmentData achData5 = new AchievmentData()
+            AchievmentData achData4 = new AchievmentData()
             {
-                Id = 4,
+                Id = "ACh_4",
                 Name = "fLvl 2",
                 Description = "Finish lvl 2",
                 IsUnlock = false,
@@ -75,9 +77,9 @@ namespace Assets.Scripts.SaveLoad.Data
                 IsRevardEnable = false
             };
 
-            AchievmentData achData6 = new AchievmentData()
+            AchievmentData achData5 = new AchievmentData()
             {
-                Id = 5,
+                Id = "ACh_5",
                 Name = "fLvl 3",
                 Description = "Finish lvl 3",
                 IsUnlock = false,
@@ -85,9 +87,9 @@ namespace Assets.Scripts.SaveLoad.Data
                 IsRevardEnable = false
             };
 
-            AchievmentData achData7 = new AchievmentData()
+            AchievmentData achData6 = new AchievmentData()
             {
-                Id = 6,
+                Id = "ACh_6",
                 Name = "CollectGols",
                 Description = "Collect 10 gold",
                 IsUnlock = false,
@@ -95,9 +97,9 @@ namespace Assets.Scripts.SaveLoad.Data
                 IsRevardEnable = false
             };
 
-            AchievmentData achData8 = new AchievmentData()
+            AchievmentData achData7 = new AchievmentData()
             {
-                Id = 7,
+                Id = "ACh_7",
                 Name = "Die",
                 Description = "Die",
                 IsUnlock = false,
@@ -105,14 +107,14 @@ namespace Assets.Scripts.SaveLoad.Data
                 IsRevardEnable = false
             };
 
-            AchievmentsData.Add(achData1);
-            AchievmentsData.Add(achData2);
-            AchievmentsData.Add(achData3);
-            AchievmentsData.Add(achData4);
-            AchievmentsData.Add(achData5);
-            AchievmentsData.Add(achData6);
-            AchievmentsData.Add(achData7);
-            AchievmentsData.Add(achData8);
+            AchievmentsData.Add("ACh_0", achData0);
+            AchievmentsData.Add("ACh_1", achData1);
+            AchievmentsData.Add("ACh_2", achData2);
+            AchievmentsData.Add("ACh_3", achData3);
+            AchievmentsData.Add("ACh_4", achData4);
+            AchievmentsData.Add("ACh_5", achData5);
+            AchievmentsData.Add("ACh_6", achData6);
+            AchievmentsData.Add("ACh_7", achData7);
         }
     }
 }

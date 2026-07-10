@@ -1,4 +1,6 @@
-﻿using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.GameMVP.Achievments;
+using Assets._Scripts.ObjectsScripts.Coins;
+using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
@@ -8,111 +10,145 @@ using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentsController : IInitGame, ISaveGame, ILoadGame
+    public class AchievmentsController : ISaveGame, ILoadGame
     {
         private IGameLogger _gameLogger;
-        private AchievmentsCellsView _achievmentsCellsView;
-        private List<IAchievement> _modelsAchievments;
-        private List<Transform> _cells;
-        private List<AchievementView> _achievementViews;
-        private int _countAchievmentsMode;
+        private Transform _objectParent;
+        private readonly AchievmentDictinaryModel _dictinaryModel;
+        private readonly Dictionary<string, AchievementView> _dictinaryView;
 
-        public AchievmentsController(IGameLogger gameLogger) 
+        public AchievmentsController(IGameLogger gameLogger, AchievmentDictinaryModel dictinaryModel) 
         {
             _gameLogger = gameLogger;
-            _cells = new List<Transform>();
-            _achievementViews = new List<AchievementView>();
-            _cells = new List<Transform>();
+            _dictinaryView = new Dictionary<string, AchievementView>();
+            _dictinaryModel = dictinaryModel;
+
+            _dictinaryModel.OnObjectAdd += ObjectInit;
         }
 
-        public void Initialization()
+        public void Initialization(Transform parent)
         {
+            _objectParent = parent;
 
+            for (int i = 0; i < _objectParent.childCount; i++)
+            {
+                if (_objectParent.GetChild(i).TryGetComponent<AchievementView>(out var view))
+                {
+                    var id = view.Id;
+
+                    _dictinaryView.Add(id, view);
+
+                    var data = new AchievmentData();
+                    var reward = new AchievmentsReward();
+
+                    _dictinaryModel.AddObject(id, data, reward);
+                }
+            }
         }
 
-        //public void Initialize(AchievmentModelList model)
-        //{
-        //    _modelsAchievments = model.GetModel();
-        //    _countAchievmentsMode = _modelsAchievments.Count;
-        //}
+        private void ObjectInit(AchievmentModel model)
+        {
+            model.OnAchievementDataChanged += OnModelStatusChanged;
+        }
 
         public void Dispose()
         {
-            foreach(var view in _achievementViews)
-            {
-                view.TakeRewardButton.onClick.RemoveAllListeners(); // под вопросом. Если потом удаляются объект то нужны ли отписки...
-            }
+            //foreach(var view in _achievementViews)
+            //{
+            //    view.TakeRewardButton.onClick.RemoveAllListeners(); // под вопросом. Если потом удаляются объект то нужны ли отписки...
+            //}
 
-            _achievementViews.Clear();
-            _cells.Clear();
+            //_achievementViews.Clear();
+            //_cells.Clear();
 
-            _achievmentsCellsView.OnDestroyCellsView -= DestroyUI;
+            //_achievmentsCellsView.OnDestroyCellsView -= DestroyUI;
         }
 
-        public void SetCellView(AchievmentsCellsView achievmentsCellsView)
+        //public void SetCellView(AchievmentsCellsView achievmentsCellsView)
+        //{
+        //    _achievmentsCellsView = achievmentsCellsView;
+        //    _achievmentsCellsView.OnDestroyCellsView += DestroyUI;
+        //}
+
+        //public void AddParent(Transform parent)
+        //{
+        //    //_objectParent = parent;
+
+        //    //for (int i = 0; i < _objectParent.childCount; i++)
+        //    //{
+        //    //    if (_objectParent.GetChild(i).TryGetComponent<AchievementView>(out var view))
+        //    //    {
+        //    //        var id = view.Id;
+
+
+        //    //    }
+        //    //}
+        //}
+
+        private void OnModelStatusChanged(string id, AchievmentData data)
         {
-            _achievmentsCellsView = achievmentsCellsView;
-            _achievmentsCellsView.OnDestroyCellsView += DestroyUI;
+            if (_dictinaryView.TryGetValue(id, out var view))
+            {
+                //view.UpdateView(isActivated);
+
+                view.SetProgress(data);
+            }
         }
 
         public void Save(GameSaveData gameSaveData)
         {
-            List<AchievmentData> achievmentsData = gameSaveData.AchievmentsData;
-
-            for(int i = 0; i < _achievementViews.Count; i++)
+            foreach (var key in gameSaveData.AchievmentsData.Keys)
             {
-                var achModel = _modelsAchievments[i];
-                achievmentsData[i] = achModel.GetData();
+                if (_dictinaryModel.TryGetModel(key, out var model))
+                {
+                    gameSaveData.AchievmentsData[key] = model.Data;
+                }   
             }
         }
 
         public void Load(GameSaveData gameSaveData)
         {
+            var achievmentData = gameSaveData.AchievmentsData;
 
+            foreach(var key in achievmentData.Keys)
+            {
+                if(_dictinaryModel.TryGetModel(key, out var model))
+                {
+                    model.SetData(achievmentData[key]);
+                }
+            }
         }
-
-
-        //public void LoadAllServices(List<AchievmentData> achievmentsData)
-        //{
-        //    for (int i = 0; i < _modelsAchievments.Count; i++)
-        //    {
-        //        var achModel = _modelsAchievments[i];
-        //        var data = achievmentsData[i];
-
-        //        achModel.SetData(data);
-        //    }
-        //}
 
         public void AddAchievmentView(AchievementView achView, int modelIndex)
         {
-            if (modelIndex >= _modelsAchievments.Count)
-            {
-                return;
-            }
+            //if (modelIndex >= _modelsAchievments.Count)
+            //{
+            //    return;
+            //}
 
-            if( modelIndex < _countAchievmentsMode )
-            {
-                var model = _modelsAchievments[modelIndex];
-                _achievementViews.Add(achView);
-                achView.transform.SetParent(_cells[modelIndex], false);
+            //if( modelIndex < _countAchievmentsMode )
+            //{
+            //    var model = _modelsAchievments[modelIndex];
+            //    _achievementViews.Add(achView);
+            //    achView.transform.SetParent(_cells[modelIndex], false);
 
-                model.OnUnlock += UpdateCellView;
-                model.OnAchievementDataChanged += UpdateCellView;
+            //    model.OnUnlock += UpdateCellView;
+            //    model.OnAchievementDataChanged += UpdateCellView;
 
-                achView.TakeRewardButton.onClick.AddListener(model.TakeReward);
+            //    achView.TakeRewardButton.onClick.AddListener(model.TakeReward);
 
-                UpdateCellView(model.Data);
-            }
-            else
-            {
-                throw new System.Exception("_countAchievmentsMode < modelIndex");
-            }
+            //    UpdateCellView(model.Data);
+            //}
+            //else
+            //{
+            //    throw new System.Exception("_countAchievmentsMode < modelIndex");
+            //}
         }
 
-        public void AddCell(Transform cell)
-        {
-            _cells.Add(cell);
-        }
+        //public void AddCell(Transform cell)
+        //{
+        //    _cells.Add(cell);
+        //}
 
         //public void UpdateView()
         //{
@@ -128,58 +164,58 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
         {
-            _gameLogger.Log("AchievmentsController RESET", "Success");
+            //_gameLogger.Log("AchievmentsController RESET", "Success");
 
-            for (int i = 0; i < _modelsAchievments.Count; i++)
-            {
-                var model = _modelsAchievments[i];
-                var data = gameSaveData.AchievmentsData[i];
+            //for (int i = 0; i < _modelsAchievments.Count; i++)
+            //{
+            //    var model = _modelsAchievments[i];
+            //    var data = gameSaveData.AchievmentsData[i];
 
-                model.Reset(data);
+            //    model.Reset(data);
 
-                UpdateCellView(data);
-            }
+            //    UpdateCellView(data);
+            //}
         }
 
         private void DestroyUI()
         {
-            _gameLogger.Log("DestroyUI AchievmentsCellsView", "Success");
+            //_gameLogger.Log("DestroyUI AchievmentsCellsView", "Success");
 
-            for (int i = 0; i < _modelsAchievments.Count; i++)
-            {
-                var model = _modelsAchievments[i];
-                var achView = _achievementViews[i];
+            //for (int i = 0; i < _modelsAchievments.Count; i++)
+            //{
+            //    var model = _modelsAchievments[i];
+            //    var achView = _achievementViews[i];
 
-                model.OnUnlock -= UpdateCellView;
-            }
+            //    model.OnUnlock -= UpdateCellView;
+            //}
         }
 
         private void UpdateCellView(AchievmentData achData)
         {
-            if (_achievmentsCellsView != null)
-            {
-                var model = _modelsAchievments[achData.Id];
-                var view = _achievementViews[achData.Id];
+            //if (_achievmentsCellsView != null)
+            //{
+            //    var model = _modelsAchievments[achData.Id];
+            //    var view = _achievementViews[achData.Id];
 
-                var data = model.Data;
-                view.SetName(data.Name);
-                view.SetDescription(data.Description);
+            //    var data = model.Data;
+            //    view.SetName(data.Name);
+            //    view.SetDescription(data.Description);
 
-                if (data.IsUnlock && data.IsRevardEnable)
-                {
-                    view.ShowUnlockedWithButtonReward();
-                }
-                else if(data.IsUnlock == false)
-                {
-                    view.ShowLocked();
-                }
-                else if(data.IsUnlock && data.IsUnlockAndTaken)
-                {
-                    view.ShowUnlokedAfterReward();
-                }
+            //    if (data.IsUnlock && data.IsRevardEnable)
+            //    {
+            //        view.ShowUnlockedWithButtonReward();
+            //    }
+            //    else if(data.IsUnlock == false)
+            //    {
+            //        view.ShowLocked();
+            //    }
+            //    else if(data.IsUnlock && data.IsUnlockAndTaken)
+            //    {
+            //        view.ShowUnlokedAfterReward();
+            //    }
 
-                view.SetProgress(achData);
-            }
+            //    view.SetProgress(achData);
+            //}
         }
     }
 }

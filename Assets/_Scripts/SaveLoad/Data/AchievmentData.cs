@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.SaveLoad.Data
 {
     [Serializable]
     public class AchievmentData
     {
-        public int Id;
+        public string Id;
         public string Name;
         public string Description;
         public bool IsUnlock;

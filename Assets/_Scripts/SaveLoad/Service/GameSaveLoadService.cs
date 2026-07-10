@@ -17,29 +17,29 @@ namespace Assets._Scripts.SaveLoad.Service
     {
         private readonly EasySaveSystem _saveSystem;
         private GameSaveData _gameSaveData;
-        private readonly LevelsController _levelsController;
-        private readonly AchievmentsController _achievmentsController;
-        private readonly ShopController _shopController;
-        private readonly WalletController _walletController;
-        private readonly EventBus _eventBus;
+        //private readonly LevelsController _levelsController;
+        //private readonly AchievmentsController _achievmentsController;
+        //private readonly ShopController _shopController;
+        //private readonly WalletController _walletController;
+        //private readonly EventBus _eventBus;
         private readonly IGameLogger _gameLogger;
 
         public GameSaveData GameSaveData => _gameSaveData;
 
         public GameSaveLoadService(EasySaveSystem saveSystem,
-            LevelsController levelsController,
-            AchievmentsController achievmentsController,
-            ShopController shopController,
-            WalletController walletController,
-            EventBus eventBus,
+            //LevelsController levelsController,
+            //AchievmentsController achievmentsController,
+            //ShopController shopController,
+            //WalletController walletController,
+            //EventBus eventBus,
             IGameLogger gameLogger) 
         {
             _saveSystem = saveSystem;
-            _levelsController = levelsController;
-            _achievmentsController = achievmentsController;
-            _shopController = shopController;
-            _walletController = walletController;
-            _eventBus = eventBus;
+            //_levelsController = levelsController;
+            //_achievmentsController = achievmentsController;
+            //_shopController = shopController;
+            //_walletController = walletController;
+            //_eventBus = eventBus;
             _gameLogger = gameLogger;
 
             LoadOrCreateSave();
@@ -143,9 +143,9 @@ namespace Assets._Scripts.SaveLoad.Service
             }
             else
             {
-                _gameSaveData = new GameSaveData(new Dictionary<string,
-                    LevelData>(),
-                    new List<AchievmentData>(),
+                _gameSaveData = new GameSaveData(
+                    new Dictionary<string, LevelData>(),
+                    new Dictionary<string, AchievmentData>(),
                     new ShopData(),
                     new WalletData(67, 322),
                     DateTime.Now){ };

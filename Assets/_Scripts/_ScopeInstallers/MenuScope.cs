@@ -16,7 +16,7 @@ namespace Assets._Scripts.Installers
         [SerializeField] private UnitButtonSkinView _unitButtonSkinViewPrefab;
         [SerializeField] private ConditionSkinView _conditionSkinViewPrefab;
         [SerializeField] private AchievementView _achievementPrefab;
-        [SerializeField] private AchievmentsCellsView _achievmentsCellsViewPrefab;
+        //[SerializeField] private AchievmentsCellsView _achievmentsCellsViewPrefab;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -46,10 +46,10 @@ namespace Assets._Scripts.Installers
                 return container.Instantiate(_achievementPrefab);
             }, Lifetime.Singleton);
 
-            builder.RegisterFactory<AchievmentsCellsView>(container => () =>
-            {
-                return container.Instantiate(_achievmentsCellsViewPrefab);
-            }, Lifetime.Singleton);
+            //builder.RegisterFactory<AchievmentsCellsView>(container => () =>
+            //{
+            //    return container.Instantiate(_achievmentsCellsViewPrefab);
+            //}, Lifetime.Singleton);
 
         }
     }

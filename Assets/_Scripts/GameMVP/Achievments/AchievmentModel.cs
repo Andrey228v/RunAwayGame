@@ -31,7 +31,7 @@ namespace Assets._Scripts.GameControllers.Achievments
         private IGameLogger _gameLogger;
 
         public event Action<AchievmentData> OnUnlock; // открылась ачивка
-        public event Action<AchievmentData> OnAchievementDataChanged;
+        public event Action<string, AchievmentData> OnAchievementDataChanged;
 
         public AchievmentData Data => _data;
 
@@ -49,14 +49,14 @@ namespace Assets._Scripts.GameControllers.Achievments
         public void SetData(AchievmentData data)
         {
             _data = data;
-            OnAchievementDataChanged?.Invoke(_data);
+            OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }
 
         public void TakeReward()
         {
             _achievmentsReward.GetRewards();
             _data.IsRevardEnable = false;
-            OnAchievementDataChanged?.Invoke(_data);
+            OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }
 
         public void Reset(AchievmentData data)
@@ -64,17 +64,17 @@ namespace Assets._Scripts.GameControllers.Achievments
             _data = data;
         }
 
-        private void ChangeCurrentProgress(T args)
+        private void ChangeCurrentProgress()
         {
-            _data.CurrentValue += args.Progress;
+            //_data.CurrentValue += args.Progress;
 
-            if (_data.CurrentValue >= _data.TargetValue)
-            {
-                Unlock();
-                _eventBus.Unsubscribe<T>(ChangeCurrentProgress);
-            }
+            //if (_data.CurrentValue >= _data.TargetValue)
+            //{
+            //    Unlock();
+            //    _eventBus.Unsubscribe<T>(ChangeCurrentProgress);
+            //}
 
-            OnAchievementDataChanged?.Invoke(_data);
+            OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }
 
         private void Unlock()

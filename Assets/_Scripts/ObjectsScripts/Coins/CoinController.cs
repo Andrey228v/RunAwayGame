@@ -6,7 +6,6 @@ using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
@@ -23,9 +22,9 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             if (points == null)
                 throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
 
+            _gameLogger = gameLogger;
             _objectParent = points.Coins;
             _dictinaryView = new Dictionary<string, CoinView>();
-            _gameLogger = gameLogger;
             _dictinaryModel = dictinaryModel;
 
             _dictinaryModel.OnObjectAdd += ObjectInit;
@@ -146,7 +145,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         {
             if (levelData == null) return;
 
-            foreach (var key in levelData.Coins.Keys.ToList())// под вопросом Keys...
+            foreach (var key in levelData.Coins.Keys)
             {
                 if (_dictinaryModel.TryGetModel(key, out var model))
                 {

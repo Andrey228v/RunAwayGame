@@ -18,7 +18,7 @@ namespace Assets._Scripts.EnteryPoints
     {
         private GameSaveLoadService _gameSaveLoadService;
         private Func<MenuTabsView> _menuFactory;
-        private Func<AchievmentsCellsView> _achievmentsCellsFactory;
+        //private Func<AchievmentsCellsView> _achievmentsCellsFactory;
         private Func<AchievementView> _achievmentsViewFactory;
         private AchievmentsController _achievmentsController;
         private LevelsController _levelsController;
@@ -31,13 +31,13 @@ namespace Assets._Scripts.EnteryPoints
             IGameLogger gameLogger,
             WalletController walletController,
             Func<AchievementView> achievmentsViewFactory,
-            Func<AchievmentsCellsView> achievmentsCellsFactory,
+            //Func<AchievmentsCellsView> achievmentsCellsFactory,
             GameSaveLoadService gameSaveLoadService,
             LevelsController levelsController
             ) 
         {
             _menuFactory = menuFactory;
-            _achievmentsCellsFactory = achievmentsCellsFactory;
+            //_achievmentsCellsFactory = achievmentsCellsFactory;
             _achievmentsController = achievmentsController;
             _achievmentsViewFactory = achievmentsViewFactory;
             _walletController = walletController;
@@ -52,11 +52,9 @@ namespace Assets._Scripts.EnteryPoints
 
             _levelsController.Initialization();
             _walletController.Initialization();
-            _achievmentsController.Initialization();
+            _achievmentsController.Initialization(menuTabsView.AchievmentsParent);
 
             _walletController.AddMenuView(menuTabsView);
-
-            InitAchievments(menuTabsView.AchievmentsParent);
         }
 
         public void Start()
@@ -74,25 +72,5 @@ namespace Assets._Scripts.EnteryPoints
             _achievmentsController.Dispose();
             //_walletController.Dispose();
         }
-
-        private void InitAchievments(Transform parent) 
-        {
-            //AchievmentsCellsView achievments = _achievmentsCellsFactory();
-            //GameObject cellsParent = achievments.CellsParent;
-            //achievments.transform.SetParent(parent, false);
-            //_achievmentsController.SetCellView(achievments);
-
-            //_gameLogger.Log("AchievmentsCellsView Construct", "Info");
-
-            //for (int i = 0; i < cellsParent.transform.childCount; i++)
-            //{
-            //    _achievmentsController.AddCell(cellsParent.transform.GetChild(i));
-
-            //    var achView = _achievmentsViewFactory();
-            //    _achievmentsController.AddAchievmentView(achView, i);
-            //}
-        }
-
-
     }
 }

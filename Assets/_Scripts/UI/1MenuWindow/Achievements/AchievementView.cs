@@ -13,6 +13,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
     {
         [Header("UI Elements")]
         //[SerializeField] private Image _icon;
+        [SerializeField] private string _id;
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _description;
         [SerializeField] private Image _blockImage;
@@ -37,10 +38,17 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public Button TakeRewardButton => _takeRewardButton;
 
+        public string Id => _id;
+
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
+            if (_id == null)
+            {
+                Debug.LogError($"{_id}: _id is not set!", this);
+            }
+
             if (_name == null)
             {
                 Debug.LogError($"{_name.name}: _name is not set!", this);

@@ -1,17 +1,29 @@
-﻿using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.GameMVP.Achievments;
+using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
-using Assets.Scripts.SaveLoad;
+using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
-using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Levels
 {
     public class LevelsController : IInitGame, ISaveGame, ILoadGame, IDieRestartGame, IFinishGame, IResetGame
     {
+        private IGameLogger _gameLogger;
+        private Transform _objectParent;
+        private readonly LevelsDictinaryModel _dictinaryModel;
+        private readonly Dictionary<string, LevelUIView> _dictinaryView;
+
         private LevelConfig _levelConfig;
 
         public LevelConfig Config => _levelConfig;
+
+        public LevelsController(IGameLogger gameLogger, LevelsDictinaryModel dictinaryModel)
+        {
+            _gameLogger = gameLogger;
+            _dictinaryModel = dictinaryModel;
+        }
 
         public void Initialization()
         {

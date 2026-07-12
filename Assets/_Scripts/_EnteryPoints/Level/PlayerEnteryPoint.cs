@@ -5,14 +5,11 @@ using Assets._Scripts.ObjectsScripts.Camera;
 using Assets._Scripts.ObjectsScripts.Player;
 using Assets._Scripts.ObjectsScripts.Player.Factorys;
 using Assets._Scripts.ObjectsScripts.StateMachines.Player;
-using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI;
 using Assets.Input;
-using Assets.Scripts.SaveLoad.Data;
 using ECM2;
 using System;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using VContainer.Unity;
 

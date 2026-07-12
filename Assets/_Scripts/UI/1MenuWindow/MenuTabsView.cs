@@ -126,16 +126,16 @@ namespace Assets._Scripts.UI._1MenuWindow
         {
             if (level == 1) // переделать...
             {
-                _eventBus.Publish(new StartLevel1 { Progress = 1});
+                //_eventBus.Publish(new StartLevel1 { Progress = 1});
 
             }
             else if (level == 2) // переделать...
             {
-                _eventBus.Publish(new StartLevel2 { Progress = 1 });
+                //_eventBus.Publish(new StartLevel2 { Progress = 1 });
             }
             else if (level == 3) // переделать...
             {
-                _eventBus.Publish(new StartLevel3 { Progress = 1 });
+                //_eventBus.Publish(new StartLevel3 { Progress = 1 });
             }
 
             await _loadManager.LoadScene(_scensGroups[level]);

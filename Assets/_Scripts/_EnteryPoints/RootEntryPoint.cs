@@ -16,23 +16,17 @@ namespace Assets._Scripts.EnteryPoints
 {
     public class RootEntryPoint : IInitializable
     {
-        //private GameSaveLoadService _gameSaveLoadService;
         private readonly LoadManager _loadManager;
         private readonly List<SceneGroupHandle> _scensGroups;
-        //private WalletModel _walletModel;
         private readonly GameLoopService _gameLoopService;
         private readonly LevelsController _levelsController;
         private readonly WalletController _walletController;
         private readonly AchievmentsController _achievmentsController;
-        //private IGameLogger _gameLogger;
-        //private EventBus _eventBus;
 
         [Inject]
         public RootEntryPoint(LoadManager loadManager,
             List<SceneGroupHandle> scensGroups,
             WalletController walletController,
-            //IGameLogger gameLogger,
-            //EventBus eventBus,
             AchievmentsController achievmentsController,
             LevelsController levelsController,
             GameLoopService gameLoopService
@@ -41,11 +35,8 @@ namespace Assets._Scripts.EnteryPoints
             _loadManager = loadManager;
             _scensGroups = scensGroups;
             _walletController = walletController;
-            //_gameSaveLoadService = gameSaveLoadService;
-            //_gameLogger = gameLogger;
             _achievmentsController = achievmentsController;
             _levelsController = levelsController;
-            //_eventBus = eventBus;
             _gameLoopService = gameLoopService;
         }
 
@@ -54,10 +45,6 @@ namespace Assets._Scripts.EnteryPoints
             Application.targetFrameRate = 60;
             Screen.sleepTimeout = SleepTimeout.NeverSleep;
             DOTween.SetTweensCapacity(5000, 100);
-
-            //var gameSaveData = _gameSaveLoadService.GameSaveData;
-            //var data = _gameSaveLoadService.GameSaveData.WalletData;
-            //var achData = _gameSaveLoadService.GameSaveData.AchievmentsData;
 
             _gameLoopService.SaveDict.Add("levelsController", _levelsController);
             _gameLoopService.LoadDict.Add("levelsController", _levelsController);
@@ -73,18 +60,9 @@ namespace Assets._Scripts.EnteryPoints
             _gameLoopService.SaveDict.Add("achievmentsController", _achievmentsController);
             _gameLoopService.LoadDict.Add("achievmentsController", _achievmentsController);
 
-            //_levelsController.Initialization(gameSaveData);
-            //_walletController.Initialization(gameSaveData);
-            //_achievmentsController.Initialization(gameSaveData);
-
-            //_levelsController.Load(gameSaveData);
-            //_walletController.Load(gameSaveData);
-            //_achievmentsController.Load(gameSaveData);
-
-
-            //var achModel = new AchievmentModelList(_eventBus, _gameLogger, achData, _walletController);
-            //_achievmentsController.Initialize(achModel);
-
+            _levelsController.Initialization();
+            _walletController.Initialization();
+            _achievmentsController.Initialization();
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

@@ -6,10 +6,7 @@ using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
-using Assets.Scripts.SaveLoad.Data;
 using System;
-using System.Collections.Generic;
-using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -18,8 +15,6 @@ namespace Assets._Scripts.EnteryPoints
     {
         private GameSaveLoadService _gameSaveLoadService;
         private Func<MenuTabsView> _menuFactory;
-        //private Func<AchievmentsCellsView> _achievmentsCellsFactory;
-        private Func<AchievementView> _achievmentsViewFactory;
         private AchievmentsController _achievmentsController;
         private LevelsController _levelsController;
         private WalletController _walletController;
@@ -30,16 +25,12 @@ namespace Assets._Scripts.EnteryPoints
             AchievmentsController achievmentsController,
             IGameLogger gameLogger,
             WalletController walletController,
-            Func<AchievementView> achievmentsViewFactory,
-            //Func<AchievmentsCellsView> achievmentsCellsFactory,
             GameSaveLoadService gameSaveLoadService,
             LevelsController levelsController
             ) 
         {
             _menuFactory = menuFactory;
-            //_achievmentsCellsFactory = achievmentsCellsFactory;
             _achievmentsController = achievmentsController;
-            _achievmentsViewFactory = achievmentsViewFactory;
             _walletController = walletController;
             _gameLogger = gameLogger;
             _levelsController = levelsController;
@@ -50,11 +41,8 @@ namespace Assets._Scripts.EnteryPoints
         {
             MenuTabsView menuTabsView = _menuFactory();
 
-            _levelsController.Initialization();
-            _walletController.Initialization();
-            _achievmentsController.Initialization(menuTabsView.AchievmentsParent);
-
             _walletController.AddMenuView(menuTabsView);
+            _achievmentsController.AddMenuView(menuTabsView.AchievmentsParent);
         }
 
         public void Start()
@@ -69,8 +57,7 @@ namespace Assets._Scripts.EnteryPoints
         public void Dispose()
         {
             _gameLogger.Log("MenuEnteryPoint OnDestroy", "Warning");
-            _achievmentsController.Dispose();
-            //_walletController.Dispose();
+            _achievmentsController.DisposeMenuView();
         }
     }
 }

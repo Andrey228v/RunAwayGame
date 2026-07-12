@@ -8,14 +8,12 @@ namespace Assets.Scripts.SaveLoad.Data
     public class GameSaveData
     {
         public Dictionary<string, LevelData> LevelsData = new Dictionary<string, LevelData>(); // LevelController
-        //public Dictionary<string, AchievmentCellData> AchievmentCellData;
         public Dictionary<string, AchievmentData> AchievmentsData; // AchievmentsController
         public ShopData ShopData; // ShopController
         public WalletData WalletData;
         public DateTime LastSaveTime;
 
         public GameSaveData(Dictionary<string, LevelData> levelsData,
-            //Dictionary<string, AchievmentCellData> achievmentCellData,
             Dictionary<string, AchievmentData> achievmentsData, 
             ShopData shopData, 
             WalletData walletData, 

@@ -1,7 +1,9 @@
 ﻿using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.Utilites.Loger;
 using DG.Tweening;
+using System;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -36,9 +38,11 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private Vector3 _originalScale;
         private IGameLogger _gameLogger;
 
-        public Button TakeRewardButton => _takeRewardButton;
+        //public Button TakeRewardButton => _takeRewardButton;
 
         public string Id => _id;
+
+        public event Action OnTakeRewardButtonClick;
 
 
 #if UNITY_EDITOR
@@ -80,38 +84,14 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private void Start()
         {
             _originalScale = transform.localScale;
+
+            _takeRewardButton.onClick.AddListener(TakeRewardButtonClick);
         }
 
         private void OnDestroy()
         {
             transform.DOKill();
-        }
-
-        public void ShowLocked()
-        {
-            _lockOverlay.SetActive(true);
-            _takeRewardButton.gameObject.SetActive(false);
-            _blockImage.gameObject.SetActive(true);
-            _progressBlock.SetActive(true);
-            _progressBar.gameObject.SetActive(true);
-        }
-
-        public void ShowUnlockedWithButtonReward()
-        {
-            _lockOverlay.SetActive(false);
-            _takeRewardButton.gameObject.SetActive(true);
-            _blockImage.gameObject.SetActive(false);
-            _progressBlock.SetActive(false);
-            _progressBar.gameObject.SetActive(false);
-        }
-
-        public void ShowUnlokedAfterReward()
-        {
-            _lockOverlay.SetActive(false);
-            _takeRewardButton.gameObject.SetActive(false);
-            _blockImage.gameObject.SetActive(false);
-            _progressBlock.SetActive(false);
-            _progressBar.gameObject.SetActive(false);
+            _takeRewardButton.onClick.RemoveListener(TakeRewardButtonClick);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -124,8 +104,21 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
             transform.DOScale(_originalScale, _duration).SetEase(Ease.OutQuad);
         }
 
-        public void SetProgress(AchievmentData data)
+        public void SetDataView(AchievmentData data)
         {
+            if (data.IsUnlock && data.IsRevardEnable)
+            {
+                ShowUnlockedWithButtonReward();
+            }
+            else if (data.IsUnlock == false)
+            {
+                ShowLocked();
+            }
+            else if (data.IsUnlock && data.IsUnlockAndTaken)
+            {
+                ShowUnlokedAfterReward();
+            }
+
             _progressBar.value = Mathf.Clamp01(data.Progress);
             _currentCountText.text = data.CurrentValue.ToString();
             _goalCountText.text = data.TargetValue.ToString();
@@ -134,5 +127,37 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         public void SetName(string name) => _name.text = name;
 
         public void SetDescription(string desc) => _description.text = desc;
+
+        private void ShowLocked()
+        {
+            _lockOverlay.SetActive(true);
+            _takeRewardButton.gameObject.SetActive(false);
+            _blockImage.gameObject.SetActive(true);
+            _progressBlock.SetActive(true);
+            _progressBar.gameObject.SetActive(true);
+        }
+
+        private void ShowUnlockedWithButtonReward()
+        {
+            _lockOverlay.SetActive(false);
+            _takeRewardButton.gameObject.SetActive(true);
+            _blockImage.gameObject.SetActive(false);
+            _progressBlock.SetActive(false);
+            _progressBar.gameObject.SetActive(false);
+        }
+
+        private void ShowUnlokedAfterReward()
+        {
+            _lockOverlay.SetActive(false);
+            _takeRewardButton.gameObject.SetActive(false);
+            _blockImage.gameObject.SetActive(false);
+            _progressBlock.SetActive(false);
+            _progressBar.gameObject.SetActive(false);
+        }
+
+        private void TakeRewardButtonClick()
+        {
+            OnTakeRewardButtonClick?.Invoke();
+        }
     }
 }

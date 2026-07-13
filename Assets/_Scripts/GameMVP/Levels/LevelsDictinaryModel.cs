@@ -1,22 +1,22 @@
-﻿using Assets._Scripts.GameControllers.Achievments;
-using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.Utilites.Loger;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
 
 
-namespace Assets._Scripts.GameMVP.Achievments
+namespace Assets._Scripts.GameMVP.Levels
 {
-    public class AchievmentDictinaryModel : IDisposable
+    public class LevelsDictinaryModel : IDisposable
     {
-        private readonly Dictionary<string, AchievmentModel> _objectModels;
+        private readonly Dictionary<string, LevelModel> _objectModels;
         private IGameLogger _gameLogger;
 
-        public event Action<AchievmentModel> OnObjectAdd;
+        public event Action<LevelModel> OnObjectAdd;
 
-        public AchievmentDictinaryModel(IGameLogger gameLogger)
+        public LevelsDictinaryModel(IGameLogger gameLogger)
         {
-            _objectModels = new Dictionary<string, AchievmentModel>();
+            _objectModels = new Dictionary<string, LevelModel>();
             _gameLogger = gameLogger;
         }
 
@@ -25,13 +25,13 @@ namespace Assets._Scripts.GameMVP.Achievments
             _objectModels.Clear();
         }
 
-        public bool TryAddObject(string id, AchievmentData data, AchievmentsReward achievmentsReward)
+        public bool TryAddObject(string id, LevelData data)
         {
             bool isAdd = false;
 
             if (_objectModels.ContainsKey(id) == false)
             {
-                AchievmentModel model = new AchievmentModel(data, achievmentsReward, _gameLogger);
+                LevelModel model = new LevelModel(data);
 
                 if (_objectModels.TryAdd(id, model) == false)
                     throw new ArgumentNullException("ERROR KEY");
@@ -44,12 +44,12 @@ namespace Assets._Scripts.GameMVP.Achievments
             return isAdd;
         }
 
-        public bool TryGetModel(string id, out AchievmentModel model)
+        public bool TryGetModel(string id, out LevelModel model)
         {
             bool isFind = false;
             model = null;
 
-            if (_objectModels.TryGetValue(id, out AchievmentModel value))
+            if (_objectModels.TryGetValue(id, out LevelModel value))
             {
                 model = value;
                 isFind = true;

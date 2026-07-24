@@ -21,7 +21,7 @@ namespace Assets._Scripts.GameControllers.Wallets
             _gameLogger = gameLogger;
         }
 
-        public void Initialization()
+        public void Initialization(GameSaveData gameSaveData)
         {
             var walletData = new WalletData();
 

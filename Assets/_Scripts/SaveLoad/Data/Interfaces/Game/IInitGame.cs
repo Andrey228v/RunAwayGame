@@ -4,6 +4,6 @@ namespace Assets._Scripts.SaveLoad.Data.Interfaces.Game
 {
     public interface IInitGame
     {
-        public void Initialization();
+        public void Initialization(GameSaveData gameSaveData);
     }
 }

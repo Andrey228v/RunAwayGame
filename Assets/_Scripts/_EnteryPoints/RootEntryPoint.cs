@@ -1,11 +1,9 @@
-﻿//using Assets._Scripts.EventBusGame;
-using Assets._Scripts.GameControllers;
+﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
-//using Assets._Scripts.SaveLoad.Service;
+using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
-//using Assets._Scripts.Utilites.Loger;
 using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +20,7 @@ namespace Assets._Scripts.EnteryPoints
         private readonly LevelsController _levelsController;
         private readonly WalletController _walletController;
         private readonly AchievmentsController _achievmentsController;
+        private readonly GameSaveLoadService _gameSaveLoadService;
 
         [Inject]
         public RootEntryPoint(LoadManager loadManager,
@@ -29,6 +28,7 @@ namespace Assets._Scripts.EnteryPoints
             WalletController walletController,
             AchievmentsController achievmentsController,
             LevelsController levelsController,
+            GameSaveLoadService gameSaveLoadService,
             GameLoopService gameLoopService
             )
         {
@@ -38,6 +38,7 @@ namespace Assets._Scripts.EnteryPoints
             _achievmentsController = achievmentsController;
             _levelsController = levelsController;
             _gameLoopService = gameLoopService;
+            _gameSaveLoadService = gameSaveLoadService;
         }
 
         public async void Initialize()
@@ -60,9 +61,9 @@ namespace Assets._Scripts.EnteryPoints
             _gameLoopService.SaveDict.Add("achievmentsController", _achievmentsController);
             _gameLoopService.LoadDict.Add("achievmentsController", _achievmentsController);
 
-            _levelsController.Initialization();
-            _walletController.Initialization();
-            _achievmentsController.Initialization();
+            _levelsController.Initialization(_gameSaveLoadService.GameSaveData);
+            _walletController.Initialization(_gameSaveLoadService.GameSaveData);
+            _achievmentsController.Initialization(_gameSaveLoadService.GameSaveData);
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

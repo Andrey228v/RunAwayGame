@@ -6,6 +6,7 @@ using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP.Achievments;
+using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
 using Assets._Scripts.Utilites.Loger;
@@ -31,6 +32,7 @@ namespace Assets._Scripts.Installers
             builder.Register<LoadManager>(Lifetime.Singleton);
             builder.RegisterEntryPoint<GameSaveLoadService>(Lifetime.Singleton).AsSelf();
             builder.RegisterEntryPoint<LevelsController>().AsSelf();
+            builder.RegisterEntryPoint<LevelsDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<AchievmentsController>().AsSelf();
             builder.RegisterEntryPoint<ShopController>().AsSelf();
             builder.Register<WalletController>(Lifetime.Singleton).AsSelf();

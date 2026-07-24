@@ -4,12 +4,9 @@ using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using Assets._Scripts.ObjectsScripts.Points.Finish;
-using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;
-using Assets.Scripts.SaveLoad.Data;
 using System;
-using System.Collections.Generic;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -110,8 +107,6 @@ namespace Assets._Scripts.EnteryPoints
                 model.OnTakeValue -= _walletController.AddConis;
                 model.OnTake -= SaveLevel;
             }
-
-
         }
 
         private void CoinAdd(CoinModel model)

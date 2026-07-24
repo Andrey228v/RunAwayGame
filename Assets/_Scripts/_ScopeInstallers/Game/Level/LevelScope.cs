@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.EnteryPoints;
+using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using Assets._Scripts.ObjectsScripts.Points.Finish;
@@ -25,6 +26,8 @@ namespace Assets._Scripts.Installers
 
             builder.RegisterEntryPoint<LastCheckPointModel>().AsSelf();
             builder.RegisterEntryPoint<LastCheckPointController>().AsSelf();
+
+            
         }
     }
 }

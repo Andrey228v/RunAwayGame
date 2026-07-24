@@ -3,6 +3,7 @@ using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,14 +26,14 @@ namespace Assets._Scripts.GameControllers.Levels
             _dictinaryModel = dictinaryModel;
         }
 
-        public void Initialization()
+        public void Initialization(GameSaveData gameSaveData)
         {
+            if (gameSaveData == null)
+            {
+                throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
+            }
 
-            //
-            //if (gameSaveData == null)
-            //{
-            //    throw new ArgumentNullException(nameof(gameSaveData), "gameSaveData cannot be null");
-            //}
+
 
             //if (gameSaveData.LevelsData.TryGetValue(_levelConfig.LevelName, out LevelData levelData) == false)
             //{
@@ -47,7 +48,9 @@ namespace Assets._Scripts.GameControllers.Levels
             //            },
             //            new Dictionary<string, CheckPointData>(),
             //            new Dictionary<string, CoinData>()
-            //        ); { };
+            //        );
+            //    { }
+            //    ;
 
             //    gameSaveData.LevelsData.Add(_levelConfig.LevelName, newLevelData);
             //}

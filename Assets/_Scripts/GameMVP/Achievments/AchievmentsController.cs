@@ -25,7 +25,7 @@ namespace Assets._Scripts.GameControllers.Achievments
             _dictinaryModel.OnObjectAdd += ObjectInit;
         }
 
-        public void Initialization()
+        public void Initialization(GameSaveData gameSaveData)
         {
             
         }

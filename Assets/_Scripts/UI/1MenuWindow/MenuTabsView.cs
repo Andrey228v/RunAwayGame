@@ -45,27 +45,26 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         [Header("Parents")]
         [SerializeField] private Transform _achievmentsParent;
+        [SerializeField] private Transform _levelsParent;
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
         private LoadManager _loadManager;
         private List<SceneGroupHandle> _scensGroups;
-        private EventBus _eventBus;
 
         public Transform AchievmentsParent => _achievmentsParent;
+        public Transform LevelsParent => _levelsParent;
 
         public event Action OnDestroyView;
 
         [Inject]
         public void Constructor( 
             LoadManager loadManager,
-            List<SceneGroupHandle> scensGroups,
-            EventBus eventBus
+            List<SceneGroupHandle> scensGroups
             )
         {
             _loadManager = loadManager;
             _scensGroups = scensGroups;
-            _eventBus = eventBus;
         }
 
         private void OnEnable()

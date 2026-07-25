@@ -11,10 +11,19 @@ namespace Assets._Scripts.GameControllers.Levels
         public event Action<int, int> OnProgressChange;
         public event Action<int> OnProgressMaxChange;
 
+        public LevelData Data => _data;
+
         public LevelModel(LevelData data)
         {
             _data = data;
         }
+
+        public void SetData(LevelData data)
+        {
+            _data = data;
+            //OnAchievementDataChanged?.Invoke(_data.Id, _data);
+        }
+
 
         public void SetProgress(int addProgress)
         {

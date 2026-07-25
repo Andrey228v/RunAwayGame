@@ -45,7 +45,6 @@ namespace Assets._Scripts.GameControllers.Achievments
             _gameLogger = gameLogger;
         }
 
-
         public void SetData(AchievmentData data)
         {
             _data = data;

@@ -43,6 +43,7 @@ namespace Assets._Scripts.EnteryPoints
 
             _walletController.AddMenuView(menuTabsView);
             _achievmentsController.AddMenuView(menuTabsView.AchievmentsParent);
+            _levelsController.AddMenuView(menuTabsView.LevelsParent);
         }
 
         public void Start()
@@ -58,6 +59,7 @@ namespace Assets._Scripts.EnteryPoints
         {
             _gameLogger.Log("MenuEnteryPoint OnDestroy", "Warning");
             _achievmentsController.DisposeMenuView();
+            _levelsController.DisposeMenuView();
         }
     }
 }

@@ -1,8 +1,6 @@
-﻿using Assets._Scripts.GameMVP.Achievments;
-using Assets._Scripts.GameMVP.Levels;
+﻿using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
-using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
@@ -12,7 +10,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Levels
 {
-    public class LevelsController : IInitGame, ISaveGame, ILoadGame, IDieRestartGame, IFinishGame, IResetGame
+    public class LevelsController : ISaveGame, ILoadGame, IDieRestartGame, IFinishGame, IResetGame
     {
         private IGameLogger _gameLogger;
         private Transform _objectParent;
@@ -30,9 +28,24 @@ namespace Assets._Scripts.GameControllers.Levels
             _dictinaryView = new Dictionary<string, LevelUIView>();
         }
 
-        public void Initialization(GameSaveData gameSaveData)
+        //Инициализируется именно при запуске уровня. Правильно ли это или нет. Пока не знаю.
+        //Запускать только в LevelEnteryPoint...
+        public void Initialization(LevelData levelData)
         {
+            if (_levelConfig == null)
+            {
+                throw new ArgumentNullException(nameof(_levelConfig), "_levelConfig cannot be null/any");
+            }
+            else
+            {
+                //переделать...
+                var playerData = new PlayerData();
+                playerData.PlayerPosition = _levelConfig.StartPosition;
+                playerData.PlayerRotation = _levelConfig.PlayerStartRotation;
 
+                levelData.LastCheckPointPosition = _levelConfig.StartPosition;
+                levelData.PlayerData = playerData;
+            }
         }
 
         public void DisposeMenuView()
@@ -66,15 +79,6 @@ namespace Assets._Scripts.GameControllers.Levels
         public void Load(GameSaveData gameSaveData) 
         {
             var levelData = gameSaveData.LevelsData;
-
-
-            //foreach (var key in levelData.Keys)
-            //{
-            //    if (_dictinaryModel.TryGetModel(key, out var model))
-            //    {
-            //        model.SetData(levelData[key]);
-            //    }
-            //}
 
             foreach (var key in _dictinaryView.Keys)
             {

@@ -8,7 +8,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
     {
         private readonly Dictionary<string, CheckPointModel> _objectModels;
 
-        public event Action<CheckPointModel> OnObjectAdd;
+        public event Action<CheckPointModel> OnObjectAdd; // Как только мы добавляем в словарь наш объект мы его подвязываем.
 
         public Dictionary<string, CheckPointModel> ObjectModelds => _objectModels;
 

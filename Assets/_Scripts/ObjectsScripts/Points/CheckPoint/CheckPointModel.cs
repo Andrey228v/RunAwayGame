@@ -26,14 +26,14 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         {
             _data.IsActivated = isActivate;
 
-            OnObjectStatusChange?.Invoke(_data.Id, _data.IsActivated);
+            OnObjectStatusChange?.Invoke(_data.Id, _data.IsActivated); // изменяем view
         }
 
         public void Take(Vector3 coords)
         {
-            OnTake?.Invoke();
-            OnTakePosition?.Invoke(coords);
-            OnTakeValue?.Invoke(1);
+            OnTake?.Invoke(); // сохраняем
+            OnTakePosition?.Invoke(coords); // устанавливаем точку последней позиции игрока.
+            OnTakeValue?.Invoke(1); // для ачивок, что если мы делаем счёт.
         }
 
         public void Reset()

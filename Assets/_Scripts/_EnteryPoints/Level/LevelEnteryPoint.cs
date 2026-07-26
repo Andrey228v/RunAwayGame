@@ -60,8 +60,9 @@ namespace Assets._Scripts.EnteryPoints
         public void Start()
         {
             _levelsController.SetLevelConfig(_levelConfig);
-            //_levelsController.Initialization(_gameSaveLoadService.GameSaveData); // Тут последовательности важна. Подумать как переделать.
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
+
+            _levelsController.Initialization(levelData);
 
             _coinDictinaryModel.OnObjectAdd += CoinAdd;
             _checkPointDictinaryModel.OnObjectAdd += CheckPointAdd;
@@ -69,25 +70,6 @@ namespace Assets._Scripts.EnteryPoints
             _coinController.Initialization(levelData, _levelConfig);
             _checkPointsController.Initialization(levelData, _levelConfig);
             _lastCheckPointController.Initialization(levelData, _levelConfig);
-
-            //_gameLoopController.SaveList.Add(_coinController);
-            //_gameLoopController.LoadList.Add(_coinController);
-            //_gameLoopController.DieRestartList.Add(_coinController);
-            //_gameLoopController.FinishList.Add(_coinController);
-
-            //_gameLoopController.SaveList.Add(_checkPointsController);
-            //_gameLoopController.LoadList.Add(_checkPointsController);
-            //_gameLoopController.DieRestartList.Add(_checkPointsController);
-            //_gameLoopController.FinishList.Add(_checkPointsController);
-
-            //_gameLoopController.FinishList.Add(_finishController);
-
-            //_gameLoopController.SaveList.Add(_lastCheckPointController);
-            //_gameLoopController.LoadList.Add(_lastCheckPointController);
-            //_gameLoopController.DieRestartList.Add(_lastCheckPointController);
-            //_gameLoopController.FinishList.Add(_lastCheckPointController);
-
-
 
             _finishModel.OnObjectStatusChange += FinishLevel;
         }

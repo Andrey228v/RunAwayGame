@@ -61,7 +61,6 @@ namespace Assets._Scripts.EnteryPoints
             _gameLoopService.SaveDict.Add("achievmentsController", _achievmentsController);
             _gameLoopService.LoadDict.Add("achievmentsController", _achievmentsController);
 
-            _levelsController.Initialization(_gameSaveLoadService.GameSaveData);
             _walletController.Initialization(_gameSaveLoadService.GameSaveData);
             _achievmentsController.Initialization(_gameSaveLoadService.GameSaveData);
 

@@ -28,25 +28,74 @@ namespace Assets._Scripts.GameControllers.Levels
             _dictinaryView = new Dictionary<string, LevelUIView>();
         }
 
-        //Инициализируется именно при запуске уровня. Правильно ли это или нет. Пока не знаю.
-        //Запускать только в LevelEnteryPoint...
-        public void Initialization(LevelData levelData)
+        //Шаг №1. Добавляются вьюшки и добавляется информация в модель.
+        public void AddMenuView(Transform parent)
         {
-            if (_levelConfig == null)
-            {
-                throw new ArgumentNullException(nameof(_levelConfig), "_levelConfig cannot be null/any");
-            }
-            else
-            {
-                //переделать...
-                var playerData = new PlayerData();
-                playerData.PlayerPosition = _levelConfig.StartPosition;
-                playerData.PlayerRotation = _levelConfig.PlayerStartRotation;
+            _objectParent = parent;
 
-                levelData.LastCheckPointPosition = _levelConfig.StartPosition;
-                levelData.PlayerData = playerData;
+            for (int i = 0; i < _objectParent.childCount; i++)
+            {
+                if (_objectParent.GetChild(i).TryGetComponent<LevelUIView>(out var view))
+                {
+                    var id = view.Id;
+
+                    _dictinaryView.Add(id, view);
+
+                    //Так ли, пускай пока так будет...
+                    var data = new LevelData(
+                        false,
+                        new LastCheckPointData(),
+                        new PlayerData(),
+                        new Dictionary<string, CheckPointData>(),
+                        new Dictionary<string, CoinData>()
+                        );
+
+                    _dictinaryModel.TryAddObject(id, data);
+                    _dictinaryModel.TryGetModel(id, out var model);
+                }
             }
         }
+
+        //Шаг №2 инициализация словоря загрузки.
+        //Инициализируется именно при запуске уровня. Правильно ли это или нет. Пока не знаю.
+        //Запускать только в LevelEnteryPoint...
+        public void Initialization(GameSaveData gameSaveData)
+        {
+            var levelsData = gameSaveData.LevelsData;
+            var key = _levelConfig.LevelName;
+
+            if (levelsData.ContainsKey(key) == false)
+            {
+                var newData = new LevelData(
+                    false,
+                    new LastCheckPointData(),
+                    new PlayerData(),
+                    new Dictionary<string, CheckPointData>(),
+                    new Dictionary<string, CoinData>()
+                    );
+
+                gameSaveData.LevelsData.Add(key, newData);
+            }
+        }
+
+        //Шаг №3
+        //Загрукза в модель данных.
+        public void Load(GameSaveData gameSaveData)
+        {
+            var levelData = gameSaveData.LevelsData;
+
+            foreach (var key in _dictinaryView.Keys)
+            {
+                if (_dictinaryModel.TryGetModel(key, out var model))
+                {
+                    if (levelData.TryGetValue(key, out LevelData data))
+                    {
+                        model.SetData(levelData[key]);
+                    }
+                }
+            }
+        }
+
 
         public void DisposeMenuView()
         {
@@ -76,34 +125,7 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
-        public void Load(GameSaveData gameSaveData) 
-        {
-            var levelData = gameSaveData.LevelsData;
 
-            foreach (var key in _dictinaryView.Keys)
-            {
-                if (_dictinaryModel.TryGetModel(key, out var model))
-                {
-                    if (levelData.TryGetValue(key, out LevelData data))
-                    {
-                        model.SetData(levelData[key]);
-                    }
-                    else
-                    {
-                        //Под вопросом. Тут ли это делается и дублируется с нижней частью кода...
-                        var newData = new LevelData(
-                            false,
-                            Vector3.zero,
-                            new PlayerData(),
-                            new Dictionary<string, CheckPointData>(),
-                            new Dictionary<string, CoinData>()
-                            );
-
-                        gameSaveData.LevelsData.Add(key, newData);
-                    }
-                }
-            }
-        }
 
         public void DieRestart(GameSaveData gameSaveData)
         {
@@ -120,31 +142,6 @@ namespace Assets._Scripts.GameControllers.Levels
 
         }
 
-        public void AddMenuView(Transform parent)
-        {
-            _objectParent = parent;
 
-            for (int i = 0; i < _objectParent.childCount; i++)
-            {
-                if (_objectParent.GetChild(i).TryGetComponent<LevelUIView>(out var view))
-                {
-                    var id = view.Id;
-
-                    _dictinaryView.Add(id, view);
-
-                    //Так ли, пускай пока так будет...
-                    var data = new LevelData(
-                        false,
-                        Vector3.zero,
-                        new PlayerData(),
-                        new Dictionary<string, CheckPointData>(),
-                        new Dictionary<string, CoinData>()
-                        );
-
-                    _dictinaryModel.TryAddObject(id, data);
-                    _dictinaryModel.TryGetModel(id, out var model);
-                }
-            }
-        }
     }
 }

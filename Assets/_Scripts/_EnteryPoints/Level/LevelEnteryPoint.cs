@@ -59,10 +59,10 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
-            _levelsController.SetLevelConfig(_levelConfig);
-            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
+            _levelsController.SetLevelConfig(_levelConfig); // шаг №1 задание конфига.
+            _levelsController.Initialization(_gameSaveLoadService.GameSaveData); // создаём lvldata если его нет для данного уровня.
 
-            _levelsController.Initialization(levelData);
+            var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
 
             _coinDictinaryModel.OnObjectAdd += CoinAdd;
             _checkPointDictinaryModel.OnObjectAdd += CheckPointAdd;

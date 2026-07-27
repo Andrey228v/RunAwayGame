@@ -1,22 +1,23 @@
-﻿using System;
+﻿using Assets._Scripts.SaveLoad.Data;
+using System;
 using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 {
     public class LastCheckPointModel
     {
-        private Vector3 _position;
+        private LastCheckPointData _position;
 
-        public event Action<Vector3> OnTransformChanged;
+        public event Action<LastCheckPointData> OnTransformChanged;
 
-        public Vector3 Position => _position;
+        public LastCheckPointData Position => _position;
 
-        public LastCheckPointModel()
+        public LastCheckPointModel(LastCheckPointData data)
         {
-            _position = Vector3.zero;
+            _position = data;
         }
 
-        public void SetTransorm(Vector3 position)
+        public void SetTransorm(LastCheckPointData position)
         {
             _position = position;
 

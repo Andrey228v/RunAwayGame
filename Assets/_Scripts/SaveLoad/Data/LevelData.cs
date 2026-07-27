@@ -12,13 +12,13 @@ namespace Assets.Scripts.SaveLoad.Data
         public bool IsLevelStart; // Был ли уровень запущен до этого запуска ??
         public int ProgressMax;
         public int CurrentProgress;
-        public Vector3 LastCheckPointPosition;
+        public LastCheckPointData LastCheckPointPosition;
         public PlayerData PlayerData; // под вопросом. Вроде как не используется...
         public Dictionary<string, CheckPointData> CheckPoints;
         public Dictionary<string, CoinData> Coins;
 
-        public LevelData(bool isLevelStart, 
-            Vector3 lastCheckPointPosition, 
+        public LevelData(bool isLevelStart,
+            LastCheckPointData lastCheckPointPosition, 
             PlayerData playerData,
             Dictionary<string, CheckPointData> checkPoints,
             Dictionary<string, CoinData> coins)
@@ -32,9 +32,9 @@ namespace Assets.Scripts.SaveLoad.Data
 
         public void ResetData(LevelConfig levelConfig)
         {
-            LastCheckPointPosition = levelConfig.StartPosition;
+            //LastCheckPointPosition = levelConfig.StartPosition;
 
-            PlayerData.ResetData();
+            //PlayerData.ResetData();
 
             // Переделать.
             //foreach (var checkPoint in CheckPoints) 

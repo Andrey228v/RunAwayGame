@@ -51,13 +51,13 @@ namespace Assets._Scripts.ObjectsScripts.Player
         public void Finish(LevelData levelData)
         {
             Reset();
-            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition.data.position, levelData.LastCheckPointPosition.data.rotation);
         }
 
         public void DieRestart(LevelData levelData)
         {
             Reset();
-            _playerMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation);
+            _playerMB.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition.data.position, levelData.LastCheckPointPosition.data.rotation);
         }
 
         public void Save(LevelData levelData)
@@ -80,7 +80,7 @@ namespace Assets._Scripts.ObjectsScripts.Player
                 levelData.PlayerData = playerData;
             }
 
-            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition, levelData.PlayerData.PlayerRotation); // при финише надо ставить точку старта
+            _character.transform.SetLocalPositionAndRotation(levelData.LastCheckPointPosition.data.position, levelData.LastCheckPointPosition.data.rotation); // при финише надо ставить точку старта
         }
 
         private void Reset()

@@ -67,12 +67,21 @@ namespace Assets._Scripts.GameControllers.Levels
             if (levelsData.ContainsKey(key) == false)
             {
                 var newData = new LevelData(
-                    false,
-                    new LastCheckPointData(),
-                    new PlayerData(),
-                    new Dictionary<string, CheckPointData>(),
-                    new Dictionary<string, CoinData>()
-                    );
+                 false,
+                 null,
+                 null,
+                 null,
+                 null
+                 );
+
+
+                //var newData = new LevelData(
+                //    false,
+                //    new LastCheckPointData(),
+                //    new PlayerData(),
+                //    new Dictionary<string, CheckPointData>(),
+                //    new Dictionary<string, CoinData>()
+                //    );
 
                 gameSaveData.LevelsData.Add(key, newData);
             }

@@ -24,7 +24,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<LevelEnteryPoint>();
             builder.RegisterInstance(_levelConfig);
 
-            builder.RegisterEntryPoint<LastCheckPointModel>().AsSelf();
+            //builder.RegisterEntryPoint<LastCheckPointModel>().AsSelf();
             builder.RegisterEntryPoint<LastCheckPointController>().AsSelf();
 
             

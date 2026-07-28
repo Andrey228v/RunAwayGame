@@ -23,9 +23,15 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void Initialization(GameSaveData gameSaveData)
         {
-            var walletData = new WalletData();
+            var data = gameSaveData.WalletData;
 
-            _model = new WalletModel(walletData, _gameLogger);
+            if(data == null)
+            {
+                data = new WalletData();
+                gameSaveData.WalletData = data;
+            }
+
+            _model = new WalletModel(data, _gameLogger);
 
             _model.OnCoinsChanged += CoinUpdateView;
             _model.OnGobeletsChanged += GobeletsUpdateView;

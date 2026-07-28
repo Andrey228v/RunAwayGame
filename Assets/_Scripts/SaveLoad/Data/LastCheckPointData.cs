@@ -6,6 +6,7 @@ namespace Assets._Scripts.SaveLoad.Data
     [Serializable]
     public class LastCheckPointData
     {
-        public Transform data;
+        public Vector3 position;
+        public Quaternion rotation;
     }
 }

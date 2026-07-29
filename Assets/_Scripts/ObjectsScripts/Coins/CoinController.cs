@@ -54,6 +54,11 @@ namespace Assets._Scripts.ObjectsScripts.Coins
                 throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
             }
 
+            if(levelData.Coins == null)
+            {
+                levelData.Coins = new Dictionary<string, CoinData>();
+            }
+
             var listSaveData = levelData.Coins; //добавляем инициализацию в коин ?
 
             for (int i = 0; i < _objectParent.childCount; i++)

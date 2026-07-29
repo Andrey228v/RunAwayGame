@@ -66,6 +66,8 @@ namespace Assets._Scripts.GameControllers.Levels
 
             if (levelsData.ContainsKey(key) == false)
             {
+
+                //Мысль такая что каждый инициализирует свои элименеты в своём модуле. Тут инициализируется только ЛвлДата.
                 var newData = new LevelData(
                  false,
                  null,
@@ -73,15 +75,6 @@ namespace Assets._Scripts.GameControllers.Levels
                  null,
                  null
                  );
-
-
-                //var newData = new LevelData(
-                //    false,
-                //    new LastCheckPointData(),
-                //    new PlayerData(),
-                //    new Dictionary<string, CheckPointData>(),
-                //    new Dictionary<string, CoinData>()
-                //    );
 
                 gameSaveData.LevelsData.Add(key, newData);
             }

@@ -17,6 +17,14 @@ namespace Assets._Scripts.ObjectsScripts.Player
 
         public PlayerMB PlayerMB => _playerMB;
 
+        public void Initialization(LevelData levelData)
+        {
+            if(levelData.PlayerData == null)
+            {
+                levelData.PlayerData = new PlayerData();
+            }
+        }
+
         public void Dispose()
         {
             _isDisposed = true;

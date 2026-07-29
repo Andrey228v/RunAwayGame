@@ -53,6 +53,12 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
             }
 
+            if(levelData.CheckPoints == null)
+            {
+                levelData.CheckPoints = new Dictionary<string, CheckPointData>();
+            }
+
+
             var listSaveData = levelData.CheckPoints;
 
             for (int i = 0; i < _objectParent.childCount; i++)

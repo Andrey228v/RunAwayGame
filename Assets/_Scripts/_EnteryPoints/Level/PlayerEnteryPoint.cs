@@ -63,6 +63,9 @@ namespace Assets._Scripts.EnteryPoints
 
             var levelConfig = _levelsController.Config;
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[levelConfig.LevelName];
+
+
+            _playerController.Initialization(levelData);
             _playerController.Load(levelData);
 
             //_playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;

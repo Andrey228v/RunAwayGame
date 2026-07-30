@@ -10,11 +10,6 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         private LastCheckPointModel _model;
         private LevelConfig _levelConfig;
 
-        public LastCheckPointController() 
-        {
-            //_model = model; 
-        }
-
         public void Dispose()
         {
 

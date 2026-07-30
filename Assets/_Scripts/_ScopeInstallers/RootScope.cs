@@ -5,6 +5,7 @@ using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.GameMVP;
 using Assets._Scripts.GameMVP.Achievments;
 using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.SaveLoad.Service;
@@ -39,6 +40,7 @@ namespace Assets._Scripts.Installers
             builder.Register<EventBus>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
             builder.Register<IGameLogger>(container => new UnityLogger("Game"), Lifetime.Singleton);
             builder.RegisterEntryPoint<GameLoopService>(Lifetime.Singleton).AsSelf();
+            builder.RegisterEntryPoint<LevelLoopService>(Lifetime.Singleton).AsSelf();
 
             builder.RegisterEntryPoint<AchievmentDictinaryModel>().AsSelf(); 
         }

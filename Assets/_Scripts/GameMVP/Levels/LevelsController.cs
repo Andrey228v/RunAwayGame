@@ -56,10 +56,16 @@ namespace Assets._Scripts.GameControllers.Levels
             }
         }
 
+        public void Initialization(GameSaveData gameSaveData)
+        {
+
+        }
+
+
         //Шаг №2 инициализация словоря загрузки.
         //Инициализируется именно при запуске уровня. Правильно ли это или нет. Пока не знаю.
         //Запускать только в LevelEnteryPoint...
-        public void Initialization(GameSaveData gameSaveData)
+        public void InitializationLevelData(GameSaveData gameSaveData)
         {
             var levelsData = gameSaveData.LevelsData;
             var key = _levelConfig.LevelName;
@@ -109,6 +115,8 @@ namespace Assets._Scripts.GameControllers.Levels
             }
 
             _dictinaryView.Clear();
+
+
         }
 
         public void SetLevelConfig(LevelConfig levelConfig)

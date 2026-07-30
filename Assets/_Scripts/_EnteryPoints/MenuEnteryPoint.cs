@@ -50,6 +50,9 @@ namespace Assets._Scripts.EnteryPoints
         {
             var gameSaveData = _gameSaveLoadService.GameSaveData;
 
+            _levelsController.Initialization(gameSaveData);
+
+
             _levelsController.Load(gameSaveData);
             _walletController.Load(gameSaveData);
             _achievmentsController.Load(gameSaveData);

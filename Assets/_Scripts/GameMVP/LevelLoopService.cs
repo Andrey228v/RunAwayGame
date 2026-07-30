@@ -11,81 +11,63 @@ namespace Assets._Scripts.GameMVP
 {
     public class LevelLoopService
     {
-        private readonly Dictionary<string, IInit> _initList; // каждый подэлемент должен сам инициализировать то, что будет. 
-        private readonly Dictionary<string, ISave> _saveList;
-        private readonly Dictionary<string, ILoad> _loadList;
-        private readonly Dictionary<string, IDieRestart> _dieRestartList;
-        private readonly Dictionary<string, IFinish> _finishList;
-        private readonly Dictionary<string, IReset> _resetList;
+        private readonly Dictionary<string, IInit> _initDict; // каждый подэлемент должен сам инициализировать то, что будет. 
+        private readonly Dictionary<string, ISave> _saveDict;
+        private readonly Dictionary<string, ILoad> _loadDict;
+        private readonly Dictionary<string, IDieRestart> _dieRestartDict;
+        private readonly Dictionary<string, IFinish> _finishDict;
+        private readonly Dictionary<string, IReset> _resetDict;
 
+        public Dictionary<string, IInit> InitDict => _initDict;
+        public Dictionary<string, ISave> SaveDict => _saveDict;
+        public Dictionary<string, ILoad> LoadDict => _loadDict;
+        public Dictionary<string, IDieRestart> DieRestartDict => _dieRestartDict;
+        public Dictionary<string, IFinish> FinishDict => _finishDict;
+        public Dictionary<string, IReset> ResetDict => _resetDict;
 
+        public void SaveAllServices(LevelData levelData)
+        {
+            if (levelData == null)
+            {
+                throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
+            }
 
+            foreach (var key in _saveDict.Keys)
+            {
+                _saveDict[key].Save(levelData);
+            }
+        }
 
-        //public void SaveAllServices(LevelData levelData)
-        //{
-        //    if (levelData == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
-        //    }
+        public void LoadAllServices(LevelData levelData)
+        {
+            foreach (var key in _loadDict.Keys)
+            {
+                _loadDict[key].Load(levelData);
+            }
+        }
 
-        //    foreach (ISave save in _saveList)
-        //    {
-        //        save.Save(levelData);
-        //    }
+        public void DieRestart(LevelData levelData)
+        {
+            foreach (var key in _dieRestartDict.Keys)
+            {
+                _dieRestartDict[key].DieRestart(levelData);
+            }
+        }
 
-        //    _gameSaveLoadService.SaveGame();
-        //}
+        public void FinishLevel(LevelData levelData)
+        {
+            foreach (var key in _finishDict.Keys)
+            {
+                _finishDict[key].Finish(levelData);
+            }
+        }
 
-        //public void LoadAllServices(LevelData levelData)
-        //{
-        //    if (levelData == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(levelData), "levelData cannot be null");
-        //    }
-
-        //    if (_levelsController.Config == null)
-        //    {
-        //        return;
-        //    }
-
-        //    foreach (ILoad load in _loadList)
-        //    {
-        //        load.Load(levelData);
-        //    }
-        //}
-
-        //public void DieRestart(LevelData levelData)
-        //{
-        //    foreach (IDieRestart restart in _dieRestartList)
-        //    {
-        //        restart.DieRestart(levelData);
-        //    }
-        //}
-
-        //public void FinishLevel(LevelData levelData)
-        //{
-        //    if (levelData == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
-        //    }
-
-        //    foreach (IFinish finish in _finishList)
-        //    {
-        //        finish.Finish(levelData);
-        //    }
-        //}
-
-        //public void ResetLevel(LevelData levelData, LevelConfig levelConfig)
-        //{
-        //    if (levelData == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(levelData), "gameSaveData cannot be null");
-        //    }
-
-        //    foreach (IReset reset in _resetList)
-        //    {
-        //        reset.ResetAllObjects(levelConfig);
-        //    }
-        //}
+        public void ResetLevel(LevelData levelData)
+        {
+            foreach (var key in _finishDict.Keys)
+            {
+                //_resetDict[key].Reset(levelData);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.GameMVP;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using Assets._Scripts.ObjectsScripts.Points.Finish;
@@ -28,19 +29,21 @@ namespace Assets._Scripts.EnteryPoints
         private CoinDictinaryModel _coinDictinaryModel;
         private CheckPointDictinaryModel _checkPointDictinaryModel;
         private LastCheckPointController _lastCheckPointController;
+        private LevelLoopService _levelLoopService;
 
         public LevelEnteryPoint(GamePoints gamePoints,
-            CheckPointsController checkPointsController, 
+            CheckPointsController checkPointsController,
             CoinController coinController,
             GameSaveLoadService gameSaveLoadService,
             WalletController walletController,
             LevelConfig levelConfig,
             FinishController finishController,
             GameLoopService gameLoopController,
-            FinishModel finishModel, 
+            FinishModel finishModel,
             CoinDictinaryModel coinDictinaryModel,
             CheckPointDictinaryModel checkPointDictinaryModel,
             LastCheckPointController lastCheckPointController,
+            LevelLoopService _levelLoopService,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
@@ -55,12 +58,14 @@ namespace Assets._Scripts.EnteryPoints
             _checkPointDictinaryModel = checkPointDictinaryModel;
             _finishModel = finishModel;
             _lastCheckPointController = lastCheckPointController;
+
+            _levelLoopService.
         }
 
         public void Start()
         {
             _levelsController.SetLevelConfig(_levelConfig); // шаг №1 задание конфига.
-            _levelsController.Initialization(_gameSaveLoadService.GameSaveData); // создаём lvldata если его нет для данного уровня.
+            _levelsController.InitializationLevelData(_gameSaveLoadService.GameSaveData); // создаём lvldata если его нет для данного уровня.
 
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
 
@@ -72,6 +77,10 @@ namespace Assets._Scripts.EnteryPoints
             _lastCheckPointController.Initialization(levelData, _levelConfig);
 
             _finishModel.OnObjectStatusChange += FinishLevel;
+
+            _coinController.Load(levelData);
+            _checkPointsController.Load(levelData);
+            _lastCheckPointController.Load(levelData);
         }
 
         public void Dispose()
@@ -89,12 +98,14 @@ namespace Assets._Scripts.EnteryPoints
                 model.OnTakeValue -= _walletController.AddConis;
                 model.OnTake -= SaveLevel;
             }
+
+            //_levelLoopService
         }
 
         private void CoinAdd(CoinModel model)
         {
-            model.OnTakeValue += _walletController.AddConis;
             model.OnTake += SaveLevel;
+            model.OnTakeValue += _walletController.AddConis;
         }
 
         private void CheckPointAdd(CheckPointModel model)
@@ -109,9 +120,14 @@ namespace Assets._Scripts.EnteryPoints
             //_gameLoopController.FinishLevel(levelData); // здесь надо сделать levelLoopController;
         }
 
+
+        //Сохранаяем при взятии чекпоинта, монетки, завершении уровня.
         private void SaveLevel()
         {
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
+
+
+
             //_gameLoopController.SaveAllServices(levelData); // здесь надо сделать levelLoopController;
         }
 

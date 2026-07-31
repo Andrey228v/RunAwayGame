@@ -6,6 +6,7 @@ using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.ObjectsScripts.Coins
@@ -17,14 +18,17 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         private readonly CoinDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CoinView> _dictinaryView;
 
-        public CoinController(GamePoints points, IGameLogger gameLogger, CoinDictinaryModel dictinaryModel)
+        public CoinController(GamePoints points, 
+            IGameLogger gameLogger, 
+            CoinDictinaryModel dictinaryModel, 
+            Dictionary<string, CoinView> dictinaryView)
         {
             if (points == null)
                 throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
 
             _gameLogger = gameLogger;
             _objectParent = points.Coins;
-            _dictinaryView = new Dictionary<string, CoinView>();
+            _dictinaryView = dictinaryView;
             _dictinaryModel = dictinaryModel;
 
             _dictinaryModel.OnObjectAdd += ObjectInit;
@@ -61,41 +65,34 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             var listSaveData = levelData.Coins; //добавляем инициализацию в коин ?
 
-            for (int i = 0; i < _objectParent.childCount; i++)
+            foreach(var kye in _dictinaryView.Keys)
             {
-                if (_objectParent.GetChild(i).TryGetComponent<CoinView>(out var view))
+                var id = kye;
+                var view = _dictinaryView[id];
+
+                CoinData data = null;
+
+                if (listSaveData.ContainsKey(id))
                 {
-                    var id = view.Id;
-
-                    CoinData data = null;
-
-                    if (listSaveData.ContainsKey(id))
-                    {
-                        data = listSaveData[id];
-                    }
-                    else
-                    {
-                        data = new CoinData
-                        {
-                            Id = id,
-                            IsActivated = false
-                        };
-
-                        if (listSaveData.TryAdd(id, data) == false)
-                        {
-                            throw new ArgumentNullException(nameof(levelData), "key Error");
-                        }
-                    }
-
-                    view.OnActivateObject += ObjectActivateView;
-
-                    _dictinaryModel.AddObject(data);
-                    _dictinaryView[data.Id] = view;
+                    data = listSaveData[id];
                 }
                 else
                 {
-                    throw new ArgumentNullException(nameof(levelData), "view cannot be null/any");
+                    data = new CoinData
+                    {
+                        Id = id,
+                        IsActivated = false
+                    };
+
+                    if (listSaveData.TryAdd(id, data) == false)
+                    {
+                        throw new ArgumentNullException(nameof(levelData), "key Error");
+                    }
                 }
+
+                view.OnActivateObject += ObjectActivateView;
+
+                _dictinaryModel.AddObject(data);
             }
         }
 
@@ -150,7 +147,9 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         {
             if (levelData == null) return;
 
-            foreach (var key in levelData.Coins.Keys)
+            var keys = levelData.Coins.Keys.ToList();
+
+            foreach (var key in keys)
             {
                 if (_dictinaryModel.TryGetModel(key, out var model))
                 {

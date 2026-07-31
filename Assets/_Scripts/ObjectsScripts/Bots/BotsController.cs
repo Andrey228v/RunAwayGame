@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 using VContainer.Unity;
 
 namespace Assets._Scripts.ObjectsScripts.Bots

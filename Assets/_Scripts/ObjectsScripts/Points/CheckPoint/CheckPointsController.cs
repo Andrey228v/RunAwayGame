@@ -16,7 +16,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         private readonly CheckPointDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CheckPointView> _dictinaryView;
 
-        public CheckPointsController(GamePoints points, IGameLogger gameLogger, CheckPointDictinaryModel dictinaryModel)
+        public CheckPointsController(GamePoints points, CheckPointDictinaryModel dictinaryModel, IGameLogger gameLogger)
         {
             if (points == null)
                 throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
@@ -150,7 +150,9 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         {
             if (levelData == null) return;
 
-            foreach (var key in levelData.CheckPoints.Keys.ToList()) // под вопросом Keys...
+            var keys = levelData.CheckPoints.Keys.ToList();
+
+            foreach (var key in keys) // под вопросом Keys...
             {
                 if (_dictinaryModel.TryGetModel(key, out var model))
                 {

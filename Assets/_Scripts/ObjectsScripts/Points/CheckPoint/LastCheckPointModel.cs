@@ -12,11 +12,6 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 
         public LastCheckPointData Position => _position;
 
-        public LastCheckPointModel(LastCheckPointData data)
-        {
-            _position = data;
-        }
-
         public void SetTransorm(LastCheckPointData position)
         {
             _position = position;

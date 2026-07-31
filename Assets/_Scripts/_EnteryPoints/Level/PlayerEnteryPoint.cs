@@ -19,7 +19,7 @@ namespace Assets._Scripts.EnteryPoints
     {
         private PlayerController _playerController;
         private PlayerStateMachineFactory _playerStateMachineFactory;
-        private CameraController _cameraController;
+        private CameraView _cameraController;
         private Func<Character> _characterFactory;
         private BillboardManager _billboardManager;
         private Func<UnitInfoUIView> _unitInfoUIFactory;
@@ -30,7 +30,7 @@ namespace Assets._Scripts.EnteryPoints
 
         public PlayerEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory,
-            Func<Character> characterFactory, CameraController cameraController,
+            Func<Character> characterFactory, CameraView cameraController,
             BillboardManager billboardManager, Func<UnitInfoUIView> unitInfoUIFactory,
             WalletController walletController,
             GameLoopService gameLoopController,
@@ -78,7 +78,7 @@ namespace Assets._Scripts.EnteryPoints
             //_playerController.PlayerMB.OnDie -= _gameLoopController.DieRestart;
         }
 
-        private void InitPlayer(CameraController cameraController, 
+        private void InitPlayer(CameraView cameraController, 
             Func<Character> characterFactory, PlayerStateMachineFactory playerStateMachineFactory, PlayerController playerController,
             Func<UnitInfoUIView> unitInfoUIFactory, BillboardManager billboardManager, WalletController walletController)
         {

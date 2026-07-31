@@ -7,13 +7,13 @@ namespace Assets._Scripts.ObjectsScripts.Player
 {
     public class PlayerMoveDirectionCalculator : IDisposable
     {
-        private CameraController _cameraController;
+        private CameraView _cameraController;
         private InputReader _inputReader;
         private Vector3 _inputDirection;
         private Quaternion _cameraAngleRotation;
         private Vector3 _direction;
 
-        public PlayerMoveDirectionCalculator(CameraController cameraController, InputReader inputReader)
+        public PlayerMoveDirectionCalculator(CameraView cameraController, InputReader inputReader)
         {
             _cameraController = cameraController;
             _inputReader = inputReader;

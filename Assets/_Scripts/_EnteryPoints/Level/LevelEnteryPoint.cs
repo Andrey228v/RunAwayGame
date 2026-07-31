@@ -8,6 +8,8 @@ using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -30,6 +32,7 @@ namespace Assets._Scripts.EnteryPoints
         private CheckPointDictinaryModel _checkPointDictinaryModel;
         private LastCheckPointController _lastCheckPointController;
         private LevelLoopService _levelLoopService;
+        private GamePoints _gamePoints;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController,
@@ -43,7 +46,7 @@ namespace Assets._Scripts.EnteryPoints
             CoinDictinaryModel coinDictinaryModel,
             CheckPointDictinaryModel checkPointDictinaryModel,
             LastCheckPointController lastCheckPointController,
-            LevelLoopService _levelLoopService,
+            LevelLoopService levelLoopService,
             LevelsController levelsController)
         {
             _checkPointsController = checkPointsController;
@@ -58,12 +61,39 @@ namespace Assets._Scripts.EnteryPoints
             _checkPointDictinaryModel = checkPointDictinaryModel;
             _finishModel = finishModel;
             _lastCheckPointController = lastCheckPointController;
+            _levelLoopService = levelLoopService;
+            _gamePoints = gamePoints;
 
-            _levelLoopService.
+            _levelLoopService.SaveDict.Add("CheckPointsController", _checkPointsController);
+            _levelLoopService.SaveDict.Add("CoinController", _coinController);
+            //_levelLoopService.SaveDict.Add("FinishController", _finishController);
+            _levelLoopService.SaveDict.Add("LastCheckPointController", _lastCheckPointController);
+
+            _levelLoopService.LoadDict.Add("CheckPointsController", _checkPointsController);
+            _levelLoopService.LoadDict.Add("CoinController", _coinController);
+            //_levelLoopService.LoadDict.Add("FinishController", _finishController);
+            _levelLoopService.LoadDict.Add("LastCheckPointController", _lastCheckPointController);
+
+            _levelLoopService.DieRestartDict.Add("CheckPointsController", _checkPointsController);
+            _levelLoopService.DieRestartDict.Add("CoinController", _coinController);
+            //_levelLoopService.DieRestartDict.Add("FinishController", _finishController);
+            _levelLoopService.DieRestartDict.Add("LastCheckPointController", _lastCheckPointController);
+
+            _levelLoopService.FinishDict.Add("CheckPointsController", _checkPointsController);
+            _levelLoopService.FinishDict.Add("CoinController", _coinController);
+            _levelLoopService.FinishDict.Add("FinishController", _finishController);
+            _levelLoopService.FinishDict.Add("LastCheckPointController", _lastCheckPointController);
+
+            _levelLoopService.ResetDict.Add("CheckPointsController", _checkPointsController);
+            _levelLoopService.ResetDict.Add("CoinController", _coinController);
+            //_levelLoopService.ResetDict.Add("FinishController", _finishController);
+            _levelLoopService.ResetDict.Add("LastCheckPointController", _lastCheckPointController);
         }
 
         public void Start()
         {
+            Transform objectParent = _gamePoints.Coins;
+
             _levelsController.SetLevelConfig(_levelConfig); // шаг №1 задание конфига.
             _levelsController.InitializationLevelData(_gameSaveLoadService.GameSaveData); // создаём lvldata если его нет для данного уровня.
 
@@ -99,7 +129,7 @@ namespace Assets._Scripts.EnteryPoints
                 model.OnTake -= SaveLevel;
             }
 
-            //_levelLoopService
+            _levelLoopService.Dispose();
         }
 
         private void CoinAdd(CoinModel model)
@@ -125,11 +155,7 @@ namespace Assets._Scripts.EnteryPoints
         private void SaveLevel()
         {
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
-
-
-
-            //_gameLoopController.SaveAllServices(levelData); // здесь надо сделать levelLoopController;
+            _gameLoopController.SaveAllServices(_gameSaveLoadService.GameSaveData);
         }
-
     }
 }

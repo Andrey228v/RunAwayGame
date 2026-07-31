@@ -12,7 +12,7 @@ namespace Assets._Scripts.Installers
     public class PlayerScope : LifetimeScope
     {
         
-        [SerializeField] private CameraController _cameraController;
+        [SerializeField] private CameraView _cameraController;
 
 #if UNITY_EDITOR
         private void OnValidate()
@@ -28,8 +28,8 @@ namespace Assets._Scripts.Installers
         {
             builder.RegisterInstance(_cameraController);
             builder.RegisterEntryPoint<PlayerController>().AsSelf();
-            builder.RegisterEntryPoint<PlayerEnteryPoint>();
             builder.Register<PlayerStateMachineFactory>(Lifetime.Singleton);
+            builder.RegisterEntryPoint<PlayerEnteryPoint>();
         }
     }
 }

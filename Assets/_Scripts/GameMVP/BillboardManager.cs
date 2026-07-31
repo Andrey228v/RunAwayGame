@@ -11,7 +11,7 @@ namespace Assets._Scripts.GameControllers
     {
         private List<UnitInfoUIView> _unitsUI = new List<UnitInfoUIView>();
         private PlayerMoveDirectionCalculator _playerMoveDirectionCalculator;
-        private CameraController _cameraController;
+        private CameraView _cameraController;
 
         public void Dispose()
         {
@@ -41,7 +41,7 @@ namespace Assets._Scripts.GameControllers
             _playerMoveDirectionCalculator = directionCalculator;
         }
 
-        public void SetCameraController(CameraController cameraController)
+        public void SetCameraController(CameraView cameraController)
         {
             _cameraController = cameraController;
         }

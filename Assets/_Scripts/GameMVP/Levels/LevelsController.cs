@@ -130,7 +130,7 @@ namespace Assets._Scripts.GameControllers.Levels
             {
                 if (_dictinaryModel.TryGetModel(key, out var model))
                 {
-                    gameSaveData.LevelsData[key] = model.Data;
+                    //gameSaveData.LevelsData[key] = model.Data;
                 }
             }
         }

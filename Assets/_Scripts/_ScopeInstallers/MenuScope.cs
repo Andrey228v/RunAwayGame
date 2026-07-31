@@ -16,13 +16,12 @@ namespace Assets._Scripts.Installers
         [SerializeField] private UnitButtonSkinView _unitButtonSkinViewPrefab;
         [SerializeField] private ConditionSkinView _conditionSkinViewPrefab;
         [SerializeField] private AchievementView _achievementPrefab;
-        //[SerializeField] private AchievmentsCellsView _achievmentsCellsViewPrefab;
 
         protected override void Configure(IContainerBuilder builder)
         {
             builder.RegisterEntryPoint<MenuEnteryPoint>();
             
-            builder.Register<FactorySkinsCells>(Lifetime.Singleton);
+            builder.Register<FactorySkinsCells>(Lifetime.Singleton); // под вопросом. Скорее всего не нужно будет.
             builder.Register<SkinController>(Lifetime.Singleton);
             builder.Register<MenuController>(Lifetime.Singleton);
 
@@ -45,12 +44,6 @@ namespace Assets._Scripts.Installers
             {
                 return container.Instantiate(_achievementPrefab);
             }, Lifetime.Singleton);
-
-            //builder.RegisterFactory<AchievmentsCellsView>(container => () =>
-            //{
-            //    return container.Instantiate(_achievmentsCellsViewPrefab);
-            //}, Lifetime.Singleton);
-
         }
     }
 }

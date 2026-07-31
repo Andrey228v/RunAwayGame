@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.SceneLoading;
+﻿using Assets._Scripts.SceneLoading;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -190,8 +189,7 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void DeletSave()
         {
-            //_eventBus.Publish(new DeletSaveEvent { });
-            //_eventBus.Publish(new UpdateUIEvent { });
+
         }
 
         public void SetCoinsCountText(int actualCoin, int addCoin)

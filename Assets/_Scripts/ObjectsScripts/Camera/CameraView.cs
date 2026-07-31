@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Assets._Scripts.ObjectsScripts.Camera
 {
     //Orbital Follow = Lock To Target on Assign.
-    public class CameraController : MonoBehaviour
+    public class CameraView : MonoBehaviour
     {
         [SerializeField] private CinemachineCamera _cameraCinemachine;
 

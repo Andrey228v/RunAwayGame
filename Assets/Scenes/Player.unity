@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.PlayerScope
   parentReference:
-    TypeName: Assets.Scripts.Installers.GameScope
+    TypeName: Assets._Scripts.Installers.RootScope
   autoRun: 1
   autoInjectGameObjects: []
   _cameraController: {fileID: 683915514}
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.Level.BotAIScope
   parentReference:
-    TypeName: Assets.Scripts.Installers.GameScope
+    TypeName: Assets._Scripts.Installers.LevelScope
   autoRun: 1
   autoInjectGameObjects: []
   _botsParent: {fileID: 1540461991}

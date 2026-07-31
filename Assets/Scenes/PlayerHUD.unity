@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.PlayerHUDScope
   parentReference:
-    TypeName: Assets.Scripts.Installers.GameScope
+    TypeName: Assets._Scripts.Installers.RootScope
   autoRun: 1
   autoInjectGameObjects: []
   _gamePanelControllerPrefab: {fileID: 5964736573086798801, guid: 59101036434b8174ea74579f3233e309, type: 3}

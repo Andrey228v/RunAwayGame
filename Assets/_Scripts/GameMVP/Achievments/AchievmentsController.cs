@@ -5,6 +5,7 @@ using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
@@ -40,10 +41,12 @@ namespace Assets._Scripts.GameControllers.Achievments
             foreach(var key in _dictinaryView.Keys)
             {
                 var view = _dictinaryView[key];
-                _dictinaryModel.TryGetModel(key, out var model);
-                view.OnTakeRewardButtonClick -= model.TakeReward;
-            }
 
+                if(_dictinaryModel.TryGetModel(key, out var model))
+                {
+                    view.OnTakeRewardButtonClick -= model.TakeReward;
+                }
+            }
             _dictinaryView.Clear();
         }
 
@@ -79,12 +82,14 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void Save(GameSaveData gameSaveData)
         {
-            foreach (var key in gameSaveData.AchievmentsData.Keys)
+            var keys = gameSaveData.AchievmentsData.Keys.ToList();
+
+            foreach (var key in keys)
             {
                 if (_dictinaryModel.TryGetModel(key, out var model))
                 {
                     gameSaveData.AchievmentsData[key] = model.Data;
-                }   
+                }
             }
         }
 

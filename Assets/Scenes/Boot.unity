@@ -324,6 +324,9 @@ MonoBehaviour:
         guid: 611cb5b9d3d8b8d40ba6c0017d77930c
       type: 3
   _loadScreenView: {fileID: 95843569}
+  _unitInfoUIPrefab: {fileID: 5975286176384170700, guid: 4bac61530990eaf48ae34bd692cbca54, type: 3}
+  _characterPrefab: {fileID: 1688571644223161820, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
+  _navMeshCharacterPrefab: {fileID: 8602651108574901809, guid: 188fc72e82fa0654eb54f5b91c3ce86f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

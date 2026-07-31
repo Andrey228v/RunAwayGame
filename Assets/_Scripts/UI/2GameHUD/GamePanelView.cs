@@ -1,12 +1,8 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.ObjectsScripts.UI.GamePanel;
-using Assets._Scripts.SceneLoading;
+﻿using Assets._Scripts.ObjectsScripts.UI.GamePanel;
 using Assets._Scripts.UI;
 using Assets._Scripts.UI._2GameHUD;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using VContainer;
 
 namespace Assets.Scripts.UI
 {

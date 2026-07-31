@@ -1,14 +1,12 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
-using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.ObjectsScripts.UI.GamePanel;
 using Assets._Scripts.SceneLoading;
 using Assets.Scripts.UI;
 using System;
 using System.Collections.Generic;
 using VContainer.Unity;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Assets._Scripts.EnteryPoints
 {

@@ -15,7 +15,7 @@ namespace Assets._Scripts.ObjectsScripts.Player.Factorys
         private AnimatorController _animatorController;
         private FallController _fallController;
 
-        public UnitStateMachine Create(Character character, CameraController cameraController, 
+        public UnitStateMachine Create(Character character, CameraView cameraController, 
             InputReader inputReader, PlayerMoveDirectionCalculator playerMoveDirectionCalculator)
         {
             _playerMovement = new PlayerMovement(character, inputReader, playerMoveDirectionCalculator);

@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.ObjectsScripts.Bots;
-using Assets._Scripts.ObjectsScripts.Bots.BotStateMachine;
+﻿using Assets._Scripts.ObjectsScripts.Bots.BotStateMachine;
 using Assets._Scripts.ObjectsScripts.Points;
 using Assets.Scripts.Points;
 using ECM2;

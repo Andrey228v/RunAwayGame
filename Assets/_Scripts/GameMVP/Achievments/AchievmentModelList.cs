@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.GameControllers.Wallets;
+﻿using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.Utilites.Loger;
 using System.Collections.Generic;
@@ -9,21 +8,19 @@ namespace Assets._Scripts.GameControllers.Achievments
     public class AchievmentModelList
     {
         private List<IAchievement> _modelsAchievments;
-        private EventBus _eventBus;
         private IGameLogger _gameLoger;
         private WalletController _walletController;
 
 
-        public AchievmentModelList(EventBus eventBus, 
-            IGameLogger gameLogger, 
+        public AchievmentModelList(IGameLogger gameLogger, 
             List<AchievmentData> achievmentData,
             WalletController walletController)
         {
             _modelsAchievments = new List<IAchievement>();
-            _eventBus = eventBus;
+
             _gameLoger = gameLogger;
             _walletController = walletController;
-            _modelsAchievments = CreateAchievementModels(_eventBus, _gameLoger, achievmentData, _walletController);
+            _modelsAchievments = CreateAchievementModels(_gameLoger, achievmentData, _walletController);
         }
 
         public List<IAchievement> GetModel()
@@ -31,8 +28,7 @@ namespace Assets._Scripts.GameControllers.Achievments
             return _modelsAchievments;
         }
 
-        private List<IAchievement> CreateAchievementModels(EventBus eventBus, 
-            IGameLogger gameLogger, 
+        private List<IAchievement> CreateAchievementModels(IGameLogger gameLogger, 
             List<AchievmentData> achievmentData, WalletController walletController)
         {
             var rewardType1 = new AchievmentsReward();

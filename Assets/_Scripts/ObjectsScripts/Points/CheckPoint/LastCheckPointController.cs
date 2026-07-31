@@ -10,6 +10,11 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         private LastCheckPointModel _model;
         private LevelConfig _levelConfig;
 
+        public LastCheckPointController(LastCheckPointModel model, LevelConfig levelConfig)
+        {
+            _model = model;
+        }
+
         public void Dispose()
         {
 
@@ -28,9 +33,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 levelData.LastCheckPointPosition = data;
             }
 
-            _model = new LastCheckPointModel(data);
-
-            //_model.SetTransorm(data);
+            _model.SetTransorm(data);
             _levelConfig = levelConfig;
         }
 

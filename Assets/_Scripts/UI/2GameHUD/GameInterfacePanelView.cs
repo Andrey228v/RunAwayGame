@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.ObjectsScripts.UI.GamePanel;
+﻿using Assets._Scripts.ObjectsScripts.UI.GamePanel;
 using Assets._Scripts.UI;
 using Assets._Scripts.Utilites.Loger;
 using System;
@@ -22,7 +21,6 @@ namespace Assets.Scripts.UI
         [SerializeField] private TextMeshProUGUI _coinsCounter;
         [SerializeField] private TextMeshProUGUI _timer;
 
-        private IEventPublisher _eventBus;
         private IGameLogger _gameLogger;
 
         public bool IsVisible { get; private set; }
@@ -65,10 +63,8 @@ namespace Assets.Scripts.UI
 #endif
 
         [Inject]
-        public void Construct(IEventPublisher eventBus,
-            IGameLogger gameLogger)
+        public void Construct(IGameLogger gameLogger)
         {
-            _eventBus = eventBus;
             _gameLogger = gameLogger;
         }
 
@@ -104,29 +100,24 @@ namespace Assets.Scripts.UI
         {
             _gameLogger.Log("ClickMenuButton", "Event");
             OnTransitFromGameToMenu?.Invoke(WindowType.MenuPanel);
-
-            //_eventBus.Publish(new TransitToPanelEvent { windowName = "GameMenuPanel"});
         }
 
         private void ClickLoadButton()
         {
             _gameLogger.Log("ClickLoadButton", "Event");
             OnLoadButtonClick?.Invoke();
-            //_eventBus.Publish(new LoadGameEvent { });
         }
 
         private void ClickSoundButton()
         {
             _gameLogger.Log("ClickSoundButton", "Event");
             OnSaveButtonClick?.Invoke();
-            //_eventBus.Publish(new ButtonSoundChangeStateEvent { });
         }
 
         private void ClickSaveButton()
         {
             _gameLogger.Log("ClickSaveButton", "Event");
             OnChangeStatusSoundButtonClick?.Invoke();
-            //_eventBus.Publish(new SaveGameEvent { });
         }
 
         public void SetCoinsCountText(int actualCoin, int addCoin)

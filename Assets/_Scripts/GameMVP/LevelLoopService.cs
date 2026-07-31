@@ -1,29 +1,41 @@
-﻿using Assets._Scripts.GameControllers.Levels;
-using Assets._Scripts.SaveLoad.Data.Interfaces;
-using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
-using Assets._Scripts.SaveLoad.Service;
+﻿using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Assets._Scripts.GameMVP
 {
     public class LevelLoopService
     {
-        private readonly Dictionary<string, IInit> _initDict; // каждый подэлемент должен сам инициализировать то, что будет. 
         private readonly Dictionary<string, ISave> _saveDict;
         private readonly Dictionary<string, ILoad> _loadDict;
         private readonly Dictionary<string, IDieRestart> _dieRestartDict;
         private readonly Dictionary<string, IFinish> _finishDict;
         private readonly Dictionary<string, IReset> _resetDict;
 
-        public Dictionary<string, IInit> InitDict => _initDict;
         public Dictionary<string, ISave> SaveDict => _saveDict;
         public Dictionary<string, ILoad> LoadDict => _loadDict;
         public Dictionary<string, IDieRestart> DieRestartDict => _dieRestartDict;
         public Dictionary<string, IFinish> FinishDict => _finishDict;
         public Dictionary<string, IReset> ResetDict => _resetDict;
+
+        public LevelLoopService()
+        {
+            _saveDict = new Dictionary<string, ISave>();
+            _loadDict = new Dictionary<string, ILoad>();
+            _dieRestartDict = new Dictionary<string, IDieRestart>();
+            _finishDict = new Dictionary<string, IFinish>();
+            _resetDict = new Dictionary<string, IReset>();
+        }
+
+        public void Dispose()
+        {
+            _saveDict.Clear();
+            _loadDict.Clear();
+            _dieRestartDict.Clear();
+            _finishDict.Clear();
+            _resetDict.Clear();
+        }
 
         public void SaveAllServices(LevelData levelData)
         {
@@ -62,11 +74,11 @@ namespace Assets._Scripts.GameMVP
             }
         }
 
-        public void ResetLevel(LevelData levelData)
+        public void ResetLevel(LevelConfig levelConfig)
         {
             foreach (var key in _finishDict.Keys)
             {
-                //_resetDict[key].Reset(levelData);
+                _resetDict[key].ResetAllObjects(levelConfig);
             }
         }
     }

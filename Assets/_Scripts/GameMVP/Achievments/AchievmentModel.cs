@@ -1,6 +1,4 @@
-﻿using Assets._Scripts.EventBusGame;
-using Assets._Scripts.GameControllers.Wallets;
-using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.Utilites.Loger;
 using System;
 using UnityEngine;

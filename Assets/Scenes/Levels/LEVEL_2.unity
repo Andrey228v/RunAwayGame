@@ -605,7 +605,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1508335597}
-  - component: {fileID: 1508335599}
   - component: {fileID: 1508335598}
   m_Layer: 0
   m_Name: --Container--
@@ -642,30 +641,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.Installers.LevelScope
   parentReference:
-    TypeName: Assets.Scripts.Installers.GameScope
+    TypeName: Assets._Scripts.Installers.RootScope
   autoRun: 1
   autoInjectGameObjects: []
   _levelConfig: {fileID: 11400000, guid: 1d0c3ca4670592c438a94e5e327d1ae9, type: 2}
---- !u!114 &1508335599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1508335596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddcba55561b5534448c5a263fe33f800, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Assets.Scripts.Installers.GameScope
-  parentReference:
-    TypeName: Assets._Scripts.Installers.RootScope
-  autoRun: 1
-  autoInjectGameObjects:
-  - {fileID: 717150710}
-  _unitInfoUIPrefab: {fileID: 5975286176384170700, guid: 4bac61530990eaf48ae34bd692cbca54, type: 3}
-  _characterPrefab: {fileID: 1688571644223161820, guid: c9199760bc891b8429a05dc66cf26105, type: 3}
-  _navMeshCharacterPrefab: {fileID: 8602651108574901809, guid: 188fc72e82fa0654eb54f5b91c3ce86f, type: 3}
   _finishPoint: {fileID: 1307114829}
   _checkPoints: {fileID: 1446692867}
   _coins: {fileID: 2114965238}

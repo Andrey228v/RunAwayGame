@@ -1,5 +1,4 @@
 ﻿using Assets._Scripts.SaveLoad.Data.Interfaces;
-using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 
@@ -10,15 +9,15 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         private FinishPointView _finishPointView;
         private FinishModel _finishModel;
 
-        public FinishController(GamePoints points, FinishModel finishModel)
+        public FinishController(FinishModel finishModel, FinishPointView finishPointView)
         {
-            if (points != null || finishModel != null)
+            if (finishPointView != null || finishModel != null)
             {
-                _finishPointView = points.FinishPoint;
+                _finishPointView = finishPointView;
                 _finishModel = finishModel;
             }
             else
-                throw new ArgumentNullException(nameof(points), "CoinController parent cannot be null");
+                throw new ArgumentNullException(nameof(finishPointView), "CoinController parent cannot be null");
 
             _finishPointView.OnActivateObject += SetActivateStatus;
             _finishModel.OnObjectStatusChange += UpdatePointView;
@@ -36,6 +35,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         public void Finish(LevelData levelData)
         {
             _finishModel.Reset();
+
 
             //if (args.lvlId == "0")
             //{

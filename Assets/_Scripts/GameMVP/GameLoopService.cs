@@ -94,6 +94,8 @@ namespace Assets._Scripts.GameControllers
                 var levelData = gameSaveData.LevelsData[levelName];
                 _levelLoopSerivece.DieRestart(levelData);
             }
+
+            SaveAllServices(gameSaveData);
         }
 
         public void FinishLevel(GameSaveData gameSaveData)
@@ -109,6 +111,8 @@ namespace Assets._Scripts.GameControllers
                 var levelData = gameSaveData.LevelsData[levelName];
                 _levelLoopSerivece.FinishLevel(levelData);
             }
+
+            SaveAllServices(gameSaveData);
         }
 
         public void ResetLevel(GameSaveData gameSaveData)
@@ -124,6 +128,8 @@ namespace Assets._Scripts.GameControllers
                 var levelData = gameSaveData.LevelsData[levelName];
                 _levelLoopSerivece.ResetLevel(_levelsController.Config);
             }
+
+            SaveAllServices(gameSaveData);
         }
     }
 }

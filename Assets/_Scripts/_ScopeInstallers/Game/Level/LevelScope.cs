@@ -25,6 +25,8 @@ namespace Assets._Scripts.Installers
 
             var coinDictionary = DictionaryCoinViewCreate(_coins);
             builder.RegisterInstance(coinDictionary);
+            builder.RegisterInstance(_finishPoint);
+
 
             builder.RegisterEntryPoint<CoinController>().AsSelf();
             builder.RegisterEntryPoint<CoinDictinaryModel>().AsSelf();

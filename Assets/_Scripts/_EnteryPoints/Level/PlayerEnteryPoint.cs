@@ -1,6 +1,7 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.GameMVP;
 using Assets._Scripts.ObjectsScripts.Camera;
 using Assets._Scripts.ObjectsScripts.Player;
 using Assets._Scripts.ObjectsScripts.Player.Factorys;
@@ -27,6 +28,7 @@ namespace Assets._Scripts.EnteryPoints
         private WalletController _walletController;
         private GameLoopService _gameLoopController;
         private GameSaveLoadService _gameSaveLoadService;
+        private LevelLoopService _levelLoopService;
 
         public PlayerEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory,
@@ -35,6 +37,7 @@ namespace Assets._Scripts.EnteryPoints
             WalletController walletController,
             GameLoopService gameLoopController,
             GameSaveLoadService gameSaveLoadService,
+            LevelLoopService levelLoopService,
             LevelsController levelsController
             ) 
         {
@@ -48,14 +51,16 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController = levelsController;
             _gameLoopController = gameLoopController;
             _gameSaveLoadService = gameSaveLoadService;
+            _levelLoopService = levelLoopService;
         }
 
         public void Start()
         {
-            //_gameLoopController.SaveList.Add(_playerController);
-            //_gameLoopController.LoadList.Add(_playerController);
-            //_gameLoopController.DieRestartList.Add(_playerController);
-            //_gameLoopController.FinishList.Add(_playerController);
+            _levelLoopService.SaveDict.Add("PlayerController", _playerController);
+            _levelLoopService.LoadDict.Add("PlayerController", _playerController);
+            _levelLoopService.DieRestartDict.Add("PlayerController", _playerController);
+            _levelLoopService.FinishDict.Add("PlayerController",_playerController);
+            _levelLoopService.ResetDict.Add("PlayerController", _playerController);
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,

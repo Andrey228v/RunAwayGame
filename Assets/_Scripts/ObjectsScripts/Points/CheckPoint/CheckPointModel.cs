@@ -31,9 +31,9 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 
         public void Take(Vector3 coords)
         {
-            OnTake?.Invoke(); // сохраняем
             OnTakePosition?.Invoke(coords); // устанавливаем точку последней позиции игрока.
             OnTakeValue?.Invoke(1); // для ачивок, что если мы делаем счёт.
+            OnTake?.Invoke(); // сохраняем
         }
 
         public void Reset()

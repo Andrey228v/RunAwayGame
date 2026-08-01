@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.ObjectsScripts.Player
 {
-    public class PlayerController : IFixedTickable, ISave, ILoad, IDieRestart, IFinish
+    public class PlayerController : IFixedTickable, ISave, ILoad, IDieRestart, IFinish, IReset
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
@@ -105,6 +105,11 @@ namespace Assets._Scripts.ObjectsScripts.Player
 
                 _character.SetMovementMode(Character.MovementMode.Falling);
             }
+        }
+
+        public void ResetAllObjects(LevelConfig config)
+        {
+            
         }
     }
 }

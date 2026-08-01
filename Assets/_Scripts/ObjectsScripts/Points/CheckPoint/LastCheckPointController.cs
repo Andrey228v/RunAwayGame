@@ -59,6 +59,8 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             data.rotation = _levelConfig.PlayerStartRotation;
 
             _model.SetTransorm(data);
+
+            Save(levelData); // так ли делать тут ...
         }
 
         public void DieRestart(LevelData levelData)

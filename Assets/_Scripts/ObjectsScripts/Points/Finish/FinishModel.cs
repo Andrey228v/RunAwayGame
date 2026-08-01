@@ -7,6 +7,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         private bool _isActivate;
 
         public event Action<bool> OnObjectStatusChange;
+        public event Action OnFinish;
 
         public FinishModel()
         {
@@ -17,6 +18,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         {
             _isActivate = isActivate;
             OnObjectStatusChange?.Invoke(_isActivate);
+            OnFinish?.Invoke();
         }
 
         public void Reset()

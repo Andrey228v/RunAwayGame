@@ -24,7 +24,10 @@ namespace Assets._Scripts.Installers
             builder.RegisterInstance(new GamePoints(_finishPoint, _checkPoints, _coins, _botsRoad));
 
             var coinDictionary = DictionaryCoinViewCreate(_coins);
+            var checkPoinDictinary = DictinaryCheckPoinViewCreate(_checkPoints);
+
             builder.RegisterInstance(coinDictionary);
+            builder.RegisterInstance(checkPoinDictinary);
             builder.RegisterInstance(_finishPoint);
 
 
@@ -47,6 +50,26 @@ namespace Assets._Scripts.Installers
             var coinViews = objectParent.GetComponentsInChildren<CoinView>();
 
             foreach (var view in coinViews)
+            {
+                if (!string.IsNullOrEmpty(view.Id))
+                {
+                    views[view.Id] = view;
+                }
+                else
+                {
+                    Debug.LogWarning($"CoinView without ID found: {view.name}");
+                }
+            }
+
+            return views;
+        }
+
+        private Dictionary<string, CheckPointView> DictinaryCheckPoinViewCreate(Transform objectParent)
+        {
+            var views = new Dictionary<string, CheckPointView>();
+            var checkPointViews = objectParent.GetComponentsInChildren<CheckPointView>();
+
+            foreach (var view in checkPointViews)
             {
                 if (!string.IsNullOrEmpty(view.Id))
                 {

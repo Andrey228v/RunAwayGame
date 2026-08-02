@@ -1,7 +1,9 @@
 ﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP;
+using Assets._Scripts.GameMVP.Achievments;
 using Assets._Scripts.ObjectsScripts.Coins;
 using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
 using Assets._Scripts.ObjectsScripts.Points.Finish;
@@ -33,6 +35,7 @@ namespace Assets._Scripts.EnteryPoints
         private LastCheckPointController _lastCheckPointController;
         private LevelLoopService _levelLoopService;
         private GamePoints _gamePoints;
+        private AchievmentDictinaryModel _achievmentDictinaryModel;
 
         public LevelEnteryPoint(GamePoints gamePoints,
             CheckPointsController checkPointsController,
@@ -47,7 +50,8 @@ namespace Assets._Scripts.EnteryPoints
             CheckPointDictinaryModel checkPointDictinaryModel,
             LastCheckPointController lastCheckPointController,
             LevelLoopService levelLoopService,
-            LevelsController levelsController)
+            LevelsController levelsController,
+            AchievmentDictinaryModel achievmentDictinaryModel)
         {
             _checkPointsController = checkPointsController;
             _coinController = coinController;
@@ -63,6 +67,7 @@ namespace Assets._Scripts.EnteryPoints
             _lastCheckPointController = lastCheckPointController;
             _levelLoopService = levelLoopService;
             _gamePoints = gamePoints;
+            _achievmentDictinaryModel = achievmentDictinaryModel;
 
             _levelLoopService.SaveDict.Add("CheckPointsController", _checkPointsController);
             _levelLoopService.SaveDict.Add("CoinController", _coinController);
@@ -111,6 +116,21 @@ namespace Assets._Scripts.EnteryPoints
             _coinController.Load(levelData);
             _checkPointsController.Load(levelData);
             _lastCheckPointController.Load(levelData);
+
+            //Под вопросом....
+            if(_achievmentDictinaryModel.TryGetModel("ACh_0", out AchievmentModel model0))
+            {
+                if(model0.Data.IsUnlock == false)
+                {
+
+                }
+                _finishController.OnFinishLvl0 += model0.ChangeCurrentProgress;
+            }
+
+            if (_achievmentDictinaryModel.TryGetModel("ACh_1", out AchievmentModel model1))
+            {
+                _finishController.OnFinishLvl0 += model0.ChangeCurrentProgress;
+            }
         }
 
         public void Dispose()

@@ -1,6 +1,5 @@
 ﻿using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets._Scripts.Utilites.Loger;
-using Assets.Scripts.Points;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
@@ -12,17 +11,17 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
     public class CheckPointsController : IInit, ISave, ILoad, IDieRestart, IFinish, IReset
     {
         private readonly IGameLogger _gameLogger;
-        private readonly Transform _objectParent;
         private readonly CheckPointDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CheckPointView> _dictinaryView;
 
-        public CheckPointsController(GamePoints points, CheckPointDictinaryModel dictinaryModel, IGameLogger gameLogger)
+        public CheckPointsController(Dictionary<string, CheckPointView> dictinaryView, 
+            CheckPointDictinaryModel dictinaryModel, 
+            IGameLogger gameLogger)
         {
-            if (points == null)
-                throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
+            if (dictinaryView == null)
+                throw new ArgumentNullException(nameof(dictinaryView), "GamePoints cannot be null");
 
-            _objectParent = points.CheckPoints;
-            _dictinaryView = new Dictionary<string, CheckPointView>();
+            _dictinaryView = dictinaryView;
             _gameLogger = gameLogger;
             _dictinaryModel = dictinaryModel;
 
@@ -61,41 +60,33 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 
             var listSaveData = levelData.CheckPoints;
 
-            for (int i = 0; i < _objectParent.childCount; i++)
+            foreach (var kye in _dictinaryView.Keys)
             {
-                if (_objectParent.GetChild(i).TryGetComponent<CheckPointView>(out var view))
+                var id = kye;
+                var view = _dictinaryView[id];
+
+                CheckPointData data = null;
+
+                if (listSaveData.ContainsKey(id))
                 {
-                    var id = view.Id;
-
-                    CheckPointData data = null;
-
-                    if (listSaveData.ContainsKey(id))
-                    {
-                        data = listSaveData[id];
-                    }
-                    else
-                    {
-                        data = new CheckPointData
-                        {
-                            Id = id,
-                            IsActivated = false
-                        };
-
-                        if (listSaveData.TryAdd(id, data) == false)
-                        {
-                            throw new ArgumentNullException(nameof(levelData), "key Error");
-                        }
-                    }
-
-                    view.OnActivateObject += ObjectActivateView;
-
-                    _dictinaryModel.AddObject(data);
-                    _dictinaryView[data.Id] = view;
+                    data = listSaveData[id];
                 }
                 else
                 {
-                    throw new ArgumentNullException(nameof(levelData), "view cannot be null/any");
+                    data = new CheckPointData
+                    {
+                        Id = id,
+                        IsActivated = false
+                    };
+
+                    if (listSaveData.TryAdd(id, data) == false)
+                    {
+                        throw new ArgumentNullException(nameof(levelData), "key Error");
+                    }
                 }
+
+                view.OnActivateObject += ObjectActivateView;
+                _dictinaryModel.AddObject(data);
             }
         }
 

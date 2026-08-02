@@ -9,6 +9,10 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         private FinishPointView _finishPointView;
         private FinishModel _finishModel;
 
+        public event Action<int> OnFinishLvl0;
+        public event Action<int> OnFinishLvl1;
+        public event Action<int> OnFinishLvl2;
+
         public FinishController(FinishModel finishModel, FinishPointView finishPointView)
         {
             if (finishPointView != null || finishModel != null)
@@ -36,19 +40,18 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         {
             _finishModel.Reset();
 
-
-            //if (args.lvlId == "0")
-            //{
-            //    _eventBus.Publish(new FinishLevel1() { Progress = 1 });
-            //}
-            //else if (args.lvlId == "1")
-            //{
-            //    _eventBus.Publish(new FinishLevel2() { Progress = 1 });
-            //}
-            //else if (args.lvlId == "2")
-            //{
-            //    _eventBus.Publish(new FinishLevel3() { Progress = 1 });
-            //}
+            if (levelData.Id == 0)
+            {
+                OnFinishLvl0?.Invoke(1);
+            }
+            else if (levelData.Id == 1)
+            {
+                OnFinishLvl1?.Invoke(1);
+            }
+            else if (levelData.Id == 2)
+            {
+                OnFinishLvl2?.Invoke(1);
+            }
         }
 
         public void SetActivateStatus(bool status)

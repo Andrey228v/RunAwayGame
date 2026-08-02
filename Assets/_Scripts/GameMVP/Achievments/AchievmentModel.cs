@@ -61,15 +61,14 @@ namespace Assets._Scripts.GameControllers.Achievments
             _data = data;
         }
 
-        private void ChangeCurrentProgress()
+        public void ChangeCurrentProgress(int progress)
         {
-            //_data.CurrentValue += args.Progress;
+            _data.CurrentValue += progress;
 
-            //if (_data.CurrentValue >= _data.TargetValue)
-            //{
-            //    Unlock();
-            //    _eventBus.Unsubscribe<T>(ChangeCurrentProgress);
-            //}
+            if (_data.CurrentValue >= _data.TargetValue)
+            {
+                Unlock();
+            }
 
             OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }

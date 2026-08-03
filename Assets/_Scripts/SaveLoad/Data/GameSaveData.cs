@@ -30,7 +30,7 @@ namespace Assets.Scripts.SaveLoad.Data
                 Id = "ACh_0",
                 Name = "sLvl 1",
                 Description = "Start lvl 1",
-                IsUnlock = true, // test
+                IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false
             };
@@ -40,9 +40,9 @@ namespace Assets.Scripts.SaveLoad.Data
                 Id = "ACh_1",
                 Name = "sLvl 2",
                 Description = "Start lvl 2",
-                IsUnlock = true, // test
+                IsUnlock = false,
                 TargetValue = 1,
-                IsRevardEnable = true // test
+                IsRevardEnable = false
             };
 
             AchievmentData achData2 = new AchievmentData()

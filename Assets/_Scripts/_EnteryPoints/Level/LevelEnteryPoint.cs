@@ -122,14 +122,24 @@ namespace Assets._Scripts.EnteryPoints
             {
                 if(model0.Data.IsUnlock == false)
                 {
-
+                    _finishController.OnFinishLvl0 += model0.ChangeCurrentProgress;
                 }
-                _finishController.OnFinishLvl0 += model0.ChangeCurrentProgress;
             }
 
             if (_achievmentDictinaryModel.TryGetModel("ACh_1", out AchievmentModel model1))
             {
-                _finishController.OnFinishLvl0 += model0.ChangeCurrentProgress;
+                if(model1.Data.IsUnlock == false)
+                {
+                    _finishController.OnFinishLvl1 += model1.ChangeCurrentProgress;
+                }
+            }
+
+            if (_achievmentDictinaryModel.TryGetModel("ACh_2", out AchievmentModel model2))
+            {
+                if (model2.Data.IsUnlock == false)
+                {
+                    _finishController.OnFinishLvl2 += model2.ChangeCurrentProgress;
+                }
             }
         }
 

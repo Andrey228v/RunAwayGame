@@ -117,28 +117,60 @@ namespace Assets._Scripts.EnteryPoints
             _checkPointsController.Load(levelData);
             _lastCheckPointController.Load(levelData);
 
+            //Под большим вопросом....
+            if(_levelConfig.LevelName == "Lvl0")
+            {
+                if (_achievmentDictinaryModel.TryGetModel("ACh_0", out AchievmentModel model0))
+                {
+                    if (model0.Data.IsUnlock == false)
+                    {
+                        model0.ChangeCurrentProgress(1);
+                    }
+                }
+            }
+            else if( _levelConfig.LevelName == "Lvl1")
+            {
+                if (_achievmentDictinaryModel.TryGetModel("ACh_1", out AchievmentModel model1))
+                {
+                    if (model1.Data.IsUnlock == false)
+                    {
+                        model1.ChangeCurrentProgress(1);
+                    }
+                }
+            }
+            else if (_levelConfig.LevelName == "Lvl2")
+            {
+                if (_achievmentDictinaryModel.TryGetModel("ACh_2", out AchievmentModel model2))
+                {
+                    if (model2.Data.IsUnlock == false)
+                    {
+                        model2.ChangeCurrentProgress(1);
+                    }
+                }
+            }
+
             //Под вопросом....
-            if(_achievmentDictinaryModel.TryGetModel("ACh_0", out AchievmentModel model0))
+            if (_achievmentDictinaryModel.TryGetModel("ACh_3", out AchievmentModel model3))
             {
-                if(model0.Data.IsUnlock == false)
+                if(model3.Data.IsUnlock == false)
                 {
-                    _finishController.OnFinishLvl0 += model0.ChangeCurrentProgress;
+                    _finishController.OnFinishLvl0 += model3.ChangeCurrentProgress;
                 }
             }
 
-            if (_achievmentDictinaryModel.TryGetModel("ACh_1", out AchievmentModel model1))
+            if (_achievmentDictinaryModel.TryGetModel("ACh_4", out AchievmentModel model4))
             {
-                if(model1.Data.IsUnlock == false)
+                if(model4.Data.IsUnlock == false)
                 {
-                    _finishController.OnFinishLvl1 += model1.ChangeCurrentProgress;
+                    _finishController.OnFinishLvl1 += model4.ChangeCurrentProgress;
                 }
             }
 
-            if (_achievmentDictinaryModel.TryGetModel("ACh_2", out AchievmentModel model2))
+            if (_achievmentDictinaryModel.TryGetModel("ACh_5", out AchievmentModel model5))
             {
-                if (model2.Data.IsUnlock == false)
+                if (model5.Data.IsUnlock == false)
                 {
-                    _finishController.OnFinishLvl2 += model2.ChangeCurrentProgress;
+                    _finishController.OnFinishLvl2 += model5.ChangeCurrentProgress;
                 }
             }
         }

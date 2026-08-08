@@ -173,6 +173,14 @@ namespace Assets._Scripts.EnteryPoints
                     _finishController.OnFinishLvl2 += model5.ChangeCurrentProgress;
                 }
             }
+
+            if(_achievmentDictinaryModel.TryGetModel("ACh_6", out AchievmentModel model6))
+            {
+                if (model6.Data.IsUnlock == false)
+                {
+                    _walletController.OnAddCoin += model6.ChangeCurrentProgress;
+                }
+            }
         }
 
         public void Dispose()

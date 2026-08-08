@@ -5,6 +5,7 @@ using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
+using System;
 
 namespace Assets._Scripts.GameControllers.Wallets
 {
@@ -15,6 +16,9 @@ namespace Assets._Scripts.GameControllers.Wallets
         private GamePanelView _gamePanelView;
         private UnitInfoUIView _unitInfoUIView;
         private IGameLogger _gameLogger;
+
+        public event Action<int> OnAddCoin;
+        public event Action<int> OnAddGobelet;
 
         public WalletController(IGameLogger gameLogger)
         {
@@ -140,14 +144,13 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void AddConis(int count)
         {
             _model.AddCoins(count);
-            //_eventBus.Publish(new SaveGameEvent { });
-            //_eventBus.Publish(new CollectGoldEvent { Progress = count });
-        } // achievments
+            OnAddCoin?.Invoke(count);
+        }
 
         public void AddGobelets(int count)
         {
             _model.AddGobelets(count);
-            //_eventBus.Publish(new SaveGameEvent { });
-        } // achievments
+            OnAddGobelet?.Invoke(count);
+        }
     }
 }

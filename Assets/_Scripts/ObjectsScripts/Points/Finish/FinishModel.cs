@@ -23,7 +23,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
 
         public void Reset()
         {
-            _isActivate = false;
+            _isActivate = true;
             OnObjectStatusChange?.Invoke(_isActivate);
         }
     }

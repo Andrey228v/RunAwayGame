@@ -7,6 +7,7 @@ using Assets.Scripts.SaveLoad.Data;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
@@ -28,7 +29,23 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void Initialization(GameSaveData gameSaveData)
         {
-            
+            var dictData = gameSaveData.AchievmentsData;
+
+            if(dictData == null)
+            {
+                // под вопросом...
+                dictData = new Dictionary<string, AchievmentData>();
+                gameSaveData.AchievmentsData = dictData;
+            }
+
+            foreach (var key in dictData.Keys)
+            {
+                var id = dictData[key].Id;
+                var data = dictData[key];
+                var reward = new AchievmentsReward();
+
+                _dictinaryModel.TryAddObject(id, data, reward); // под вопросом... почему тут Трай, а это никак не используется.
+            }
         }
 
         private void ObjectInit(AchievmentModel model)
@@ -62,10 +79,10 @@ namespace Assets._Scripts.GameControllers.Achievments
 
                     _dictinaryView.Add(id, view);
 
-                    var data = new AchievmentData();
-                    var reward = new AchievmentsReward();
+                    //var data = new AchievmentData();
+                    //var reward = new AchievmentsReward();
 
-                    _dictinaryModel.TryAddObject(id, data, reward); // под вопросом... почему тут Трай, а это никак не используется.
+                    //_dictinaryModel.TryAddObject(id, data, reward); // под вопросом... почему тут Трай, а это никак не используется.
                     _dictinaryModel.TryGetModel(id, out var model); // под вопросом. Тут тоже трай не понятно зачем.
                     view.OnTakeRewardButtonClick += model.TakeReward;
                 }

@@ -34,6 +34,8 @@ namespace Assets._Scripts.UI._1MenuWindow
         [SerializeField] private Button _backButtonShop;
         [SerializeField] private Button _backButtonAchievements;
         [SerializeField] private Button _exitButton;
+        [SerializeField] private Dropdown _dropdownLanguage;
+
 
         [Header("Amounts")]
         [SerializeField] private TextMeshProUGUI _goldsText;
@@ -55,6 +57,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         public Transform LevelsParent => _levelsParent;
 
         public event Action OnDestroyView;
+        public event Action OnLanguageButtonClick;
 
         [Inject]
         public void Constructor( 
@@ -122,20 +125,6 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private async void StartGame(int level)
         {
-            if (level == 1) // переделать...
-            {
-                //_eventBus.Publish(new StartLevel1 { Progress = 1});
-
-            }
-            else if (level == 2) // переделать...
-            {
-                //_eventBus.Publish(new StartLevel2 { Progress = 1 });
-            }
-            else if (level == 3) // переделать...
-            {
-                //_eventBus.Publish(new StartLevel3 { Progress = 1 });
-            }
-
             await _loadManager.LoadScene(_scensGroups[level]);
         }
 
@@ -162,6 +151,8 @@ namespace Assets._Scripts.UI._1MenuWindow
 
             _deletSaveButton.onClick.AddListener(DeletSave);
             _exitButton.onClick.AddListener(ClickExit);
+
+            //_lanuageButton.onClick.AddListener(LanguageButtonClick);
         }
 
         private void UnSetupButtons()
@@ -180,6 +171,13 @@ namespace Assets._Scripts.UI._1MenuWindow
             _startGameButtonL0.onClick.RemoveAllListeners();
             _startGameButtonL1.onClick.RemoveAllListeners();
             _startGameButtonL2.onClick.RemoveAllListeners();
+
+            //_lanuageButton.onClick.RemoveListener(LanguageButtonClick);
+        }
+
+        private void LanguageButtonClick()
+        {
+            OnLanguageButtonClick?.Invoke();
         }
 
         private void ClickExit()

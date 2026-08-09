@@ -17,6 +17,11 @@ namespace Assets._Scripts.SaveLoad.Data
 
         public bool IsUnlockAndTaken => IsUnlock && !IsRevardEnable;
 
+        public AchievmentData()
+        {
+
+        }
+
         public void ResetData()
         {
 

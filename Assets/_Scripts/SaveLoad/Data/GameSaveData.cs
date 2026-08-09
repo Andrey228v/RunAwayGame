@@ -28,8 +28,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData0 = new AchievmentData()
             {
                 Id = "ACh_0",
-                Name = "sLvl 1",
-                Description = "Start lvl 1",
+                Name = "Старт №1",
+                Description = "Начать уровень №1",
                 IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false
@@ -38,8 +38,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData1 = new AchievmentData()
             {
                 Id = "ACh_1",
-                Name = "sLvl 2",
-                Description = "Start lvl 2",
+                Name = "Старт №2",
+                Description = "Начать уровень №2",
                 IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false
@@ -48,8 +48,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData2 = new AchievmentData()
             {
                 Id = "ACh_2",
-                Name = "sLvl 3",
-                Description = "Start lvl 3",
+                Name = "Старт №3",
+                Description = "Начать уровень №3",
                 IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false
@@ -58,8 +58,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData3 = new AchievmentData()
             {
                 Id = "ACh_3",
-                Name = "fLvl 1",
-                Description = "Finish lvl 1",
+                Name = "Финиш №1",
+                Description = "Финишировать уровень №1",
                 IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false
@@ -68,8 +68,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData4 = new AchievmentData()
             {
                 Id = "ACh_4",
-                Name = "fLvl 2",
-                Description = "Finish lvl 2",
+                Name = "Финиш №2",
+                Description = "Финишировать уровень №2",
                 IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false
@@ -78,8 +78,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData5 = new AchievmentData()
             {
                 Id = "ACh_5",
-                Name = "fLvl 3",
-                Description = "Finish lvl 3",
+                Name = "Финиш №3",
+                Description = "Финишировать уровень №3",
                 IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false
@@ -88,8 +88,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData6 = new AchievmentData()
             {
                 Id = "ACh_6",
-                Name = "CollectGols",
-                Description = "Collect 10 gold",
+                Name = "Коллекционер монеток",
+                Description = "Собрать 10 монеток",
                 IsUnlock = false,
                 TargetValue = 10,
                 IsRevardEnable = false
@@ -98,8 +98,8 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentData achData7 = new AchievmentData()
             {
                 Id = "ACh_7",
-                Name = "Die",
-                Description = "Die",
+                Name = "Упс",
+                Description = "Переродиться",
                 IsUnlock = false,
                 TargetValue = 1,
                 IsRevardEnable = false

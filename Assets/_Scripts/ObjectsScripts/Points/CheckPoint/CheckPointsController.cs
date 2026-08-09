@@ -57,8 +57,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 levelData.CheckPoints = new Dictionary<string, CheckPointData>();
             }
 
-
-            var listSaveData = levelData.CheckPoints;
+            var dictSaveData = levelData.CheckPoints;
 
             foreach (var kye in _dictinaryView.Keys)
             {
@@ -67,9 +66,9 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 
                 CheckPointData data = null;
 
-                if (listSaveData.ContainsKey(id))
+                if (dictSaveData.ContainsKey(id))
                 {
-                    data = listSaveData[id];
+                    data = dictSaveData[id];
                 }
                 else
                 {
@@ -79,7 +78,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                         IsActivated = false
                     };
 
-                    if (listSaveData.TryAdd(id, data) == false)
+                    if (dictSaveData.TryAdd(id, data) == false)
                     {
                         throw new ArgumentNullException(nameof(levelData), "key Error");
                     }

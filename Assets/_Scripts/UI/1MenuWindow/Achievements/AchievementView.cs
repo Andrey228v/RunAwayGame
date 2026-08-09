@@ -3,7 +3,6 @@ using Assets._Scripts.Utilites.Loger;
 using DG.Tweening;
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -106,6 +105,9 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public void SetDataView(AchievmentData data)
         {
+            SetName(data.Name); // Скорее всего не здесь...
+            SetDescription(data.Description); // Скорее всего не здесь...
+
             if (data.IsUnlock && data.IsRevardEnable)
             {
                 ShowUnlockedWithButtonReward();

@@ -7,13 +7,16 @@ namespace Assets._Scripts.SaveLoad.Data
     [Serializable]
     public class SettingsData
     {
+        public int _idLanguage;
         public double VolumeAudio;
         public double VolumeMusic;
         public double VolumeEffects;
         public bool IsSoundOn;
 
-        public SettingsData(double volumeAudion = 0.5, double volumeMusic = 0.5, double volumeEffects = 0.5, bool isSoundOn = true)
+        public SettingsData(int idLanguage = 0, double volumeAudion = 0.5, 
+            double volumeMusic = 0.5, double volumeEffects = 0.5, bool isSoundOn = true)
         {
+            _idLanguage = idLanguage;
             VolumeAudio = volumeAudion;
             VolumeMusic = volumeMusic;
             VolumeEffects = volumeEffects;

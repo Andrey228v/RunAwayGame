@@ -6,7 +6,7 @@ namespace Assets._Scripts.GameMVP.Language
 {
     public class LanguageModel
     {
-
+        private int _id;
 
     }
 }

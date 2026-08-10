@@ -3,6 +3,7 @@ using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Menu;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
+using Assets._Scripts.UI._1MenuWindow.Language;
 using Assets._Scripts.UI._1MenuWindow.ShopWindow;
 using UnityEngine;
 using VContainer;
@@ -16,6 +17,7 @@ namespace Assets._Scripts.Installers
         [SerializeField] private UnitButtonSkinView _unitButtonSkinViewPrefab;
         [SerializeField] private ConditionSkinView _conditionSkinViewPrefab;
         [SerializeField] private AchievementView _achievementPrefab;
+        [SerializeField] private LanguageViewMenu _viewLanguageMenu;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -24,6 +26,7 @@ namespace Assets._Scripts.Installers
             builder.Register<FactorySkinsCells>(Lifetime.Singleton); // под вопросом. Скорее всего не нужно будет.
             builder.Register<SkinController>(Lifetime.Singleton);
             builder.Register<MenuController>(Lifetime.Singleton);
+            builder.Register<LanguageViewMenu>(Lifetime.Singleton);
 
             builder.RegisterFactory<MenuTabsView>(container => () =>
             {

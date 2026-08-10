@@ -7,6 +7,7 @@ namespace Assets.Scripts.SaveLoad.Data
     [Serializable]
     public class GameSaveData
     {
+        public SettingsData SettingsData;
         public Dictionary<string, LevelData> LevelsData = new Dictionary<string, LevelData>(); // LevelController
         public Dictionary<string, AchievmentData> AchievmentsData; // AchievmentsController
         public ShopData ShopData; // ShopController
@@ -16,7 +17,8 @@ namespace Assets.Scripts.SaveLoad.Data
         public GameSaveData(Dictionary<string, LevelData> levelsData,
             Dictionary<string, AchievmentData> achievmentsData, 
             ShopData shopData, 
-            WalletData walletData, 
+            WalletData walletData,
+            SettingsData settingsData,
             DateTime lastSaveTime)
         {
             LevelsData = levelsData;

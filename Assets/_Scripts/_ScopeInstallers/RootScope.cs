@@ -6,6 +6,7 @@ using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP;
 using Assets._Scripts.GameMVP.Achievments;
+using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
@@ -46,6 +47,10 @@ namespace Assets._Scripts.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
+            var modelLanguage = CreateModelLanguage();
+
+            builder.RegisterInstance(modelLanguage);
+
             builder.RegisterInstance(_sceneGroupHandle);
             builder.RegisterInstance(_loadScreenView);
             builder.RegisterEntryPoint<RootEntryPoint>().AsSelf();
@@ -78,6 +83,13 @@ namespace Assets._Scripts.Installers
             {
                 return container.Instantiate(_navMeshCharacterPrefab);
             }, Lifetime.Transient);
+        }
+
+        private LanguageModel CreateModelLanguage()
+        {
+            LanguageModel model = new LanguageModel();
+
+            return model;
         }
     }
 }

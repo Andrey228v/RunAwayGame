@@ -2,9 +2,11 @@
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
+using Assets._Scripts.UI._1MenuWindow.Language;
 using Assets._Scripts.Utilites.Loger;
 using System;
 using VContainer.Unity;
@@ -19,6 +21,8 @@ namespace Assets._Scripts.EnteryPoints
         private LevelsController _levelsController;
         private WalletController _walletController;
         private IGameLogger _gameLogger;
+        private LanguageController _languageController;
+        private LanguageViewMenu _viewLanguageMenu;
 
         public MenuEnteryPoint(
             Func<MenuTabsView> menuFactory,
@@ -26,7 +30,9 @@ namespace Assets._Scripts.EnteryPoints
             IGameLogger gameLogger,
             WalletController walletController,
             GameSaveLoadService gameSaveLoadService,
-            LevelsController levelsController
+            LevelsController levelsController,
+            LanguageController languageController,
+            LanguageViewMenu viewLanguageMenu
             ) 
         {
             _menuFactory = menuFactory;
@@ -35,6 +41,8 @@ namespace Assets._Scripts.EnteryPoints
             _gameLogger = gameLogger;
             _levelsController = levelsController;
             _gameSaveLoadService = gameSaveLoadService;
+            _languageController = languageController;
+            _viewLanguageMenu = viewLanguageMenu;
         }
 
         public void Initialize()
@@ -44,6 +52,7 @@ namespace Assets._Scripts.EnteryPoints
             _walletController.AddMenuView(menuTabsView);
             _achievmentsController.AddMenuView(menuTabsView.AchievmentsParent);
             _levelsController.AddMenuView(menuTabsView.LevelsParent);
+            _languageController.AddMenuView(_viewLanguageMenu);
         }
 
         public void Start()

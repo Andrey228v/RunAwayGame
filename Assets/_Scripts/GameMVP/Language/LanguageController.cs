@@ -10,6 +10,8 @@ namespace Assets._Scripts.GameMVP.Language
         private LanguageModel _model;
         private LanguageViewMenu _viewMenu;
 
+
+
         public LanguageController(LanguageModel model)
         {
             _model = model;
@@ -28,7 +30,7 @@ namespace Assets._Scripts.GameMVP.Language
 
         public void Save(GameSaveData gameSaveData)
         {
-
+            _model.Save(gameSaveData);
         }
 
         public void Load(GameSaveData gameSaveData)
@@ -39,6 +41,8 @@ namespace Assets._Scripts.GameMVP.Language
         public void AddMenuView(LanguageViewMenu viewMenu)
         {
             _viewMenu = viewMenu;
+
+
         }
 
     }

@@ -118,9 +118,6 @@ namespace Assets._Scripts.GameControllers.Wallets
 
             OnCoinsChanged?.Invoke(_data.Coins, 0);
             OnGobeletsChanged?.Invoke(_data.Gobelets, 0);
-
-            //AddCoins(_data.Coins);
-            //AddGobelets(_data.Gobelets);
         }
     }
 }

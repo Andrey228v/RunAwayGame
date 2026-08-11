@@ -5,7 +5,6 @@ using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.UI._1MenuWindow;
-using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.UI._1MenuWindow.Language;
 using Assets._Scripts.Utilites.Loger;
 using System;

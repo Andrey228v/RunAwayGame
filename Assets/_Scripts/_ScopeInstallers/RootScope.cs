@@ -69,6 +69,8 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<AchievmentDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 
+            builder.RegisterEntryPoint<LanguageController>().AsSelf();
+
             builder.RegisterFactory<UnitInfoUIView>(container => () =>
             {
                 return container.Instantiate(_unitInfoUIPrefab);

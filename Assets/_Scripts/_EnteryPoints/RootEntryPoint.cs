@@ -2,6 +2,7 @@
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
+using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
 using DG.Tweening;
@@ -21,6 +22,7 @@ namespace Assets._Scripts.EnteryPoints
         private readonly WalletController _walletController;
         private readonly AchievmentsController _achievmentsController;
         private readonly GameSaveLoadService _gameSaveLoadService;
+        private readonly LanguageController _languageController;
 
         [Inject]
         public RootEntryPoint(LoadManager loadManager,
@@ -29,6 +31,7 @@ namespace Assets._Scripts.EnteryPoints
             AchievmentsController achievmentsController,
             LevelsController levelsController,
             GameSaveLoadService gameSaveLoadService,
+            LanguageController languageController,
             GameLoopService gameLoopService
             )
         {
@@ -39,6 +42,7 @@ namespace Assets._Scripts.EnteryPoints
             _levelsController = levelsController;
             _gameLoopService = gameLoopService;
             _gameSaveLoadService = gameSaveLoadService;
+            _languageController = languageController;
         }
 
         public async void Initialize()
@@ -61,8 +65,12 @@ namespace Assets._Scripts.EnteryPoints
             _gameLoopService.SaveDict.Add("achievmentsController", _achievmentsController);
             _gameLoopService.LoadDict.Add("achievmentsController", _achievmentsController);
 
+            _gameLoopService.SaveDict.Add("languageController", _languageController);
+            _gameLoopService.LoadDict.Add("languageController", _languageController);
+
             _walletController.Initialization(_gameSaveLoadService.GameSaveData);
             _achievmentsController.Initialization(_gameSaveLoadService.GameSaveData);
+            _languageController.Initialization(_gameSaveLoadService.GameSaveData);
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

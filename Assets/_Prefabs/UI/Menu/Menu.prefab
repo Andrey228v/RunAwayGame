@@ -2524,7 +2524,7 @@ MonoBehaviour:
   _backButtonShop: {fileID: 6571528084718737264}
   _backButtonAchievements: {fileID: 3360717212195295752}
   _exitButton: {fileID: 122835909246431705}
-  _dropdownLanguage: {fileID: 0}
+  _languageViewMenu: {fileID: 4363030948567717051}
   _goldsText: {fileID: 3746322247130723685}
   _gobeletsText: {fileID: 259979420258679262}
   _volumeMusicSlider: {fileID: 0}
@@ -2928,7 +2928,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1

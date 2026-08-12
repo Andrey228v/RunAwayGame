@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.GameControllers;
-using Assets._Scripts.GameControllers.Achievments;
+﻿using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP.Language;
@@ -51,7 +50,7 @@ namespace Assets._Scripts.EnteryPoints
             _walletController.AddMenuView(menuTabsView);
             _achievmentsController.AddMenuView(menuTabsView.AchievmentsParent);
             _levelsController.AddMenuView(menuTabsView.LevelsParent);
-            _languageController.AddMenuView(_viewLanguageMenu);
+            _languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
         }
 
         public void Start()
@@ -60,10 +59,10 @@ namespace Assets._Scripts.EnteryPoints
 
             _levelsController.Initialization(gameSaveData);
 
-
             _levelsController.Load(gameSaveData);
             _walletController.Load(gameSaveData);
             _achievmentsController.Load(gameSaveData);
+            _languageController.Load(gameSaveData);
         }
 
         public void Dispose()
@@ -71,6 +70,8 @@ namespace Assets._Scripts.EnteryPoints
             _gameLogger.Log("MenuEnteryPoint OnDestroy", "Warning");
             _achievmentsController.DisposeMenuView();
             _levelsController.DisposeMenuView();
+
+            _languageController.RemoveMenuView("viewLanguageMenu");
         }
     }
 }

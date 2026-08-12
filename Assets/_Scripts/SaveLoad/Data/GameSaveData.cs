@@ -25,6 +25,7 @@ namespace Assets.Scripts.SaveLoad.Data
             AchievmentsData = achievmentsData;
             ShopData = shopData;
             WalletData = walletData;
+            SettingsData = settingsData;
             LastSaveTime = lastSaveTime;
 
             AchievmentData achData0 = new AchievmentData()

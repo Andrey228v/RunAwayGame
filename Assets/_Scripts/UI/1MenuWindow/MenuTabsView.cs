@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.SceneLoading;
+using Assets._Scripts.UI._1MenuWindow.Language;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -34,7 +35,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         [SerializeField] private Button _backButtonShop;
         [SerializeField] private Button _backButtonAchievements;
         [SerializeField] private Button _exitButton;
-        [SerializeField] private Dropdown _dropdownLanguage;
+        [SerializeField] private LanguageViewMenu _languageViewMenu;
 
 
         [Header("Amounts")]

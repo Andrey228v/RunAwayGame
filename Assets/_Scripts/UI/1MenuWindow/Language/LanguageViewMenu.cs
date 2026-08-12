@@ -30,6 +30,11 @@ namespace Assets._Scripts.UI._1MenuWindow.Language
             _buttonsLanguages[2].onClick.RemoveListener(() => SetTurkeyLanguage(2));
         }
 
+        public void UpdateMainButton(int id)
+        {
+            _mainLanguageButton.GetComponent<Image>().sprite = _buttonsLanguages[id].GetComponent<Image>().sprite;
+        }
+
         public void UpdateView(bool isActivate)
         {
             if(isActivate == true)

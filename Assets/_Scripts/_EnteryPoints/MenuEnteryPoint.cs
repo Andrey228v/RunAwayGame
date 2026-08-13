@@ -14,7 +14,7 @@ namespace Assets._Scripts.EnteryPoints
     public class MenuEnteryPoint : IInitializable, IStartable, IDisposable
     {
         private GameSaveLoadService _gameSaveLoadService;
-        private Func<MenuTabsView> _menuFactory;
+        //private Func<MenuTabsView> _menuFactory;
         private AchievmentsController _achievmentsController;
         private LevelsController _levelsController;
         private WalletController _walletController;
@@ -23,7 +23,7 @@ namespace Assets._Scripts.EnteryPoints
         private LanguageViewMenu _viewLanguageMenu;
 
         public MenuEnteryPoint(
-            Func<MenuTabsView> menuFactory,
+            //Func<MenuTabsView> menuFactory,
             AchievmentsController achievmentsController,
             IGameLogger gameLogger,
             WalletController walletController,
@@ -33,7 +33,7 @@ namespace Assets._Scripts.EnteryPoints
             LanguageViewMenu viewLanguageMenu
             ) 
         {
-            _menuFactory = menuFactory;
+            //_menuFactory = menuFactory;
             _achievmentsController = achievmentsController;
             _walletController = walletController;
             _gameLogger = gameLogger;
@@ -45,12 +45,12 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Initialize()
         {
-            MenuTabsView menuTabsView = _menuFactory();
+            //MenuTabsView menuTabsView = _menuFactory();
 
-            _walletController.AddMenuView(menuTabsView);
-            _achievmentsController.AddMenuView(menuTabsView.AchievmentsParent);
-            _levelsController.AddMenuView(menuTabsView.LevelsParent);
-            _languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
+            //_walletController.AddMenuView(menuTabsView);
+            //_achievmentsController.AddMenuView(menuTabsView.AchievmentsParent);
+            //_levelsController.AddMenuView(menuTabsView.LevelsParent);
+            //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
         }
 
         public void Start()

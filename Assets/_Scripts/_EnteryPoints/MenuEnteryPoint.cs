@@ -3,37 +3,44 @@ using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
+using Assets._Scripts.SceneLoading;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Language;
 using Assets._Scripts.Utilites.Loger;
 using System;
+using System.Collections.Generic;
+using Unity.Collections;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
     public class MenuEnteryPoint : IInitializable, IStartable, IDisposable
     {
+        private List<SceneGroupHandle> _scensGroups;
         private GameSaveLoadService _gameSaveLoadService;
-        //private Func<MenuTabsView> _menuFactory;
         private AchievmentsController _achievmentsController;
         private LevelsController _levelsController;
         private WalletController _walletController;
         private IGameLogger _gameLogger;
         private LanguageController _languageController;
         private LanguageViewMenu _viewLanguageMenu;
+        private MenuTabsView _menuTabsView;
+        private LoadManager _loadManager;
 
         public MenuEnteryPoint(
-            //Func<MenuTabsView> menuFactory,
             AchievmentsController achievmentsController,
             IGameLogger gameLogger,
             WalletController walletController,
             GameSaveLoadService gameSaveLoadService,
             LevelsController levelsController,
             LanguageController languageController,
-            LanguageViewMenu viewLanguageMenu
+            MenuTabsView menuTabsView,
+            LoadManager loadManager,
+            LanguageViewMenu viewLanguageMenu,
+            List<SceneGroupHandle> scensGroups
             ) 
         {
-            //_menuFactory = menuFactory;
+            _scensGroups = scensGroups;
             _achievmentsController = achievmentsController;
             _walletController = walletController;
             _gameLogger = gameLogger;
@@ -41,15 +48,17 @@ namespace Assets._Scripts.EnteryPoints
             _gameSaveLoadService = gameSaveLoadService;
             _languageController = languageController;
             _viewLanguageMenu = viewLanguageMenu;
+            _menuTabsView = menuTabsView;
+            _loadManager = loadManager;
+
+            _languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
         }
 
         public void Initialize()
         {
-            //MenuTabsView menuTabsView = _menuFactory();
-
-            //_walletController.AddMenuView(menuTabsView);
-            //_achievmentsController.AddMenuView(menuTabsView.AchievmentsParent);
-            //_levelsController.AddMenuView(menuTabsView.LevelsParent);
+            _walletController.AddMenuView(_menuTabsView);
+            _achievmentsController.AddMenuView(_menuTabsView.AchievmentsParent);
+            _levelsController.AddMenuView(_menuTabsView.LevelsParent);
             //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
         }
 
@@ -63,6 +72,15 @@ namespace Assets._Scripts.EnteryPoints
             _walletController.Load(gameSaveData);
             _achievmentsController.Load(gameSaveData);
             _languageController.Load(gameSaveData);
+
+
+            _menuTabsView.OnLevelStart0 += LoadLevel;
+            _menuTabsView.OnLevelStart1 += LoadLevel;
+            _menuTabsView.OnLevelStart2 += LoadLevel;
+
+            //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
+
+            //_loadManager.LoadScene()
         }
 
         public void Dispose()
@@ -71,7 +89,18 @@ namespace Assets._Scripts.EnteryPoints
             _achievmentsController.DisposeMenuView();
             _levelsController.DisposeMenuView();
 
+            _menuTabsView.OnLevelStart0 -= LoadLevel;
+            _menuTabsView.OnLevelStart1 -= LoadLevel;
+            _menuTabsView.OnLevelStart2 -= LoadLevel;
+
             _languageController.RemoveMenuView("viewLanguageMenu");
         }
+
+        //Временное решение ?? 
+        private async void LoadLevel(int id)
+        {
+            await _loadManager.LoadScene(_scensGroups[id]);
+        }
+
     }
 }

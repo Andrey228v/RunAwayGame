@@ -10,7 +10,6 @@ using Assets._Scripts.ObjectsScripts.Points.Finish;
 using Assets._Scripts.SaveLoad.Service;
 using Assets.Scripts.Points;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -71,17 +70,14 @@ namespace Assets._Scripts.EnteryPoints
 
             _levelLoopService.SaveDict.Add("CheckPointsController", _checkPointsController);
             _levelLoopService.SaveDict.Add("CoinController", _coinController);
-            //_levelLoopService.SaveDict.Add("FinishController", _finishController);
             _levelLoopService.SaveDict.Add("LastCheckPointController", _lastCheckPointController);
 
             _levelLoopService.LoadDict.Add("CheckPointsController", _checkPointsController);
             _levelLoopService.LoadDict.Add("CoinController", _coinController);
-            //_levelLoopService.LoadDict.Add("FinishController", _finishController);
             _levelLoopService.LoadDict.Add("LastCheckPointController", _lastCheckPointController);
 
             _levelLoopService.DieRestartDict.Add("CheckPointsController", _checkPointsController);
             _levelLoopService.DieRestartDict.Add("CoinController", _coinController);
-            //_levelLoopService.DieRestartDict.Add("FinishController", _finishController);
             _levelLoopService.DieRestartDict.Add("LastCheckPointController", _lastCheckPointController);
 
             _levelLoopService.FinishDict.Add("LastCheckPointController", _lastCheckPointController);
@@ -91,7 +87,6 @@ namespace Assets._Scripts.EnteryPoints
 
             _levelLoopService.ResetDict.Add("CheckPointsController", _checkPointsController);
             _levelLoopService.ResetDict.Add("CoinController", _coinController);
-            //_levelLoopService.ResetDict.Add("FinishController", _finishController);
             _levelLoopService.ResetDict.Add("LastCheckPointController", _lastCheckPointController);
         }
 

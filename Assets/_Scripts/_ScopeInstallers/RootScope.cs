@@ -3,6 +3,7 @@ using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Menu;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP;
 using Assets._Scripts.GameMVP.Achievments;
@@ -47,10 +48,6 @@ namespace Assets._Scripts.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
-            var modelLanguage = CreateModelLanguage();
-
-            builder.RegisterInstance(modelLanguage);
-
             builder.RegisterInstance(_sceneGroupHandle);
             builder.RegisterInstance(_loadScreenView);
             builder.RegisterEntryPoint<RootEntryPoint>().AsSelf();
@@ -69,7 +66,12 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<AchievmentDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 
+            var modelLanguage = CreateModelLanguage();
             builder.RegisterEntryPoint<LanguageController>().AsSelf();
+            builder.RegisterInstance(modelLanguage);
+
+            builder.RegisterEntryPoint<MenuController>().AsSelf();
+            builder.RegisterEntryPoint<MenuModel>().AsSelf();
 
             builder.RegisterFactory<UnitInfoUIView>(container => () =>
             {

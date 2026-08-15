@@ -6,6 +6,10 @@ namespace Assets._Scripts.GameControllers.Menu
 {
     public class MenuModel
     {
+        private bool _isMenuActivate;
+
+        public bool IsMenuActivate => _isMenuActivate;
+
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Assets._Scripts.EnteryPoints;
 using Assets._Scripts.GameControllers.GameShop;
 using Assets._Scripts.GameControllers.Menu;
+using Assets._Scripts.SceneLoading;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.UI._1MenuWindow.Language;
@@ -18,14 +19,16 @@ namespace Assets._Scripts.Installers
         [SerializeField] private ConditionSkinView _conditionSkinViewPrefab;
         [SerializeField] private AchievementView _achievementPrefab;
         [SerializeField] private LanguageViewMenu _viewLanguageMenu;
+        [SerializeField] private MenuTabsView _menuTabsView;
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterInstance(_menuTabsView);
             builder.RegisterEntryPoint<MenuEnteryPoint>();
             
             builder.Register<FactorySkinsCells>(Lifetime.Singleton); // под вопросом. Скорее всего не нужно будет.
             builder.Register<SkinController>(Lifetime.Singleton);
-            builder.Register<MenuController>(Lifetime.Singleton);
+            //builder.Register<MenuController>(Lifetime.Singleton);
             builder.Register<LanguageViewMenu>(Lifetime.Singleton);
 
             //builder.RegisterFactory<MenuTabsView>(container => () =>

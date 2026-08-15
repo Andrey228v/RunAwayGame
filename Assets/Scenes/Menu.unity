@@ -119,6 +119,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &99777646 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4363030948567717051, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+  m_PrefabInstance: {fileID: 1564352118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c3f8076cc102bc4ebfaf622ab52f174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.UI._1MenuWindow.Language.LanguageViewMenu
 --- !u!1 &1157114850
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +181,8 @@ MonoBehaviour:
   _unitButtonSkinViewPrefab: {fileID: 6217150662217162583, guid: 33e81fb8ef33cb9419381b671637c07b, type: 3}
   _conditionSkinViewPrefab: {fileID: 76440864217939401, guid: 9f47190c5f270bb4890670384c69756a, type: 3}
   _achievementPrefab: {fileID: 3994185680666412377, guid: adba67dbd3de4724a9d55ac14050469b, type: 3}
-  _viewLanguageMenu: {fileID: 0}
+  _viewLanguageMenu: {fileID: 99777646}
+  _menuTabsView: {fileID: 1627433707}
 --- !u!1001 &1564352118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -495,6 +507,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7125559611388467430, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+      propertyPath: _startGameButtonL0
+      value: 
+      objectReference: {fileID: 1564352121}
+    - target: {fileID: 7125559611388467430, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+      propertyPath: _startGameButtonL1
+      value: 
+      objectReference: {fileID: 1564352120}
+    - target: {fileID: 7125559611388467430, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+      propertyPath: _startGameButtonL2
+      value: 
+      objectReference: {fileID: 1564352119}
     - target: {fileID: 8643115741793507499, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -528,6 +552,50 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+--- !u!114 &1564352119 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1160415371174709101, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+  m_PrefabInstance: {fileID: 1564352118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &1564352120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8882932047560993801, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+  m_PrefabInstance: {fileID: 1564352118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &1564352121 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5679003920585716839, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+  m_PrefabInstance: {fileID: 1564352118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!114 &1627433707 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7125559611388467430, guid: 3e70cd7d3dca68c4db0c87f27dc645b1, type: 3}
+  m_PrefabInstance: {fileID: 1564352118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f7f004582e6f114a87700e21ec72236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.UI._1MenuWindow.MenuTabs
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

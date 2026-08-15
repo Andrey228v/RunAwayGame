@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Menu;
 using Assets._Scripts.GameMVP;
 using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
 using Assets._Scripts.SaveLoad.Service;
@@ -13,6 +14,7 @@ namespace Assets._Scripts.GameControllers
         private GameSaveLoadService _gameSaveLoadService;
         private LevelLoopService _levelLoopSerivece;
         private LevelsController _levelsController;
+        private MenuController _menuController;
 
         private readonly Dictionary<string, ISaveGame> _saveDict;
         private readonly Dictionary<string, ILoadGame> _loadDict;
@@ -27,11 +29,14 @@ namespace Assets._Scripts.GameControllers
         public Dictionary<string, IResetGame> ResetDict => _resetDict;
 
         public GameLoopService(GameSaveLoadService gameSaveLoadService,
-            LevelLoopService levelLoopService, LevelsController levelsController)
+            LevelLoopService levelLoopService,
+            MenuController menuController,
+            LevelsController levelsController)
         {
             _gameSaveLoadService = gameSaveLoadService;
             _levelLoopSerivece = levelLoopService;
             _levelsController = levelsController;
+            _menuController = menuController;
 
             _saveDict = new Dictionary<string, ISaveGame>();
             _loadDict = new Dictionary<string, ILoadGame>();

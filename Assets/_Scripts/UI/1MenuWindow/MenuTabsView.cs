@@ -1,11 +1,9 @@
-﻿using Assets._Scripts.SceneLoading;
-using Assets._Scripts.UI._1MenuWindow.Language;
+﻿using Assets._Scripts.UI._1MenuWindow.Language;
 using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 namespace Assets._Scripts.UI._1MenuWindow
 {
@@ -23,9 +21,9 @@ namespace Assets._Scripts.UI._1MenuWindow
         [SerializeField] private List<GameObject> _panels;
 
         [Header("Buttons")]
-        [SerializeField] private IdButton _startGameButtonL0;
-        [SerializeField] private IdButton _startGameButtonL1;
-        [SerializeField] private IdButton _startGameButtonL2;
+        [SerializeField] private Button _startGameButtonL0;
+        [SerializeField] private Button _startGameButtonL1;
+        [SerializeField] private Button _startGameButtonL2;
         [SerializeField] private Button _settingsButton;
         [SerializeField] private Button _soundControllButton;
         [SerializeField] private Button _shopButton;
@@ -51,27 +49,16 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
-        //private LoadManager _loadManager;
-        //private List<SceneGroupHandle> _scensGroups;
 
         public Transform AchievmentsParent => _achievmentsParent;
         public Transform LevelsParent => _levelsParent;
 
         public event Action OnDestroyView;
         public event Action OnLanguageButtonClick;
-
+        public event Action<int> OnLevelStart0;
+        public event Action<int> OnLevelStart1;
+        public event Action<int> OnLevelStart2;
         
-
-        //[Inject]
-        //public void Constructor( 
-        //    LoadManager loadManager,
-        //    List<SceneGroupHandle> scensGroups
-        //    )
-        //{
-        //    _loadManager = loadManager;
-        //    _scensGroups = scensGroups;
-        //}
-
         private void OnEnable()
         {
             _currentPanel = _panels[0];
@@ -126,10 +113,22 @@ namespace Assets._Scripts.UI._1MenuWindow
             _currentPanel.SetActive(true);
         }
 
-        //private async void StartGame(int level)
-        //{
-        //    await _loadManager.LoadScene(_scensGroups[level]);
-        //}
+        //Под вопросом...
+        private void StartGame(int levelId)
+        {
+            if (levelId == 0)
+            {
+                OnLevelStart0?.Invoke(1);
+            }
+            else if (levelId == 1) 
+            {
+                OnLevelStart1?.Invoke(2);
+            }
+            else if(levelId == 2)
+            {
+                OnLevelStart2?.Invoke(3);
+            }
+        }
 
         private void ClickBackButton()
         {
@@ -140,9 +139,9 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void SetupButtons()
         {
-            //_startGameButtonL0.onClick.AddListener(() => StartGame(1)); // переделать...
-            //_startGameButtonL1.onClick.AddListener(() => StartGame(2)); // переделать...
-            //_startGameButtonL2.onClick.AddListener(() => StartGame(3)); // переделать...
+            _startGameButtonL0.onClick.AddListener(() => StartGame(0)); // переделать...
+            _startGameButtonL1.onClick.AddListener(() => StartGame(1)); // переделать...
+            _startGameButtonL2.onClick.AddListener(() => StartGame(2)); // переделать...
 
             _settingsButton.onClick.AddListener(()=> ShowPage(PageName.Settings));
             _shopButton.onClick.AddListener(() => ShowPage(PageName.Shop));
@@ -171,9 +170,9 @@ namespace Assets._Scripts.UI._1MenuWindow
             _deletSaveButton.onClick.RemoveListener(DeletSave);
             _exitButton.onClick.RemoveListener(ClickExit);
 
-            //_startGameButtonL0.onClick.RemoveAllListeners();
-            //_startGameButtonL1.onClick.RemoveAllListeners();
-            //_startGameButtonL2.onClick.RemoveAllListeners();
+            _startGameButtonL0.onClick.RemoveAllListeners();
+            _startGameButtonL1.onClick.RemoveAllListeners();
+            _startGameButtonL2.onClick.RemoveAllListeners();
 
             //_lanuageButton.onClick.RemoveListener(LanguageButtonClick);
         }

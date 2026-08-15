@@ -8,14 +8,14 @@ namespace Assets._Scripts.GameControllers.Settings
 {
     public class SettingsController
     {
-        private SettingsModel _model;
-        private MenuTabsView _menuView;
-        private GameInterfacePanelView _gamePanelView;
+        //private SettingsModel _model;
+        //private MenuTabsView _menuView;
+        //private GameInterfacePanelView _gamePanelView;
 
-        public void Initialize(SettingsModel model)
-        {
-            _model = model;
-        }
+        //public void Initialize(SettingsModel model)
+        //{
+        //    _model = model;
+        //}
 
         public void SaveAllServices(GameSaveData gameSaveData)
         {
@@ -33,13 +33,13 @@ namespace Assets._Scripts.GameControllers.Settings
             //_model.LoadData(gameSaveData.WalletData);
         }
 
-        public void AddMenuView(MenuTabsView menuView)
-        {
-            //_menuView = menuView;
-            //_menuView.OnDestroyView += RemoveMenuView;
-            //_model.OnCoinsChanged += _menuView.SetCoinsCountText;
-            //_model.OnGobeletsChanged += _menuView.SetGobeletsCountText;
-        }
+        //public void AddMenuView(MenuTabsView menuView)
+        //{
+        //    //_menuView = menuView;
+        //    //_menuView.OnDestroyView += RemoveMenuView;
+        //    //_model.OnCoinsChanged += _menuView.SetCoinsCountText;
+        //    //_model.OnGobeletsChanged += _menuView.SetGobeletsCountText;
+        //}
 
         public void RemoveMenuView()
         {

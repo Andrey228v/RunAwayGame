@@ -6,6 +6,7 @@ using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
 using DG.Tweening;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using VContainer;
@@ -13,7 +14,7 @@ using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
 {
-    public class RootEntryPoint : IInitializable
+    public class RootEntryPoint : IInitializable, IDisposable
     {
         private readonly LoadManager _loadManager;
         private readonly List<SceneGroupHandle> _scensGroups;
@@ -23,6 +24,7 @@ namespace Assets._Scripts.EnteryPoints
         private readonly AchievmentsController _achievmentsController;
         private readonly GameSaveLoadService _gameSaveLoadService;
         private readonly LanguageController _languageController;
+        private readonly LanguageModel _languageModel;
 
         [Inject]
         public RootEntryPoint(LoadManager loadManager,
@@ -32,6 +34,7 @@ namespace Assets._Scripts.EnteryPoints
             LevelsController levelsController,
             GameSaveLoadService gameSaveLoadService,
             LanguageController languageController,
+            LanguageModel languageModel,
             GameLoopService gameLoopService
             )
         {
@@ -43,6 +46,12 @@ namespace Assets._Scripts.EnteryPoints
             _gameLoopService = gameLoopService;
             _gameSaveLoadService = gameSaveLoadService;
             _languageController = languageController;
+            _languageModel = languageModel;
+        }
+
+        public void Dispose()
+        {
+            _languageModel.OnLanguageChangedForSave -= SaveLevel;
         }
 
         public async void Initialize()
@@ -72,7 +81,15 @@ namespace Assets._Scripts.EnteryPoints
             _achievmentsController.Initialization(_gameSaveLoadService.GameSaveData);
             _languageController.Initialization(_gameSaveLoadService.GameSaveData);
 
+            _languageModel.OnLanguageChangedForSave += SaveLevel;
+
             await _loadManager.LoadScene(_scensGroups[0]);
+        }
+
+        //Сохранаяем при взятии чекпоинта, монетки, завершении уровня.
+        private void SaveLevel()
+        {
+            _gameLoopService.SaveAllServices(_gameSaveLoadService.GameSaveData);
         }
     }
 }

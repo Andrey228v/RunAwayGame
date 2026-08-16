@@ -1,43 +1,64 @@
-﻿using Assets.Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 
 namespace Assets._Scripts.GameMVP.Language
 {
+    public enum LanguageType
+    {
+        Russian = 0,
+        English = 1,
+        Turkish = 2
+    }
+
     public class LanguageModel
     {
-        private int _id;
-        private bool _isActive;
+        private LanguageType _currentLanguage = LanguageType.English;
+        private bool _isMenuVisible;
 
-        public event Action<int> OnLanguageChanged;
-        public event Action<bool> OnActivateChanged;
+        public event Action OnLanguageChangedForSave;
+        public event Action<LanguageType> OnLanguageChanged;
+        public event Action<bool> OnMenuVisibilityChanged;
 
-        public LanguageModel(int id = 0, bool isActivate = false)
-        {
-            _id = id;
-            _isActive = isActivate;
-        }
+        public LanguageType CurrentLanguage => _currentLanguage;
+
 
         public void Save(GameSaveData gameSaveData)
         {
-            gameSaveData.SettingsData.IdLanguage = _id;
+            if (gameSaveData.SettingsData == null)
+            {
+                gameSaveData.SettingsData = new SettingsData();
+            }
+            gameSaveData.SettingsData.IdLanguage = (int)_currentLanguage;
         }
 
         public void Load(GameSaveData gameSaveData)
         {
-            var data = gameSaveData.SettingsData;
-            SetIdLanguage(data.IdLanguage);
+            var settings = gameSaveData.SettingsData;
+
+            if (settings != null)
+            {
+                _currentLanguage = (LanguageType)settings.IdLanguage;
+                OnLanguageChanged?.Invoke(_currentLanguage);
+            }
         }
 
-        public void SetActivate(bool isAcivate)
+        public void ToggleMenuVisibility()
         {
-            _isActive = isAcivate;
-            OnActivateChanged?.Invoke(_isActive);
+            _isMenuVisible = !_isMenuVisible;
+            OnMenuVisibilityChanged?.Invoke(_isMenuVisible);
         }
 
-        public void SetIdLanguage(int id)
+        public void SetLanguage(LanguageType language)
         {
-            _id = id;
-            OnLanguageChanged?.Invoke(_id);
+            if (_currentLanguage != language)
+            {
+                _currentLanguage = language;
+                OnLanguageChanged?.Invoke(language);
+                _isMenuVisible = false;
+                OnMenuVisibilityChanged?.Invoke(false);
+                OnLanguageChangedForSave?.Invoke();
+            }
         }
     }
 }

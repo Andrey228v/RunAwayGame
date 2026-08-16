@@ -1,66 +1,64 @@
-﻿using System;
+﻿using Assets._Scripts.GameMVP.Language;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets._Scripts.UI._1MenuWindow.Language
 {
-    public class LanguageViewMenu: MonoBehaviour, ILanguageViewMenu
+    public interface ILanguageView
+    {
+        void UpdateLanguageDisplay(LanguageType language);
+        void UpdateVisibility(bool isVisible);
+        event Action OnToggleClicked;
+        event Action<LanguageType> OnLanguageSelected;
+    }
+
+    public class LanguageViewMenu: MonoBehaviour, ILanguageView
     {
         [SerializeField] private Button _mainLanguageButton;
         [SerializeField] private Transform _buttonsParent;
-        [SerializeField] private List<Button> _buttonsLanguages;
+        [SerializeField] private List<Button> _languageButtons;
 
-        public event Action<int> OnRusLanguageChoose;
-        public event Action<int> OnUSALanguageChoose;
-        public event Action<int> OnTurkeyLanguageChoose;
+        public event Action OnToggleClicked;
+        public event Action<LanguageType> OnLanguageSelected;
 
-        //Данный класс сделан в простом стиле, без мысли что будет расширяться.
         private void Start()
         {
-            _buttonsLanguages[0].onClick.AddListener(() => SetRusLanguage(0));
-            _buttonsLanguages[1].onClick.AddListener(() => SetUSALanguage(1));
-            _buttonsLanguages[2].onClick.AddListener(() => SetTurkeyLanguage(2));
+            InitializeButtons();
+        }
+
+        private void InitializeButtons()
+        {
+            for (int i = 0; i < _languageButtons.Count; i++)
+            {
+                var button = _languageButtons[i];
+                var language = (LanguageType)i;
+                button.onClick.AddListener(() => OnLanguageSelected?.Invoke(language));
+            }
+
+            _mainLanguageButton.onClick.AddListener(() => OnToggleClicked?.Invoke());
         }
 
         private void OnDestroy()
         {
-            _buttonsLanguages[0].onClick.RemoveListener(() => SetRusLanguage(0));
-            _buttonsLanguages[1].onClick.RemoveListener(() => SetUSALanguage(1));
-            _buttonsLanguages[2].onClick.RemoveListener(() => SetTurkeyLanguage(2));
-        }
+            _mainLanguageButton.onClick.RemoveAllListeners();
 
-        public void UpdateMainButton(int id)
-        {
-            _mainLanguageButton.GetComponent<Image>().sprite = _buttonsLanguages[id].GetComponent<Image>().sprite;
-        }
-
-        public void UpdateView(bool isActivate)
-        {
-            if(isActivate == true)
+            foreach (var button in _languageButtons)
             {
-                _buttonsParent.gameObject.SetActive(true);
-            }
-            else
-            {
-                _buttonsParent.gameObject.SetActive(false);
+                button.onClick.RemoveAllListeners();
             }
         }
 
-        private void SetRusLanguage(int id)
+        public void UpdateLanguageDisplay(LanguageType language)
         {
-            OnRusLanguageChoose?.Invoke(id);
+            var targetButton = _languageButtons[(int)language];
+            _mainLanguageButton.GetComponent<Image>().sprite = targetButton.GetComponent<Image>().sprite;
         }
 
-        private void SetUSALanguage(int id)
+        public void UpdateVisibility(bool isVisible)
         {
-            OnUSALanguageChoose?.Invoke(id);
+            _buttonsParent.gameObject.SetActive(isVisible);
         }
-
-        private void SetTurkeyLanguage(int id)
-        {
-            OnTurkeyLanguageChoose?.Invoke(id);
-        }
-
     }
 }

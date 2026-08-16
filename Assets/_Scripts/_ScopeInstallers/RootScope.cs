@@ -66,9 +66,8 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<AchievmentDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 
-            var modelLanguage = CreateModelLanguage();
-            builder.RegisterEntryPoint<LanguageController>().AsSelf();
-            builder.RegisterInstance(modelLanguage);
+            builder.Register<LanguageModel>(Lifetime.Singleton);
+            builder.Register<LanguageController>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
             builder.RegisterEntryPoint<MenuController>().AsSelf();
             builder.RegisterEntryPoint<MenuModel>().AsSelf();
@@ -89,11 +88,11 @@ namespace Assets._Scripts.Installers
             }, Lifetime.Transient);
         }
 
-        private LanguageModel CreateModelLanguage()
-        {
-            LanguageModel model = new LanguageModel();
+        //private LanguageModel CreateModelLanguage()
+        //{
+        //    LanguageModel model = new LanguageModel();
 
-            return model;
-        }
+        //    return model;
+        //}
     }
 }

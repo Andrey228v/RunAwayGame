@@ -181,7 +181,7 @@ MonoBehaviour:
   _unitButtonSkinViewPrefab: {fileID: 6217150662217162583, guid: 33e81fb8ef33cb9419381b671637c07b, type: 3}
   _conditionSkinViewPrefab: {fileID: 76440864217939401, guid: 9f47190c5f270bb4890670384c69756a, type: 3}
   _achievementPrefab: {fileID: 3994185680666412377, guid: adba67dbd3de4724a9d55ac14050469b, type: 3}
-  _viewLanguageMenu: {fileID: 99777646}
+  _languageMenuView: {fileID: 99777646}
   _menuTabsView: {fileID: 1627433707}
 --- !u!1001 &1564352118
 PrefabInstance:

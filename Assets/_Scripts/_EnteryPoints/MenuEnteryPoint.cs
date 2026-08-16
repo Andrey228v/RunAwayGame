@@ -9,7 +9,6 @@ using Assets._Scripts.UI._1MenuWindow.Language;
 using Assets._Scripts.Utilites.Loger;
 using System;
 using System.Collections.Generic;
-using Unity.Collections;
 using VContainer.Unity;
 
 namespace Assets._Scripts.EnteryPoints
@@ -51,7 +50,8 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView = menuTabsView;
             _loadManager = loadManager;
 
-            _languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
+            //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
+            _languageController.AddView(_viewLanguageMenu);
         }
 
         public void Initialize()
@@ -93,7 +93,9 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart1 -= LoadLevel;
             _menuTabsView.OnLevelStart2 -= LoadLevel;
 
-            _languageController.RemoveMenuView("viewLanguageMenu");
+            _languageController.Dispose();
+
+            //_languageController.RemoveMenuView("viewLanguageMenu");
         }
 
         //Временное решение ?? 

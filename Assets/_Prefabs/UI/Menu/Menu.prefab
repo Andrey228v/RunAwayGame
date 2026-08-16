@@ -2996,7 +2996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Assets._Scripts.UI._1MenuWindow.Language.LanguageViewMenu
   _mainLanguageButton: {fileID: 6239669408516717750}
   _buttonsParent: {fileID: 1501641517768007629}
-  _buttonsLanguages:
+  _languageButtons:
   - {fileID: 4987992080013321266}
   - {fileID: 4145130023807088274}
   - {fileID: 1387456457826886155}

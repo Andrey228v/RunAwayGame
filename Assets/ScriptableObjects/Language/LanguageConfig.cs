@@ -7,8 +7,6 @@ namespace Assets.ScriptableObjects.Language
     public class LanguageConfig : ScriptableObject
     {
         [Header("Menu")]
-
-        [Header("Menu")]
         [SerializeField] private string _buttonAchievmentsName;
         [SerializeField] private string _buttonSoundName;
         [SerializeField] private string _buttonShopName;

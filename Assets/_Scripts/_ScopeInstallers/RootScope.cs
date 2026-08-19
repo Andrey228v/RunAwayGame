@@ -12,7 +12,9 @@ using Assets._Scripts.GameMVP.Levels;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
 using Assets._Scripts.UI;
+using Assets._Scripts.UI._1MenuWindow.Language;
 using Assets._Scripts.Utilites.Loger;
+using Assets.ScriptableObjects.Language;
 using Assets.Scripts.SaveLoad;
 using ECM2;
 using System.Collections.Generic;
@@ -24,6 +26,7 @@ namespace Assets._Scripts.Installers
 {
     public class RootScope : LifetimeScope
     {
+        [SerializeField] private List<LanguageConfig> _languages;
         [SerializeField] private List<SceneGroupHandle> _sceneGroupHandle;
         [SerializeField] private LoadScreenView _loadScreenView;
 
@@ -48,6 +51,7 @@ namespace Assets._Scripts.Installers
 
         protected override void Configure(IContainerBuilder builder)
         {
+            builder.RegisterInstance(_languages);
             builder.RegisterInstance(_sceneGroupHandle);
             builder.RegisterInstance(_loadScreenView);
             builder.RegisterEntryPoint<RootEntryPoint>().AsSelf();
@@ -71,6 +75,8 @@ namespace Assets._Scripts.Installers
 
             builder.RegisterEntryPoint<MenuController>().AsSelf();
             builder.RegisterEntryPoint<MenuModel>().AsSelf();
+
+            builder.Register<LanguageManger>(Lifetime.Singleton).AsSelf();
 
             builder.RegisterFactory<UnitInfoUIView>(container => () =>
             {

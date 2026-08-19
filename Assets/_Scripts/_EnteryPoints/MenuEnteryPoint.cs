@@ -25,6 +25,7 @@ namespace Assets._Scripts.EnteryPoints
         private LanguageViewMenu _viewLanguageMenu;
         private MenuTabsView _menuTabsView;
         private LoadManager _loadManager;
+        private readonly LanguageManger _languageManger;
 
         public MenuEnteryPoint(
             AchievmentsController achievmentsController,
@@ -36,6 +37,7 @@ namespace Assets._Scripts.EnteryPoints
             MenuTabsView menuTabsView,
             LoadManager loadManager,
             LanguageViewMenu viewLanguageMenu,
+            LanguageManger languageManger,
             List<SceneGroupHandle> scensGroups
             ) 
         {
@@ -49,6 +51,7 @@ namespace Assets._Scripts.EnteryPoints
             _viewLanguageMenu = viewLanguageMenu;
             _menuTabsView = menuTabsView;
             _loadManager = loadManager;
+            _languageManger = languageManger;
 
             //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
             _languageController.AddView(_viewLanguageMenu);
@@ -60,6 +63,8 @@ namespace Assets._Scripts.EnteryPoints
             _achievmentsController.AddMenuView(_menuTabsView.AchievmentsParent);
             _levelsController.AddMenuView(_menuTabsView.LevelsParent);
             //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
+
+            _languageManger.AddLangageFlip(_menuTabsView);
         }
 
         public void Start()
@@ -94,6 +99,8 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart2 -= LoadLevel;
 
             _languageController.Dispose();
+
+            _languageManger.RemoveLanguageFlip(_menuTabsView);
 
             //_languageController.RemoveMenuView("viewLanguageMenu");
         }

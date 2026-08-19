@@ -1,4 +1,6 @@
-﻿using Assets._Scripts.UI._1MenuWindow.Language;
+﻿using Assets._Scripts.GameMVP.Language;
+using Assets._Scripts.UI._1MenuWindow.Language;
+using Assets.ScriptableObjects.Language;
 using System;
 using System.Collections.Generic;
 using TMPro;
@@ -15,7 +17,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         Achievements
     }
 
-    public class MenuTabsView : MonoBehaviour
+    public class MenuTabsView : MonoBehaviour, ILanguageFlip
     {
         [Header("Tabs")]
         [SerializeField] private List<GameObject> _panels;
@@ -200,6 +202,11 @@ namespace Assets._Scripts.UI._1MenuWindow
         public void SetGobeletsCountText(int actualGobelets, int addGobelets)
         {
             _gobeletsText.text = actualGobelets.ToString();
+        }
+
+        public void SetLanguage(LanguageConfig languageConfig)
+        {
+            //_achievementsButton.GetComponent<Text>
         }
     }
 }

@@ -5,6 +5,7 @@ using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
 using Assets._Scripts.SceneLoading;
+using Assets._Scripts.UI._1MenuWindow.Language;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Assets._Scripts.EnteryPoints
         private readonly GameSaveLoadService _gameSaveLoadService;
         private readonly LanguageController _languageController;
         private readonly LanguageModel _languageModel;
+        private readonly LanguageManger _languageManger;
 
         [Inject]
         public RootEntryPoint(LoadManager loadManager,
@@ -35,6 +37,7 @@ namespace Assets._Scripts.EnteryPoints
             GameSaveLoadService gameSaveLoadService,
             LanguageController languageController,
             LanguageModel languageModel,
+            LanguageManger languageManger,
             GameLoopService gameLoopService
             )
         {
@@ -47,6 +50,7 @@ namespace Assets._Scripts.EnteryPoints
             _gameSaveLoadService = gameSaveLoadService;
             _languageController = languageController;
             _languageModel = languageModel;
+            _languageManger = languageManger;
         }
 
         public void Dispose()
@@ -80,6 +84,7 @@ namespace Assets._Scripts.EnteryPoints
             _walletController.Initialization(_gameSaveLoadService.GameSaveData);
             _achievmentsController.Initialization(_gameSaveLoadService.GameSaveData);
             _languageController.Initialization(_gameSaveLoadService.GameSaveData);
+            _languageManger.Initialization(_gameSaveLoadService.GameSaveData);
 
             _languageModel.OnLanguageChangedForSave += SaveLevel;
 

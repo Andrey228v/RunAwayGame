@@ -44,6 +44,8 @@ namespace Assets._Scripts.UI._1MenuWindow.Language
         public void AddLangageFlip(ILanguageFlip langageFlip)
         {
             _languageFlipList.Add(langageFlip);
+
+            langageFlip.SetLanguage(_languages[_idLanguage]);
         }
 
         public void RemoveLanguageFlip(ILanguageFlip langageFlip) 

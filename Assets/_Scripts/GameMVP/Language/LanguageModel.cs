@@ -18,6 +18,7 @@ namespace Assets._Scripts.GameMVP.Language
 
         public event Action OnLanguageChangedForSave;
         public event Action<LanguageType> OnLanguageChanged;
+        public event Action<int> OnLangageIdChanged;
         public event Action<bool> OnMenuVisibilityChanged;
 
         public LanguageType CurrentLanguage => _currentLanguage;
@@ -38,8 +39,7 @@ namespace Assets._Scripts.GameMVP.Language
 
             if (settings != null)
             {
-                _currentLanguage = (LanguageType)settings.IdLanguage;
-                OnLanguageChanged?.Invoke(_currentLanguage);
+                SetLanguage((LanguageType)settings.IdLanguage);
             }
         }
 
@@ -58,6 +58,7 @@ namespace Assets._Scripts.GameMVP.Language
                 _isMenuVisible = false;
                 OnMenuVisibilityChanged?.Invoke(false);
                 OnLanguageChangedForSave?.Invoke();
+                OnLangageIdChanged?.Invoke(((int)language));
             }
         }
     }

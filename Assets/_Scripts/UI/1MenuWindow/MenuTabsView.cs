@@ -206,7 +206,18 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         public void SetLanguage(LanguageConfig languageConfig)
         {
-            //_achievementsButton.GetComponent<Text>
+            TextMeshProUGUI settingsButtonText = _settingsButton.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI achievmentbuttonText = _achievementsButton.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (settingsButtonText != null)
+            {
+                settingsButtonText.text = languageConfig.ButtonSettingName;
+            }
+
+            if (achievmentbuttonText != null)
+            {
+                achievmentbuttonText.text = languageConfig.ButtonAchievmentsName;
+            }
         }
     }
 }

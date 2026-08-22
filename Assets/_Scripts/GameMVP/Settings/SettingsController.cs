@@ -1,15 +1,20 @@
-﻿using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.GameMVP.Language;
+using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.UI;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
+using System;
 
 namespace Assets._Scripts.GameControllers.Settings
 {
+
+
+
     public class SettingsController
     {
-        //private SettingsModel _model;
-        //private MenuTabsView _menuView;
+        private SettingsModel _model;
+        private MenuTabsView _menuView;
         //private GameInterfacePanelView _gamePanelView;
 
         //public void Initialize(SettingsModel model)

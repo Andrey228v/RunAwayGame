@@ -17,10 +17,23 @@ namespace Assets._Scripts.UI._1MenuWindow
         Achievements
     }
 
+    public interface ISettingsView
+    {
+        void UpdateSettingsDisplay();
+    }
+
     public class MenuTabsView : MonoBehaviour, ILanguageFlip
     {
         [Header("Tabs")]
         [SerializeField] private List<GameObject> _panels;
+
+        [Header("Text")]
+        [SerializeField] private TextMeshProUGUI _goldsText;
+        [SerializeField] private TextMeshProUGUI _gobeletsText;
+        [SerializeField] private TextMeshProUGUI _textSliderAllAudio;
+        [SerializeField] private TextMeshProUGUI _textSliderMusic;
+        [SerializeField] private TextMeshProUGUI _textSliderEffect;
+        [SerializeField] private TextMeshProUGUI _textAudioFlipToggle;
 
         [Header("Buttons")]
         [SerializeField] private Button _startGameButtonL0;
@@ -37,17 +50,17 @@ namespace Assets._Scripts.UI._1MenuWindow
         [SerializeField] private Button _exitButton;
         [SerializeField] private LanguageViewMenu _languageViewMenu;
 
-
-        [Header("Amounts")]
-        [SerializeField] private TextMeshProUGUI _goldsText;
-        [SerializeField] private TextMeshProUGUI _gobeletsText;
-
         [Header("Sliders")]
-        [SerializeField] private Slider _volumeMusicSlider;
+        [SerializeField] private Slider _sliderAllAudio;
+        [SerializeField] private Slider _sliderMusic;
+        [SerializeField] private Slider _sliderEffect;
 
         [Header("Parents")]
         [SerializeField] private Transform _achievmentsParent;
         [SerializeField] private Transform _levelsParent;
+
+        [Header("Toggle")]
+        [SerializeField] private Toggle _audioFlipToggle;
 
         private GameObject _currentPanel;
         private GameObject _previousPanel;
@@ -177,11 +190,6 @@ namespace Assets._Scripts.UI._1MenuWindow
             _startGameButtonL2.onClick.RemoveAllListeners();
 
             //_lanuageButton.onClick.RemoveListener(LanguageButtonClick);
-        }
-
-        private void LanguageButtonClick()
-        {
-            OnLanguageButtonClick?.Invoke();
         }
 
         private void ClickExit()

@@ -28,6 +28,9 @@ namespace Assets._Scripts.UI._1MenuWindow
         [SerializeField] private List<GameObject> _panels;
 
         [Header("Text")]
+        [SerializeField] private TextMeshProUGUI _goldsTextAmount;
+        [SerializeField] private TextMeshProUGUI _gobeletsTextAmount;
+
         [SerializeField] private TextMeshProUGUI _goldsText;
         [SerializeField] private TextMeshProUGUI _gobeletsText;
         [SerializeField] private TextMeshProUGUI _textSliderAllAudio;
@@ -204,27 +207,41 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         public void SetCoinsCountText(int actualCoin, int addCoin)
         {
-            _goldsText.text  = actualCoin.ToString();
+            _goldsTextAmount.text  = actualCoin.ToString();
         }
 
         public void SetGobeletsCountText(int actualGobelets, int addGobelets)
         {
-            _gobeletsText.text = actualGobelets.ToString();
+            _gobeletsTextAmount.text = actualGobelets.ToString();
         }
 
         public void SetLanguage(LanguageConfig languageConfig)
         {
-            TextMeshProUGUI settingsButtonText = _settingsButton.GetComponentInChildren<TextMeshProUGUI>();
-            TextMeshProUGUI achievmentbuttonText = _achievementsButton.GetComponentInChildren<TextMeshProUGUI>();
+            SetButtonText(_settingsButton, languageConfig.ButtonSettingName);
+            SetButtonText(_achievementsButton, languageConfig.ButtonAchievmentsName);
 
-            if (settingsButtonText != null)
-            {
-                settingsButtonText.text = languageConfig.ButtonSettingName;
-            }
+            _goldsText.text = languageConfig.TextGoldName;
+            _gobeletsText.text = languageConfig.TextGobeletsName;
 
-            if (achievmentbuttonText != null)
+            _textSliderAllAudio.text = languageConfig.TextAllAudioSetting;
+            _textSliderMusic.text = languageConfig.TextMusicSetting;
+            _textSliderEffect.text = languageConfig.TextEffectSetting;
+            _textAudioFlipToggle.text = languageConfig.TextFlipAudio;
+
+            SetButtonText(_deletSaveButton, languageConfig.TextDeletSaveButton);
+            SetButtonText(_backButtonSetting, languageConfig.TextBackButton);
+            SetButtonText(_backButtonShop, languageConfig.TextBackButton);
+            SetButtonText(_backButtonAchievements, languageConfig.TextBackButton);
+            SetButtonText(_exitButton, languageConfig.ButtonExitName);
+        }
+
+        private void SetButtonText(Button button, string text)
+        {
+            TextMeshProUGUI buttonText = button.GetComponentInChildren<TextMeshProUGUI>();
+
+            if (buttonText != null)
             {
-                achievmentbuttonText.text = languageConfig.ButtonAchievmentsName;
+                buttonText.text = text;
             }
         }
     }

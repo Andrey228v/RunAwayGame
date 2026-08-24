@@ -2512,11 +2512,14 @@ MonoBehaviour:
   - {fileID: 2937857897495838581}
   - {fileID: 5795699333522702238}
   - {fileID: 4187729989646861819}
-  _goldsText: {fileID: 3746322247130723685}
-  _gobeletsText: {fileID: 259979420258679262}
+  _goldsTextAmount: {fileID: 3746322247130723685}
+  _gobeletsTextAmount: {fileID: 259979420258679262}
+  _goldsText: {fileID: 6087654553744384919}
+  _gobeletsText: {fileID: 6658022268003035124}
   _textSliderAllAudio: {fileID: 3453467813368307200}
   _textSliderMusic: {fileID: 4127226377807246307}
   _textSliderEffect: {fileID: 5086399071096772810}
+  _textAudioFlipToggle: {fileID: 2388895014893919042}
   _startGameButtonL0: {fileID: 5679003920585716839}
   _startGameButtonL1: {fileID: 8882932047560993801}
   _startGameButtonL2: {fileID: 1160415371174709101}
@@ -2535,6 +2538,7 @@ MonoBehaviour:
   _sliderEffect: {fileID: 8303630483144320092}
   _achievmentsParent: {fileID: 4022847633930411246}
   _levelsParent: {fileID: 6731363385888767456}
+  _audioFlipToggle: {fileID: 0}
 --- !u!1 &3254360259685432278
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,8 +6,8 @@ namespace Assets._Scripts.SaveLoad.Data
     public class AchievmentData
     {
         public string Id;
-        public string Name;
-        public string Description;
+        //public string Name;
+        //public string Description;
         public bool IsUnlock;
         public int TargetValue;
         public int CurrentValue;

@@ -218,7 +218,9 @@ namespace Assets._Scripts.UI._1MenuWindow
         public void SetLanguage(LanguageConfig languageConfig)
         {
             SetButtonText(_settingsButton, languageConfig.ButtonSettingName);
+            SetButtonText(_shopButton, languageConfig.ButtonShopName);
             SetButtonText(_achievementsButton, languageConfig.ButtonAchievmentsName);
+            SetButtonText(_soundControllButton, languageConfig.ButtonSoundName);
 
             _goldsText.text = languageConfig.TextGoldName;
             _gobeletsText.text = languageConfig.TextGobeletsName;

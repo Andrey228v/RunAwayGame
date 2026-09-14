@@ -19,3 +19,9 @@ MonoBehaviour:
   _buttonExitName: Exit
   _textGoldName: 'Gold:'
   _textGobeletsName: 'Gobelets:'
+  _textAllAudioSetting: 'Audio:'
+  _textMusicSetting: 'Music:'
+  _textEffectSetting: 'Effects:'
+  _textFlipAudio: On/off audio
+  _textDeletSaveButton: DeletSave
+  _textBackButton: BackButton

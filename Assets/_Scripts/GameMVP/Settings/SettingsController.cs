@@ -15,6 +15,7 @@ namespace Assets._Scripts.GameControllers.Settings
     {
         private SettingsModel _model;
         private MenuTabsView _menuView;
+
         //private GameInterfacePanelView _gamePanelView;
 
         //public void Initialize(SettingsModel model)

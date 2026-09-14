@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.SaveLoad.Data;
+using Assets.Scripts.SaveLoad.Data;
 using System;
 
 namespace Assets._Scripts.GameControllers.Settings
@@ -13,6 +14,28 @@ namespace Assets._Scripts.GameControllers.Settings
         public event Action<double> OnMusicValueChanged;
         public event Action<double> OnEffectsValueChanged;
         public event Action<bool> OnSoundStatusChanged;
+
+        public void Save(GameSaveData gameSaveData)
+        {
+            if (gameSaveData.SettingsData == null)
+            {
+                gameSaveData.SettingsData = new SettingsData();
+            }
+
+            //gameSaveData.SettingsData.VolumeAudio = 
+        }
+
+        public void Load(GameSaveData gameSaveData)
+        {
+            var settings = gameSaveData.SettingsData;
+
+            if (settings != null)
+            {
+                SetAudioValue(settings.VolumeAudio);
+                SetMusicValue(settings.VolumeMusic);
+                SetEffectsValue(settings.VolumeEffects);
+            }
+        }
 
         public void SetAudioValue(double value)
         {

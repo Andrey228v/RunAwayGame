@@ -77,7 +77,7 @@ namespace Assets._Scripts.GameControllers.Achievments
         {
             if (_data.IsUnlock == false)
             {
-                _gameLogger.Log($"Achievment Unlock {_data.Name}", "Achievment");
+                //_gameLogger.Log($"Achievment Unlock {_data.Name}", "Achievment");
 
                 _data.IsUnlock = true;
                 _data.IsRevardEnable = true;

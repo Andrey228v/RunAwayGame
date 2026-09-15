@@ -56,7 +56,7 @@ namespace Assets._Scripts.EnteryPoints
         public void Dispose()
         {
             _languageModel.OnLanguageChangedForSave -= SaveLevel;
-            _languageModel.OnLangageIdChanged -= SetLanguage;
+            _languageModel.OnLangageIdChanged -= _languageManger.SetLanguageId; // было SetLanguage
         }
 
         public async void Initialize()
@@ -88,7 +88,7 @@ namespace Assets._Scripts.EnteryPoints
             _languageManger.Initialization(_gameSaveLoadService.GameSaveData);
 
             _languageModel.OnLanguageChangedForSave += SaveLevel;
-            _languageModel.OnLangageIdChanged += SetLanguage;
+            _languageModel.OnLangageIdChanged += _languageManger.SetLanguageId; // было SetLanguage
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }
@@ -99,9 +99,9 @@ namespace Assets._Scripts.EnteryPoints
             _gameLoopService.SaveAllServices(_gameSaveLoadService.GameSaveData);
         }
 
-        private void SetLanguage(int id)
-        {
-            _languageManger.SetLanguageId(id);
-        }
+        //private void SetLanguage(int id)
+        //{
+        //    _languageManger.SetLanguageId(id);
+        //}
     }
 }

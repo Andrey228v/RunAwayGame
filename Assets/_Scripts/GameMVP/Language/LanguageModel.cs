@@ -46,7 +46,7 @@ namespace Assets._Scripts.GameMVP.Language
         public void ToggleMenuVisibility()
         {
             _isMenuVisible = !_isMenuVisible;
-            OnMenuVisibilityChanged?.Invoke(_isMenuVisible);
+            SetVisibility(_isMenuVisible);
         }
 
         public void SetLanguage(LanguageType language)
@@ -56,10 +56,15 @@ namespace Assets._Scripts.GameMVP.Language
                 _currentLanguage = language;
                 OnLanguageChanged?.Invoke(language);
                 _isMenuVisible = false;
-                OnMenuVisibilityChanged?.Invoke(false);
+                SetVisibility(_isMenuVisible);
                 OnLanguageChangedForSave?.Invoke();
                 OnLangageIdChanged?.Invoke(((int)language));
             }
+        }
+
+        private void SetVisibility(bool IsVisible)
+        {
+            OnMenuVisibilityChanged?.Invoke(_isMenuVisible);
         }
     }
 }

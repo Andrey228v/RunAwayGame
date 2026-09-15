@@ -37,6 +37,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Language
                 button.onClick.AddListener(() => OnLanguageSelected?.Invoke(language));
             }
 
+            _buttonsParent.gameObject.SetActive(false); // при старте меню выбора скрыто
             _mainLanguageButton.onClick.AddListener(() => OnToggleClicked?.Invoke());
         }
 

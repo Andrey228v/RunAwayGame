@@ -246,5 +246,7 @@ namespace Assets._Scripts.UI._1MenuWindow
                 buttonText.text = text;
             }
         }
+
+
     }
 }

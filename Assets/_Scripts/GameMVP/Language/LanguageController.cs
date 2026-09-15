@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace Assets._Scripts.GameMVP.Language
 {
+    //Управление отображением языка (флажок).
     public class LanguageController : IInitGame, ISaveGame, ILoadGame, IDisposable
     {
         private readonly LanguageModel _model;
@@ -48,8 +49,8 @@ namespace Assets._Scripts.GameMVP.Language
             view.OnToggleClicked += _model.ToggleMenuVisibility;
             view.OnLanguageSelected += _model.SetLanguage;
 
-            view.UpdateLanguageDisplay(_model.CurrentLanguage);
-            view.UpdateVisibility(false);
+            //view.UpdateLanguageDisplay(_model.CurrentLanguage); //по идее должно при подгрузке обновляться. По идее тут удалить надо
+            //view.UpdateVisibility(false);//по идее должно при подгрузке обновляться. По идее тут удалить надо
         }
 
         public void RemoveView(ILanguageView view)

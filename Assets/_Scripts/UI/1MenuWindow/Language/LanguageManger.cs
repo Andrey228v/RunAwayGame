@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 namespace Assets._Scripts.UI._1MenuWindow.Language
 {
+    //Управление передачей выбранного языка в другие вьюшки элементам, чтобы там происходило обновление.
+    //Нужно ли деление на Контроллер языка и менеджер - пока не понятно плюсов от разделения.
     public class LanguageManger : IDisposable
     {
         private List<ILanguageFlip> _languageFlipList;
@@ -30,6 +32,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Language
             _languageFlipList.Clear();
         }
 
+        // подписка на событиек от модели.
         public void SetLanguageId(int id)
         {
             _idLanguage = id;
@@ -41,6 +44,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Language
             }
         }
 
+        //Сюда мы добавляем элементы, в которых должен меняться язык.
         public void AddLangageFlip(ILanguageFlip langageFlip)
         {
             _languageFlipList.Add(langageFlip);
@@ -48,6 +52,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Language
             langageFlip.SetLanguage(_languages[_idLanguage]);
         }
 
+        //Удаляем элементы при Dispose.
         public void RemoveLanguageFlip(ILanguageFlip langageFlip) 
         {
             _languageFlipList.Remove(langageFlip);

@@ -22,7 +22,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         void UpdateSettingsDisplay();
     }
 
-    public class MenuTabsView : MonoBehaviour, ILanguageFlip
+    public class MenuTabsView : MonoBehaviour, ILanguageFlip, ISettingsView
     {
         [Header("Tabs")]
         [SerializeField] private List<GameObject> _panels;
@@ -247,6 +247,10 @@ namespace Assets._Scripts.UI._1MenuWindow
             }
         }
 
+        public void UpdateSettingsDisplay()
+        {
+
+        }
 
     }
 }

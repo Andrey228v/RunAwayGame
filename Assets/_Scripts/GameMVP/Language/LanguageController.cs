@@ -11,7 +11,7 @@ namespace Assets._Scripts.GameMVP.Language
     public class LanguageController : IInitGame, ISaveGame, ILoadGame, IDisposable
     {
         private readonly LanguageModel _model;
-        private readonly List<ILanguageView> _views = new();
+        private readonly List<ILanguageView> _views = new(); // сделать тут словарь... вроде как удобнее
         private bool _disposed;
 
         public LanguageController(LanguageModel model)

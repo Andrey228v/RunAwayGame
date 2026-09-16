@@ -1,84 +1,54 @@
-﻿using Assets._Scripts.GameMVP.Language;
-using Assets._Scripts.SaveLoad.Data;
-using Assets._Scripts.UI;
+﻿using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets.Scripts.SaveLoad.Data;
-using Assets.Scripts.UI;
 using System;
+using System.Collections.Generic;
 
 namespace Assets._Scripts.GameControllers.Settings
 {
 
-
-
     public class SettingsController
     {
         private SettingsModel _model;
-        private MenuTabsView _menuView;
+        private readonly List<ISettingsView> _views = new(); // сделать тут словарь... вроде как удобнее
+        private bool _disposed;
 
-        //private GameInterfacePanelView _gamePanelView;
-
-        //public void Initialize(SettingsModel model)
-        //{
-        //    _model = model;
-        //}
-
-        public void SaveAllServices(GameSaveData gameSaveData)
+        public SettingsController(SettingsModel model)
         {
-            //gameSaveData.WalletData.Coins = _model.Data.Coins;
-            //gameSaveData.WalletData.Gobelets = _model.Data.Gobelets;
+            _model = model ?? throw new ArgumentNullException(nameof(model));
         }
 
-        public void LoadAllServices(GameSaveData gameSaveData)
+        public void Initialization(GameSaveData gameSaveData)
         {
-            //if (gameSaveData.WalletData == null)
-            //{
-            //    gameSaveData.WalletData = new WalletData();
-            //}
-
-            //_model.LoadData(gameSaveData.WalletData);
+            if (gameSaveData.SettingsData == null)
+            {
+                gameSaveData.SettingsData = new SettingsData();
+            }
         }
 
-        //public void AddMenuView(MenuTabsView menuView)
-        //{
-        //    //_menuView = menuView;
-        //    //_menuView.OnDestroyView += RemoveMenuView;
-        //    //_model.OnCoinsChanged += _menuView.SetCoinsCountText;
-        //    //_model.OnGobeletsChanged += _menuView.SetGobeletsCountText;
-        //}
-
-        public void RemoveMenuView()
+        public void Load(GameSaveData gameSaveData)
         {
-            //_menuView.OnDestroyView -= RemoveMenuView;
-            //_model.OnCoinsChanged -= _menuView.SetCoinsCountText;
-            //_model.OnGobeletsChanged -= _menuView.SetGobeletsCountText;
+            _model.Load(gameSaveData);
         }
 
-        public void AddGamePanelView(GamePanelView gamePanelView)
+        public void Save(GameSaveData gameSaveData)
         {
-            //_gamePanelView = gamePanelView;
-            //_gamePanelView.OnDestroyView += RemoveGamePanelView;
-            //_model.OnCoinsChanged += _gamePanelView.SetCoinsCountText;
-
-            //_gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
-            //_unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
+            _model.Save(gameSaveData);
         }
 
-        public void RemoveGamePanelView()
+        public void AddView(ISettingsView view)
         {
-            //_gamePanelView.OnDestroyView -= RemoveGamePanelView;
-            //_model.OnCoinsChanged -= _gamePanelView.SetCoinsCountText;
+            if (view == null || _views.Contains(view)) return;
+
+            _views.Add(view);
+
+            //Тут сделать подвязки для модели...
         }
 
-        public void UpdateView()
+        public void RemoveView(ISettingsView view)
         {
-            //_menuView.SetCoinsCountText(_model.Data.Coins, 0);
-            //_menuView.SetGobeletsCountText(_model.Data.Gobelets, 0);
+            //Здесь сделать отписки от событий...
         }
 
-        public void Reset(GameSaveData gameSaveData)
-        {
-
-        }
     }
 }

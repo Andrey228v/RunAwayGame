@@ -51,15 +51,12 @@ namespace Assets._Scripts.GameMVP.Language
 
         public void SetLanguage(LanguageType language)
         {
-            if (_currentLanguage != language)
-            {
-                _currentLanguage = language;
-                OnLanguageChanged?.Invoke(language);
-                _isMenuVisible = false;
-                SetVisibility(_isMenuVisible);
-                OnLanguageChangedForSave?.Invoke();
-                OnLangageIdChanged?.Invoke(((int)language));
-            }
+            _currentLanguage = language;
+            OnLanguageChanged?.Invoke(language);
+            _isMenuVisible = false;
+            SetVisibility(_isMenuVisible);
+            OnLanguageChangedForSave?.Invoke();
+            OnLangageIdChanged?.Invoke(((int)language));
         }
 
         private void SetVisibility(bool IsVisible)

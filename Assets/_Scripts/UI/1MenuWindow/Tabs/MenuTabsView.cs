@@ -19,7 +19,9 @@ namespace Assets._Scripts.UI._1MenuWindow
 
     public interface ISettingsView
     {
-        void UpdateSettingsDisplay();
+        public void UpdateSettingsDisplay();
+        public void UpdateAudioValue(double value);
+
     }
 
     public class MenuTabsView : MonoBehaviour, ILanguageFlip, ISettingsView

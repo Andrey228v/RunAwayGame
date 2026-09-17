@@ -1,5 +1,6 @@
 ﻿using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Settings;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
@@ -26,6 +27,7 @@ namespace Assets._Scripts.EnteryPoints
         private MenuTabsView _menuTabsView;
         private LoadManager _loadManager;
         private readonly LanguageManger _languageManger;
+        private SettingsController _settingsController;
 
         public MenuEnteryPoint(
             AchievmentsController achievmentsController,
@@ -38,6 +40,7 @@ namespace Assets._Scripts.EnteryPoints
             LoadManager loadManager,
             LanguageViewMenu viewLanguageMenu,
             LanguageManger languageManger,
+            SettingsController settingsController,
             List<SceneGroupHandle> scensGroups
             ) 
         {
@@ -52,9 +55,12 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView = menuTabsView;
             _loadManager = loadManager;
             _languageManger = languageManger;
+            _settingsController = settingsController;
 
             //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
             _languageController.AddView(_viewLanguageMenu);
+            _settingsController.AddView(_menuTabsView);
+            
         }
 
         public void Initialize()
@@ -98,10 +104,13 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart1 -= LoadLevel;
             _menuTabsView.OnLevelStart2 -= LoadLevel;
 
-            _languageController.Dispose();
-
             _languageManger.RemoveLanguageFlip(_menuTabsView);
 
+            _languageController.RemoveView(_viewLanguageMenu);
+            _settingsController.RemoveView(_menuTabsView);
+
+
+            //_languageController.Dispose();
             //_languageController.RemoveMenuView("viewLanguageMenu");
         }
 

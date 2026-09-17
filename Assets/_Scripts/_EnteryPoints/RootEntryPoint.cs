@@ -57,6 +57,7 @@ namespace Assets._Scripts.EnteryPoints
         {
             _languageModel.OnLanguageChangedForSave -= SaveLevel;
             _languageModel.OnLangageIdChanged -= _languageManger.SetLanguageId; // было SetLanguage
+            _languageController.Dispose();
         }
 
         public async void Initialize()

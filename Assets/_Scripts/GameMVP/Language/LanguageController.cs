@@ -11,7 +11,7 @@ namespace Assets._Scripts.GameMVP.Language
     public class LanguageController : IInitGame, ISaveGame, ILoadGame, IDisposable
     {
         private readonly LanguageModel _model;
-        private readonly List<ILanguageView> _views = new(); // сделать тут словарь... вроде как удобнее
+        private readonly List<ILanguageView> _views = new(); // сделать тут словарь... вроде как удобнее... или нет??
         private bool _disposed;
 
         public LanguageController(LanguageModel model)
@@ -48,9 +48,6 @@ namespace Assets._Scripts.GameMVP.Language
 
             view.OnToggleClicked += _model.ToggleMenuVisibility;
             view.OnLanguageSelected += _model.SetLanguage;
-
-            //view.UpdateLanguageDisplay(_model.CurrentLanguage); //по идее должно при подгрузке обновляться. По идее тут удалить надо
-            //view.UpdateVisibility(false);//по идее должно при подгрузке обновляться. По идее тут удалить надо
         }
 
         public void RemoveView(ILanguageView view)
@@ -59,16 +56,20 @@ namespace Assets._Scripts.GameMVP.Language
             _model.OnMenuVisibilityChanged -= view.UpdateVisibility;
             view.OnToggleClicked -= _model.ToggleMenuVisibility;
             view.OnLanguageSelected -= _model.SetLanguage;
+
+            _views.Remove(view);
         }
 
         public void Dispose()
         {
             if (_disposed) return;
 
-            foreach (var view in _views)
+            // Идем с конца в начало
+            for (int i = _views.Count - 1; i >= 0; i--)
             {
-                RemoveView(view);
+                RemoveView(_views[i]);
             }
+
             _views.Clear();
             _disposed = true;
         }

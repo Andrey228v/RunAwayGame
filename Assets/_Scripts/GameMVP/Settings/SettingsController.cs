@@ -10,7 +10,7 @@ namespace Assets._Scripts.GameControllers.Settings
     public class SettingsController
     {
         private SettingsModel _model;
-        private readonly List<ISettingsView> _views = new(); // сделать тут словарь... вроде как удобнее
+        private readonly List<ISettingsView> _views = new(); // сделать тут словарь... вроде как удобнее... или нет??
         private bool _disposed;
 
         public SettingsController(SettingsModel model)
@@ -42,12 +42,18 @@ namespace Assets._Scripts.GameControllers.Settings
 
             _views.Add(view);
 
+            //_model.OnAudioValueChanged += view.UpdateAudioValue;
+            //_model.OnMusicValueChanged +=
+            //_model.OnEffectsValueChanged +=
+
             //Тут сделать подвязки для модели...
         }
 
         public void RemoveView(ISettingsView view)
         {
             //Здесь сделать отписки от событий...
+
+            _views.Remove(view);
         }
 
     }

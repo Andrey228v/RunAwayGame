@@ -8,12 +8,13 @@ namespace Assets._Scripts.GameMVP.Language
     {
         Russian = 0,
         English = 1,
-        Turkish = 2
+        Turkish = 2,
+        None = 100,
     }
 
     public class LanguageModel
     {
-        private LanguageType _currentLanguage = LanguageType.English;
+        private LanguageType _currentLanguage = LanguageType.None;
         private bool _isMenuVisible;
 
         public event Action OnLanguageChangedForSave;
@@ -55,8 +56,8 @@ namespace Assets._Scripts.GameMVP.Language
             OnLanguageChanged?.Invoke(language);
             _isMenuVisible = false;
             SetVisibility(_isMenuVisible);
-            OnLanguageChangedForSave?.Invoke();
             OnLangageIdChanged?.Invoke(((int)language));
+            OnLanguageChangedForSave?.Invoke();
         }
 
         private void SetVisibility(bool IsVisible)

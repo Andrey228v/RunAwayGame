@@ -42,16 +42,16 @@ namespace Assets._Scripts.GameControllers.Settings
 
             _views.Add(view);
 
-            //_model.OnAudioValueChanged += view.UpdateAudioValue;
-            //_model.OnMusicValueChanged +=
-            //_model.OnEffectsValueChanged +=
-
-            //Тут сделать подвязки для модели...
+            _model.OnAudioValueChanged += view.UpdateAudioValue;
+            _model.OnMusicValueChanged += view.UpdateMusicValue;
+            _model.OnEffectsValueChanged += view.UpdateEffectValue;
         }
 
         public void RemoveView(ISettingsView view)
         {
-            //Здесь сделать отписки от событий...
+            _model.OnAudioValueChanged -= view.UpdateAudioValue;
+            _model.OnMusicValueChanged -= view.UpdateMusicValue;
+            _model.OnEffectsValueChanged -= view.UpdateEffectValue;
 
             _views.Remove(view);
         }

@@ -56,21 +56,16 @@ namespace Assets._Scripts.EnteryPoints
             _loadManager = loadManager;
             _languageManger = languageManger;
             _settingsController = settingsController;
-
-            //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
-            _languageController.AddView(_viewLanguageMenu);
-            _settingsController.AddView(_menuTabsView);
-            
         }
 
         public void Initialize()
         {
-            _walletController.AddMenuView(_menuTabsView);
+            _walletController.AddView(_menuTabsView);
             _achievmentsController.AddMenuView(_menuTabsView.AchievmentsParent);
             _levelsController.AddMenuView(_menuTabsView.LevelsParent);
-            //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
-
             _languageManger.AddLangageFlip(_menuTabsView);
+            _languageController.AddView(_viewLanguageMenu);
+            _settingsController.AddView(_menuTabsView);
         }
 
         public void Start()
@@ -83,15 +78,12 @@ namespace Assets._Scripts.EnteryPoints
             _walletController.Load(gameSaveData);
             _achievmentsController.Load(gameSaveData);
             _languageController.Load(gameSaveData);
+            _settingsController.Load(gameSaveData);
 
 
             _menuTabsView.OnLevelStart0 += LoadLevel;
             _menuTabsView.OnLevelStart1 += LoadLevel;
             _menuTabsView.OnLevelStart2 += LoadLevel;
-
-            //_languageController.AddMenuView("viewLanguageMenu", _viewLanguageMenu);
-
-            //_loadManager.LoadScene()
         }
 
         public void Dispose()
@@ -104,14 +96,10 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart1 -= LoadLevel;
             _menuTabsView.OnLevelStart2 -= LoadLevel;
 
+            _walletController.RemoveView(_menuTabsView);
             _languageManger.RemoveLanguageFlip(_menuTabsView);
-
             _languageController.RemoveView(_viewLanguageMenu);
             _settingsController.RemoveView(_menuTabsView);
-
-
-            //_languageController.Dispose();
-            //_languageController.RemoveMenuView("viewLanguageMenu");
         }
 
         //Временное решение ?? 

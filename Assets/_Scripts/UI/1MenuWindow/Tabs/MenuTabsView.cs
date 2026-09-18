@@ -21,10 +21,18 @@ namespace Assets._Scripts.UI._1MenuWindow
     {
         public void UpdateSettingsDisplay();
         public void UpdateAudioValue(double value);
+        public void UpdateMusicValue(double value);
+        public void UpdateEffectValue(double value);
 
     }
 
-    public class MenuTabsView : MonoBehaviour, ILanguageFlip, ISettingsView
+    public interface IWalletView
+    {
+        public void SetCoinsCountText(int current, int value);
+        public void SetGobeletsCountText(int current, int value);
+    }
+
+    public class MenuTabsView : MonoBehaviour, ILanguageFlip, ISettingsView, IWalletView
     {
         [Header("Tabs")]
         [SerializeField] private List<GameObject> _panels;
@@ -254,5 +262,19 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         }
 
+        public void UpdateAudioValue(double value)
+        {
+            _sliderAllAudio.value = (float)value;
+        }
+
+        public void UpdateMusicValue(double value) 
+        {
+            _sliderMusic.value = (float)value;
+        }
+
+        public void UpdateEffectValue(double value) 
+        {
+            _sliderEffect.value = (float)value;
+        }
     }
 }

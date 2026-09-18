@@ -21,19 +21,17 @@ namespace Assets._Scripts.GameControllers.Settings
             {
                 gameSaveData.SettingsData = new SettingsData();
             }
-
-            //gameSaveData.SettingsData.VolumeAudio = 
         }
 
         public void Load(GameSaveData gameSaveData)
         {
-            var settings = gameSaveData.SettingsData;
+            _settingsData = gameSaveData.SettingsData;
 
-            if (settings != null)
+            if (_settingsData != null)
             {
-                SetAudioValue(settings.VolumeAudio);
-                SetMusicValue(settings.VolumeMusic);
-                SetEffectsValue(settings.VolumeEffects);
+                SetAudioValue(_settingsData.VolumeAudio);
+                SetMusicValue(_settingsData.VolumeMusic);
+                SetEffectsValue(_settingsData.VolumeEffects);
             }
         }
 

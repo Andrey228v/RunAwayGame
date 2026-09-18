@@ -1,12 +1,14 @@
 ﻿using Assets._Scripts.ObjectsScripts.UI.GamePanel;
 using Assets._Scripts.UI;
+using Assets._Scripts.UI._1MenuWindow;
 using Assets._Scripts.UI._2GameHUD;
 using System;
 using UnityEngine;
 
 namespace Assets.Scripts.UI
 {
-    public class GamePanelView : MonoBehaviour //Игровой HUD
+    //Игровой HUD
+    public class GamePanelView : MonoBehaviour, IWalletView 
     {
         [SerializeField] private GameInterfacePanelView _gameInterfacePanel;
         [SerializeField] private GameMenuPanelView _gameMenuPanel;
@@ -33,6 +35,11 @@ namespace Assets.Scripts.UI
         public void SetCoinsCountText(int actualCoin, int addCoin)
         {
             _gameInterfacePanel.SetCoinsCountText(actualCoin, addCoin);
+        }
+
+        public void SetGobeletsCountText(int actualGobelets, int addGobelets)
+        {
+
         }
 
         public void ShowPanel(WindowType windowType) // под вопросом...

@@ -30,6 +30,8 @@ namespace Assets._Scripts.EnteryPoints
         private GameSaveLoadService _gameSaveLoadService;
         private LevelLoopService _levelLoopService;
 
+        private UnitInfoUIView _unitInfoUI;
+
         public PlayerEnteryPoint(PlayerController playerController,
             PlayerStateMachineFactory playerStateMachineFactory,
             Func<Character> characterFactory, CameraView cameraController,
@@ -56,6 +58,8 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Start()
         {
+            _unitInfoUI = _unitInfoUIFactory();
+
             _levelLoopService.SaveDict.Add("PlayerController", _playerController);
             _levelLoopService.LoadDict.Add("PlayerController", _playerController);
             _levelLoopService.DieRestartDict.Add("PlayerController", _playerController);
@@ -64,7 +68,7 @@ namespace Assets._Scripts.EnteryPoints
 
             InitPlayer(_cameraController, _characterFactory, //Переделать...
                         _playerStateMachineFactory, _playerController,
-                        _unitInfoUIFactory, _billboardManager, _walletController);
+                        _billboardManager);
 
             var levelConfig = _levelsController.Config;
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[levelConfig.LevelName];
@@ -78,14 +82,16 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Dispose()
         {
+            _walletController.RemoveView(_unitInfoUI);
+
             _billboardManager = null;
             _unitInfoUIFactory = null;
             //_playerController.PlayerMB.OnDie -= _gameLoopController.DieRestart;
         }
 
         private void InitPlayer(CameraView cameraController, 
-            Func<Character> characterFactory, PlayerStateMachineFactory playerStateMachineFactory, PlayerController playerController,
-            Func<UnitInfoUIView> unitInfoUIFactory, BillboardManager billboardManager, WalletController walletController)
+            Func<Character> characterFactory, PlayerStateMachineFactory playerStateMachineFactory,
+            PlayerController playerController, BillboardManager billboardManager)
         {
             Character character = characterFactory();
             character.AddComponent<PlayerMB>(); // Тут подумать так ли делать ...
@@ -98,17 +104,17 @@ namespace Assets._Scripts.EnteryPoints
             playerController.SetCharacter(character);
             playerController.SetPlayerStateMachine(playerStateMachine);
 
-            UnitInfoUIView unitInfoUI = unitInfoUIFactory();
-            unitInfoUI.transform.SetParent(character.transform);
+            //UnitInfoUIView unitInfoUI = unitInfoUIFactory();
+            _unitInfoUI.transform.SetParent(character.transform);
 
-            billboardManager.AddUnitUI(unitInfoUI);
+            billboardManager.AddUnitUI(_unitInfoUI);
             billboardManager.SetDirectionCalculator(playerMoveDirectionCalculator);
             billboardManager.SetCameraController(cameraController);
 
             PlayerMB playerMB =  character.gameObject.GetComponent<PlayerMB>();
             playerController.SetPlayerMB(playerMB);
 
-            walletController.AddUnitInfoUIView(unitInfoUI);
+            _walletController.AddView(_unitInfoUI);
         }
     }
 }

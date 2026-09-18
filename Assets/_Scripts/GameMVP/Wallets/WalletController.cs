@@ -2,19 +2,23 @@
 using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
 using Assets._Scripts.UI;
 using Assets._Scripts.UI._1MenuWindow;
+using Assets._Scripts.UI._1MenuWindow.Language;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using Assets.Scripts.UI;
 using System;
+using System.Collections.Generic;
 
 namespace Assets._Scripts.GameControllers.Wallets
 {
     public class WalletController : IInitGame, ISaveGame, ILoadGame, IFinishGame, IResetGame
     {
         private WalletModel _model;
-        private MenuTabsView _menuView;
-        private GamePanelView _gamePanelView;
-        private UnitInfoUIView _unitInfoUIView;
+        private readonly List<IWalletView> _views = new(); // сделать тут словарь... вроде как удобнее... или нет??
+
+        //private MenuTabsView _menuView;
+        //private GamePanelView _gamePanelView;
+        //private UnitInfoUIView _unitInfoUIView;
         private IGameLogger _gameLogger;
 
         public event Action<int> OnAddCoin;
@@ -69,77 +73,93 @@ namespace Assets._Scripts.GameControllers.Wallets
             _model.Reset();
         }
 
+        public void AddView(IWalletView view)
+        {
+            if (view == null || _views.Contains(view)) return;
+
+            _views.Add(view);
+
+            //подписки на события с моделью
+        }
+
+        public void RemoveView(IWalletView view)
+        {
+            _views.Remove(view);
+
+            //Отписки от событий с моделью...
+        }
+
         public void CoinUpdateView(int current, int value) 
         {
-            if (_menuView != null)
-            {
-                _menuView.SetCoinsCountText(current, value);
-            }
-            else if (_gamePanelView != null)
-            {
-                _gamePanelView.SetCoinsCountText(current, value);
-            }
+            //if (_menuView != null)
+            //{
+            //    _menuView.SetCoinsCountText(current, value);
+            //}
+            //else if (_gamePanelView != null)
+            //{
+            //    _gamePanelView.SetCoinsCountText(current, value);
+            //}
         }
 
         public void GobeletsUpdateView(int current, int value)
         {
-            if (_menuView != null)
-            {
-                _menuView.SetGobeletsCountText(current, value);
-            }
-            else if(_unitInfoUIView != null)
-            {
-                _unitInfoUIView.SetGobeletsCountText(current, value);
-            }
+            //if (_menuView != null)
+            //{
+            //    _menuView.SetGobeletsCountText(current, value);
+            //}
+            //else if(_unitInfoUIView != null)
+            //{
+            //    _unitInfoUIView.SetGobeletsCountText(current, value);
+            //}
         }
 
-        public void GobeletsUpdateVied(int current, int value)
-        {
-            if (_unitInfoUIView != null)
-            {
-                _unitInfoUIView.SetGobeletsCountText(current, value);
-            }
-        }
+        //public void GobeletsUpdateVied(int current, int value)
+        //{
+        //    if (_unitInfoUIView != null)
+        //    {
+        //        _unitInfoUIView.SetGobeletsCountText(current, value);
+        //    }
+        //}
 
-        public void AddMenuView(MenuTabsView menuView)
-        {
-            _menuView = menuView;
-            _menuView.OnDestroyView += RemoveMenuView;
+        //public void AddMenuView(MenuTabsView menuView)
+        //{
+        //    _menuView = menuView;
+        //    _menuView.OnDestroyView += RemoveMenuView;
 
-            _menuView.SetCoinsCountText(_model.Data.Coins, 0);
-            _menuView.SetGobeletsCountText(_model.Data.Gobelets, 0);
-        }
+        //    _menuView.SetCoinsCountText(_model.Data.Coins, 0);
+        //    _menuView.SetGobeletsCountText(_model.Data.Gobelets, 0);
+        //}
 
-        public void RemoveMenuView()
-        {
-            _menuView.OnDestroyView -= RemoveMenuView;
-        }
+        //public void RemoveMenuView()
+        //{
+        //    _menuView.OnDestroyView -= RemoveMenuView;
+        //}
 
-        public void AddGamePanelView(GamePanelView gamePanelView)
-        {
-            _gamePanelView = gamePanelView;
-            _gamePanelView.OnDestroyView += RemoveGamePanelView;
+        //public void AddGamePanelView(GamePanelView gamePanelView)
+        //{
+        //    _gamePanelView = gamePanelView;
+        //    _gamePanelView.OnDestroyView += RemoveGamePanelView;
 
-            _gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
-        }
+        //    _gamePanelView.SetCoinsCountText(_model.Data.Coins, 0);
+        //}
 
-        public void RemoveGamePanelView()
-        {
-            _gamePanelView.OnDestroyView -= RemoveGamePanelView;
-        }
+        //public void RemoveGamePanelView()
+        //{
+        //    _gamePanelView.OnDestroyView -= RemoveGamePanelView;
+        //}
 
-        public void AddUnitInfoUIView(UnitInfoUIView unitInfoUI)
-        {
-            _unitInfoUIView = unitInfoUI;
-            _unitInfoUIView.OnDestroyView += RemoveUnitInfoUIView;
+        //public void AddUnitInfoUIView(UnitInfoUIView unitInfoUI)
+        //{
+        //    _unitInfoUIView = unitInfoUI;
+        //    _unitInfoUIView.OnDestroyView += RemoveUnitInfoUIView;
 
-            _unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
-        }
+        //    _unitInfoUIView.SetGobeletsCountText(_model.Data.Gobelets, 0);
+        //}
 
-        public void RemoveUnitInfoUIView()
-        {
-            _unitInfoUIView.OnDestroyView -= RemoveUnitInfoUIView;
-        }
+        //public void RemoveUnitInfoUIView()
+        //{
+        //    _unitInfoUIView.OnDestroyView -= RemoveUnitInfoUIView;
+        //}
 
         public void AddConis(int count)
         {

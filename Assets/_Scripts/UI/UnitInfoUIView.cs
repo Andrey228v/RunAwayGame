@@ -1,11 +1,12 @@
-﻿using Assets.Scripts.UI;
+﻿using Assets._Scripts.UI._1MenuWindow;
+using Assets.Scripts.UI;
 using System;
 using TMPro;
 using UnityEngine;
 
 namespace Assets._Scripts.UI
 {
-    public class UnitInfoUIView : MonoBehaviour
+    public class UnitInfoUIView : MonoBehaviour, IWalletView
     {
         [SerializeField] private TextMeshProUGUI _name;
         [SerializeField] private TextMeshProUGUI _gobeletsCount;
@@ -30,6 +31,11 @@ namespace Assets._Scripts.UI
                 Quaternion targetRotation = Quaternion.LookRotation(direction);
                 transform.rotation = targetRotation;
             }
+        }
+
+        public void SetCoinsCountText(int actualCoin, int addCoin)
+        {
+            
         }
 
         public void SetGobeletsCountText(int actualGobelets, int addGobelets)

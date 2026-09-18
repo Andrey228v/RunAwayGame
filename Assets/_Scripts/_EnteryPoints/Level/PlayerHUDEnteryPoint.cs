@@ -41,7 +41,7 @@ namespace Assets._Scripts.EnteryPoints
         public void Start()
         {
             _panel = _gamePanelFactory();
-            _walletController.AddGamePanelView(_panel);
+            _walletController.AddView(_panel);
 
             _gamePanelController.AddGamePaneView(_panel);
 
@@ -56,6 +56,8 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Dispose()
         {
+            _walletController.RemoveView(_panel);
+
             _panel.GameWinPanelView.OnButtonBackToMenuClick -= TransitToMenuWindow;
             _panel.GameMenuPanelView.OnButtonBackToMenuClick -= TransitToMenuWindow;
         }

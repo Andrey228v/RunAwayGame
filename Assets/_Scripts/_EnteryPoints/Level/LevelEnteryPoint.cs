@@ -29,7 +29,7 @@ namespace Assets._Scripts.EnteryPoints
         private FinishController _finishController;
         private GameLoopService _gameLoopController;
         private FinishModel _finishModel;
-        private CoinDictinaryModel _coinDictinaryModel;
+        //private CoinDictinaryModel _coinDictinaryModel;
         private CheckPointDictinaryModel _checkPointDictinaryModel;
         private LastCheckPointController _lastCheckPointController;
         private LevelLoopService _levelLoopService;
@@ -45,7 +45,7 @@ namespace Assets._Scripts.EnteryPoints
             FinishController finishController,
             GameLoopService gameLoopController,
             FinishModel finishModel,
-            CoinDictinaryModel coinDictinaryModel,
+            //CoinDictinaryModel coinDictinaryModel,
             CheckPointDictinaryModel checkPointDictinaryModel,
             LastCheckPointController lastCheckPointController,
             LevelLoopService levelLoopService,
@@ -60,7 +60,7 @@ namespace Assets._Scripts.EnteryPoints
             _walletController = walletController;
             _finishController = finishController;
             _gameLoopController = gameLoopController;
-            _coinDictinaryModel = coinDictinaryModel;
+            //_coinDictinaryModel = coinDictinaryModel;
             _checkPointDictinaryModel = checkPointDictinaryModel;
             _finishModel = finishModel;
             _lastCheckPointController = lastCheckPointController;
@@ -99,7 +99,7 @@ namespace Assets._Scripts.EnteryPoints
 
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
 
-            _coinDictinaryModel.OnObjectAdd += CoinAddInDictinary;
+            //_coinDictinaryModel.OnObjectAdd += CoinAddInDictinary;
             _checkPointDictinaryModel.OnObjectAdd += CheckPointAddInDictinary;
 
             _coinController.Initialization(levelData, _levelConfig);
@@ -186,14 +186,14 @@ namespace Assets._Scripts.EnteryPoints
             _lastCheckPointController.Dispose();
 
             _finishModel.OnFinish -= FinishLevel;
-            _coinDictinaryModel.OnObjectAdd -= CoinAddInDictinary;
+            //_coinDictinaryModel.OnObjectAdd -= CoinAddInDictinary;
             _checkPointDictinaryModel.OnObjectAdd -= CheckPointAddInDictinary;
 
-            foreach (var model in _coinDictinaryModel.ObjectModelds.Values)
-            {
-                model.OnTakeValue -= _walletController.AddConis;
-                model.OnTake -= SaveLevel;
-            }
+            //foreach (var model in _coinDictinaryModel.ObjectModelds.Values)
+            //{
+            //    model.OnTakeValue -= _walletController.AddConis;
+            //    model.OnTake -= SaveLevel;
+            //}
 
             _levelLoopService.Dispose();
         }

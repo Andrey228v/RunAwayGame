@@ -14,29 +14,29 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     public class CoinController:  ISave, ILoad, IDieRestart, IFinish, IReset
     {
         private readonly IGameLogger _gameLogger;
-        private readonly Transform _objectParent;
+        //private readonly Transform _objectParent;
         private readonly CoinDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CoinView> _dictinaryView;
 
         public CoinController(GamePoints points, 
             IGameLogger gameLogger, 
-            CoinDictinaryModel dictinaryModel, 
+            //CoinDictinaryModel dictinaryModel, 
             Dictionary<string, CoinView> dictinaryView)
         {
             if (points == null)
                 throw new ArgumentNullException(nameof(points), "GamePoints cannot be null");
 
             _gameLogger = gameLogger;
-            _objectParent = points.Coins;
+            //_objectParent = points.Coins;
             _dictinaryView = dictinaryView;
-            _dictinaryModel = dictinaryModel;
+            _dictinaryModel = new CoinDictinaryModel();
 
-            _dictinaryModel.OnObjectAdd += ObjectInit;
+            //_dictinaryModel.OnObjectAdd += ObjectInit;
         }
 
         public void Dispose()
         {
-            _dictinaryModel.OnObjectAdd -= ObjectInit;
+            //_dictinaryModel.OnObjectAdd -= ObjectInit;
 
             foreach(var view in _dictinaryView.Values)
             {
@@ -101,6 +101,12 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             model.OnObjectStatusChange += OnModelStatusChanged;
         }
 
+        public void AddModel(CoinData data)
+        {
+
+        }
+
+        //event from view to model
         public void ObjectActivateView(string id, bool status, Vector3 coords)
         {
             if (_dictinaryModel.ObjectModelds.TryGetValue(id, out var model))
@@ -114,6 +120,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
         }
 
+        //event from model to view
         private void OnModelStatusChanged(string id, bool isActivated)
         {
             if (_dictinaryView.TryGetValue(id, out var view))
@@ -188,5 +195,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             _gameLogger.Log($"Loaded {levelData.Coins.Count} coins");
         }
+
+
     }
 }

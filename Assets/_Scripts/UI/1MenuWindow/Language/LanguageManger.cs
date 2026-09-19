@@ -35,7 +35,7 @@ namespace Assets._Scripts.UI._1MenuWindow.Language
         // подписка на событиек от модели.
         public void SetLanguageId(int id)
         {
-            _idLanguage = id;
+            _idLanguage = id; // под вопросом.... скорее всего тут так не должно быть, думаю это для модели значение...
             var language = _languages[id];
 
             for (int i = 0; i < _languageFlipList.Count; i++) 

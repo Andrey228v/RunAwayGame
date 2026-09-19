@@ -32,7 +32,7 @@ namespace Assets._Scripts.Installers
 
 
             builder.RegisterEntryPoint<CoinController>().AsSelf();
-            builder.RegisterEntryPoint<CoinDictinaryModel>().AsSelf();
+            //builder.RegisterEntryPoint<CoinDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<CheckPointsController>().AsSelf();
             builder.RegisterEntryPoint<CheckPointDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<FinishController>().AsSelf();

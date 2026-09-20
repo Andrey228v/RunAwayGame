@@ -1,5 +1,4 @@
-﻿using Assets._Scripts.ObjectsScripts.Points.CheckPoint;
-using Assets._Scripts.SaveLoad.Data;
+﻿using Assets._Scripts.SaveLoad.Data;
 using Assets._Scripts.SaveLoad.Data.Interfaces;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.Points;
@@ -17,6 +16,8 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         //private readonly Transform _objectParent;
         private readonly CoinDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CoinView> _dictinaryView;
+
+        public event Action<CoinModel> OnModelAdd;
 
         public CoinController(GamePoints points, 
             IGameLogger gameLogger, 
@@ -92,18 +93,23 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
                 view.OnActivateObject += ObjectActivateView;
 
-                _dictinaryModel.AddObject(data);
+                //_dictinaryModel.AddObject(data);
+
+                AddModel(data);
             }
         }
 
-        private void ObjectInit(CoinModel model)
-        {
-            model.OnObjectStatusChange += OnModelStatusChanged;
-        }
+        //private void ObjectInit(CoinModel model)
+        //{
+        //    model.OnObjectStatusChange += OnModelStatusChanged;
+        //}
 
         public void AddModel(CoinData data)
         {
+            var model = _dictinaryModel.AddObject(data);
+            model.OnObjectStatusChange += OnModelStatusChanged;
 
+            OnModelAdd?.Invoke(model);
         }
 
         //event from view to model

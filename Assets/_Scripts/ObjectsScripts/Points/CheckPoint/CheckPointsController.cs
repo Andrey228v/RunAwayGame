@@ -14,8 +14,9 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         private readonly CheckPointDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CheckPointView> _dictinaryView;
 
-        public CheckPointsController(Dictionary<string, CheckPointView> dictinaryView, 
-            CheckPointDictinaryModel dictinaryModel, 
+        public CheckPointsController(Dictionary<string, 
+            CheckPointView> dictinaryView, 
+            //CheckPointDictinaryModel dictinaryModel, 
             IGameLogger gameLogger)
         {
             if (dictinaryView == null)
@@ -23,7 +24,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
 
             _dictinaryView = dictinaryView;
             _gameLogger = gameLogger;
-            _dictinaryModel = dictinaryModel;
+            _dictinaryModel = new CheckPointDictinaryModel();
 
             _dictinaryModel.OnObjectAdd += ObjectInit;
         }

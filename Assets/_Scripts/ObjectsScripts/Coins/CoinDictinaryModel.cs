@@ -8,7 +8,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     {
         private readonly Dictionary<string, CoinModel> _objectModels;
 
-        public event Action<CoinModel> OnObjectAdd;
+        //public event Action<CoinModel> OnObjectAdd;
 
         public Dictionary<string, CoinModel> ObjectModelds => _objectModels;
 
@@ -17,14 +17,16 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             _objectModels = new Dictionary<string, CoinModel>();
         }
 
-        public void AddObject(CoinData data)
+        public CoinModel AddObject(CoinData data)
         {
             CoinModel model = new CoinModel(data);
 
             if(_objectModels.TryAdd(data.Id, model) == false)
                 throw new ArgumentNullException("ERROR KEY");
 
-            OnObjectAdd?.Invoke(model);
+            //OnObjectAdd?.Invoke(model);
+
+            return model;
         }
 
         public bool TryGetModel(string id, out CoinModel model)

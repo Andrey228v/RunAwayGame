@@ -1,5 +1,4 @@
 ﻿using Assets._Scripts.GameControllers.Levels;
-using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
@@ -10,14 +9,10 @@ namespace Assets._Scripts.GameMVP.Levels
     public class LevelsDictinaryModel : IDisposable
     {
         private readonly Dictionary<string, LevelModel> _objectModels;
-        private IGameLogger _gameLogger;
 
-        public event Action<LevelModel> OnObjectAdd;
-
-        public LevelsDictinaryModel(IGameLogger gameLogger)
+        public LevelsDictinaryModel()
         {
             _objectModels = new Dictionary<string, LevelModel>();
-            _gameLogger = gameLogger;
         }
 
         public void Dispose()
@@ -25,23 +20,14 @@ namespace Assets._Scripts.GameMVP.Levels
             _objectModels.Clear();
         }
 
-        public bool TryAddObject(string id, LevelData data)
+        public LevelModel AddObject(LevelData data)
         {
-            bool isAdd = false;
+            LevelModel model = new LevelModel(data);
 
-            if (_objectModels.ContainsKey(id) == false)
-            {
-                LevelModel model = new LevelModel(data);
+            if (_objectModels.TryAdd(data.Id, model) == false)
+                throw new ArgumentNullException("ERROR KEY");
 
-                if (_objectModels.TryAdd(id, model) == false)
-                    throw new ArgumentNullException("ERROR KEY");
-
-                OnObjectAdd?.Invoke(model);
-
-                isAdd = true;
-            }
-
-            return isAdd;
+            return model;
         }
 
         public bool TryGetModel(string id, out LevelModel model)

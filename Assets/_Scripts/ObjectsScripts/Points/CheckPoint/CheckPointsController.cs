@@ -14,9 +14,10 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
         private readonly CheckPointDictinaryModel _dictinaryModel;
         private readonly Dictionary<string, CheckPointView> _dictinaryView;
 
+        public event Action<CheckPointModel> OnModelAdd;
+
         public CheckPointsController(Dictionary<string, 
-            CheckPointView> dictinaryView, 
-            //CheckPointDictinaryModel dictinaryModel, 
+            CheckPointView> dictinaryView,
             IGameLogger gameLogger)
         {
             if (dictinaryView == null)
@@ -25,14 +26,10 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             _dictinaryView = dictinaryView;
             _gameLogger = gameLogger;
             _dictinaryModel = new CheckPointDictinaryModel();
-
-            _dictinaryModel.OnObjectAdd += ObjectInit;
         }
 
         public void Dispose()
         {
-            _dictinaryModel.OnObjectAdd -= ObjectInit;
-
             foreach(var view in _dictinaryView.Values)
             {
                 view.OnActivateObject -= ObjectActivateView;
@@ -86,13 +83,17 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
                 }
 
                 view.OnActivateObject += ObjectActivateView;
-                _dictinaryModel.AddObject(data);
+
+                AddModel(data);
             }
         }
 
-        private void ObjectInit(CheckPointModel model)
+        public void AddModel(CheckPointData data)
         {
+            var model = _dictinaryModel.AddObject(data);
             model.OnObjectStatusChange += OnModelStatusChanged;
+
+            OnModelAdd?.Invoke(model);
         }
 
         public void ObjectActivateView(string id, bool status, Vector3 coords)

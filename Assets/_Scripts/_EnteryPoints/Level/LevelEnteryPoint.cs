@@ -29,8 +29,6 @@ namespace Assets._Scripts.EnteryPoints
         private FinishController _finishController;
         private GameLoopService _gameLoopController;
         private FinishModel _finishModel;
-        //private CoinDictinaryModel _coinDictinaryModel;
-        //private CheckPointDictinaryModel _checkPointDictinaryModel;
         private LastCheckPointController _lastCheckPointController;
         private LevelLoopService _levelLoopService;
         private GamePoints _gamePoints;
@@ -45,8 +43,6 @@ namespace Assets._Scripts.EnteryPoints
             FinishController finishController,
             GameLoopService gameLoopController,
             FinishModel finishModel,
-            //CoinDictinaryModel coinDictinaryModel,
-            //CheckPointDictinaryModel checkPointDictinaryModel,
             LastCheckPointController lastCheckPointController,
             LevelLoopService levelLoopService,
             LevelsController levelsController,
@@ -60,8 +56,6 @@ namespace Assets._Scripts.EnteryPoints
             _walletController = walletController;
             _finishController = finishController;
             _gameLoopController = gameLoopController;
-            //_coinDictinaryModel = coinDictinaryModel;
-            //_checkPointDictinaryModel = checkPointDictinaryModel;
             _finishModel = finishModel;
             _lastCheckPointController = lastCheckPointController;
             _levelLoopService = levelLoopService;
@@ -99,9 +93,8 @@ namespace Assets._Scripts.EnteryPoints
 
             var levelData = _gameSaveLoadService.GameSaveData.LevelsData[_levelConfig.LevelName];
 
-            //_coinDictinaryModel.OnObjectAdd += CoinAddInDictinary;
             _coinController.OnModelAdd += CoinAddInDictinary;
-            //_checkPointDictinaryModel.OnObjectAdd += CheckPointAddInDictinary;
+            _checkPointsController.OnModelAdd += CheckPointAddInDictinary;
 
             _coinController.Initialization(levelData, _levelConfig);
             _checkPointsController.Initialization(levelData, _levelConfig);
@@ -187,15 +180,8 @@ namespace Assets._Scripts.EnteryPoints
             _lastCheckPointController.Dispose();
 
             _finishModel.OnFinish -= FinishLevel;
-            //_coinDictinaryModel.OnObjectAdd -= CoinAddInDictinary;
             _coinController.OnModelAdd -= CoinAddInDictinary;
-            //_checkPointDictinaryModel.OnObjectAdd -= CheckPointAddInDictinary;
-
-            //foreach (var model in _coinDictinaryModel.ObjectModelds.Values)
-            //{
-            //    model.OnTakeValue -= _walletController.AddConis;
-            //    model.OnTake -= SaveLevel;
-            //}
+            _checkPointsController.OnModelAdd -= CheckPointAddInDictinary;
 
             _levelLoopService.Dispose();
         }

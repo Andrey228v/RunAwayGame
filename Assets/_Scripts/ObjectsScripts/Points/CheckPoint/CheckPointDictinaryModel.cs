@@ -8,8 +8,6 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
     {
         private readonly Dictionary<string, CheckPointModel> _objectModels;
 
-        public event Action<CheckPointModel> OnObjectAdd; // Как только мы добавляем в словарь наш объект мы его подвязываем.
-
         public Dictionary<string, CheckPointModel> ObjectModelds => _objectModels;
 
         public CheckPointDictinaryModel()
@@ -17,14 +15,14 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             _objectModels = new Dictionary<string, CheckPointModel>();
         }
 
-        public void AddObject(CheckPointData data)
+        public CheckPointModel AddObject(CheckPointData data)
         {
             CheckPointModel model = new CheckPointModel(data);
 
             if(_objectModels.TryAdd(data.Id, model) == false)
                 throw new ArgumentNullException("ERROR KEY");
 
-            OnObjectAdd?.Invoke(model);
+            return model;
         }
 
         public bool TryGetModel(string id, out CheckPointModel model)

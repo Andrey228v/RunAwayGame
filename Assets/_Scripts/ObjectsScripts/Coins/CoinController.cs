@@ -93,16 +93,9 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
                 view.OnActivateObject += ObjectActivateView;
 
-                //_dictinaryModel.AddObject(data);
-
                 AddModel(data);
             }
         }
-
-        //private void ObjectInit(CoinModel model)
-        //{
-        //    model.OnObjectStatusChange += OnModelStatusChanged;
-        //}
 
         public void AddModel(CoinData data)
         {

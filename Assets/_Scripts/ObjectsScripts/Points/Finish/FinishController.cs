@@ -40,15 +40,15 @@ namespace Assets._Scripts.ObjectsScripts.Points.Finish
         {
             _finishModel.Reset();
 
-            if (levelData.Id == 0)
+            if (levelData.Id == "0")
             {
                 OnFinishLvl0?.Invoke(1);
             }
-            else if (levelData.Id == 1)
+            else if (levelData.Id == "1")
             {
                 OnFinishLvl1?.Invoke(1);
             }
-            else if (levelData.Id == 2)
+            else if (levelData.Id == "2")
             {
                 OnFinishLvl2?.Invoke(1);
             }

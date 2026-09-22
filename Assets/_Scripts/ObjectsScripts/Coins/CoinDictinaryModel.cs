@@ -8,8 +8,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     {
         private readonly Dictionary<string, CoinModel> _objectModels;
 
-        //public event Action<CoinModel> OnObjectAdd;
-
         public Dictionary<string, CoinModel> ObjectModelds => _objectModels;
 
         public CoinDictinaryModel()
@@ -23,8 +21,6 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
             if(_objectModels.TryAdd(data.Id, model) == false)
                 throw new ArgumentNullException("ERROR KEY");
-
-            //OnObjectAdd?.Invoke(model);
 
             return model;
         }

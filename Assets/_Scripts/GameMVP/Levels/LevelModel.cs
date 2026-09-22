@@ -21,7 +21,6 @@ namespace Assets._Scripts.GameControllers.Levels
         public void SetData(LevelData data)
         {
             _data = data;
-            //OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }
 
 

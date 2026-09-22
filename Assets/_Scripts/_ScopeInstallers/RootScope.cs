@@ -67,7 +67,7 @@ namespace Assets._Scripts.Installers
             builder.RegisterEntryPoint<GameLoopService>(Lifetime.Singleton).AsSelf();
             builder.RegisterEntryPoint<LevelLoopService>(Lifetime.Singleton).AsSelf();
 
-            builder.RegisterEntryPoint<LevelsDictinaryModel>().AsSelf();
+            //builder.RegisterEntryPoint<LevelsDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<AchievmentDictinaryModel>().AsSelf();
             builder.RegisterEntryPoint<BillboardManager>().AsSelf();
 

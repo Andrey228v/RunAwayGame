@@ -8,7 +8,7 @@ namespace Assets.Scripts.SaveLoad.Data
     [Serializable]
     public class LevelData
     {
-        public int Id; // Нужно ли ???
+        public string Id;
         public bool IsLevelStart; // Был ли уровень запущен до этого запуска ??
         public int ProgressMax;
         public int CurrentProgress;

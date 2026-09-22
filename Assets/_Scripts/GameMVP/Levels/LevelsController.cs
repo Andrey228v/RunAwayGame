@@ -21,10 +21,10 @@ namespace Assets._Scripts.GameControllers.Levels
 
         public LevelConfig Config => _levelConfig;
 
-        public LevelsController(IGameLogger gameLogger, LevelsDictinaryModel dictinaryModel)
+        public LevelsController(IGameLogger gameLogger)
         {
             _gameLogger = gameLogger;
-            _dictinaryModel = dictinaryModel;
+            _dictinaryModel = new LevelsDictinaryModel();
             _dictinaryView = new Dictionary<string, LevelUIView>();
         }
 
@@ -50,8 +50,7 @@ namespace Assets._Scripts.GameControllers.Levels
                         new Dictionary<string, CoinData>()
                         );
 
-                    _dictinaryModel.TryAddObject(id, data);
-                    _dictinaryModel.TryGetModel(id, out var model);
+                    AddModel(data);
                 }
             }
         }
@@ -59,6 +58,14 @@ namespace Assets._Scripts.GameControllers.Levels
         public void Initialization(GameSaveData gameSaveData)
         {
 
+        }
+
+        public void AddModel(LevelData data)
+        {
+            var model = _dictinaryModel.AddObject(data);
+            //model.OnObjectStatusChange += OnModelStatusChanged;
+
+            //OnModelAdd?.Invoke(model);
         }
 
 

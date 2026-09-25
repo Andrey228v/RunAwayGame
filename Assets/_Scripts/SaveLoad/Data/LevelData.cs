@@ -17,12 +17,15 @@ namespace Assets.Scripts.SaveLoad.Data
         public Dictionary<string, CheckPointData> CheckPoints;
         public Dictionary<string, CoinData> Coins;
 
-        public LevelData(bool isLevelStart,
+        public LevelData(
+            string id,
+            bool isLevelStart,
             LastCheckPointData lastCheckPointPosition, 
             PlayerData playerData,
             Dictionary<string, CheckPointData> checkPoints,
             Dictionary<string, CoinData> coins)
         {
+            Id = id;
             IsLevelStart = isLevelStart;
             LastCheckPointPosition = lastCheckPointPosition;
             PlayerData = playerData;

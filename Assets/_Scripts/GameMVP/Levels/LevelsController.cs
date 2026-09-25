@@ -41,8 +41,11 @@ namespace Assets._Scripts.GameControllers.Levels
 
                     _dictinaryView.Add(id, view);
 
-                    //Так ли, пускай пока так будет...
+                    string testId = i.ToString();
+
+                    //Так ли, пускай пока так будет... Нет не так. тут надо делать через фабрику, чтобы не дублировалось это в нескольких местах.
                     var data = new LevelData(
+                        testId,
                         false,
                         new LastCheckPointData(),
                         new PlayerData(),
@@ -82,11 +85,12 @@ namespace Assets._Scripts.GameControllers.Levels
 
                 //Мысль такая что каждый инициализирует свои элименеты в своём модуле. Тут инициализируется только ЛвлДата.
                 var newData = new LevelData(
-                 false,
-                 null,
-                 null,
-                 null,
-                 null
+                    "test",
+                    false,
+                    null,
+                    null,
+                    null,
+                    null
                  );
 
                 gameSaveData.LevelsData.Add(key, newData);

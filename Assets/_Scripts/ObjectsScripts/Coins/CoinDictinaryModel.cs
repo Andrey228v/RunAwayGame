@@ -15,6 +15,11 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             _objectModels = new Dictionary<string, CoinModel>();
         }
 
+        public void Dispose()
+        {
+            _objectModels.Clear();
+        }
+
         public CoinModel AddObject(CoinData data)
         {
             CoinModel model = new CoinModel(data);

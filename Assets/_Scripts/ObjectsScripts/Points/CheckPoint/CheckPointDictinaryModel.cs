@@ -15,6 +15,11 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             _objectModels = new Dictionary<string, CheckPointModel>();
         }
 
+        public void Dispose()
+        {
+            _objectModels.Clear();
+        }
+
         public CheckPointModel AddObject(CheckPointData data)
         {
             CheckPointModel model = new CheckPointModel(data);

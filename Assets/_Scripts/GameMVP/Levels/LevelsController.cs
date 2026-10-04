@@ -126,7 +126,7 @@ namespace Assets._Scripts.GameControllers.Levels
             }
 
             _dictinaryView.Clear();
-
+            _dictinaryModel.Dispose();
 
         }
 

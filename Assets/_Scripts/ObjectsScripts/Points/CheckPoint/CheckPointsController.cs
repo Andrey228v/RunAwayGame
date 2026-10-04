@@ -41,6 +41,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
             }
 
             _dictinaryView.Clear();
+            _dictinaryModel.Dispose();
         }
 
         public void Initialization(LevelData levelData, LevelConfig levelConfig)

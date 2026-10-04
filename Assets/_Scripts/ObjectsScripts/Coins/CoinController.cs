@@ -50,6 +50,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
             }
 
             _dictinaryView.Clear();
+            _dictinaryModel.Dispose();
         }
 
         public void Initialization(LevelData levelData, LevelConfig levelConfig)

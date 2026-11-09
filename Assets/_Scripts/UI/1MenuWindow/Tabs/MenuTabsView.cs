@@ -86,6 +86,7 @@ namespace Assets._Scripts.UI._1MenuWindow
         public event Action<int> OnLevelStart0;
         public event Action<int> OnLevelStart1;
         public event Action<int> OnLevelStart2;
+        public event Action OnButtonDeletSaveClick;
         
         private void OnEnable()
         {
@@ -212,7 +213,7 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         private void DeletSave()
         {
-
+            OnButtonDeletSaveClick?.Invoke();
         }
 
         public void SetCoinsCountText(int actualCoin, int addCoin)

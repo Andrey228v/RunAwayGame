@@ -40,6 +40,25 @@ namespace Assets._Scripts.SaveLoad.Service
             _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
         }
 
+        public void ResetSaveData()
+        {
+            _gameSaveData = CreateSaveDataStandart();
+        }
+
+        private GameSaveData CreateSaveDataStandart()
+        {
+            var data = new GameSaveData(
+                new Dictionary<string, LevelData>(),
+                new Dictionary<string, AchievmentData>(),
+                new ShopData(),
+                new WalletData(67, 322),
+                new SettingsData(),
+                DateTime.Now)
+                        { };
+
+            return data;
+        }
+
         private void LoadOrCreateSave()
         {
             _gameLogger.Log("GameSaveLoadService LoadOrCreateSave", "Service");
@@ -50,13 +69,7 @@ namespace Assets._Scripts.SaveLoad.Service
             }
             else
             {
-                _gameSaveData = new GameSaveData(
-                    new Dictionary<string, LevelData>(),
-                    new Dictionary<string, AchievmentData>(),
-                    new ShopData(),
-                    new WalletData(67, 322),
-                    new SettingsData(),
-                    DateTime.Now){ };
+                _gameSaveData = CreateSaveDataStandart();
 
                 _saveSystem.Save(SaveUtilites.GAME_SAVE_KEY, _gameSaveData);
             }

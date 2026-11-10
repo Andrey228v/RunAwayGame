@@ -131,10 +131,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
 
         public void Finish(LevelData levelData)
         {
-            foreach (var model in _dictinaryModel.ObjectModelds.Values)
-            {
-                model.Reset();
-            }
+            Reset();
         }
 
         public void DieRestart(LevelData levelData)
@@ -143,6 +140,11 @@ namespace Assets._Scripts.ObjectsScripts.Coins
         }
 
         public void ResetAllObjects(LevelConfig levelConfig)
+        {
+            Reset();
+        }
+
+        private void Reset()
         {
             foreach (var model in _dictinaryModel.ObjectModelds.Values)
             {

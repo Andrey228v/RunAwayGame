@@ -37,8 +37,6 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
         private Vector3 _originalScale;
         private IGameLogger _gameLogger;
 
-        //public Button TakeRewardButton => _takeRewardButton;
-
         public string Id => _id;
 
         public event Action OnTakeRewardButtonClick;
@@ -105,9 +103,6 @@ namespace Assets._Scripts.UI._1MenuWindow.Achievements
 
         public void SetDataView(AchievmentData data)
         {
-            //SetName(data.Name); // Скорее всего не здесь...
-            //SetDescription(data.Description); // Скорее всего не здесь...
-
             if (data.IsUnlock && data.IsRevardEnable)
             {
                 ShowUnlockedWithButtonReward();

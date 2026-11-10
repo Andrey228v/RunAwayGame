@@ -7,7 +7,6 @@ using Assets.Scripts.SaveLoad.Data;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static UnityEngine.InputSystem.LowLevel.InputStateHistory;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {

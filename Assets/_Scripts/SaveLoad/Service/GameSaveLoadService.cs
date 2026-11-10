@@ -43,6 +43,7 @@ namespace Assets._Scripts.SaveLoad.Service
         public void ResetSaveData()
         {
             _gameSaveData = CreateSaveDataStandart();
+            //тут должно быть обновление всех элементов ...
         }
 
         private GameSaveData CreateSaveDataStandart()

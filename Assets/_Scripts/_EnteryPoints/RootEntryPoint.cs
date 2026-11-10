@@ -91,6 +91,8 @@ namespace Assets._Scripts.EnteryPoints
             _languageModel.OnLanguageChangedForSave += SaveLevel;
             _languageModel.OnLangageIdChanged += _languageManger.SetLanguageId; // было SetLanguage
 
+
+
             await _loadManager.LoadScene(_scensGroups[0]);
         }
 

@@ -84,6 +84,8 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart0 += LoadLevel;
             _menuTabsView.OnLevelStart1 += LoadLevel;
             _menuTabsView.OnLevelStart2 += LoadLevel;
+
+            _menuTabsView.OnButtonDeletSaveClick += _gameSaveLoadService.ResetSaveData; // тут вопрос в том, что эвент должен ли с вью приходить или нет...
         }
 
         public void Dispose()
@@ -95,6 +97,8 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart0 -= LoadLevel;
             _menuTabsView.OnLevelStart1 -= LoadLevel;
             _menuTabsView.OnLevelStart2 -= LoadLevel;
+
+            _menuTabsView.OnButtonDeletSaveClick -= _gameSaveLoadService.ResetSaveData;
 
             _walletController.RemoveView(_menuTabsView);
             _languageManger.RemoveLanguageFlip(_menuTabsView);

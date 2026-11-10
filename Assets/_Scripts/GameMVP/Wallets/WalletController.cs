@@ -47,7 +47,7 @@ namespace Assets._Scripts.GameControllers.Wallets
 
         public void Save(GameSaveData gameSaveData)
         {
-            //Переделать...
+            //Переделать... а что переделывать я забыл...
             gameSaveData.WalletData.Coins = _model.Data.Coins;
             gameSaveData.WalletData.Gobelets = _model.Data.Gobelets;
         }

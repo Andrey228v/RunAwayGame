@@ -12,7 +12,7 @@ namespace Assets._Scripts.ObjectsScripts.Player
     {
         private UnitStateMachine _playerStateMachine;
         private Character _character;
-        private PlayerMB _playerMB;
+        private PlayerMB _playerMB; //view
         private bool _isDisposed = false;
 
         public PlayerMB PlayerMB => _playerMB;
@@ -107,9 +107,10 @@ namespace Assets._Scripts.ObjectsScripts.Player
             }
         }
 
+        //Сброска при удалении сохранения...
         public void ResetAllObjects(LevelConfig config)
         {
-            
+            Reset();
         }
     }
 }

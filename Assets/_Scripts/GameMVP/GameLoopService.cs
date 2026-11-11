@@ -122,7 +122,7 @@ namespace Assets._Scripts.GameControllers
 
         public void ResetLevel(GameSaveData gameSaveData)
         {
-            foreach (var key in _finishDict.Keys)
+            foreach (var key in _resetDict.Keys)
             {
                 _resetDict[key].Reset(gameSaveData);
             }

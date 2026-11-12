@@ -120,6 +120,7 @@ namespace Assets._Scripts.GameControllers
             SaveAllServices(gameSaveData);
         }
 
+        //Тут надо менять. Словарь ResetDict
         public void ResetLevel(GameSaveData gameSaveData)
         {
             foreach (var key in _resetDict.Keys)

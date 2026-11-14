@@ -79,6 +79,7 @@ namespace Assets._Scripts.EnteryPoints
 
             _gameLoopService.SaveDict.Add("achievmentsController", _achievmentsController);
             _gameLoopService.LoadDict.Add("achievmentsController", _achievmentsController);
+            _gameLoopService.ResetDict.Add("achievmentsController", _achievmentsController);
 
             _gameLoopService.SaveDict.Add("languageController", _languageController);
             _gameLoopService.LoadDict.Add("languageController", _languageController);

@@ -1,4 +1,5 @@
-﻿using Assets._Scripts.GameControllers.Achievments;
+﻿using Assets._Scripts.GameControllers;
+using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
 using Assets._Scripts.GameControllers.Settings;
 using Assets._Scripts.GameControllers.Wallets;
@@ -28,6 +29,7 @@ namespace Assets._Scripts.EnteryPoints
         private LoadManager _loadManager;
         private readonly LanguageManger _languageManger;
         private SettingsController _settingsController;
+        private GameLoopService _gameLoopController;
 
         public MenuEnteryPoint(
             AchievmentsController achievmentsController,
@@ -41,6 +43,7 @@ namespace Assets._Scripts.EnteryPoints
             LanguageViewMenu viewLanguageMenu,
             LanguageManger languageManger,
             SettingsController settingsController,
+            GameLoopService gameLoopController,
             List<SceneGroupHandle> scensGroups
             ) 
         {
@@ -56,6 +59,7 @@ namespace Assets._Scripts.EnteryPoints
             _loadManager = loadManager;
             _languageManger = languageManger;
             _settingsController = settingsController;
+            _gameLoopController = gameLoopController;
         }
 
         public void Initialize()
@@ -85,7 +89,8 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart1 += LoadLevel;
             _menuTabsView.OnLevelStart2 += LoadLevel;
 
-            _menuTabsView.OnButtonDeletSaveClick += _gameSaveLoadService.ResetSaveData; // тут вопрос в том, что эвент должен ли с вью приходить или нет...
+            _menuTabsView.OnButtonDeletSaveClick += ResetSaveData;
+            //_menuTabsView.OnButtonDeletSaveClick += _gameSaveLoadService.ResetSaveData; // тут вопрос в том, что эвент должен ли с вью приходить или нет...
         }
 
         public void Dispose()
@@ -98,7 +103,8 @@ namespace Assets._Scripts.EnteryPoints
             _menuTabsView.OnLevelStart1 -= LoadLevel;
             _menuTabsView.OnLevelStart2 -= LoadLevel;
 
-            _menuTabsView.OnButtonDeletSaveClick -= _gameSaveLoadService.ResetSaveData;
+            _menuTabsView.OnButtonDeletSaveClick -= ResetSaveData;
+            //_menuTabsView.OnButtonDeletSaveClick -= _gameSaveLoadService.ResetSaveData;
 
             _walletController.RemoveView(_menuTabsView);
             _languageManger.RemoveLanguageFlip(_menuTabsView);
@@ -110,6 +116,11 @@ namespace Assets._Scripts.EnteryPoints
         private async void LoadLevel(int id)
         {
             await _loadManager.LoadScene(_scensGroups[id]);
+        }
+
+        private void ResetSaveData()
+        {
+            _gameLoopController.ResetGame(_gameSaveLoadService.GameSaveData);
         }
 
     }

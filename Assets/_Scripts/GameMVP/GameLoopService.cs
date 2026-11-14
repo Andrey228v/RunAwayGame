@@ -21,7 +21,6 @@ namespace Assets._Scripts.GameControllers
         private readonly Dictionary<string, IDieRestartGame> _dieRestartDict;
         private readonly Dictionary<string, IFinishGame> _finishDict;
         private readonly Dictionary<string, IResetGame> _resetDict;
-
         public Dictionary<string, ISaveGame> SaveDict => _saveDict;
         public Dictionary<string, ILoadGame> LoadDict => _loadDict;
         public Dictionary<string, IDieRestartGame> DieRestartDict => _dieRestartDict;
@@ -121,7 +120,7 @@ namespace Assets._Scripts.GameControllers
         }
 
         //Тут надо менять. Словарь ResetDict
-        public void ResetLevel(GameSaveData gameSaveData)
+        public void ResetGame(GameSaveData gameSaveData)
         {
             foreach (var key in _resetDict.Keys)
             {

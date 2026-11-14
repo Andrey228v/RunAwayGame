@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentsController : ISaveGame, ILoadGame
+    public class AchievmentsController : ISaveGame, ILoadGame, IResetGame
     {
         private IGameLogger _gameLogger;
         private Transform _objectParent;
@@ -120,6 +120,13 @@ namespace Assets._Scripts.GameControllers.Achievments
                     model.SetData(achievmentData[key]);
                 }
             }
+        }
+
+        public void Reset(GameSaveData gameSaveData)
+        {
+            //_model.Reset();
+
+
         }
 
         public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)

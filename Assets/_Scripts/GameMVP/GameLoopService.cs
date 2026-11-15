@@ -127,7 +127,7 @@ namespace Assets._Scripts.GameControllers
                 _resetDict[key].Reset(gameSaveData);
             }
 
-            if (_levelsController.Config != null)
+            if (_levelsController.Config != null) // если уровень запущен, мы переходим к LevelLoopSerivece, который содержит данные по уровню.
             {
                 var levelName = _levelsController.Config.LevelName;
                 var levelData = gameSaveData.LevelsData[levelName];

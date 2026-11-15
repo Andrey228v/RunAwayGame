@@ -8,7 +8,7 @@ namespace Assets._Scripts.ObjectsScripts.Coins
     {
         private readonly Dictionary<string, CoinModel> _objectModels;
 
-        public Dictionary<string, CoinModel> ObjectModelds => _objectModels;
+        public Dictionary<string, CoinModel> ObjectModelds => _objectModels; //хотелось бы это убрать, чтобы сссылки не было лишней.
 
         public CoinDictinaryModel()
         {

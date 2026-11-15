@@ -24,7 +24,8 @@ namespace Assets._Scripts.SaveLoad.Data
 
         public void ResetData()
         {
-
+            IsUnlock = false;
+            IsRevardEnable = false;
         }
     }
 }

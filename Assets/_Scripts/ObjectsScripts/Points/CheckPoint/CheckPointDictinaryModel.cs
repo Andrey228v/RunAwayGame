@@ -8,7 +8,7 @@ namespace Assets._Scripts.ObjectsScripts.Points.CheckPoint
     {
         private readonly Dictionary<string, CheckPointModel> _objectModels;
 
-        public Dictionary<string, CheckPointModel> ObjectModelds => _objectModels;
+        public Dictionary<string, CheckPointModel> ObjectModelds => _objectModels; //хотелось бы это убрать, чтобы сссылки не было лишней.
 
         public CheckPointDictinaryModel()
         {

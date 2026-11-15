@@ -10,6 +10,7 @@ namespace Assets._Scripts.GameMVP.Achievments
     public class AchievmentDictinaryModel : IDisposable
     {
         private readonly Dictionary<string, AchievmentModel> _objectModels;
+
         private IGameLogger _gameLogger;
 
         public event Action<AchievmentModel> OnObjectAdd;
@@ -56,6 +57,14 @@ namespace Assets._Scripts.GameMVP.Achievments
             }
 
             return isFind;
+        }
+
+        public void Reset()
+        {
+            foreach(var key in _objectModels.Keys)
+            {
+                _objectModels[key].Reset();
+            }
         }
     }
 }

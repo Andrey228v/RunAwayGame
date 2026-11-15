@@ -4,13 +4,14 @@ using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
 using Assets._Scripts.UI._1MenuWindow.Achievements;
 using Assets._Scripts.Utilites.Loger;
 using Assets.Scripts.SaveLoad.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace Assets._Scripts.GameControllers.Achievments
 {
-    public class AchievmentsController : ISaveGame, ILoadGame, IResetGame
+    public class AchievmentsController : ISaveGame, ILoadGame, IResetGame, IDisposable
     {
         private IGameLogger _gameLogger;
         private Transform _objectParent;
@@ -24,6 +25,12 @@ namespace Assets._Scripts.GameControllers.Achievments
             _dictinaryModel = dictinaryModel;
 
             _dictinaryModel.OnObjectAdd += ObjectInit;
+        }
+
+        //Надо проверить работает ли...
+        public void Dispose()
+        {
+            _dictinaryModel.Dispose();
         }
 
         public void Initialization(GameSaveData gameSaveData)
@@ -124,25 +131,23 @@ namespace Assets._Scripts.GameControllers.Achievments
 
         public void Reset(GameSaveData gameSaveData)
         {
-            //_model.Reset();
-
-
+            _dictinaryModel.Reset();
         }
 
-        public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
-        {
-            //_gameLogger.Log("AchievmentsController RESET", "Success");
+        //public void Reset(GameSaveData gameSaveData, LevelConfig levelConfig)
+        //{
+        //    //_gameLogger.Log("AchievmentsController RESET", "Success");
 
-            //for (int i = 0; i < _modelsAchievments.Count; i++)
-            //{
-            //    var model = _modelsAchievments[i];
-            //    var data = gameSaveData.AchievmentsData[i];
+        //    //for (int i = 0; i < _modelsAchievments.Count; i++)
+        //    //{
+        //    //    var model = _modelsAchievments[i];
+        //    //    var data = gameSaveData.AchievmentsData[i];
 
-            //    model.Reset(data);
+        //    //    model.Reset(data);
 
-            //    UpdateCellView(data);
-            //}
-        }
+        //    //    UpdateCellView(data);
+        //    //}
+        //}
 
     }
 }

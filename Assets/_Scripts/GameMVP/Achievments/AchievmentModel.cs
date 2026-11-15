@@ -49,19 +49,20 @@ namespace Assets._Scripts.GameControllers.Achievments
             OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }
 
-        public void TakeReward()
+        public void TakeReward() // Событие для нажатия кнопки взять награду. Доступно после открытия.
         {
             _achievmentsReward.GetRewards();
             _data.IsRevardEnable = false;
             OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }
 
-        public void Reset(AchievmentData data)
+        public void Reset() // сбрасывать состояние.
         {
-            _data = data;
+            _data.CurrentValue = 0;
+            Close();
         }
 
-        public void ChangeCurrentProgress(int progress)
+        public void ChangeCurrentProgress(int progress) // прибавляет прогресс к текущему.
         {
             _data.CurrentValue += progress;
 
@@ -73,7 +74,7 @@ namespace Assets._Scripts.GameControllers.Achievments
             OnAchievementDataChanged?.Invoke(_data.Id, _data);
         }
 
-        private void Unlock()
+        private void Unlock() // Ачивка открывается, но награда за него ещё не взята.
         {
             if (_data.IsUnlock == false)
             {
@@ -81,6 +82,16 @@ namespace Assets._Scripts.GameControllers.Achievments
 
                 _data.IsUnlock = true;
                 _data.IsRevardEnable = true;
+                OnUnlock?.Invoke(_data);
+            }
+        }
+
+        private void Close()
+        {
+            if (_data.IsUnlock == true)
+            {
+                _data.IsUnlock = false;
+                _data.IsRevardEnable = false;
                 OnUnlock?.Invoke(_data);
             }
         }

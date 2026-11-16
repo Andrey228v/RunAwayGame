@@ -60,6 +60,11 @@ namespace Assets._Scripts.GameMVP.Language
             OnLanguageChangedForSave?.Invoke();
         }
 
+        public void Reset()
+        {
+            SetLanguage(0);
+        }
+
         private void SetVisibility(bool IsVisible)
         {
             OnMenuVisibilityChanged?.Invoke(_isMenuVisible);

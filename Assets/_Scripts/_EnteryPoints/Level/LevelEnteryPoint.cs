@@ -174,6 +174,8 @@ namespace Assets._Scripts.EnteryPoints
 
         public void Dispose()
         {
+            _levelsController.SetLevelConfig(null); // тут вопрос. Правильно ли так нулл делать??
+
             _checkPointsController.Dispose();
             _coinController.Dispose();
             _finishController.Dispose();

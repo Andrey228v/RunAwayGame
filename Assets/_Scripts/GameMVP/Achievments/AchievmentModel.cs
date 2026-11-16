@@ -92,7 +92,7 @@ namespace Assets._Scripts.GameControllers.Achievments
             {
                 _data.IsUnlock = false;
                 _data.IsRevardEnable = false;
-                OnUnlock?.Invoke(_data);
+                OnAchievementDataChanged?.Invoke(_data.Id, _data);
             }
         }
     }

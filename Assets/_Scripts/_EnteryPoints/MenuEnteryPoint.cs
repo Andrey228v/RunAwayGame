@@ -120,8 +120,10 @@ namespace Assets._Scripts.EnteryPoints
 
         private void ResetSaveData()
         {
-            _gameLoopController.ResetGame(_gameSaveLoadService.GameSaveData);
+            //_gameLoopController.ResetGame(_gameSaveLoadService.GameSaveData);
+            
+            _gameSaveLoadService.ResetSaveData();
+            _gameLoopController.LoadHightLevelServices(_gameSaveLoadService.GameSaveData);
         }
-
     }
 }

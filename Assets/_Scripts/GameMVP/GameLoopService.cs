@@ -70,7 +70,7 @@ namespace Assets._Scripts.GameControllers
             _gameSaveLoadService.SaveGame();
         }
 
-        public void LoadAllServices(GameSaveData gameSaveData)
+        public void LoadHightLevelServices(GameSaveData gameSaveData)
         {
             foreach (var key in _loadDict.Keys)
             {
@@ -120,21 +120,21 @@ namespace Assets._Scripts.GameControllers
         }
 
         //Тут надо менять. Словарь ResetDict
-        public void ResetGame(GameSaveData gameSaveData)
-        {
-            foreach (var key in _resetDict.Keys)
-            {
-                _resetDict[key].Reset(gameSaveData);
-            }
+        //public void ResetGame(GameSaveData gameSaveData)
+        //{
+        //    foreach (var key in _resetDict.Keys)
+        //    {
+        //        _resetDict[key].Reset(gameSaveData);
+        //    }
 
-            if (_levelsController.Config != null) // если уровень запущен, мы переходим к LevelLoopSerivece, который содержит данные по уровню.
-            {
-                var levelName = _levelsController.Config.LevelName;
-                var levelData = gameSaveData.LevelsData[levelName];
-                _levelLoopSerivece.ResetLevel(_levelsController.Config);
-            }
+        //    if (_levelsController.Config != null) // если уровень запущен, мы переходим к LevelLoopSerivece, который содержит данные по уровню.
+        //    {
+        //        var levelName = _levelsController.Config.LevelName;
+        //        var levelData = gameSaveData.LevelsData[levelName];
+        //        _levelLoopSerivece.ResetLevel(_levelsController.Config);
+        //    }
 
-            SaveAllServices(gameSaveData);
-        }
+        //    SaveAllServices(gameSaveData);
+        //}
     }
 }

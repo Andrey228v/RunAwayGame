@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Assets._Scripts.GameMVP.Language
 {
     //Управление отображением языка (флажок).
-    public class LanguageController : IInitGame, ISaveGame, ILoadGame, IDisposable
+    public class LanguageController : IInitGame, ISaveGame, ILoadGame, IDisposable, IResetGame
     {
         private readonly LanguageModel _model;
         private readonly List<ILanguageView> _views = new(); // сделать тут словарь... вроде как удобнее... или нет??
@@ -72,6 +72,11 @@ namespace Assets._Scripts.GameMVP.Language
 
             _views.Clear();
             _disposed = true;
+        }
+
+        public void Reset(GameSaveData gameSaveData)
+        {
+            _model.Reset();
         }
     }
 }

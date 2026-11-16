@@ -115,7 +115,6 @@ namespace Assets._Scripts.GameControllers.Wallets
         public void Reset()
         {
             _data.ResetData(); // под вопросом...
-
             OnCoinsChanged?.Invoke(_data.Coins, 0);
             OnGobeletsChanged?.Invoke(_data.Gobelets, 0);
         }

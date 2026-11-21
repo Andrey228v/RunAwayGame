@@ -26,7 +26,7 @@ namespace Assets._Scripts.EnteryPoints
         private Func<UnitInfoUIView> _unitInfoUIFactory;
         private LevelsController _levelsController;
         private WalletController _walletController;
-        private GameLoopService _gameLoopController;
+        private GameLoopService _gameLoopService;
         private GameSaveLoadService _gameSaveLoadService;
         private LevelLoopService _levelLoopService;
 
@@ -51,7 +51,7 @@ namespace Assets._Scripts.EnteryPoints
             _unitInfoUIFactory = unitInfoUIFactory;
             _walletController = walletController;
             _levelsController = levelsController;
-            _gameLoopController = gameLoopController;
+            _gameLoopService = gameLoopController;
             _gameSaveLoadService = gameSaveLoadService;
             _levelLoopService = levelLoopService;
         }
@@ -78,11 +78,14 @@ namespace Assets._Scripts.EnteryPoints
             _playerController.Load(levelData);
 
             //_playerController.PlayerMB.OnDie += _gameLoopController.DieRestart;
+            //_playerController.PlayerMB.OnDie += _gameLoopService.Di
         }
 
         public void Dispose()
         {
             _walletController.RemoveView(_unitInfoUI);
+
+            _playerController.PlayerMB.OnDie -= RestarDie;
 
             _billboardManager = null;
             _unitInfoUIFactory = null;
@@ -112,9 +115,18 @@ namespace Assets._Scripts.EnteryPoints
             billboardManager.SetCameraController(cameraController);
 
             PlayerMB playerMB =  character.gameObject.GetComponent<PlayerMB>();
+            playerMB.OnDie += RestarDie;
+
+
             playerController.SetPlayerMB(playerMB);
 
             _walletController.AddView(_unitInfoUI);
+        }
+
+        //Так ли и тут ли делается ...
+        private void RestarDie()
+        {
+            _gameLoopService.DieRestart(_gameSaveLoadService.GameSaveData);
         }
     }
 }

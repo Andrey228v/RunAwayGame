@@ -1,4 +1,5 @@
 ﻿using Assets._Scripts.SaveLoad.Data;
+using Assets._Scripts.SaveLoad.Data.Interfaces.Game;
 using Assets._Scripts.UI._1MenuWindow;
 using Assets.Scripts.SaveLoad.Data;
 using System;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 namespace Assets._Scripts.GameControllers.Settings
 {
 
-    public class SettingsController
+    public class SettingsController : IInitGame, ISaveGame, ILoadGame, IDisposable, IResetGame
     {
         private SettingsModel _model;
         private readonly List<ISettingsView> _views = new(); // сделать тут словарь... вроде как удобнее... или нет??
@@ -16,6 +17,19 @@ namespace Assets._Scripts.GameControllers.Settings
         public SettingsController(SettingsModel model)
         {
             _model = model ?? throw new ArgumentNullException(nameof(model));
+        }
+
+        public void Dispose()
+        {
+            if (_disposed) return;
+
+            for (int i = _views.Count - 1; i >= 0; i--)
+            {
+                RemoveView(_views[i]);
+            }
+
+            _views.Clear();
+            _disposed = true;
         }
 
         public void Initialization(GameSaveData gameSaveData)
@@ -54,6 +68,11 @@ namespace Assets._Scripts.GameControllers.Settings
             _model.OnEffectsValueChanged -= view.UpdateEffectValue;
 
             _views.Remove(view);
+        }
+
+        public void Reset(GameSaveData gameSaveData)
+        {
+            _model.Reset();
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using Assets._Scripts.GameControllers;
 using Assets._Scripts.GameControllers.Achievments;
 using Assets._Scripts.GameControllers.Levels;
+using Assets._Scripts.GameControllers.Settings;
 using Assets._Scripts.GameControllers.Wallets;
 using Assets._Scripts.GameMVP.Language;
 using Assets._Scripts.SaveLoad.Service;
@@ -27,6 +28,7 @@ namespace Assets._Scripts.EnteryPoints
         private readonly LanguageController _languageController;
         private readonly LanguageModel _languageModel;
         private readonly LanguageManger _languageManger;
+        private readonly SettingsController _settingsController;
 
         [Inject]
         public RootEntryPoint(LoadManager loadManager,
@@ -38,6 +40,7 @@ namespace Assets._Scripts.EnteryPoints
             LanguageController languageController,
             LanguageModel languageModel,
             LanguageManger languageManger,
+            SettingsController settingsController,
             GameLoopService gameLoopService
             )
         {
@@ -51,13 +54,16 @@ namespace Assets._Scripts.EnteryPoints
             _languageController = languageController;
             _languageModel = languageModel;
             _languageManger = languageManger;
+            _settingsController = settingsController;
         }
 
         public void Dispose()
         {
-            _languageModel.OnLanguageChangedForSave -= SaveLevel;
+            _languageModel.OnChangedForSave -= SaveLevel;
             _languageModel.OnLangageIdChanged -= _languageManger.SetLanguageId; // было SetLanguage
             _languageController.Dispose();
+            _settingsController.Dispose();
+
         }
 
         public async void Initialize()
@@ -85,15 +91,18 @@ namespace Assets._Scripts.EnteryPoints
             _gameLoopService.LoadDict.Add("languageController", _languageController);
             _gameLoopService.ResetDict.Add("languageController", _languageController);
 
+            _gameLoopService.SaveDict.Add("settingsController", _settingsController);
+            _gameLoopService.LoadDict.Add("settingsController", _settingsController);
+            _gameLoopService.ResetDict.Add("settingsController", _settingsController);
+
             _walletController.Initialization(_gameSaveLoadService.GameSaveData);
             _achievmentsController.Initialization(_gameSaveLoadService.GameSaveData);
             _languageController.Initialization(_gameSaveLoadService.GameSaveData);
             _languageManger.Initialization(_gameSaveLoadService.GameSaveData);
+            _settingsController.Initialization(_gameSaveLoadService.GameSaveData);
 
-            _languageModel.OnLanguageChangedForSave += SaveLevel;
+            _languageModel.OnChangedForSave += SaveLevel;
             _languageModel.OnLangageIdChanged += _languageManger.SetLanguageId; // было SetLanguage
-
-
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

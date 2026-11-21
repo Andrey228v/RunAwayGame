@@ -17,7 +17,7 @@ namespace Assets._Scripts.GameMVP.Language
         private LanguageType _currentLanguage = LanguageType.None;
         private bool _isMenuVisible;
 
-        public event Action OnLanguageChangedForSave;
+        public event Action OnChangedForSave;
         public event Action<LanguageType> OnLanguageChanged;
         public event Action<int> OnLangageIdChanged;
         public event Action<bool> OnMenuVisibilityChanged;
@@ -57,7 +57,7 @@ namespace Assets._Scripts.GameMVP.Language
             _isMenuVisible = false;
             SetVisibility(_isMenuVisible);
             OnLangageIdChanged?.Invoke(((int)language));
-            OnLanguageChangedForSave?.Invoke();
+            OnChangedForSave?.Invoke();
         }
 
         public void Reset()

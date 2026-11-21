@@ -2,10 +2,7 @@
 using Assets._Scripts.ObjectsScripts.Points;
 using ECM2;
 using System;
-using TMPro;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 namespace Assets._Scripts.ObjectsScripts.Bots
 {
@@ -16,7 +13,11 @@ namespace Assets._Scripts.ObjectsScripts.Bots
         private readonly RoadPointAIController _roadPointAIController;
         private readonly BotMB _botMB;
 
-        public Bot(NavMeshCharacter agent, BotAISM botAISM, RoadPointAIController roadPointAIController, Vector3 startPosition, Vector3 destination) 
+        public Bot(NavMeshCharacter agent, 
+            BotAISM botAISM, 
+            RoadPointAIController roadPointAIController, 
+            Vector3 startPosition, 
+            Vector3 destination) 
         {
             _agent = agent;
             _botAISM = botAISM;

@@ -15,6 +15,8 @@ namespace Assets._Scripts.GameControllers.Settings
         public event Action<double> OnEffectsValueChanged;
         public event Action<bool> OnSoundStatusChanged;
 
+        public event Action OnChangedForSave;
+
         public void Save(GameSaveData gameSaveData)
         {
             if (gameSaveData.SettingsData == null)
@@ -48,6 +50,7 @@ namespace Assets._Scripts.GameControllers.Settings
 
             _settingsData.VolumeAudio = value;
             OnAudioValueChanged?.Invoke(value);
+            OnChangedForSave?.Invoke();
         }
 
         public void SetMusicValue(double value) 
@@ -63,6 +66,7 @@ namespace Assets._Scripts.GameControllers.Settings
 
             _settingsData.VolumeMusic = value;
             OnMusicValueChanged?.Invoke(value);
+            OnChangedForSave?.Invoke();
         }
 
         public void SetEffectsValue(double value) 
@@ -78,12 +82,23 @@ namespace Assets._Scripts.GameControllers.Settings
 
             _settingsData.VolumeEffects = value;
             OnEffectsValueChanged?.Invoke(value);
+            OnChangedForSave?.Invoke();
         }
 
         public void SetSoundStatus(bool value)
         {
             _settingsData.IsSoundOn = value;
             OnSoundStatusChanged?.Invoke(value);
+            OnChangedForSave?.Invoke();
+        }
+
+        public void Reset()
+        {
+            SetAudioValue(0.5);
+            SetMusicValue(0.5);
+            SetEffectsValue(0.5);
+            SetSoundStatus(false);
+
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Assets._Scripts.EnteryPoints
         private readonly LanguageModel _languageModel;
         private readonly LanguageManger _languageManger;
         private readonly SettingsController _settingsController;
+        private readonly SettingsModel _settingsModel;
 
         [Inject]
         public RootEntryPoint(LoadManager loadManager,
@@ -41,6 +42,7 @@ namespace Assets._Scripts.EnteryPoints
             LanguageModel languageModel,
             LanguageManger languageManger,
             SettingsController settingsController,
+            SettingsModel settingsModel,
             GameLoopService gameLoopService
             )
         {
@@ -55,11 +57,13 @@ namespace Assets._Scripts.EnteryPoints
             _languageModel = languageModel;
             _languageManger = languageManger;
             _settingsController = settingsController;
+            _settingsModel = settingsModel;
         }
 
         public void Dispose()
         {
             _languageModel.OnChangedForSave -= SaveLevel;
+            _settingsModel.OnChangedForSave -= SaveLevel;
             _languageModel.OnLangageIdChanged -= _languageManger.SetLanguageId; // было SetLanguage
             _languageController.Dispose();
             _settingsController.Dispose();
@@ -103,6 +107,9 @@ namespace Assets._Scripts.EnteryPoints
 
             _languageModel.OnChangedForSave += SaveLevel;
             _languageModel.OnLangageIdChanged += _languageManger.SetLanguageId; // было SetLanguage
+
+            _settingsModel.OnChangedForSave += SaveLevel;
+
 
             await _loadManager.LoadScene(_scensGroups[0]);
         }

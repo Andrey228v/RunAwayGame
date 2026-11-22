@@ -20,9 +20,13 @@ namespace Assets._Scripts.UI._1MenuWindow
     public interface ISettingsView
     {
         public void UpdateSettingsDisplay();
-        public void UpdateAudioValue(double value);
-        public void UpdateMusicValue(double value);
-        public void UpdateEffectValue(double value);
+        public void SetAudioValue(double value);
+        public void SetMusicValue(double value);
+        public void SetEffectValue(double value);
+
+        public event Action<double> OnAudioValueChanged;
+        public event Action<double> OnMusicValueChanged;
+        public event Action<double> OnEffectValueChanged;
 
     }
 
@@ -87,11 +91,19 @@ namespace Assets._Scripts.UI._1MenuWindow
         public event Action<int> OnLevelStart1;
         public event Action<int> OnLevelStart2;
         public event Action OnButtonDeletSaveClick;
-        
+        public event Action<double> OnAudioValueChanged;
+        public event Action<double> OnMusicValueChanged;
+        public event Action<double> OnEffectValueChanged;
+
+
         private void OnEnable()
         {
             _currentPanel = _panels[0];
             _previousPanel = null;
+
+            _sliderAllAudio.onValueChanged.AddListener(UpdateAudioValue);
+            _sliderMusic.onValueChanged.AddListener(UpdateMusicValue);
+            _sliderEffect.onValueChanged.AddListener(UpdateEffectValue);
         }
 
         private void Start()
@@ -203,7 +215,9 @@ namespace Assets._Scripts.UI._1MenuWindow
             _startGameButtonL1.onClick.RemoveAllListeners();
             _startGameButtonL2.onClick.RemoveAllListeners();
 
-            //_lanuageButton.onClick.RemoveListener(LanguageButtonClick);
+            _sliderAllAudio.onValueChanged.RemoveListener(UpdateAudioValue);
+            _sliderMusic.onValueChanged.RemoveListener(UpdateMusicValue);
+            _sliderEffect.onValueChanged.RemoveListener(UpdateEffectValue);
         }
 
         private void ClickExit()
@@ -263,19 +277,48 @@ namespace Assets._Scripts.UI._1MenuWindow
 
         }
 
-        public void UpdateAudioValue(double value)
+        public void UpdateAudioValue(float value)
+        {
+            //_sliderAllAudio.value = (float)value;
+
+            var dvalue = _sliderAllAudio.value;
+
+            OnAudioValueChanged?.Invoke(dvalue);
+
+        }
+
+        public void UpdateMusicValue(float value)
+        {
+            //_sliderMusic.value = (float)value;
+
+            var dvalue = _sliderMusic.value;
+
+            OnMusicValueChanged?.Invoke(dvalue);
+        }
+
+        public void UpdateEffectValue(float value)
+        {
+            //_sliderEffect.value = (float)value;
+
+            var dvalue = _sliderEffect.value;
+
+            OnEffectValueChanged?.Invoke(dvalue);
+        }
+
+        public void SetAudioValue(double value)
         {
             _sliderAllAudio.value = (float)value;
         }
 
-        public void UpdateMusicValue(double value) 
+        public void SetMusicValue(double value)
         {
             _sliderMusic.value = (float)value;
         }
 
-        public void UpdateEffectValue(double value) 
+        public void SetEffectValue(double value)
         {
             _sliderEffect.value = (float)value;
         }
+
     }
 }

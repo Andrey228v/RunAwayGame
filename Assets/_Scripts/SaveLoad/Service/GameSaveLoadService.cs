@@ -4,6 +4,7 @@ using Assets.Scripts.SaveLoad;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets._Scripts.SaveLoad.Service
 {
@@ -12,6 +13,10 @@ namespace Assets._Scripts.SaveLoad.Service
         private readonly EasySaveSystem _saveSystem;
         private GameSaveData _gameSaveData;
         private readonly IGameLogger _gameLogger;
+
+        private float _saveCooldown = 1f;     // сек
+        private float _lastSaveRequestTime = -999f;
+        private bool _saveDirty;
 
         public GameSaveData GameSaveData => _gameSaveData;
 
@@ -31,6 +36,27 @@ namespace Assets._Scripts.SaveLoad.Service
             SaveGame();
 
             _gameLogger.Log("GameSaveLoadService Dispose complite", "Service");
+        }
+
+        public void RequestSave()             // ← вместо прямого SaveGame из подписчика
+        {
+            _saveDirty = true;
+            if (Time.time - _lastSaveRequestTime >= _saveCooldown)
+                FlushSave();
+        }
+
+        public void Tick()                    // вызывать из Update/корутины/UniTask
+        {
+            if (_saveDirty && Time.time - _lastSaveRequestTime >= _saveCooldown)
+                FlushSave();
+        }
+
+        public void FlushSave()
+        {
+            if (!_saveDirty) return;
+            _saveDirty = false;
+            _lastSaveRequestTime = Time.time;
+            SaveGame();
         }
 
         public void SaveGame()

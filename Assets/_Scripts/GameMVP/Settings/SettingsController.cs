@@ -4,6 +4,7 @@ using Assets._Scripts.UI._1MenuWindow;
 using Assets.Scripts.SaveLoad.Data;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UIElements;
 
 namespace Assets._Scripts.GameControllers.Settings
 {
@@ -56,16 +57,24 @@ namespace Assets._Scripts.GameControllers.Settings
 
             _views.Add(view);
 
-            _model.OnAudioValueChanged += view.UpdateAudioValue;
-            _model.OnMusicValueChanged += view.UpdateMusicValue;
-            _model.OnEffectsValueChanged += view.UpdateEffectValue;
+            _model.OnAudioValueChanged += view.SetAudioValue;
+            _model.OnMusicValueChanged += view.SetMusicValue;
+            _model.OnEffectsValueChanged += view.SetEffectValue;
+
+            view.OnAudioValueChanged += _model.SetAudioValue;
+            view.OnMusicValueChanged += _model.SetMusicValue;
+            view.OnEffectValueChanged += _model.SetEffectsValue;
         }
 
         public void RemoveView(ISettingsView view)
         {
-            _model.OnAudioValueChanged -= view.UpdateAudioValue;
-            _model.OnMusicValueChanged -= view.UpdateMusicValue;
-            _model.OnEffectsValueChanged -= view.UpdateEffectValue;
+            _model.OnAudioValueChanged -= view.SetAudioValue;
+            _model.OnMusicValueChanged -= view.SetMusicValue;
+            _model.OnEffectsValueChanged -= view.SetEffectValue;
+
+            view.OnAudioValueChanged -= _model.SetAudioValue;
+            view.OnMusicValueChanged -= _model.SetMusicValue;
+            view.OnEffectValueChanged -= _model.SetEffectsValue;
 
             _views.Remove(view);
         }
